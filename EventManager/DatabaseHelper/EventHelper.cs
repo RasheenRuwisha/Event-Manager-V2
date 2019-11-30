@@ -44,10 +44,10 @@ namespace EventManager.DatabaseHelper
             List<UserEvent> repetitive = new List<UserEvent>();
             List<UserEvent> contacts = new List<UserEvent>();
 
-            using (var dbContext = new DatabaseModel())
-                {
+            databaseModel = new DatabaseModel();
+                
                 repetitive = databaseModel.Events.Where(events => events.RepeatTill >= weekStartEnd.WeekStart).ToList();
-            }
+            
 
 
 
@@ -57,15 +57,26 @@ namespace EventManager.DatabaseHelper
         public UserEvent GetUserEvent(string eventid)
         {
             UserEvent contacts = new UserEvent();
+
+            databaseModel = new DatabaseModel();
             contacts = databaseModel.Events.Where(events => events.eventid.Equals(eventid)).FirstOrDefault();
             return contacts;
         }
 
-        public List<UserEvent> SearchUserEvent(string name)
+        public List<UserEvent> SearchUserEvent(DateTime startDate, DateTime endDate)
         {
+
+           List<UserEvent> repetitive = new List<UserEvent>();
             List<UserEvent> contacts = new List<UserEvent>();
-            contacts = databaseModel.Events.Where(events => events.title.Equals(name)).ToList();
-            return contacts;
+
+            databaseModel = new DatabaseModel();
+
+            repetitive = databaseModel.Events.Where(events => events.RepeatTill >= startDate.Date).ToList();
+
+
+
+
+            return eventGenerator.GenerateEvents(repetitive, startDate.Date, endDate.Date);
         }
 
 
@@ -103,6 +114,7 @@ namespace EventManager.DatabaseHelper
                     contactDetails.State = appointment.State;
                     contactDetails.City = appointment.City;
                     contactDetails.Zipcode = appointment.Zipcode;
+                    contactDetails.eventid = appointment.eventid;
                     contactDetails.userid = appointment.userid;
                     contactDetails.title = appointment.title;
                     contactDetails.description = appointment.description;

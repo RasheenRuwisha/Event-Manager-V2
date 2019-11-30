@@ -100,82 +100,7 @@ namespace EventManager.View.Events
 
             cmb_repeattype.SelectedItem = userEvent.RepeatType;
 
-            if (!userEvent.RepeatType.Equals("") && !userEvent.RepeatType.Equals("None"))
-            {
-                Label label = new Label()
-                {
-                    Name = "lbl_repeatfor",
-                    Text = "Repeat For",
-                    Location = new Point(41, this.cmb_repeattype.Location.Y + 30),
-                    ForeColor = System.Drawing.Color.White,
-                };
-
-                ComboBox combo = new ComboBox()
-                {
-                    Name = "cmb_repeatfor",
-                    Location = new Point(41, label.Location.Y + 22),
-                    BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25))))),
-                    ForeColor = System.Drawing.Color.White,
-                    Size = new System.Drawing.Size(250, 21),
-
-                };
-                combo.Items.AddRange(new object[] {
-                    "Forever",
-                    "Specific Number Of Times",
-                    "Until",
-                });
-                combo.SelectedIndexChanged += new System.EventHandler(this.cmb_repeatfor_SelectedIndexChanged);
-                combo.SelectedItem = userEvent.RepeatDuration;
-
-                Controls.Add(label);
-                Controls.Add(combo);
-
-                    ComboBox cmb_repeat = Controls.Find("cmb_repeatfor", true).FirstOrDefault() as ComboBox;
-                    btn_save.Location = new Point(41, cmb_repeat.Location.Y + cmb_repeat.Height + 10);
-            }
-
-            ComboBox cmb_repeatfor = Controls.Find("cmb_repeatfor", true).FirstOrDefault() as ComboBox;
-
-            if (!userEvent.RepeatDuration.Equals("") && !userEvent.RepeatDuration.Equals("None") && userEvent.RepeatDuration.Equals("Forever"))
-            {
-                Label label = new Label()
-                {
-                    Name = "lbl_repeatduration",
-                    Text = "Duration",
-                    Location = new Point(333, this.cmb_repeattype.Location.Y + 30),
-                    ForeColor = System.Drawing.Color.White,
-                };
-
-                Controls.Add(label);
-            }
-
-            if (userEvent.RepeatDuration.Equals("Specific Number Of Times"))
-            {
-                TextBox text = new TextBox()
-                {
-                    Name = "txt_duration",
-                    Location = new Point(333, cmb_repeatfor.Location.Y),
-                    ForeColor = System.Drawing.Color.White,
-                    BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31))))),
-                    Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F),
-                    Text = userEvent.RepeatCount.ToString(),
-
-                };
-                Controls.Add(text);
-            }
-
-            if (userEvent.RepeatDuration.Equals("Until"))
-            {
-                DateTimePicker text = new DateTimePicker()
-                {
-                    Name = "dtp_duration",
-                    Location = new Point(333, cmb_repeatfor.Location.Y),
-                    ForeColor = System.Drawing.Color.White,
-                    Value = userEvent.RepeatTill,
-                };
-                Controls.Add(text);
-            }
-
+           
 
         }
 
@@ -638,6 +563,10 @@ namespace EventManager.View.Events
             {
                 events.type = "Appointment";
             }
+            else
+            {
+                events.type = "Task";
+            }
 
             return events;
         }
@@ -728,6 +657,7 @@ namespace EventManager.View.Events
                     "Specific Number Of Times",
                     "Until",
                 });
+                combo.SelectedItem = userEvent.RepeatDuration;
                 combo.SelectedIndexChanged += new System.EventHandler(this.cmb_repeatfor_SelectedIndexChanged);
                 Controls.Add(label);
                 Controls.Add(combo);
@@ -787,6 +717,7 @@ namespace EventManager.View.Events
                     ForeColor = System.Drawing.Color.White,
                     BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31))))),
                     Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F),
+                    Text = userEvent.RepeatCount.ToString(),
 
                 };
                 Controls.Add(text);
@@ -799,6 +730,7 @@ namespace EventManager.View.Events
                     Name = "dtp_duration",
                     Location = new Point(333, cmb_repeatfor.Location.Y),
                     ForeColor = System.Drawing.Color.White,
+                    Value = userEvent.RepeatTill == DateTime.MaxValue ? DateTime.Now : userEvent.RepeatTill,
                 };
                 Controls.Add(text);
             }

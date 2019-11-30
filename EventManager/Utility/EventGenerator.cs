@@ -33,7 +33,7 @@ namespace EventManager.Utility
 
                     if (userEvent.RepeatDuration.Equals("Specific Number Of Times"))
                     {
-                        for(int i = 0; i <= timeDifference; i++)
+                        for(int i = 1; i <= timeDifference; i++)
                         
                             if(i <= userEvent.RepeatCount)
                             {

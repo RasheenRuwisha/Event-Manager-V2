@@ -36,6 +36,35 @@ namespace EventManager.View
             pnl_eventlist.HorizontalScroll.Visible = false;
             pnl_eventlist.HorizontalScroll.Maximum = 0;
             pnl_eventlist.AutoScroll = true;
+
+            pnl_eventsearch.AutoScroll = false;
+            pnl_eventsearch.HorizontalScroll.Enabled = false;
+            pnl_eventsearch.HorizontalScroll.Visible = false;
+            pnl_eventsearch.HorizontalScroll.Maximum = 0;
+            pnl_eventsearch.AutoScroll = true;
+
+            pnl_contactlist.AutoScroll = false;
+            pnl_contactlist.HorizontalScroll.Enabled = false;
+            pnl_contactlist.HorizontalScroll.Visible = false;
+            pnl_contactlist.HorizontalScroll.Maximum = 0;
+            pnl_contactlist.AutoScroll = true;
+
+            pnl_search.AutoScroll = false;
+            pnl_search.HorizontalScroll.Enabled = false;
+            pnl_search.HorizontalScroll.Visible = false;
+            pnl_search.HorizontalScroll.Maximum = 0;
+            pnl_search.AutoScroll = true;
+
+            this.dtp_searchstart.ValueChanged += new EventHandler(startDatePickerValueChanged);
+        }
+
+        void startDatePickerValueChanged(object sender, EventArgs e)
+        {
+            if (dtp_seachend.Value < dtp_searchstart.Value)
+            {
+                this.dtp_seachend.Value = this.dtp_searchstart.Value;
+
+            }
         }
 
         private void cpb_addcontact_Click(object sender, EventArgs e)
@@ -78,7 +107,7 @@ namespace EventManager.View
             }
             else
             {
-                pnl_contactlist.Controls.Add(this.GenerateNoContacsLabel());
+                pnl_contactlist.Controls.Add(this.GenerateNoContacsLabel("No Contact(s) Found"));
             }
             pnl_contactlist.BringToFront();
             txt_search.Enabled = true;
@@ -153,9 +182,45 @@ namespace EventManager.View
                 pictureBox.Click += new System.EventHandler(this.pb_close_Click);
                 pnl_search.Controls.Add(label);
                 pnl_search.Controls.Add(pictureBox);
+            }      
+        }
+
+        private void AddEventSeachHeaderAndClose()
+        {
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new MethodInvoker(this.AddEventSeachHeaderAndClose));
             }
-            
-            
+            else
+            {
+                Label label = new Label()
+                {
+                    AutoSize = true,
+                    Font = new System.Drawing.Font("HoloLens MDL2 Assets", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+                    ForeColor = System.Drawing.SystemColors.ControlLightLight,
+                    Location = new System.Drawing.Point(218, 12),
+                    Name = "lbl_header",
+                    Size = new System.Drawing.Size(175, 29),
+                    TabIndex = 44,
+                    Text = "Search Results",
+                    TextAlign = System.Drawing.ContentAlignment.TopCenter
+                };
+
+
+                PictureBox pictureBox = new PictureBox()
+                {
+                    Image = global::EventManager.Properties.Resources.whitex,
+                    Location = new System.Drawing.Point(10, 11),
+                    Name = "pb_close",
+                    Size = new System.Drawing.Size(20, 20),
+                    SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom,
+                    TabIndex = 45,
+                    TabStop = false,
+                };
+                pictureBox.Click += new System.EventHandler(this.pb_event_close_Click);
+                pnl_eventsearch.Controls.Add(label);
+                pnl_eventsearch.Controls.Add(pictureBox);
+            }
         }
 
 
@@ -201,7 +266,7 @@ namespace EventManager.View
             }
             else
             {
-                pnl_search.Controls.Add(this.GenerateNoContacsLabel());
+                pnl_search.Controls.Add(this.GenerateNoContacsLabel("No Contact(s) Found"));
             }
             pnl_search.BringToFront();
         }
@@ -219,6 +284,11 @@ namespace EventManager.View
             pnl_contactlist.BringToFront();
         }
 
+        private void pb_event_close_Click(object sender, EventArgs e)
+        {
+            pnl_eventlist.BringToFront();
+        }
+
         public void ContactControlClick(object sender, EventArgs e)
         {
             ContactListView contactList = (ContactListView)sender;
@@ -234,7 +304,7 @@ namespace EventManager.View
             this.pnl_contactpreview.Controls.Add(contactPreview);
         }
 
-        private Label GenerateNoContacsLabel()
+        private Label GenerateNoContacsLabel(string text)
         {
             Label label = new Label()
             {
@@ -244,7 +314,7 @@ namespace EventManager.View
                 Name = "lbl_error",
                 Size = new System.Drawing.Size(175, 29),
                 TabIndex = 44,
-                Text = "No Contact(s) Found",
+                Text = text,
             };
             label.Location = new System.Drawing.Point(pnl_search.Width / 2 - label.Width / 2, pnl_search.Height / 2 - label.Height / 2);
             return label;
@@ -287,7 +357,7 @@ namespace EventManager.View
 
         private List<EventListView> GenerateEventtList(String type)
         {
-            this.AddSeachHeaderAndClose();
+            this.AddEventSeachHeaderAndClose();
 
             List<UserEvent> contactList = new List<UserEvent>();
             if (type.Equals("load"))
@@ -296,7 +366,7 @@ namespace EventManager.View
             }
             else if (type.Equals("search"))
             {
-                contactList = eventHelper.SearchUserEvent(txt_eventsearch.Text.Trim());
+                contactList = eventHelper.SearchUserEvent(dtp_searchstart.Value, dtp_seachend.Value);
             }
             List<EventListView> contactLists = new List<EventListView>();
             foreach (UserEvent contactDetails in contactList)
@@ -316,7 +386,7 @@ namespace EventManager.View
         public void EventControlClick(object sender, EventArgs e)
         {
             EventListView contactList = (EventListView)sender;
-            UserEvent contact = this.eventHelper.GetUserEvent(contactList.Tag.ToString());
+            UserEvent contact = contactList.Tag as UserEvent;
             EventPreview contactPreview = new EventPreview();
             contactPreview.title = contact.title;
             contactPreview.description = contact.description;
@@ -361,7 +431,7 @@ namespace EventManager.View
             }
             else
             {
-                pnl_eventsearch.Controls.Add(this.GenerateNoContacsLabel());
+                pnl_eventsearch.Controls.Add(this.GenerateNoContacsLabel("No Event(s) Found"));
             }
             pnl_eventsearch.BringToFront();
         }
@@ -374,7 +444,6 @@ namespace EventManager.View
 
         private async void pnl_eventlist_Paint(object sender, PaintEventArgs e)
         {
-
             if(pnl_eventlist.Controls.Count == 0)
             {
                 List<EventListView> contacts = await Task.Run(() => this.GenerateEventtList("load"));
@@ -408,7 +477,7 @@ namespace EventManager.View
                 }
                 else
                 {
-                    pnl_contactlist.Controls.Add(this.GenerateNoContacsLabel());
+                    pnl_contactlist.Controls.Add(this.GenerateNoContacsLabel("No Event(s) Found"));
                 }
             }
             
