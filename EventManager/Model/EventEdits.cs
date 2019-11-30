@@ -8,20 +8,27 @@ using System.Threading.Tasks;
 
 namespace EventManager.Model
 {
-    public class UserEvent
+    class EventEdits
     {
 
-        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        [ForeignKey("UserEvent")]
         public string eventid { get; set; }
+        public virtual UserEvent UserEvent { get; set; }
+
+
         [ForeignKey("User")]
         public string userid { get; set; }
         public virtual User User { get; set; }
+
+
+
         [MaxLength(100)]
         public string title { get; set; }
         [MaxLength(500)]
         public string description { get; set; }
-        [MaxLength(15)]
-        public string type { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string RepeatType { get; set; }
@@ -29,8 +36,6 @@ namespace EventManager.Model
         public int RepeatCount { get; set; }
         public DateTime RepeatTill { get; set; }
         public virtual List<EventContact> EventContacts { get; set; }
-        public string HasExceptions { get; set; }
-
         [MaxLength(50)]
         public string AddressLine1 { get; set; }
         [MaxLength(50)]

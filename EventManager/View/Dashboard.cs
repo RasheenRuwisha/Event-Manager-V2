@@ -31,6 +31,11 @@ namespace EventManager.View
             txt_search.Enabled = false;
             pb_search.Enabled = false;
 
+            pnl_eventlist.AutoScroll = false;
+            pnl_eventlist.HorizontalScroll.Enabled = false;
+            pnl_eventlist.HorizontalScroll.Visible = false;
+            pnl_eventlist.HorizontalScroll.Maximum = 0;
+            pnl_eventlist.AutoScroll = true;
         }
 
         private void cpb_addcontact_Click(object sender, EventArgs e)
@@ -297,10 +302,7 @@ namespace EventManager.View
             foreach (UserEvent contactDetails in contactList)
             {
                 EventListView contact = new EventListView();
-                contact.Tag = contactDetails.eventid;
-                contact.EventTitle = contactDetails.title;
-                contact.EventStartDate = contactDetails.StartDate.ToString();
-                contact.EventEndDate = contactDetails.EndDate.ToString();
+                contact.userEvent = contactDetails;
                 contact.Name = $"ctx_";
                 contact.Click += new EventHandler(this.EventControlClick);
                 //contact.deleteEvent = new EventHandler(this.removePreview);
@@ -372,39 +374,44 @@ namespace EventManager.View
 
         private async void pnl_eventlist_Paint(object sender, PaintEventArgs e)
         {
-            List<EventListView> contacts = await Task.Run(() => this.GenerateEventtList("load"));
-            if (contacts.Count != 0)
+
+            if(pnl_eventlist.Controls.Count == 0)
             {
-                int x = 0;
-                int y = 0;
-                int count = 0;
-                foreach (EventListView contactList in contacts)
+                List<EventListView> contacts = await Task.Run(() => this.GenerateEventtList("load"));
+                if (contacts.Count != 0)
                 {
-                    if (count == 0)
+                    int x = 0;
+                    int y = 0;
+                    int count = 0;
+                    foreach (EventListView contactList in contacts)
                     {
-                        contactList.Location = new Point(x, y);
-                        this.pnl_eventlist.Controls.Add(contactList);
-                        y = y + contactList.Height + 1;
-                        //x = x + contactList.Width + 1;
-                        count = 1;
-                    }
-                    else if (count == 1)
-                    {
-                        contactList.Location = new Point(x, y);
-                        this.pnl_eventlist.Controls.Add(contactList);
-                        y = y + contactList.Height + 1;
-                        contactList.BackColor = Color.FromArgb(39, 39, 39);
-                        x = 0;
-                        count = 0;
+                        if (count == 0)
+                        {
+                            contactList.Location = new Point(x, y);
+                            this.pnl_eventlist.Controls.Add(contactList);
+                            y = y + contactList.Height + 1;
+                            //x = x + contactList.Width + 1;
+                            count = 1;
+                        }
+                        else if (count == 1)
+                        {
+                            contactList.Location = new Point(x, y);
+                            this.pnl_eventlist.Controls.Add(contactList);
+                            y = y + contactList.Height + 1;
+                            contactList.BackColor = Color.FromArgb(39, 39, 39);
+                            x = 0;
+                            count = 0;
 
+                        }
                     }
+
                 }
-
+                else
+                {
+                    pnl_contactlist.Controls.Add(this.GenerateNoContacsLabel());
+                }
             }
-            else
-            {
-                pnl_contactlist.Controls.Add(this.GenerateNoContacsLabel());
-            }
+            
             pnl_eventlist.BringToFront();
             txt_search.Enabled = true;
             pb_search.Enabled = true;

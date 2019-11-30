@@ -46,8 +46,6 @@ namespace EventManager.View.Events
             this.txt_name.AutoSize = false;
             this.txt_name.Size = new System.Drawing.Size(250, 30);
 
-            this.txt_email.AutoSize = false;
-            this.txt_email.Size = new System.Drawing.Size(250, 30);
         }
 
 
@@ -112,49 +110,103 @@ namespace EventManager.View.Events
 
         private void changeConrolLocations()
         {
+            Label lbl_repeatduration = Controls.Find("lbl_repeatduration", true).FirstOrDefault() as Label;
+            ComboBox cmb_repeatfor = Controls.Find("cmb_repeatfor", true).FirstOrDefault() as ComboBox;
+            TextBox txt_duration = Controls.Find("txt_duration", true).FirstOrDefault() as TextBox;
+            DateTimePicker dtp_duration = Controls.Find("dtp_duration", true).FirstOrDefault() as DateTimePicker;
+            Label lbl_repeatfor = Controls.Find("lbl_repeatfor", true).FirstOrDefault() as Label;
+
             if (rb_appointment.Checked)
             {
-                lbl_collaborators.Location = new Point(41, 415);
+                lbl_collaborators.Location = new Point(41, 512);
                 cmb_contacts.Location = new Point(41, lbl_collaborators.Location.Y + lbl_collaborators.Height + 10);
                 lbl_addcollab.Location = new Point(299, cmb_contacts.Location.Y);
                 cmb_evetncollab.Location = new Point(333, cmb_contacts.Location.Y);
                 btn_removecollab.Location = new Point(589, cmb_contacts.Location.Y);
                 lbl_repeat.Location = new Point(41, cmb_contacts.Location.Y + cmb_contacts.Height + 10);
                 cmb_repeattype.Location = new Point(41, lbl_repeat.Location.Y + lbl_repeat.Height + 10);
-                btn_save.Location = new Point(41, cmb_repeattype.Location.Y + cmb_repeattype.Height + 10);
+
+                if(lbl_repeatfor != null)
+                {
+                    lbl_repeatfor.Location = new Point(41, this.cmb_repeattype.Location.Y + 30);
+                    cmb_repeatfor.Location = new Point(41, lbl_repeatfor.Location.Y + 22);
+                    btn_save.Location = new Point(41, cmb_repeatfor.Location.Y + cmb_repeatfor.Height + 10);
+                }
+                else {
+                    btn_save.Location = new Point(41, cmb_repeattype.Location.Y + cmb_repeattype.Height + 10);
+                }
+
+                if (lbl_repeatduration != null)
+                {
+                    lbl_repeatduration.Location = new Point(333, this.cmb_repeattype.Location.Y + 30);
+                    if(txt_duration != null)
+                    {
+                        txt_duration.Location = new Point(333, cmb_repeatfor.Location.Y);
+                    }
+                    else
+                    {
+                        dtp_duration.Location = new Point(333, cmb_repeatfor.Location.Y);
+                    }
+
+                }
+
+
+
+
+
             }
             else
             {
-                lbl_collaborators.Location = new Point(41, 281);
+                lbl_collaborators.Location = new Point(41, 388);
                 cmb_contacts.Location = new Point(41, lbl_collaborators.Location.Y + lbl_collaborators.Height + 10);
                 lbl_addcollab.Location = new Point(299, cmb_contacts.Location.Y);
                 cmb_evetncollab.Location = new Point(333, cmb_contacts.Location.Y);
                 btn_removecollab.Location = new Point(589, cmb_contacts.Location.Y);
                 lbl_repeat.Location = new Point(41, cmb_contacts.Location.Y + cmb_contacts.Height + 10);
                 cmb_repeattype.Location = new Point(41, lbl_repeat.Location.Y + lbl_repeat.Height + 10);
-                btn_save.Location = new Point(43, 420);
+
+                if (lbl_repeatfor != null)
+                {
+                    lbl_repeatfor.Location = new Point(41, this.cmb_repeattype.Location.Y + 30);
+                    cmb_repeatfor.Location = new Point(41, lbl_repeatfor.Location.Y + 22);
+                    btn_save.Location = new Point(41, cmb_repeatfor.Location.Y + cmb_repeatfor.Height + 10);
+                }
+                else
+                {
+                    btn_save.Location = new Point(41, cmb_repeattype.Location.Y + cmb_repeattype.Height + 10);
+
+                }
             }
         }
 
 
         private void AddAddressControls()
         {
-            this.Size = new Size(627, 571);
+            Label rLabel = Controls.Find("lbl_repeatfor", true).FirstOrDefault() as Label;
+            if (rLabel != null)
+            {
+                this.Size = new Size(627, 750);
+            }
+            else
+            {
+                this.Size = new Size(627, 700);
+            }
+            
             PictureBox tbx = this.Controls.Find("dynamicpbx_chevdown", true).FirstOrDefault() as PictureBox;
             if (tbx != null)
             {
                 tbx.Dispose();
             }
-            this.Controls.Add(uiBuilder.GenerateLongTextBox(42, 303, "dynamictxt_addressline1", ""));
-            this.Controls.Add(uiBuilder.GenerateLongTextBox(330, 303, "dynamictxt_addressline2", ""));
-            this.Controls.Add(uiBuilder.GenerateShortTextBox(42, 370, "dynamictxt_city", ""));
-            this.Controls.Add(uiBuilder.GenerateShortTextBox(243, 370, "dynamictxt_state", ""));
-            this.Controls.Add(uiBuilder.GenerateShortTextBox(451, 370, "dynamictxt_zip", ""));
-            this.Controls.Add(uiBuilder.GenerateLabel(40, 281, "dynamiclbl_addressline1", "Address Line 1 "));
-            this.Controls.Add(uiBuilder.GenerateLabel(329, 281, "dynamiclbl_addressline2", "Address Line 2 "));
-            this.Controls.Add(uiBuilder.GenerateLabel(40, 348, "dynamiclbl_city", "City "));
-            this.Controls.Add(uiBuilder.GenerateLabel(241, 348, "dynamiclbl_state", "State "));
-            this.Controls.Add(uiBuilder.GenerateLabel(449, 348, "dynamiclbl_zip", "Zip "));
+            this.Controls.Add(uiBuilder.GenerateLongTextBox(42, 400, "dynamictxt_addressline1", ""));
+            this.Controls.Add(uiBuilder.GenerateLongTextBox(330, 400, "dynamictxt_addressline2", ""));
+            this.Controls.Add(uiBuilder.GenerateShortTextBox(42, 467, "dynamictxt_city", ""));
+            this.Controls.Add(uiBuilder.GenerateShortTextBox(243, 467, "dynamictxt_state", ""));
+            this.Controls.Add(uiBuilder.GenerateShortTextBox(451, 467, "dynamictxt_zip", ""));
+            this.Controls.Add(uiBuilder.GenerateLabel(40, 388, "dynamiclbl_addressline1", "Address Line 1 "));
+            this.Controls.Add(uiBuilder.GenerateLabel(329, 388, "dynamiclbl_addressline2", "Address Line 2 "));
+            this.Controls.Add(uiBuilder.GenerateLabel(40, 445, "dynamiclbl_city", "City "));
+            this.Controls.Add(uiBuilder.GenerateLabel(241, 445, "dynamiclbl_state", "State "));
+            this.Controls.Add(uiBuilder.GenerateLabel(449, 445, "dynamiclbl_zip", "Zip "));
             this.CenterToParent();
         }
 
@@ -170,7 +222,15 @@ namespace EventManager.View.Events
 
         private bool RemoveDynamicUis()
         {
-            this.Size = new Size(627, 461);
+            Label rLabel = Controls.Find("lbl_repeatfor", true).FirstOrDefault() as Label;
+            if (rLabel != null)
+            {
+                this.Size = new Size(627, 600);
+            }
+            else
+            {
+                this.Size = new Size(627, 550);
+            }
             List<Control> controlsList = new List<Control>();
             foreach (Control currentControl in this.Controls)
             {
@@ -424,13 +484,13 @@ namespace EventManager.View.Events
             }
             return endDate;
         }
-        private Appointment GenerateAppointmentObject()
+        private UserEvent GenerateUserEvent()
         {
             ComboBox cComboBox = Controls.Find("cmb_repeatfor", true).FirstOrDefault() as ComboBox;
             TextBox durationText = Controls.Find("txt_duration", true).FirstOrDefault() as TextBox;
             DateTimePicker durationTime = Controls.Find("dtp_duration", true).FirstOrDefault() as DateTimePicker;
 
-            Appointment appointment = new Appointment()
+            UserEvent events = new UserEvent()
             {
                 AddressLine1 = this.GetDynamicTextBoxValues("dynamictxt_addressline1"),
                 AddressLine2 = this.GetDynamicTextBoxValues("dynamictxt_addressline2"),
@@ -449,67 +509,35 @@ namespace EventManager.View.Events
                 StartDate = dtp_startdate.Value.Date + dtp_starttime.Value.TimeOfDay,
                 EndDate = dtp_enddate.Value.Date + dtp_endtime.Value.TimeOfDay,
             };
-
-            return appointment;
-        }
-
-        private Tasks GenerateTaskObject()
-        {
-            ComboBox cComboBox = Controls.Find("cmb_repeatfor", true).FirstOrDefault() as ComboBox;
-            TextBox durationText = Controls.Find("txt_duration", true).FirstOrDefault() as TextBox;
-            DateTimePicker durationTime = Controls.Find("dtp_duration", true).FirstOrDefault() as DateTimePicker;
-
-            Tasks appointment = new Tasks()
+            if (rb_appointment.Checked)
             {
-                eventid = this.eventid,
-                userid = Application.UserAppDataRegistry.GetValue("userID").ToString(),
-                title = txt_name.Text,
-                description = txt_email.Text,
-                RepeatType = cmb_repeattype.Text,
-                EventContacts = GenerateEventContacts(),
-                RepeatDuration = cComboBox != null ? cComboBox.Text : "",
-                RepeatCount = durationText != null ? Int32.Parse(durationText.Text) : 0,
-                RepeatTill = durationTime != null ? durationTime.Value : this.GenerateEndTime(),
-                StartDate = dtp_startdate.Value.Date + dtp_starttime.Value.TimeOfDay,
-                EndDate = dtp_enddate.Value.Date + dtp_endtime.Value.TimeOfDay,
-            };
+                events.type = "Appointment";
+            }
+            else
+            {
+                events.type = "Task";
+            }
 
-            return appointment;
+            return events;
         }
+
 
 
         private async void btn_save_Click(object sender, EventArgs e)
         {
             eventid = commonUtil.generateUserId("event");
             bool isAppointment = false;
-            Tasks tasks = new Tasks();
-            Appointment appointment = new Appointment();
-            if (rb_appointment.Checked)
-            {
-                appointment = this.GenerateAppointmentObject();
-                isAppointment = true;
-            }
-            else
-            {
-                tasks = this.GenerateTaskObject();
-            }
 
             PictureBox pictureBox = commonUtil.addLoaderImage(this.btn_save.Location.X + 205, this.btn_save.Location.Y + 2);
             this.Controls.Add(pictureBox);
             this.btn_save.Enabled = false;
             bool task = await Task.Run(() => this.DoValidations());
+            UserEvent userEvent = this.GenerateUserEvent();
             if (task)
             {
 
                 bool contact = false;
-                if (isAppointment)
-                {
-                    contact = await Task.Run(() => eventHelper.AddAppointment(appointment));
-                }
-                else
-                {
-                    contact = await Task.Run(() => eventHelper.AddEvent(tasks));
-                }
+                    contact = await Task.Run(() => eventHelper.AddEvent(userEvent));
                 if (contact)
                 {
                     this.Controls.Remove(pictureBox);
@@ -534,13 +562,24 @@ namespace EventManager.View.Events
 
         private void cmb_repeattype_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Label rLabel = Controls.Find("lbl_repeatfor", true).FirstOrDefault() as Label;
-            ComboBox cComboBox = Controls.Find("cmb_repeatfor", true).FirstOrDefault() as ComboBox;
-            if(rLabel != null && cComboBox != null)
+            TextBox dynamictxt_addressline1 = Controls.Find("dynamictxt_addressline1", true).FirstOrDefault() as TextBox;
+            if(dynamictxt_addressline1 == null)
+            {
+                this.Size = new Size(627, 600);
+
+            }
+            else
+            {
+                this.Size = new Size(627, 750);
+
+            }
+            Label lbl_repeatfor = Controls.Find("lbl_repeatfor", true).FirstOrDefault() as Label;
+            ComboBox cmb_repeatfor = Controls.Find("cmb_repeatfor", true).FirstOrDefault() as ComboBox;
+            if(lbl_repeatfor != null && cmb_repeatfor != null)
             {
 
-                rLabel.Dispose();
-                cComboBox.Dispose();
+                lbl_repeatfor.Dispose();
+                cmb_repeatfor.Dispose();
             }
 
 
@@ -571,34 +610,41 @@ namespace EventManager.View.Events
                 combo.SelectedIndexChanged += new System.EventHandler(this.cmb_repeatfor_SelectedIndexChanged);
                 Controls.Add(label);
                 Controls.Add(combo);
+
+                if(cmb_repeatfor == null)
+                {
+                    cmb_repeatfor = Controls.Find("cmb_repeatfor", true).FirstOrDefault() as ComboBox;
+                    btn_save.Location = new Point(41, cmb_repeatfor.Location.Y + cmb_repeatfor.Height + 10);
+
+                }
             }
         }
 
 
         private void cmb_repeatfor_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Label rLabel = Controls.Find("lbl_repeatduration", true).FirstOrDefault() as Label;
-            ComboBox cComboBox = Controls.Find("cmb_repeatfor", true).FirstOrDefault() as ComboBox;
+            Label lbl_duration = Controls.Find("lbl_repeatduration", true).FirstOrDefault() as Label;
+            ComboBox cmb_repeatfor = Controls.Find("cmb_repeatfor", true).FirstOrDefault() as ComboBox;
 
-            TextBox durationText = Controls.Find("txt_duration", true).FirstOrDefault() as TextBox;
-            DateTimePicker durationTime = Controls.Find("dtp_duration", true).FirstOrDefault() as DateTimePicker;
+            TextBox txt_duration = Controls.Find("txt_duration", true).FirstOrDefault() as TextBox;
+            DateTimePicker dtp_duration = Controls.Find("dtp_duration", true).FirstOrDefault() as DateTimePicker;
 
-            if (rLabel != null )
+            if (lbl_duration != null )
             {
-                rLabel.Dispose();
+                lbl_duration.Dispose();
             }
 
-            if (durationText != null)
+            if (txt_duration != null)
             {
-                durationText.Dispose();
+                txt_duration.Dispose();
             }
 
-            if (durationTime != null)
+            if (dtp_duration != null)
             {
-                durationTime.Dispose();
+                dtp_duration.Dispose();
             }
 
-            if (!cComboBox.Text.Equals("") && !cComboBox.Text.Equals("None") && !cComboBox.Text.Equals("Forever"))
+            if (!cmb_repeatfor.Text.Equals("") && !cmb_repeatfor.Text.Equals("None") && !cmb_repeatfor.Text.Equals("Forever"))
             {
                 Label label = new Label()
                 {
@@ -611,12 +657,12 @@ namespace EventManager.View.Events
                 Controls.Add(label);
             }
 
-            if (cComboBox.Text.Equals("Specific Number Of Times"))
+            if (cmb_repeatfor.Text.Equals("Specific Number Of Times"))
             {
                 TextBox text = new TextBox()
                 {
                     Name = "txt_duration",
-                    Location = new Point(333, cComboBox.Location.Y),
+                    Location = new Point(333, cmb_repeatfor.Location.Y),
                     ForeColor = System.Drawing.Color.White,
                     BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31))))),
                     Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F),
@@ -625,12 +671,12 @@ namespace EventManager.View.Events
                 Controls.Add(text);
             }
 
-            if (cComboBox.Text.Equals("Until"))
+            if (cmb_repeatfor.Text.Equals("Until"))
             {
                 DateTimePicker text = new DateTimePicker()
                 {
                     Name = "dtp_duration",
-                    Location = new Point(333, cComboBox.Location.Y),
+                    Location = new Point(333, cmb_repeatfor.Location.Y),
                     ForeColor = System.Drawing.Color.White,
                 };
                 Controls.Add(text);

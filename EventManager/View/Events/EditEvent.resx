@@ -117,27 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="pb_close.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAO2SURBVGhD7ZpNbExRGIbrv42fiEQsJBILCxIbizY0YdXEho2VWmKvdliiLSu1U2prUwsrG5QF
-        gqAJIiEkhEgkQkQEwfF8934zued07pwz929amSd5k+a93/ed05m3t3funa4OHSrEGDOFfPxCB7QlNzJL
-        Z/qY0hY/FE/HPV6+o43alhmZobNCmNY2PxRvQfLq/EH9alvgTyDhEVqsdsvQuxDdl0FwQW0L/D70W9Wr
-        dhg0jCLhOepWuw7eUvRSCuC42i1D74l4hHmNVqhdB28JeioFMKJ2ODQlB4yqbYHfj+RVknduu9rB0LMt
-        0b9DbQv800ho+IIGQWNIxIaRIK/ocrW9UCvv6AtphJNqW+Bnj5QLA3wRW4RqGR9X2wu15+OWxn9jePki
-        5cKQkIglzzp71E6Fmt1xqfmBNqttgZ8/Ui4MConYEBI+ojVqz4Bjq9EHKYRDalvgFxcpFwb6IjYPXZUC
-        uKL2DDg2GZeYa2i+2nXwio2UC0NDIrYWfYoqGvzXxzsYHzKf0Tq1LfCLj5QLg0MiNoiEb2iD2uKvR1/l
-        AOxV2wK/vEi5sEAyYj1qW+BfiiqMuY0WoPnolhgwqWUW+OVGyoVFQiK2Er2JKow5io7FP5p3aJWWWeCX
-        HykXFupFtQj0qW2BP4D+op8q+XlAD1vgVxcpFxYMidhYVBFzRm0L/Goj5cKi3ehZtHx6xHrQHVXaL3sK
-        CTKrmki5sLD3LNYMetoXKRc24I1YI6htb6Rc2IRs6Em0nZSINYLaWqSqO0v5YCMtRYya2RMpFzZUi9hj
-        tVKRmrg0/B2sDNlUvLc5/IuwoZaikqjPdLYrBTaS6exDbfJs1/4/djaR6exDrfearTLYQK6zT6K/fRFj
-        4dBLlLuq2XmJwqLeSOGfjSpixtS2wG9fxFhw7l/Gs5D3LIUvH6zeRhXGHEHy4Up4j9I+WFV7ycIiIZFq
-        9FH3phhwWcss8KuLGAt4I4C/DwnNbj4Mqm2BX/5ZjMEhkUreDtqvdh08eZgjfEFpt4PKjRhDmy6AJ/G5
-        LgUQcoNO7qr4btAVGzEGhkTqMBJauWU6pLYFfvERY1BIpDah2k3sXWqnQs1OJKfjZjexi40YQ3yRkscK
-        D6QAzqnthdrxuCW6pPc9VsgXMQaERGoECa9Q1gc9w2pb4OePGI0hkcr76G1roj/t0VsyEcE3N+rQ5IvU
-        MlT1w9DWIkZDSKQuIuEhyvt4+p4Mggm1LfCzRYzi/+YLAyFf4ZAr2qK/wiEzfdzQlg4dyqer6x/4Ae9L
-        0lhnswAAAABJRU5ErkJggg==
-</value>
-  </data>
 </root>

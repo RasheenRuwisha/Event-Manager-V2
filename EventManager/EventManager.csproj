@@ -71,12 +71,33 @@
     <Compile Include="Migrations\201911290847338_addrepeatduaration.Designer.cs">
       <DependentUpon>201911290847338_addrepeatduaration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911292352382_updatedeventtable.cs" />
+    <Compile Include="Migrations\201911292352382_updatedeventtable.Designer.cs">
+      <DependentUpon>201911292352382_updatedeventtable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911300123540_addeventedittable.cs" />
+    <Compile Include="Migrations\201911300123540_addeventedittable.Designer.cs">
+      <DependentUpon>201911300123540_addeventedittable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911300140320_editEditEventTable.cs" />
+    <Compile Include="Migrations\201911300140320_editEditEventTable.Designer.cs">
+      <DependentUpon>201911300140320_editEditEventTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911301133156_addtypecol.cs" />
+    <Compile Include="Migrations\201911301133156_addtypecol.Designer.cs">
+      <DependentUpon>201911301133156_addtypecol.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911301350383_removedInheritance.cs" />
+    <Compile Include="Migrations\201911301350383_removedInheritance.Designer.cs">
+      <DependentUpon>201911301350383_removedInheritance.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Appointment.cs" />
     <Compile Include="Model\ComboBoxItem.cs" />
     <Compile Include="Model\Contact.cs" />
     <Compile Include="Model\EventContact.cs" />
     <Compile Include="Model\EventDates.cs" />
+    <Compile Include="Model\EventEdits.cs" />
     <Compile Include="Model\MonthStartEnd.cs" />
     <Compile Include="Model\Tasks.cs" />
     <Compile Include="Model\User.cs" />
@@ -180,6 +201,21 @@
     <EmbeddedResource Include="Migrations\201911290847338_addrepeatduaration.resx">
       <DependentUpon>201911290847338_addrepeatduaration.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911292352382_updatedeventtable.resx">
+      <DependentUpon>201911292352382_updatedeventtable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911300123540_addeventedittable.resx">
+      <DependentUpon>201911300123540_addeventedittable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911300140320_editEditEventTable.resx">
+      <DependentUpon>201911300140320_editEditEventTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911301133156_addtypecol.resx">
+      <DependentUpon>201911301133156_addtypecol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911301350383_removedInheritance.resx">
+      <DependentUpon>201911301350383_removedInheritance.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UIComponents\Banner.resx">
       <DependentUpon>Banner.cs</DependentUpon>
     </EmbeddedResource>
@@ -203,6 +239,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\Events\AddEvent.resx">
       <DependentUpon>AddEvent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Events\EditEvent.resx">
+      <DependentUpon>EditEvent.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\Events\EventPreview.resx">
       <DependentUpon>EventPreview.cs</DependentUpon>

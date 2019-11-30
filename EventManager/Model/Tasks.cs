@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EventManager.Model
 {
-    public class Tasks : UserEvent
+    public class Tasks
     {
     }
 }

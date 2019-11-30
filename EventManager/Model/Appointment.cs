@@ -7,18 +7,9 @@ using System.Threading.Tasks;
 
 namespace EventManager.Model
 {
-    public class Appointment : UserEvent
+    public class Appointment
     {
 
-        [MaxLength(50)]
-        public string AddressLine1 { get; set; }
-        [MaxLength(50)]
-        public string AddressLine2 { get; set; }
-        [MaxLength(50)]
-        public string City { get; set; }
-        [MaxLength(50)]
-        public string State { get; set; }
-        [MaxLength(50)]
-        public string Zipcode { get; set; }
+
     }
 }

@@ -52,7 +52,7 @@ namespace EventManager.UIComponents
         {
             set
             {
-                this.pb_delete.Tag = value;
+                this.Tag = value;
             }
         }
 
@@ -73,7 +73,7 @@ namespace EventManager.UIComponents
                 Controls.Add(label);
                 Controls.Add(commonUtil.addLoaderImage(label.Location.X - 30, label.Location.Y - 3));
 
-                bool removeContact = await Task.Run(() => contactHelper.RemoveContact(this.pb_delete.Tag.ToString()));
+                bool removeContact = await Task.Run(() => contactHelper.RemoveContact(this.Tag.ToString()));
                 if (removeContact)
                 {
 
@@ -99,7 +99,7 @@ namespace EventManager.UIComponents
 
         private void pb_edit_Click(object sender, EventArgs e)
         {
-            EditContact editContact = new EditContact(this.pb_delete.Tag.ToString());
+            EditContact editContact = new EditContact(this.Tag.ToString());
             editContact.FormClosing += new FormClosingEventHandler(this.EditContact_FormClosing);
             //editContact.FormClosing += new FormClosingEventHandler(this.form);
             editContact.ShowDialog();       
