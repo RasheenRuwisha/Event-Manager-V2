@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using System.Xml.Serialization;
 
 namespace EventManager.DatabaseHelper
 {
@@ -93,8 +94,16 @@ namespace EventManager.DatabaseHelper
                 using (var dbContext = new DatabaseModel())
                 {
                     contacts = dbContext.Events.Where(events => events.eventid.Equals(eventid)).FirstOrDefault();
+                    List<EventContact> eventDates = new List<EventContact>();
+                    foreach (EventContact contact in contacts.EventContacts)
+                    {
+                        eventDates.Add(contact);
+                    }
+                    contacts.EventContacts = eventDates;
                     dbContext.Events.Remove(contacts);
+
                     dbContext.SaveChanges();
+                    this.RemoveXMLEvent(eventid);
                 }
                 return true;
             }
@@ -112,6 +121,9 @@ namespace EventManager.DatabaseHelper
                 using (var dbContext = new DatabaseModel())
                 {
                     contactDetails = dbContext.Events.Find(appointment.eventid);
+
+                    contactDetails.EventContacts.Clear();
+
                     contactDetails.AddressLine1 = appointment.AddressLine1;
                     contactDetails.AddressLine2 = appointment.AddressLine2;
                     contactDetails.State = appointment.State;
@@ -130,6 +142,8 @@ namespace EventManager.DatabaseHelper
                     contactDetails.StartDate = appointment.StartDate;
                     contactDetails.EndDate = appointment.EndDate;
                     dbContext.SaveChanges();
+                    this.UpdtaeXMLEvent(appointment);
+
                 }
                 return true;
             }
@@ -180,6 +194,81 @@ namespace EventManager.DatabaseHelper
 
 
                 xmlDoc.Element("LocalStore").Add(xEvent);
+                xmlDoc.Save($"{userId}.xml");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+
+        private bool UpdtaeXMLEvent(UserEvent userEvent)
+        {
+            XDocument xmlDoc = new XDocument();
+            try
+            {
+                xmlDoc = XDocument.Load($"{userId}.xml");
+            }
+            catch (Exception ex)
+            {
+            }
+
+            try
+            {
+                var updateQuery = (from item in xmlDoc.Descendants("Event")
+                                   where item.Element("eventid").Value == userEvent.eventid
+                                   select item).FirstOrDefault();
+
+
+                updateQuery.Element("title").SetValue(userEvent.title);
+                updateQuery.Element("description").SetValue(userEvent.description);
+                updateQuery.Element("type").SetValue(userEvent.type);
+                updateQuery.Element("startdate").SetValue(userEvent.StartDate);
+                updateQuery.Element("enddate").SetValue(userEvent.EndDate);
+                updateQuery.Element("repeatType").SetValue(userEvent.RepeatType);
+                updateQuery.Element("repeatDuration").SetValue(userEvent.RepeatDuration);
+                updateQuery.Element("repeatCount").SetValue(userEvent.RepeatCount);
+                updateQuery.Element("repeatTill").SetValue(userEvent.RepeatTill);
+                updateQuery.Element("addressline1").SetValue(userEvent.AddressLine1);
+                updateQuery.Element("addressline1").SetValue(userEvent.AddressLine2);
+                updateQuery.Element("city").SetValue(userEvent.City);
+                updateQuery.Element("state").SetValue(userEvent.State);
+                updateQuery.Element("zip").SetValue(userEvent.Zipcode);
+                updateQuery.Element("contacts").Remove();
+                updateQuery.Add(new XElement("contacts", userEvent.EventContacts.Select(x => new XElement("contact",
+                                                                new XElement("contactId", x.ContactId),
+                                                                new XElement("userId", x.UserId),
+                                                                new XElement("eventId", x.EventId)))));
+
+                xmlDoc.Save($"{userId}.xml");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        private bool RemoveXMLEvent(string userEvent)
+        {
+            XDocument xmlDoc = new XDocument();
+            try
+            {
+                xmlDoc = XDocument.Load($"{userId}.xml");
+            }
+            catch (Exception ex)
+            {
+            }
+
+            try
+            {
+                var updateQuery = (from item in xmlDoc.Descendants("Event")
+                                   where item.Element("eventid").Value == userEvent
+                                   select item).FirstOrDefault();
+
+                updateQuery.Remove();
                 xmlDoc.Save($"{userId}.xml");
                 return true;
             }

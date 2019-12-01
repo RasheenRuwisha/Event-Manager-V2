@@ -485,5 +485,8 @@ namespace EventManager.View
             txt_search.Enabled = true;
             pb_search.Enabled = true;
         }
+   
     }
+
+   
 }

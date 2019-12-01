@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace EventManager.Model
 {
-    class ComboBoxItem
+    public class ComboBoxItem
     {
-
+        public int Id { get; set; }
         public string Name { get; set; }
         public string ContactId { get; set; }
 

@@ -51,6 +51,7 @@ namespace EventManager.View.Events
                 {
                     ComboBoxItem comboBoxItem = new ComboBoxItem()
                     {
+                        Id  = eventContact.Id,
                         ContactId = eventContact.ContactId,
                         Name = eventContact.Contact.Name,
                     };
