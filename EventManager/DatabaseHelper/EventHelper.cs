@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace EventManager.DatabaseHelper
 {
@@ -25,6 +26,7 @@ namespace EventManager.DatabaseHelper
                 {
                     dbContext.Events.Add(userEvent);
                     dbContext.SaveChanges();
+                    this.AddEventToXML(userEvent);
                 }
                 return true;
             }
@@ -45,13 +47,13 @@ namespace EventManager.DatabaseHelper
             List<UserEvent> contacts = new List<UserEvent>();
 
             databaseModel = new DatabaseModel();
-                
-                repetitive = databaseModel.Events.Where(events => events.RepeatTill >= weekStartEnd.WeekStart).ToList();
-            
+
+            repetitive = databaseModel.Events.Where(events => events.RepeatTill >= weekStartEnd.WeekStart).ToList();
 
 
 
-            return eventGenerator.GenerateEvents(repetitive, weekStartEnd.WeekStart,weekStartEnd.WeekEnd);
+
+            return eventGenerator.GenerateEvents(repetitive, weekStartEnd.WeekStart, weekStartEnd.WeekEnd);
         }
 
         public UserEvent GetUserEvent(string eventid)
@@ -66,7 +68,7 @@ namespace EventManager.DatabaseHelper
         public List<UserEvent> SearchUserEvent(DateTime startDate, DateTime endDate)
         {
 
-           List<UserEvent> repetitive = new List<UserEvent>();
+            List<UserEvent> repetitive = new List<UserEvent>();
             List<UserEvent> contacts = new List<UserEvent>();
 
             databaseModel = new DatabaseModel();
@@ -95,7 +97,8 @@ namespace EventManager.DatabaseHelper
                     dbContext.SaveChanges();
                 }
                 return true;
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return false;
             }
@@ -126,8 +129,58 @@ namespace EventManager.DatabaseHelper
                     contactDetails.RepeatTill = appointment.RepeatTill;
                     contactDetails.StartDate = appointment.StartDate;
                     contactDetails.EndDate = appointment.EndDate;
-                    dbContext.SaveChanges(); 
+                    dbContext.SaveChanges();
                 }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+
+
+
+        private bool AddEventToXML(UserEvent userEvent)
+        {
+            XDocument xmlDoc = new XDocument();
+            try
+            {
+                xmlDoc = XDocument.Load($"{userId}.xml");
+            }
+            catch (Exception ex)
+            {
+            }
+
+            try
+            {
+
+
+                XElement xEvent = new XElement("Event",
+                    new XElement("eventid", userEvent.eventid),
+                    new XElement("title", userEvent.title),
+                    new XElement("description", userEvent.description),
+                    new XElement("type", userEvent.type),
+                    new XElement("startdate", userEvent.StartDate),
+                    new XElement("enddate", userEvent.EndDate),
+                    new XElement("repeatType", userEvent.RepeatType),
+                    new XElement("repeatDuration", userEvent.RepeatDuration),
+                    new XElement("repeatCount", userEvent.RepeatCount),
+                    new XElement("repeatTill", userEvent.RepeatTill),
+                    new XElement("addressline1", userEvent.AddressLine1),
+                    new XElement("addressline1", userEvent.AddressLine2),
+                    new XElement("city", userEvent.City),
+                    new XElement("state", userEvent.State),
+                    new XElement("zip", userEvent.Zipcode),
+                    new XElement("contacts", userEvent.EventContacts.Select(x => new XElement("contact",
+                                                                 new XElement("contactId", x.ContactId),
+                                                                 new XElement("userId", x.UserId),
+                                                                 new XElement("eventId", x.EventId)))));
+
+
+                xmlDoc.Element("LocalStore").Add(xEvent);
+                xmlDoc.Save($"{userId}.xml");
                 return true;
             }
             catch (Exception ex)
