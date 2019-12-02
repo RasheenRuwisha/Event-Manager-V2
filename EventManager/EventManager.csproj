@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DatabaseHelper\ContactHelper.cs" />
+    <Compile Include="DatabaseHelper\DatabaseConnectivity.cs" />
     <Compile Include="DatabaseHelper\EventHelper.cs" />
     <Compile Include="DatabaseHelper\UserHelper.cs" />
     <Compile Include="DatabaseModel.cs" />
@@ -91,6 +92,18 @@
     <Compile Include="Migrations\201911301350383_removedInheritance.Designer.cs">
       <DependentUpon>201911301350383_removedInheritance.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912020454328_UpdateVaraibleNames.cs" />
+    <Compile Include="Migrations\201912020454328_UpdateVaraibleNames.Designer.cs">
+      <DependentUpon>201912020454328_UpdateVaraibleNames.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912021350063_UpdateContacts.cs" />
+    <Compile Include="Migrations\201912021350063_UpdateContacts.Designer.cs">
+      <DependentUpon>201912021350063_UpdateContacts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912021656113_AddEventContacts.cs" />
+    <Compile Include="Migrations\201912021656113_AddEventContacts.Designer.cs">
+      <DependentUpon>201912021656113_AddEventContacts.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Appointment.cs" />
     <Compile Include="Model\ComboBoxItem.cs" />
@@ -104,6 +117,8 @@
     <Compile Include="Model\UserCredential.cs" />
     <Compile Include="Model\UserEvent.cs" />
     <Compile Include="Model\WeekStartEnd.cs" />
+    <Compile Include="Model\XML Model\XMLEventContacts.cs" />
+    <Compile Include="Model\XML Model\XMLUserEvent.cs" />
     <Compile Include="UIComponents\Banner.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -128,6 +143,7 @@
     <Compile Include="Utility\CommonUtil.cs" />
     <Compile Include="Utility\EventGenerator.cs" />
     <Compile Include="Utility\FieldValidator.cs" />
+    <Compile Include="Utility\MailSender.cs" />
     <Compile Include="Utility\UiBuilder.cs" />
     <Compile Include="Utility\UiMessageUtitlity.cs" />
     <Compile Include="View\Contacts\AddContact.cs">
@@ -215,6 +231,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911301350383_removedInheritance.resx">
       <DependentUpon>201911301350383_removedInheritance.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912020454328_UpdateVaraibleNames.resx">
+      <DependentUpon>201912020454328_UpdateVaraibleNames.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912021350063_UpdateContacts.resx">
+      <DependentUpon>201912021350063_UpdateContacts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912021656113_AddEventContacts.resx">
+      <DependentUpon>201912021656113_AddEventContacts.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UIComponents\Banner.resx">
       <DependentUpon>Banner.cs</DependentUpon>
@@ -323,6 +348,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\whitex.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\refreshh.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

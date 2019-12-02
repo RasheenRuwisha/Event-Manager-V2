@@ -35,6 +35,8 @@
             this.txt_email = new System.Windows.Forms.TextBox();
             this.txt_name = new System.Windows.Forms.TextBox();
             this.pb_close = new System.Windows.Forms.PictureBox();
+            this.lbl_phone = new System.Windows.Forms.Label();
+            this.txt_phone = new System.Windows.Forms.TextBox();
             this.cpb_userimage = new EventManager.UIComponents.CircularPictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pb_close)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cpb_userimage)).BeginInit();
@@ -47,7 +49,7 @@
             this.btn_save.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(174)))), ((int)(((byte)(191)))));
             this.btn_save.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_save.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.btn_save.Location = new System.Drawing.Point(194, 292);
+            this.btn_save.Location = new System.Drawing.Point(196, 335);
             this.btn_save.Name = "btn_save";
             this.btn_save.Size = new System.Drawing.Size(200, 31);
             this.btn_save.TabIndex = 34;
@@ -118,6 +120,26 @@
             this.pb_close.TabStop = false;
             this.pb_close.Click += new System.EventHandler(this.pb_close_Click);
             // 
+            // lbl_phone
+            // 
+            this.lbl_phone.AutoSize = true;
+            this.lbl_phone.ForeColor = System.Drawing.Color.White;
+            this.lbl_phone.Location = new System.Drawing.Point(40, 235);
+            this.lbl_phone.Name = "lbl_phone";
+            this.lbl_phone.Size = new System.Drawing.Size(38, 13);
+            this.lbl_phone.TabIndex = 38;
+            this.lbl_phone.Text = "Phone";
+            // 
+            // txt_phone
+            // 
+            this.txt_phone.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
+            this.txt_phone.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
+            this.txt_phone.ForeColor = System.Drawing.Color.White;
+            this.txt_phone.Location = new System.Drawing.Point(42, 252);
+            this.txt_phone.Name = "txt_phone";
+            this.txt_phone.Size = new System.Drawing.Size(250, 24);
+            this.txt_phone.TabIndex = 37;
+            // 
             // cpb_userimage
             // 
             this.cpb_userimage.BackColor = System.Drawing.Color.Transparent;
@@ -134,7 +156,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(627, 335);
+            this.ClientSize = new System.Drawing.Size(627, 378);
+            this.Controls.Add(this.lbl_phone);
+            this.Controls.Add(this.txt_phone);
             this.Controls.Add(this.cpb_userimage);
             this.Controls.Add(this.pb_close);
             this.Controls.Add(this.btn_save);
@@ -164,5 +188,7 @@
         private System.Windows.Forms.TextBox txt_email;
         private System.Windows.Forms.TextBox txt_name;
         private UIComponents.CircularPictureBox cpb_userimage;
+        private System.Windows.Forms.Label lbl_phone;
+        private System.Windows.Forms.TextBox txt_phone;
     }
 }

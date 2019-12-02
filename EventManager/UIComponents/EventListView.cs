@@ -24,7 +24,7 @@ namespace EventManager.UIComponents
         {
             set
             {
-                this.lbl_title.Text = value.title;
+                this.lbl_title.Text = value.Title;
                 this.lbl_startdate.Text = value.StartDate.ToString();
                 this.lbl_enddate.Text = value.EndDate.ToString();
                 this.Tag = value;
@@ -48,7 +48,7 @@ namespace EventManager.UIComponents
                 {
 
 
-                    eventHelper.RemoevEvent(userEvent.eventid);
+                    eventHelper.RemoveEvent(userEvent.EventId);
                     Panel panel = this.Parent as Panel;
 
                     panel.Controls.Clear();
@@ -56,7 +56,6 @@ namespace EventManager.UIComponents
                 }
                 else
                 {
-                    // If 'No', do something here.
                 }
             }
             else
@@ -68,7 +67,7 @@ namespace EventManager.UIComponents
         private void pb_edit_Click(object sender, EventArgs e)
         {
             UserEvent userEvent = this.Tag as UserEvent;
-            EditEvent editEvent = new EditEvent(userEvent);
+            EditEvent editEvent = new EditEvent(userEvent.EventId);
             editEvent.ShowDialog();
 
             Panel panel = this.Parent as Panel;

@@ -28,23 +28,28 @@ namespace EventManager.View.Events
         List<ComboBoxItem> comboBoxItems = new List<ComboBoxItem>();
         readonly String userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
         UserEvent userEvent = new UserEvent();
+        List<Contact> allContacts = new List<Contact>();
+
         public EditEvent()
         {
             InitializeComponent();
         }
 
-        public EditEvent(UserEvent userEvent)
+        public EditEvent(string  eventid)
         {
             InitializeComponent();
-            this.userEvent = userEvent;
-            txt_name.Text = userEvent.title;
-            txt_email.Text = userEvent.description;
+            
+            userEvent = eventHelper.GetUserEvent(eventid);
+            txt_name.Text = userEvent.Title;
+            txt_email.Text = userEvent.Description;
             dtp_startdate.Value = userEvent.StartDate;
             dtp_starttime.Value = userEvent.StartDate;
             dtp_enddate.Value = userEvent.StartDate;
             dtp_endtime.Value = userEvent.EndDate;
 
-            List<Contact> contacts = new List<Contact>();
+            allContacts = contactHelper.GetUserContacts();
+            allContacts.RemoveAll(x => contacts.Exists(y => y.ContactId == x.ContactId));
+
             if(userEvent.EventContacts != null)
             {
                 foreach(EventContact eventContact in userEvent.EventContacts)
@@ -53,9 +58,8 @@ namespace EventManager.View.Events
                     {
                         Id  = eventContact.Id,
                         ContactId = eventContact.ContactId,
-                        Name = eventContact.Contact.Name,
+                        Name = this.GetContactName(eventContact.ContactId),
                     };
-                    contacts.Add(eventContact.Contact);
                     cmb_evetncollab.DisplayMember = "Name";
                     cmb_evetncollab.ValueMember = "ContactId";
                     cmb_evetncollab.DisplayMember = "Name";
@@ -66,9 +70,7 @@ namespace EventManager.View.Events
                 }
             }
 
-            List<Contact> allContacts = new List<Contact>();
-            allContacts = contactHelper.GetUserContacts();
-            allContacts.RemoveAll(x => contacts.Exists(y => y.Contactid == x.Contactid));
+
 
 
             if (allContacts != null)
@@ -77,7 +79,7 @@ namespace EventManager.View.Events
                 {
                     ComboBoxItem comboBoxItem = new ComboBoxItem()
                     {
-                        ContactId = eventContact.Contactid,
+                        ContactId = eventContact.ContactId,
                         Name = eventContact.Name,
                     };
 
@@ -88,15 +90,24 @@ namespace EventManager.View.Events
                     cmb_contacts.Items.Add(comboBoxItem);
                 }
                 cmb_contacts.Items.Remove("Loading....");
-                cmb_contacts.SelectedIndex = 0;
+                //cmb_contacts.SelectedIndex = 0;
 
             }
 
-            if (userEvent.type.Equals("Appointment"))
+            if (!userEvent.AddressLine1.Equals("") || !userEvent.AddressLine2.Equals("") || !userEvent.City.Equals("") || !userEvent.State.Equals("") || !userEvent.Zipcode.Equals(""))
             {
-                rb_appointment.Checked = true;
                 this.AddAddressControls();
-                this.changeConrolLocations();
+                this.changeConrolLocations("add");
+            }
+            else
+            {
+                PictureBox pbx = uiBuilder.GeneratePictureBox(17, 390, "dynamicpbx_chevdown", Properties.Resources.chevdown, 15, 15);
+                pbx.Click += new EventHandler(this.AddUiClick);
+
+                this.Controls.Add(pbx);
+
+                Label label = uiBuilder.GenerateLabel(40, 390, "dynamiclbl_address", "Address");
+                this.Controls.Add(label);
             }
 
             cmb_repeattype.SelectedItem = userEvent.RepeatType;
@@ -108,54 +119,48 @@ namespace EventManager.View.Events
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        private void rb_appointment_CheckedChanged(object sender, EventArgs e)
+        public String GetContactName(String contactId)
         {
-
-            if (rb_appointment.Checked)
+            String name = "";
+            foreach(Contact contact in allContacts)
             {
-                this.AddAddressControls();
-                this.changeConrolLocations();
-            }
-            else
-            {
-                this.RemoveDynamicUis();
-                this.changeConrolLocations();
+                if (contact.ContactId.Equals(contactId))
+                {
+                    name =  contact.Name;
+                    break;
+                }
             }
 
+            return name;
         }
 
 
-        private void changeConrolLocations()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        private void changeConrolLocations(string type)
         {
             Label lbl_repeatduration = Controls.Find("lbl_repeatduration", true).FirstOrDefault() as Label;
             ComboBox cmb_repeatfor = Controls.Find("cmb_repeatfor", true).FirstOrDefault() as ComboBox;
@@ -163,7 +168,7 @@ namespace EventManager.View.Events
             DateTimePicker dtp_duration = Controls.Find("dtp_duration", true).FirstOrDefault() as DateTimePicker;
             Label lbl_repeatfor = Controls.Find("lbl_repeatfor", true).FirstOrDefault() as Label;
 
-            if (rb_appointment.Checked)
+            if (type.Equals("add"))
             {
                 lbl_collaborators.Location = new Point(41, 512);
                 cmb_contacts.Location = new Point(41, lbl_collaborators.Location.Y + lbl_collaborators.Height + 10);
@@ -230,6 +235,15 @@ namespace EventManager.View.Events
 
         private void AddAddressControls()
         {
+            PictureBox tbx = this.Controls.Find("dynamicpbx_chevdown", true).FirstOrDefault() as PictureBox;
+            Label label = this.Controls.Find("dynamiclbl_address", true).FirstOrDefault() as Label;
+
+            if (tbx != null)
+            {
+                tbx.Dispose();
+                label.Dispose();
+            }
+
             Label rLabel = Controls.Find("lbl_repeatfor", true).FirstOrDefault() as Label;
             if (rLabel != null)
             {
@@ -238,12 +252,6 @@ namespace EventManager.View.Events
             else
             {
                 this.Size = new Size(627, 700);
-            }
-
-            PictureBox tbx = this.Controls.Find("dynamicpbx_chevdown", true).FirstOrDefault() as PictureBox;
-            if (tbx != null)
-            {
-                tbx.Dispose();
             }
             this.Controls.Add(uiBuilder.GenerateLongTextBox(42, 400, "dynamictxt_addressline1", userEvent.AddressLine1));
             this.Controls.Add(uiBuilder.GenerateLongTextBox(330, 400, "dynamictxt_addressline2", userEvent.AddressLine2));
@@ -255,6 +263,11 @@ namespace EventManager.View.Events
             this.Controls.Add(uiBuilder.GenerateLabel(40, 445, "dynamiclbl_city", "City "));
             this.Controls.Add(uiBuilder.GenerateLabel(241, 445, "dynamiclbl_state", "State "));
             this.Controls.Add(uiBuilder.GenerateLabel(449, 445, "dynamiclbl_zip", "Zip "));
+
+            PictureBox pbx = uiBuilder.GeneratePictureBox(17, 390, "dynamicpbx_chevup", Properties.Resources.chevup, 15, 15);
+            pbx.Click += new EventHandler(this.RemoveUiClick);
+            this.Controls.Add(pbx);
+
             this.CenterToParent();
         }
 
@@ -294,10 +307,42 @@ namespace EventManager.View.Events
             {
                 control.Dispose();
             }
+            PictureBox pbx = uiBuilder.GeneratePictureBox(17, 390, "dynamicpbx_chevdown", Properties.Resources.chevdown, 15, 15);
+            pbx.Click += new EventHandler(this.AddUiClick);
+
+            Label label = uiBuilder.GenerateLabel(40, 390, "dynamiclbl_address", "Address");
+            this.changeConrolLocations("");
             this.CenterToParent();
+            this.Controls.Add(pbx);
+            this.Controls.Add(label);
             return true;
         }
 
+        private void AddUiClick(object sender, EventArgs e)
+        {
+            this.AddAddressControls();
+            this.changeConrolLocations("add");
+        }
+        private void RemoveUiClick(object sender, EventArgs e)
+        {
+            if (this.GetDynamicTextBoxValues("dynamictxt_addressline1").Equals("") && this.GetDynamicTextBoxValues("dynamictxt_addressline2").Equals("") &&
+                this.GetDynamicTextBoxValues("dynamictxt_city").Equals("") && this.GetDynamicTextBoxValues("dynamictxt_state").Equals("") &&
+                this.GetDynamicTextBoxValues("dynamictxt_zip").Equals(""))
+            {
+                this.RemoveDynamicUis();
+            }
+            else {
+                var confirmResult = MessageBox.Show("Address fields will be removed from the contact. Do you want to proceed?",
+                       "Confirm Delete!!",
+                       MessageBoxButtons.YesNo);
+
+                if (confirmResult == DialogResult.Yes)
+                {
+                    this.RemoveDynamicUis();
+                }
+            }
+
+        }
 
         private void pb_close_Click(object sender, EventArgs e)
         {
@@ -337,7 +382,7 @@ namespace EventManager.View.Events
                     {
                         ComboBoxItem comboBoxItem = new ComboBoxItem()
                         {
-                            ContactId = contact.Contactid,
+                            ContactId = contact.ContactId,
                             Name = contact.Name
                         };
                         cmb_contacts.DisplayMember = "Name";
@@ -424,49 +469,42 @@ namespace EventManager.View.Events
 
         private void ShowErrors()
         {
-            foreach (Control contorl in this.Controls)
-            {
-                if (contorl is TextBox)
-                {
-                    if (String.IsNullOrEmpty(contorl.Text.Trim()))
-                    {
-                        PictureBox pictureBox = Controls.Find("ptx_" + contorl.Name, true).FirstOrDefault() as PictureBox;
-                        if (pictureBox == null)
-                        {
-                            PictureBox error = uiMessage.AddErrorIcon(contorl.Name, contorl.Location.X + 255, contorl.Location.Y + 2);
-                            if (this.InvokeRequired)
-                            {
-                                this.Invoke(new MethodInvoker(this.ShowErrors));
-                            }
-                            else
-                            {
-                                this.Controls.Add(error);
-                            }
+            PictureBox pictureBox = Controls.Find("ptx_" + txt_name.Name, true).FirstOrDefault() as PictureBox;
 
-                        }
+            if (String.IsNullOrEmpty(txt_name.Text.Trim()))
+            {
+                if (pictureBox == null)
+                {
+                    PictureBox error = uiMessage.AddErrorIcon(txt_name.Name, txt_name.Location.X + 255, txt_name.Location.Y + 2);
+                    if (this.InvokeRequired)
+                    {
+                        this.Invoke(new MethodInvoker(this.ShowErrors));
                     }
                     else
                     {
-                        PictureBox pictureBox = Controls.Find("ptx_" + contorl.Name, true).FirstOrDefault() as PictureBox;
-                        if (this.InvokeRequired)
-                        {
-                            this.Invoke(new MethodInvoker(this.ShowErrors));
-                        }
-                        else
-                        {
-                            Controls.Remove(pictureBox);
-                        }
+                        this.Controls.Add(error);
                     }
 
                 }
-
+            }
+            else
+            {
+                if (this.InvokeRequired)
+                {
+                    this.Invoke(new MethodInvoker(this.ShowErrors));
+                }
+                else
+                {
+                    Controls.Remove(pictureBox);
+                }
             }
         }
+    
 
         private bool ValidateFields()
         {
             this.ShowErrors();
-            if (txt_email.Text.Trim().Equals("") || txt_name.Text.Trim().Equals(""))
+            if (txt_name.Text.Trim().Equals(""))
             {
                 return false;
             }
@@ -489,7 +527,7 @@ namespace EventManager.View.Events
                 EventContact eventContact = new EventContact()
                 {
                     ContactId = cmb.ContactId,
-                    EventId = userEvent.eventid,
+                    EventId = userEvent.EventId,
                     UserId = userId,
                 };
 
@@ -548,10 +586,10 @@ namespace EventManager.View.Events
                 State = this.GetDynamicTextBoxValues("dynamictxt_state"),
                 City = this.GetDynamicTextBoxValues("dynamictxt_city"),
                 Zipcode = this.GetDynamicTextBoxValues("dynamictxt_zip"),
-                eventid = userEvent.eventid,
-                userid = Application.UserAppDataRegistry.GetValue("userID").ToString(),
-                title = txt_name.Text,
-                description = txt_email.Text,
+                EventId = userEvent.EventId,
+                UserId = Application.UserAppDataRegistry.GetValue("userID").ToString(),
+                Title = txt_name.Text,
+                Description = txt_email.Text,
                 RepeatType = cmb_repeattype.Text,
                 EventContacts = GenerateEventContacts(),
                 RepeatDuration = cComboBox != null ? cComboBox.Text : "",
@@ -562,11 +600,11 @@ namespace EventManager.View.Events
             };
             if (rb_appointment.Checked)
             {
-                events.type = "Appointment";
+                events.Type = "Appointment";
             }
             else
             {
-                events.type = "Task";
+                events.Type = "Task";
             }
 
             return events;

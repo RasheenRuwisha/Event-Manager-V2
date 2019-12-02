@@ -221,17 +221,17 @@ namespace EventManager.Utility
         {
             UserEvent events = new UserEvent()
             {
-                title = userEvent.title,
-                description = userEvent.description,
+                Title = userEvent.Title,
+                Description = userEvent.Description,
                 StartDate = userEvent.StartDate,
                 EndDate = userEvent.EndDate,
-                eventid = userEvent.eventid,
+                EventId = userEvent.EventId,
                 EventContacts = userEvent.EventContacts,
                 RepeatCount = userEvent.RepeatCount,
                 RepeatDuration = userEvent.RepeatDuration,
                 RepeatTill = userEvent.RepeatTill,
                 RepeatType = userEvent.RepeatType,
-                userid = userEvent.userid,
+                UserId = userEvent.UserId,
 
             };
             return events;

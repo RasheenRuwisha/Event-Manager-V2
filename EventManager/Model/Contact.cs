@@ -12,11 +12,12 @@ namespace EventManager.Model
     {
 
         [Key]
-        public string Contactid { get; set; }
+        public string ContactId { get; set; }
       
 
         public virtual User User { get; set; }
         public string Email { get; set; }
+        public string Phone { get; set; }
         public string Image { get; set; }
         [MaxLength(50)]
         public string Name { get; set; }
@@ -33,6 +34,6 @@ namespace EventManager.Model
 
 
         [ForeignKey("User")]
-        public string Userid { get; set; }
+        public string UserId { get; set; }
     }
 }

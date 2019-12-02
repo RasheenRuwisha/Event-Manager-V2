@@ -57,7 +57,7 @@
             this.reset_panel.Controls.Add(this.btn_reset);
             this.reset_panel.Controls.Add(this.lbl_password);
             this.reset_panel.Controls.Add(this.txt_password);
-            this.reset_panel.Location = new System.Drawing.Point(-1, 184);
+            this.reset_panel.Location = new System.Drawing.Point(0, 202);
             this.reset_panel.Name = "reset_panel";
             this.reset_panel.Size = new System.Drawing.Size(396, 314);
             this.reset_panel.TabIndex = 20;
@@ -96,6 +96,7 @@
             this.btn_reset.TabIndex = 9;
             this.btn_reset.Text = "Reset";
             this.btn_reset.UseVisualStyleBackColor = false;
+            this.btn_reset.Click += new System.EventHandler(this.btn_reset_Click);
             // 
             // lbl_password
             // 
@@ -123,7 +124,7 @@
             this.email_panel.Controls.Add(this.btn_send_mail);
             this.email_panel.Controls.Add(this.lbl_email);
             this.email_panel.Controls.Add(this.txt_email);
-            this.email_panel.Location = new System.Drawing.Point(-1, 184);
+            this.email_panel.Location = new System.Drawing.Point(0, 202);
             this.email_panel.Name = "email_panel";
             this.email_panel.Size = new System.Drawing.Size(396, 314);
             this.email_panel.TabIndex = 18;
@@ -141,6 +142,7 @@
             this.btn_send_mail.TabIndex = 9;
             this.btn_send_mail.Text = "Send Email";
             this.btn_send_mail.UseVisualStyleBackColor = false;
+            this.btn_send_mail.Click += new System.EventHandler(this.btn_send_mail_Click);
             // 
             // lbl_email
             // 
@@ -189,9 +191,9 @@
             this.verification_panel.Controls.Add(this.txt_proceed);
             this.verification_panel.Controls.Add(this.label1);
             this.verification_panel.Controls.Add(this.txt_otp);
-            this.verification_panel.Location = new System.Drawing.Point(-1, 184);
+            this.verification_panel.Location = new System.Drawing.Point(0, 202);
             this.verification_panel.Name = "verification_panel";
-            this.verification_panel.Size = new System.Drawing.Size(398, 314);
+            this.verification_panel.Size = new System.Drawing.Size(404, 322);
             this.verification_panel.TabIndex = 19;
             // 
             // txt_proceed
@@ -207,6 +209,7 @@
             this.txt_proceed.TabIndex = 11;
             this.txt_proceed.Text = "Proceed";
             this.txt_proceed.UseVisualStyleBackColor = false;
+            this.txt_proceed.Click += new System.EventHandler(this.txt_proceed_Click);
             // 
             // lbl_login
             // 

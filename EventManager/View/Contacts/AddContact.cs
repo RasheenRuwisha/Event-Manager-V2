@@ -39,9 +39,16 @@ namespace EventManager.View.Contacts
             this.txt_email.AutoSize = false;
             this.txt_email.Size = new System.Drawing.Size(250, 30);
 
-            PictureBox pbx = uiBuilder.GeneratePictureBox(17, 246, "dynamicpbx_chevdown", Properties.Resources.chevdown, 15, 15);
+            this.txt_phone.AutoSize = false;
+            this.txt_phone.Size = new System.Drawing.Size(250, 30);
+
+            PictureBox pbx = uiBuilder.GeneratePictureBox(17, 293, "dynamicpbx_chevdown", Properties.Resources.chevdown, 15, 15);
             pbx.Click += new EventHandler(this.AddUiClick);
             this.Controls.Add(pbx);
+
+            Label label = uiBuilder.GenerateLabel(40, 295, "dynamiclbl_address", "Address");
+            this.Controls.Add(label);
+
 
             this.cpb_userimage.Left = this.Width / 2 - this.cpb_userimage.Width / 2;
             this.cpb_userimage.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -52,24 +59,27 @@ namespace EventManager.View.Contacts
          private void AddAddressControls()
         {
             PictureBox tbx = this.Controls.Find("dynamicpbx_chevdown", true).FirstOrDefault() as PictureBox;
+            Label label = this.Controls.Find("dynamiclbl_address", true).FirstOrDefault() as Label;
+
             if (tbx != null)
             {
                 tbx.Dispose();
+                label.Dispose();
             }
             this.Size = new Size(627, 470);
-            PictureBox pbx = uiBuilder.GeneratePictureBox(17, 246, "dynamicpbx_chevup", Properties.Resources.chevup, 15, 15);
+            PictureBox pbx = uiBuilder.GeneratePictureBox(17, 293, "dynamicpbx_chevup", Properties.Resources.chevup, 15, 15);
             pbx.Click += new EventHandler(this.RemoveUiClick);
             this.Controls.Add(pbx);
-            this.Controls.Add(uiBuilder.GenerateLongTextBox(42, 263, "dynamictxt_addressline1", ""));
-            this.Controls.Add(uiBuilder.GenerateLongTextBox(330, 263, "dynamictxt_addressline2", ""));
-            this.Controls.Add(uiBuilder.GenerateShortTextBox(42, 324, "dynamictxt_city", ""));
-            this.Controls.Add(uiBuilder.GenerateShortTextBox(243, 324, "dynamictxt_state", ""));
-            this.Controls.Add(uiBuilder.GenerateShortTextBox(451, 324, "dynamictxt_zip", ""));
-            this.Controls.Add(uiBuilder.GenerateLabel(40, 246, "dynamiclbl_addressline1", "Address Line 1 "));
-            this.Controls.Add(uiBuilder.GenerateLabel(329, 247, "dynamiclbl_addressline2", "Address Line 2 "));
-            this.Controls.Add(uiBuilder.GenerateLabel(40, 308, "dynamiclbl_city", "City "));
-            this.Controls.Add(uiBuilder.GenerateLabel(241, 308, "dynamiclbl_state", "State "));
-            this.Controls.Add(uiBuilder.GenerateLabel(449, 308, "dynamiclbl_zip", "Zip "));
+            this.Controls.Add(uiBuilder.GenerateLongTextBox(42, 310, "dynamictxt_addressline1", ""));
+            this.Controls.Add(uiBuilder.GenerateLongTextBox(330, 310, "dynamictxt_addressline2", ""));
+            this.Controls.Add(uiBuilder.GenerateShortTextBox(42, 372, "dynamictxt_city", ""));
+            this.Controls.Add(uiBuilder.GenerateShortTextBox(243, 372, "dynamictxt_state", ""));
+            this.Controls.Add(uiBuilder.GenerateShortTextBox(451, 372, "dynamictxt_zip", ""));
+            this.Controls.Add(uiBuilder.GenerateLabel(40, 293, "dynamiclbl_addressline1", "Address Line 1 "));
+            this.Controls.Add(uiBuilder.GenerateLabel(329, 293, "dynamiclbl_addressline2", "Address Line 2 "));
+            this.Controls.Add(uiBuilder.GenerateLabel(40, 355, "dynamiclbl_city", "City "));
+            this.Controls.Add(uiBuilder.GenerateLabel(241, 355, "dynamiclbl_state", "State "));
+            this.Controls.Add(uiBuilder.GenerateLabel(449, 355, "dynamiclbl_zip", "Zip "));
             this.btn_save.Location = new Point(181, 427);
             this.btn_save.Left = this.Width / 2 - this.btn_save.Width / 2;
             this.CenterToParent();
@@ -102,13 +112,17 @@ namespace EventManager.View.Contacts
             {
                 control.Dispose();
             }
-            this.Size = new Size(627, 335);
-            PictureBox pbx = uiBuilder.GeneratePictureBox(17, 246, "dynamicpbx_chevdown", Properties.Resources.chevdown, 15, 15);
+            this.Size = new Size(627, 378);
+            PictureBox pbx = uiBuilder.GeneratePictureBox(17, 293, "dynamicpbx_chevdown", Properties.Resources.chevdown, 15, 15);
             pbx.Click += new EventHandler(this.AddUiClick);
-            this.btn_save.Location = new Point(194, 292);
+
+            Label label = uiBuilder.GenerateLabel(40, 295, "dynamiclbl_address", "Address");
+
+            this.btn_save.Location = new Point(194, 335);
             this.btn_save.Left = this.Width / 2 - this.btn_save.Width / 2;
             this.CenterToParent();
             this.Controls.Add(pbx);
+            this.Controls.Add(label);
             return true;
         }
 
@@ -119,6 +133,17 @@ namespace EventManager.View.Contacts
                 this.GetDynamicTextBoxValues("dynamictxt_zip").Equals(""))
             {
                 this.RemoveDynamicUis();
+            }
+            else
+            {
+                var confirmResult = MessageBox.Show("Address fields will be removed from the contact. Do you want to proceed?",
+                   "Confirm Delete!!",
+                   MessageBoxButtons.YesNo);
+
+                if (confirmResult == DialogResult.Yes)
+                {
+                    this.RemoveDynamicUis();
+                }
             }
 
         }
@@ -147,40 +172,42 @@ namespace EventManager.View.Contacts
 
         private void ShowErrors()
         {
-            foreach (Control contorl in this.Controls)
+            foreach (Control control in this.Controls)
             {
-                if (contorl is TextBox)
+                if (control is TextBox)
                 {
-                    if (String.IsNullOrEmpty(contorl.Text.Trim()))
+                    if(control.Name.Equals("txt_email") || control.Name.Equals("txt_name"))
                     {
-                        PictureBox pictureBox = Controls.Find("ptx_" + contorl.Name, true).FirstOrDefault() as PictureBox;
-                        if (pictureBox == null)
+                        if (String.IsNullOrEmpty(control.Text.Trim()))
                         {
-                            PictureBox error = uiMessage.AddErrorIcon(contorl.Name, contorl.Location.X + 255, contorl.Location.Y + 2);
+                            PictureBox pictureBox = Controls.Find("ptx_" + control.Name, true).FirstOrDefault() as PictureBox;
+                            if (pictureBox == null)
+                            {
+                                PictureBox error = uiMessage.AddErrorIcon(control.Name, control.Location.X + 255, control.Location.Y + 2);
+                                if (this.InvokeRequired)
+                                {
+                                    this.Invoke(new MethodInvoker(this.ShowErrors));
+                                }
+                                else
+                                {
+                                    this.Controls.Add(error);
+                                }
+
+                            }
+                        }
+                        else
+                        {
+                            PictureBox pictureBox = Controls.Find("ptx_" + control.Name, true).FirstOrDefault() as PictureBox;
                             if (this.InvokeRequired)
                             {
                                 this.Invoke(new MethodInvoker(this.ShowErrors));
                             }
                             else
                             {
-                                this.Controls.Add(error);
+                                Controls.Remove(pictureBox);
                             }
-
                         }
                     }
-                    else
-                    {
-                        PictureBox pictureBox = Controls.Find("ptx_" + contorl.Name, true).FirstOrDefault() as PictureBox;
-                        if (this.InvokeRequired)
-                        {
-                            this.Invoke(new MethodInvoker(this.ShowErrors));
-                        }
-                        else
-                        {
-                            Controls.Remove(pictureBox);
-                        }
-                    }
-
                 }
 
             }
@@ -320,16 +347,17 @@ namespace EventManager.View.Contacts
         {
             Contact contact = new Contact()
             {
-                Contactid = commonUtil.generateUserId("contact"),
+                ContactId = commonUtil.generateUserId("contact"),
                 Name = txt_name.Text.Trim(),
                 Email = txt_email.Text.Trim(),
+                Phone = txt_phone.Text.Trim(),
                 Image = commonUtil.BitmapToBase64(cpb_userimage.Image),
                 AddressLine1 = this.GetDynamicTextBoxValues("dynamictxt_addressline1"),
                 AddressLine2 = this.GetDynamicTextBoxValues("dynamictxt_addressline2"),
                 State = this.GetDynamicTextBoxValues("dynamictxt_state"),
                 City = this.GetDynamicTextBoxValues("dynamictxt_city"),
                 Zipcode = this.GetDynamicTextBoxValues("dynamictxt_zip"),
-                Userid = Application.UserAppDataRegistry.GetValue("userID").ToString()
+                UserId = Application.UserAppDataRegistry.GetValue("userID").ToString()
             };
             return contact;
         }

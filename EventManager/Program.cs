@@ -1,4 +1,5 @@
-﻿using EventManager.View;
+﻿using EventManager.DatabaseHelper;
+using EventManager.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,9 @@ namespace EventManager
                 Login login = new Login();
                 login.Show();
             }
+
+            DatabaseConnectivity databaseConnectivity = new DatabaseConnectivity();
+            databaseConnectivity.connectionValidator();
             Application.Run();
         }
     }

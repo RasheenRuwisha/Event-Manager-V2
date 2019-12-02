@@ -12,16 +12,16 @@ namespace EventManager.Model
     {
 
         [Key]
-        public string eventid { get; set; }
+        public string EventId { get; set; }
         [ForeignKey("User")]
-        public string userid { get; set; }
+        public string UserId { get; set; }
         public virtual User User { get; set; }
         [MaxLength(100)]
-        public string title { get; set; }
+        public string Title { get; set; }
         [MaxLength(500)]
-        public string description { get; set; }
+        public string Description { get; set; }
         [MaxLength(15)]
-        public string type { get; set; }
+        public string Type { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string RepeatType { get; set; }
@@ -41,6 +41,5 @@ namespace EventManager.Model
         public string State { get; set; }
         [MaxLength(50)]
         public string Zipcode { get; set; }
-
     }
 }

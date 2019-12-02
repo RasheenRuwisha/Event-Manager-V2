@@ -64,7 +64,7 @@
             "Daily",
             "Weekly",
             "Monthly"});
-            this.cmb_repeattype.Location = new System.Drawing.Point(43, 474);
+            this.cmb_repeattype.Location = new System.Drawing.Point(43, 507);
             this.cmb_repeattype.Name = "cmb_repeattype";
             this.cmb_repeattype.Size = new System.Drawing.Size(250, 21);
             this.cmb_repeattype.TabIndex = 75;
@@ -74,7 +74,7 @@
             // 
             this.lbl_repeat.AutoSize = true;
             this.lbl_repeat.ForeColor = System.Drawing.Color.White;
-            this.lbl_repeat.Location = new System.Drawing.Point(41, 449);
+            this.lbl_repeat.Location = new System.Drawing.Point(41, 482);
             this.lbl_repeat.Name = "lbl_repeat";
             this.lbl_repeat.Size = new System.Drawing.Size(42, 13);
             this.lbl_repeat.TabIndex = 74;
@@ -90,7 +90,7 @@
             this.rb_appointment.TabIndex = 73;
             this.rb_appointment.Text = "Appointment";
             this.rb_appointment.UseVisualStyleBackColor = true;
-            this.rb_appointment.CheckedChanged += new System.EventHandler(this.rb_appointment_CheckedChanged);
+            //this.rb_appointment.CheckedChanged += new System.EventHandler(this.rb_appointment_CheckedChanged);
             // 
             // rb_task
             // 
@@ -130,7 +130,7 @@
             this.cmb_contacts.FormattingEnabled = true;
             this.cmb_contacts.Items.AddRange(new object[] {
             "Loading...."});
-            this.cmb_contacts.Location = new System.Drawing.Point(43, 413);
+            this.cmb_contacts.Location = new System.Drawing.Point(43, 446);
             this.cmb_contacts.Name = "cmb_contacts";
             this.cmb_contacts.Size = new System.Drawing.Size(250, 21);
             this.cmb_contacts.TabIndex = 69;
@@ -158,7 +158,7 @@
             this.btn_save.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(174)))), ((int)(((byte)(191)))));
             this.btn_save.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_save.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.btn_save.Location = new System.Drawing.Point(44, 527);
+            this.btn_save.Location = new System.Drawing.Point(44, 560);
             this.btn_save.Name = "btn_save";
             this.btn_save.Size = new System.Drawing.Size(200, 29);
             this.btn_save.TabIndex = 65;
@@ -170,11 +170,11 @@
             // 
             this.lbl_collaborators.AutoSize = true;
             this.lbl_collaborators.ForeColor = System.Drawing.Color.White;
-            this.lbl_collaborators.Location = new System.Drawing.Point(41, 388);
+            this.lbl_collaborators.Location = new System.Drawing.Point(41, 421);
             this.lbl_collaborators.Name = "lbl_collaborators";
             this.lbl_collaborators.Size = new System.Drawing.Size(68, 13);
             this.lbl_collaborators.TabIndex = 64;
-            this.lbl_collaborators.Text = "Collabortaors";
+            this.lbl_collaborators.Text = "Collaborators";
             // 
             // lbl_header
             // 
@@ -263,7 +263,7 @@
             // 
             // lbl_addcollab
             // 
-            this.lbl_addcollab.Location = new System.Drawing.Point(299, 411);
+            this.lbl_addcollab.Location = new System.Drawing.Point(299, 444);
             this.lbl_addcollab.Name = "lbl_addcollab";
             this.lbl_addcollab.Size = new System.Drawing.Size(25, 23);
             this.lbl_addcollab.TabIndex = 76;
@@ -273,7 +273,7 @@
             // 
             // btn_removecollab
             // 
-            this.btn_removecollab.Location = new System.Drawing.Point(589, 410);
+            this.btn_removecollab.Location = new System.Drawing.Point(589, 443);
             this.btn_removecollab.Name = "btn_removecollab";
             this.btn_removecollab.Size = new System.Drawing.Size(25, 23);
             this.btn_removecollab.TabIndex = 78;
@@ -286,7 +286,7 @@
             this.cmb_evetncollab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.cmb_evetncollab.ForeColor = System.Drawing.Color.White;
             this.cmb_evetncollab.FormattingEnabled = true;
-            this.cmb_evetncollab.Location = new System.Drawing.Point(333, 412);
+            this.cmb_evetncollab.Location = new System.Drawing.Point(333, 445);
             this.cmb_evetncollab.Name = "cmb_evetncollab";
             this.cmb_evetncollab.Size = new System.Drawing.Size(250, 21);
             this.cmb_evetncollab.TabIndex = 77;
@@ -296,7 +296,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(627, 583);
+            this.ClientSize = new System.Drawing.Size(627, 626);
             this.Controls.Add(this.btn_removecollab);
             this.Controls.Add(this.cmb_evetncollab);
             this.Controls.Add(this.lbl_addcollab);
@@ -322,7 +322,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "AddEvent";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "AddEvent";
+            this.Text = "`````````";
             this.Load += new System.EventHandler(this.AddEvent_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pb_close)).EndInit();
             this.ResumeLayout(false);

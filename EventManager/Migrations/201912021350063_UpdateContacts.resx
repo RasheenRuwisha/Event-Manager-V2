@@ -117,50 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="adduser" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\adduser.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Target" xml:space="preserve">
+    <value>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</value>
   </data>
-  <data name="chevdown" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\chevdown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="chevup" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\chevup.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="close" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\blackclose.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="edit" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\edit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="erroricon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\erroricon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="loader" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\loader.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\logoo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="logo2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\logo2 (2).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="passworderror" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\passworderror.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="refresh" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\refreshh.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="remove" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\remove.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="search" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\search.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="user" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\user.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="whitex" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\whitex.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="DefaultSchema" xml:space="preserve">
+    <value>dbo</value>
   </data>
 </root>

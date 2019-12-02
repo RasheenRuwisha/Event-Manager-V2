@@ -131,10 +131,10 @@ namespace EventManager.View
             foreach (Contact contactDetails in contactList)
             {
                 ContactListView contact = new ContactListView();
-                contact.Tag = contactDetails.Contactid;
+                contact.Tag = contactDetails.ContactId;
                 contact.ContactName = contactDetails.Name;
                 contact.ContactEmail = contactDetails.Email;
-                contact.ContactId = contactDetails.Contactid;
+                contact.ContactId = contactDetails.ContactId;
                 contact.ContactImage = commonUtil.Base64ToBitmap(contactDetails.Image);
                 contact.Name = $"ctx_";
                 contact.Click += new EventHandler(this.ContactControlClick);
@@ -322,11 +322,14 @@ namespace EventManager.View
 
         private void btn_events_Click(object sender, EventArgs e)
         {
+            pnl_loader.BringToFront();
+            pnl_contactlist.Controls.Clear();
             pnl_events.BringToFront();
         }
 
         private void btn_contact_Click(object sender, EventArgs e)
         {
+            pnl_eventlist.Controls.Clear();
             pnl_contacts.BringToFront();
             pnl_loader.BringToFront();
         }
@@ -388,8 +391,8 @@ namespace EventManager.View
             EventListView contactList = (EventListView)sender;
             UserEvent contact = contactList.Tag as UserEvent;
             EventPreview contactPreview = new EventPreview();
-            contactPreview.title = contact.title;
-            contactPreview.description = contact.description;
+            contactPreview.title = contact.Title;
+            contactPreview.description = contact.Description;
             contactPreview.startdate = contact.RepeatType;
             contactPreview.enddate = contact.RepeatTill.ToString();
 
@@ -485,7 +488,13 @@ namespace EventManager.View
             txt_search.Enabled = true;
             pb_search.Enabled = true;
         }
-   
+
+        private void cpb_refresh_Click(object sender, EventArgs e)
+        {
+            this.pnl_loader.BringToFront();
+            this.pnl_eventlist.Controls.Clear();
+            this.pnl_eventlist.Refresh();
+        }
     }
 
    
