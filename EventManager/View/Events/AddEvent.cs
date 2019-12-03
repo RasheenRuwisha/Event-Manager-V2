@@ -535,7 +535,7 @@ namespace EventManager.View.Events
                 RepeatType = cmb_repeattype.Text,
                 EventContacts = GenerateEventContacts(),
                 RepeatDuration = cComboBox != null ? cComboBox.Text : "",
-                RepeatCount = durationText != null ? Int32.Parse(durationText.Text) : 0,
+                RepeatCount = durationText != null ? Int32.Parse(durationText.Text) - 1 : 0,
                 RepeatTill = durationTime != null ? durationTime.Value : this.GenerateEndTime(),
                 StartDate = dtp_startdate.Value.Date + dtp_starttime.Value.TimeOfDay,
                 EndDate = dtp_enddate.Value.Date + dtp_endtime.Value.TimeOfDay,

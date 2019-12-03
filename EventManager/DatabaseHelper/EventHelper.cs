@@ -54,45 +54,7 @@ namespace EventManager.DatabaseHelper
             }
 
         }
-
-        public List<UserEvent> GetUserEvents()
-        {
-            WeekStartEnd weekStartEnd = new WeekStartEnd();
-            weekStartEnd.WeekStart = DateTime.Now.AddDays(-(int)DateTime.Now.DayOfWeek).Date;
-            weekStartEnd.WeekEnd = weekStartEnd.WeekStart.Date.AddDays(7).AddSeconds(-1);
-
-            List<UserEvent> userEvents = new List<UserEvent>();
-
-            try
-            {
-                if (Application.UserAppDataRegistry.GetValue("dbConnection").ToString().Equals("True"))
-                {
-                    using (var dbContext = new DatabaseModel())
-                    {
-                        userEvents = dbContext.Events.Where(events => events.RepeatTill >= weekStartEnd.WeekStart).Include(e => e.EventContacts).ToList();
-                    }
-                }
-                else
-                {
-                    userEvents = this.GetAllEventsXML();
-                }
-
-            }
-            catch (System.Data.Entity.Core.EntityException ex)
-            {
-                userEvents = this.GetAllEventsXML();
-            }
-            catch (System.Data.SqlClient.SqlException ex)
-            {
-                userEvents = this.GetAllEventsXML();
-            }
-            catch (Exception ex)
-            {
-
-            }
-            
-            return eventGenerator.GenerateEvents(userEvents, weekStartEnd.WeekStart, weekStartEnd.WeekEnd);
-        }
+    
 
         public UserEvent GetUserEvent(string eventid)
         {

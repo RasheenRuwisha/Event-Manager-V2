@@ -77,6 +77,10 @@ namespace EventManager.Utility
                     }
                 }else if (userEvent.RepeatType.Equals("Weekly"))
                 {
+                    if (userEvent.StartDate >= startDate && userEvent.EndDate <= endDate)
+                    {
+                        userEvents.Add(userEvent);
+                    }
 
                     int datediff = (startDate - userEvent.StartDate).Days;
                     double mulof  = (double)datediff / (double)7;
@@ -88,14 +92,8 @@ namespace EventManager.Utility
                         datediff = (mulOfInt + 1) * 7;
                     }
 
-                    userEvent.StartDate = userEvent.StartDate.AddDays(datediff);
-
-                    userEvent.EndDate = userEvent.EndDate.AddDays(datediff);
-
-                    if (userEvent.StartDate >= startDate && userEvent.EndDate <= endDate)
-                    {
-                        userEvents.Add(userEvent);
-                    }
+                    userEvent.StartDate = userEvent.StartDate.AddDays(datediff > 0 ? datediff : 0);
+                    userEvent.EndDate = userEvent.EndDate.AddDays(datediff > 0 ? datediff : 0);
 
                     int weekdiff = (startDate - userEvent.StartDate).Days;
                     if (userEvent.RepeatDuration.Equals("Specific Number Of Times"))
@@ -145,19 +143,20 @@ namespace EventManager.Utility
                     }
                 }else if (userEvent.RepeatType.Equals("Monthly"))
                 {
-            
-
-                    DateTime newStart = new DateTime(startDate.Year, startDate.Month, userEvent.StartDate.Day, userEvent.StartDate.Hour, userEvent.StartDate.Minute, userEvent.StartDate.Second);
-                    userEvent.StartDate = newStart;
-
-
-                    DateTime newEnd = new DateTime(startDate.Year, startDate.Month, userEvent.EndDate.Day, userEvent.EndDate.Hour, userEvent.EndDate.Minute, userEvent.EndDate.Second);
-                    userEvent.EndDate = newEnd;
 
                     if (userEvent.StartDate >= startDate && userEvent.EndDate <= endDate)
                     {
                         userEvents.Add(userEvent);
                     }
+
+                    if(startDate >= userEvent.StartDate)
+                    {
+                        DateTime newStart = new DateTime(startDate.Year, startDate.Month, userEvent.StartDate.Day, userEvent.StartDate.Hour, userEvent.StartDate.Minute, userEvent.StartDate.Second);
+                        userEvent.StartDate = newStart;
+                        DateTime newEnd = new DateTime(startDate.Year, startDate.Month, userEvent.EndDate.Day, userEvent.EndDate.Hour, userEvent.EndDate.Minute, userEvent.EndDate.Second);
+                        userEvent.EndDate = newEnd;
+                    }
+
                     if (userEvent.RepeatDuration.Equals("Specific Number Of Times"))
                     {
                         for (int i = 1; i <= timeDifference; i++)
@@ -232,6 +231,12 @@ namespace EventManager.Utility
                 RepeatTill = userEvent.RepeatTill,
                 RepeatType = userEvent.RepeatType,
                 UserId = userEvent.UserId,
+                AddressLine1 = userEvent.AddressLine1,
+                AddressLine2 = userEvent.AddressLine2,
+                State = userEvent.State,
+                City = userEvent.City,
+                Zipcode = userEvent.Zipcode,
+                Type = userEvent.Type
 
             };
             return events;

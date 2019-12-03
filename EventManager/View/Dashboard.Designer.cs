@@ -29,17 +29,6 @@
         private void InitializeComponent()
         {
             this.pnl_menu = new System.Windows.Forms.Panel();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.circularPictureBox1 = new EventManager.UIComponents.CircularPictureBox();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
             this.btn_logout = new System.Windows.Forms.Button();
             this.lbl_username = new System.Windows.Forms.Label();
             this.btn_contact = new System.Windows.Forms.Button();
@@ -57,12 +46,12 @@
             this.pnl_contactlist = new System.Windows.Forms.Panel();
             this.lbl_contact_header = new System.Windows.Forms.Label();
             this.pnl_events = new System.Windows.Forms.Panel();
+            this.cpb_refresh = new EventManager.UIComponents.CircularPictureBox();
             this.pnl_eventsearch = new System.Windows.Forms.Panel();
             this.lbl_searchend = new System.Windows.Forms.Label();
             this.lbl_searchstart = new System.Windows.Forms.Label();
             this.dtp_seachend = new System.Windows.Forms.DateTimePicker();
             this.dtp_searchstart = new System.Windows.Forms.DateTimePicker();
-            this.panel6 = new System.Windows.Forms.Panel();
             this.pnl_eventloader = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
@@ -71,30 +60,45 @@
             this.pnl_eventspreview = new System.Windows.Forms.Panel();
             this.pnl_eventlist = new System.Windows.Forms.Panel();
             this.lbl_eventheader = new System.Windows.Forms.Label();
-            this.cpb_refresh = new EventManager.UIComponents.CircularPictureBox();
+            this.pnl_prediction = new System.Windows.Forms.Panel();
+            this.pnl_predictiondet = new System.Windows.Forms.Panel();
+            this.lbl_upcoming = new System.Windows.Forms.Label();
+            this.lbl_pastmonth = new System.Windows.Forms.Label();
+            this.lbl_monthlyavgtext = new System.Windows.Forms.Label();
+            this.lbl_weeklyavgtext = new System.Windows.Forms.Label();
+            this.lbl_dailyavgtext = new System.Windows.Forms.Label();
+            this.lbl_MonthlyAverage = new System.Windows.Forms.Label();
+            this.lbl_weeklyAverage = new System.Windows.Forms.Label();
+            this.lbl_dailyAverage = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.lbl_events = new System.Windows.Forms.Label();
+            this.cpbar_appointments = new EventManager.UIComponents.CircularProgressBar();
+            this.cpbar_tasks = new EventManager.UIComponents.CircularProgressBar();
+            this.pnl_predloader = new System.Windows.Forms.Panel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.lbl_predictionheader = new System.Windows.Forms.Label();
             this.pnl_menu.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.circularPictureBox1)).BeginInit();
             this.pnl_contacts.SuspendLayout();
             this.pnl_loader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_search)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cpb_addcontact)).BeginInit();
             this.pnl_events.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cpb_refresh)).BeginInit();
             this.pnl_eventloader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_eventsearch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cpb_addevent)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cpb_refresh)).BeginInit();
+            this.pnl_prediction.SuspendLayout();
+            this.pnl_predictiondet.SuspendLayout();
+            this.pnl_predloader.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // pnl_menu
             // 
             this.pnl_menu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.pnl_menu.Controls.Add(this.panel1);
             this.pnl_menu.Controls.Add(this.btn_logout);
             this.pnl_menu.Controls.Add(this.lbl_username);
             this.pnl_menu.Controls.Add(this.btn_contact);
@@ -104,119 +108,6 @@
             this.pnl_menu.Name = "pnl_menu";
             this.pnl_menu.Size = new System.Drawing.Size(332, 706);
             this.pnl_menu.TabIndex = 1;
-            // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.panel1.Controls.Add(this.panel2);
-            this.panel1.Controls.Add(this.panel3);
-            this.panel1.Controls.Add(this.pictureBox3);
-            this.panel1.Controls.Add(this.textBox1);
-            this.panel1.Controls.Add(this.circularPictureBox1);
-            this.panel1.Controls.Add(this.panel4);
-            this.panel1.Controls.Add(this.panel5);
-            this.panel1.Controls.Add(this.label2);
-            this.panel1.ForeColor = System.Drawing.Color.White;
-            this.panel1.Location = new System.Drawing.Point(330, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1052, 706);
-            this.panel1.TabIndex = 13;
-            // 
-            // panel2
-            // 
-            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
-            this.panel2.Location = new System.Drawing.Point(1, 87);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(622, 619);
-            this.panel2.TabIndex = 10;
-            // 
-            // panel3
-            // 
-            this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
-            this.panel3.Controls.Add(this.label1);
-            this.panel3.Controls.Add(this.pictureBox2);
-            this.panel3.Location = new System.Drawing.Point(1, 87);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(622, 619);
-            this.panel3.TabIndex = 9;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(283, 328);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(139, 39);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Loading";
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Image = global::EventManager.Properties.Resources.loader;
-            this.pictureBox2.Location = new System.Drawing.Point(184, 318);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(83, 61);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox2.TabIndex = 0;
-            this.pictureBox2.TabStop = false;
-            // 
-            // pictureBox3
-            // 
-            this.pictureBox3.Image = global::EventManager.Properties.Resources.search;
-            this.pictureBox3.Location = new System.Drawing.Point(589, 58);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(20, 30);
-            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox3.TabIndex = 12;
-            this.pictureBox3.TabStop = false;
-            // 
-            // textBox1
-            // 
-            this.textBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.ForeColor = System.Drawing.Color.White;
-            this.textBox1.Location = new System.Drawing.Point(5, 61);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(578, 24);
-            this.textBox1.TabIndex = 11;
-            // 
-            // circularPictureBox1
-            // 
-            this.circularPictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.circularPictureBox1.Image = global::EventManager.Properties.Resources.adduser;
-            this.circularPictureBox1.Location = new System.Drawing.Point(980, 18);
-            this.circularPictureBox1.Name = "circularPictureBox1";
-            this.circularPictureBox1.Size = new System.Drawing.Size(50, 50);
-            this.circularPictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.circularPictureBox1.TabIndex = 10;
-            this.circularPictureBox1.TabStop = false;
-            // 
-            // panel4
-            // 
-            this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
-            this.panel4.Location = new System.Drawing.Point(622, 87);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(419, 706);
-            this.panel4.TabIndex = 9;
-            // 
-            // panel5
-            // 
-            this.panel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
-            this.panel5.Location = new System.Drawing.Point(1, 87);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(622, 619);
-            this.panel5.TabIndex = 8;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("HoloLens MDL2 Assets", 12F, System.Drawing.FontStyle.Bold);
-            this.label2.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.label2.Location = new System.Drawing.Point(26, 21);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(63, 16);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "Contacts";
             // 
             // btn_logout
             // 
@@ -272,6 +163,7 @@
             this.btn_predictions.Text = "Prediction";
             this.btn_predictions.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btn_predictions.UseVisualStyleBackColor = true;
+            this.btn_predictions.Click += new System.EventHandler(this.btn_predictions_Click);
             // 
             // btn_events
             // 
@@ -413,7 +305,6 @@
             this.pnl_events.Controls.Add(this.lbl_searchstart);
             this.pnl_events.Controls.Add(this.dtp_seachend);
             this.pnl_events.Controls.Add(this.dtp_searchstart);
-            this.pnl_events.Controls.Add(this.panel6);
             this.pnl_events.Controls.Add(this.pnl_eventloader);
             this.pnl_events.Controls.Add(this.pb_eventsearch);
             this.pnl_events.Controls.Add(this.cpb_addevent);
@@ -425,6 +316,18 @@
             this.pnl_events.Name = "pnl_events";
             this.pnl_events.Size = new System.Drawing.Size(1052, 706);
             this.pnl_events.TabIndex = 13;
+            // 
+            // cpb_refresh
+            // 
+            this.cpb_refresh.BackColor = System.Drawing.Color.Transparent;
+            this.cpb_refresh.Image = global::EventManager.Properties.Resources.refresh;
+            this.cpb_refresh.Location = new System.Drawing.Point(921, 18);
+            this.cpb_refresh.Name = "cpb_refresh";
+            this.cpb_refresh.Size = new System.Drawing.Size(50, 50);
+            this.cpb_refresh.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.cpb_refresh.TabIndex = 17;
+            this.cpb_refresh.TabStop = false;
+            this.cpb_refresh.Click += new System.EventHandler(this.cpb_refresh_Click);
             // 
             // pnl_eventsearch
             // 
@@ -465,14 +368,6 @@
             this.dtp_searchstart.Name = "dtp_searchstart";
             this.dtp_searchstart.Size = new System.Drawing.Size(200, 20);
             this.dtp_searchstart.TabIndex = 13;
-            // 
-            // panel6
-            // 
-            this.panel6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
-            this.panel6.Location = new System.Drawing.Point(0, 87);
-            this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(622, 619);
-            this.panel6.TabIndex = 10;
             // 
             // pnl_eventloader
             // 
@@ -555,17 +450,195 @@
             this.lbl_eventheader.TabIndex = 6;
             this.lbl_eventheader.Text = "Events";
             // 
-            // cpb_refresh
+            // pnl_prediction
             // 
-            this.cpb_refresh.BackColor = System.Drawing.Color.Transparent;
-            this.cpb_refresh.Image = global::EventManager.Properties.Resources.refresh;
-            this.cpb_refresh.Location = new System.Drawing.Point(921, 18);
-            this.cpb_refresh.Name = "cpb_refresh";
-            this.cpb_refresh.Size = new System.Drawing.Size(50, 50);
-            this.cpb_refresh.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.cpb_refresh.TabIndex = 17;
-            this.cpb_refresh.TabStop = false;
-            this.cpb_refresh.Click += new System.EventHandler(this.cpb_refresh_Click);
+            this.pnl_prediction.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.pnl_prediction.Controls.Add(this.pnl_predictiondet);
+            this.pnl_prediction.Controls.Add(this.pnl_predloader);
+            this.pnl_prediction.Controls.Add(this.lbl_predictionheader);
+            this.pnl_prediction.ForeColor = System.Drawing.Color.White;
+            this.pnl_prediction.Location = new System.Drawing.Point(324, -1);
+            this.pnl_prediction.Name = "pnl_prediction";
+            this.pnl_prediction.Size = new System.Drawing.Size(1052, 706);
+            this.pnl_prediction.TabIndex = 18;
+            // 
+            // pnl_predictiondet
+            // 
+            this.pnl_predictiondet.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
+            this.pnl_predictiondet.Controls.Add(this.lbl_upcoming);
+            this.pnl_predictiondet.Controls.Add(this.lbl_pastmonth);
+            this.pnl_predictiondet.Controls.Add(this.lbl_monthlyavgtext);
+            this.pnl_predictiondet.Controls.Add(this.lbl_weeklyavgtext);
+            this.pnl_predictiondet.Controls.Add(this.lbl_dailyavgtext);
+            this.pnl_predictiondet.Controls.Add(this.lbl_MonthlyAverage);
+            this.pnl_predictiondet.Controls.Add(this.lbl_weeklyAverage);
+            this.pnl_predictiondet.Controls.Add(this.lbl_dailyAverage);
+            this.pnl_predictiondet.Controls.Add(this.label1);
+            this.pnl_predictiondet.Controls.Add(this.lbl_events);
+            this.pnl_predictiondet.Controls.Add(this.cpbar_appointments);
+            this.pnl_predictiondet.Controls.Add(this.cpbar_tasks);
+            this.pnl_predictiondet.Location = new System.Drawing.Point(1, 87);
+            this.pnl_predictiondet.Name = "pnl_predictiondet";
+            this.pnl_predictiondet.Size = new System.Drawing.Size(1040, 619);
+            this.pnl_predictiondet.TabIndex = 8;
+            this.pnl_predictiondet.Paint += new System.Windows.Forms.PaintEventHandler(this.pnl_predictiondet_Paint);
+            // 
+            // lbl_upcoming
+            // 
+            this.lbl_upcoming.AutoSize = true;
+            this.lbl_upcoming.Font = new System.Drawing.Font("Franklin Gothic Medium", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_upcoming.Location = new System.Drawing.Point(24, 342);
+            this.lbl_upcoming.Name = "lbl_upcoming";
+            this.lbl_upcoming.Size = new System.Drawing.Size(248, 24);
+            this.lbl_upcoming.TabIndex = 12;
+            this.lbl_upcoming.Text = "Upcoming Month Overview";
+            // 
+            // lbl_pastmonth
+            // 
+            this.lbl_pastmonth.AutoSize = true;
+            this.lbl_pastmonth.Font = new System.Drawing.Font("Franklin Gothic Medium", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_pastmonth.Location = new System.Drawing.Point(24, 27);
+            this.lbl_pastmonth.Name = "lbl_pastmonth";
+            this.lbl_pastmonth.Size = new System.Drawing.Size(198, 24);
+            this.lbl_pastmonth.TabIndex = 11;
+            this.lbl_pastmonth.Text = "Past Month Overview";
+            // 
+            // lbl_monthlyavgtext
+            // 
+            this.lbl_monthlyavgtext.AutoSize = true;
+            this.lbl_monthlyavgtext.Font = new System.Drawing.Font("Franklin Gothic Medium", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_monthlyavgtext.Location = new System.Drawing.Point(138, 443);
+            this.lbl_monthlyavgtext.Name = "lbl_monthlyavgtext";
+            this.lbl_monthlyavgtext.Size = new System.Drawing.Size(94, 16);
+            this.lbl_monthlyavgtext.TabIndex = 10;
+            this.lbl_monthlyavgtext.Text = "Monthy Average :";
+            // 
+            // lbl_weeklyavgtext
+            // 
+            this.lbl_weeklyavgtext.AutoSize = true;
+            this.lbl_weeklyavgtext.Font = new System.Drawing.Font("Franklin Gothic Medium", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_weeklyavgtext.Location = new System.Drawing.Point(138, 415);
+            this.lbl_weeklyavgtext.Name = "lbl_weeklyavgtext";
+            this.lbl_weeklyavgtext.Size = new System.Drawing.Size(94, 16);
+            this.lbl_weeklyavgtext.TabIndex = 9;
+            this.lbl_weeklyavgtext.Text = "Weekly Average :";
+            // 
+            // lbl_dailyavgtext
+            // 
+            this.lbl_dailyavgtext.AutoSize = true;
+            this.lbl_dailyavgtext.Font = new System.Drawing.Font("Franklin Gothic Medium", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_dailyavgtext.Location = new System.Drawing.Point(138, 384);
+            this.lbl_dailyavgtext.Name = "lbl_dailyavgtext";
+            this.lbl_dailyavgtext.Size = new System.Drawing.Size(85, 16);
+            this.lbl_dailyavgtext.TabIndex = 8;
+            this.lbl_dailyavgtext.Text = "Daily  Average :";
+            // 
+            // lbl_MonthlyAverage
+            // 
+            this.lbl_MonthlyAverage.AutoSize = true;
+            this.lbl_MonthlyAverage.Font = new System.Drawing.Font("Franklin Gothic Medium", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_MonthlyAverage.Location = new System.Drawing.Point(25, 443);
+            this.lbl_MonthlyAverage.Name = "lbl_MonthlyAverage";
+            this.lbl_MonthlyAverage.Size = new System.Drawing.Size(94, 16);
+            this.lbl_MonthlyAverage.TabIndex = 7;
+            this.lbl_MonthlyAverage.Text = "Monthy Average :";
+            // 
+            // lbl_weeklyAverage
+            // 
+            this.lbl_weeklyAverage.AutoSize = true;
+            this.lbl_weeklyAverage.Font = new System.Drawing.Font("Franklin Gothic Medium", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_weeklyAverage.Location = new System.Drawing.Point(25, 415);
+            this.lbl_weeklyAverage.Name = "lbl_weeklyAverage";
+            this.lbl_weeklyAverage.Size = new System.Drawing.Size(94, 16);
+            this.lbl_weeklyAverage.TabIndex = 6;
+            this.lbl_weeklyAverage.Text = "Weekly Average :";
+            // 
+            // lbl_dailyAverage
+            // 
+            this.lbl_dailyAverage.AutoSize = true;
+            this.lbl_dailyAverage.Font = new System.Drawing.Font("Franklin Gothic Medium", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_dailyAverage.Location = new System.Drawing.Point(25, 384);
+            this.lbl_dailyAverage.Name = "lbl_dailyAverage";
+            this.lbl_dailyAverage.Size = new System.Drawing.Size(85, 16);
+            this.lbl_dailyAverage.TabIndex = 5;
+            this.lbl_dailyAverage.Text = "Daily  Average :";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Franklin Gothic Medium", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(650, 257);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(118, 16);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Appointments Created";
+            // 
+            // lbl_events
+            // 
+            this.lbl_events.AutoSize = true;
+            this.lbl_events.Font = new System.Drawing.Font("Franklin Gothic Medium", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_events.Location = new System.Drawing.Point(314, 257);
+            this.lbl_events.Name = "lbl_events";
+            this.lbl_events.Size = new System.Drawing.Size(77, 16);
+            this.lbl_events.TabIndex = 3;
+            this.lbl_events.Text = "Tasks Created";
+            // 
+            // cpbar_appointments
+            // 
+            this.cpbar_appointments.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
+            this.cpbar_appointments.Location = new System.Drawing.Point(600, 70);
+            this.cpbar_appointments.Name = "cpbar_appointments";
+            this.cpbar_appointments.Size = new System.Drawing.Size(200, 200);
+            this.cpbar_appointments.TabIndex = 2;
+            // 
+            // cpbar_tasks
+            // 
+            this.cpbar_tasks.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
+            this.cpbar_tasks.Location = new System.Drawing.Point(251, 70);
+            this.cpbar_tasks.Name = "cpbar_tasks";
+            this.cpbar_tasks.Size = new System.Drawing.Size(200, 200);
+            this.cpbar_tasks.TabIndex = 1;
+            // 
+            // pnl_predloader
+            // 
+            this.pnl_predloader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
+            this.pnl_predloader.Controls.Add(this.label4);
+            this.pnl_predloader.Controls.Add(this.pictureBox2);
+            this.pnl_predloader.Location = new System.Drawing.Point(1, 87);
+            this.pnl_predloader.Name = "pnl_predloader";
+            this.pnl_predloader.Size = new System.Drawing.Size(1040, 619);
+            this.pnl_predloader.TabIndex = 9;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(518, 328);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(139, 39);
+            this.label4.TabIndex = 1;
+            this.label4.Text = "Loading";
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = global::EventManager.Properties.Resources.loader;
+            this.pictureBox2.Location = new System.Drawing.Point(419, 318);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(83, 61);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox2.TabIndex = 0;
+            this.pictureBox2.TabStop = false;
+            // 
+            // lbl_predictionheader
+            // 
+            this.lbl_predictionheader.AutoSize = true;
+            this.lbl_predictionheader.Font = new System.Drawing.Font("HoloLens MDL2 Assets", 12F, System.Drawing.FontStyle.Bold);
+            this.lbl_predictionheader.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.lbl_predictionheader.Location = new System.Drawing.Point(26, 21);
+            this.lbl_predictionheader.Name = "lbl_predictionheader";
+            this.lbl_predictionheader.Size = new System.Drawing.Size(73, 16);
+            this.lbl_predictionheader.TabIndex = 6;
+            this.lbl_predictionheader.Text = "Prediction";
             // 
             // Dashboard
             // 
@@ -573,6 +646,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
             this.ClientSize = new System.Drawing.Size(1366, 705);
+            this.Controls.Add(this.pnl_prediction);
             this.Controls.Add(this.pnl_events);
             this.Controls.Add(this.pnl_contacts);
             this.Controls.Add(this.pnl_menu);
@@ -582,13 +656,6 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.pnl_menu.ResumeLayout(false);
             this.pnl_menu.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.circularPictureBox1)).EndInit();
             this.pnl_contacts.ResumeLayout(false);
             this.pnl_contacts.PerformLayout();
             this.pnl_loader.ResumeLayout(false);
@@ -598,12 +665,19 @@
             ((System.ComponentModel.ISupportInitialize)(this.cpb_addcontact)).EndInit();
             this.pnl_events.ResumeLayout(false);
             this.pnl_events.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cpb_refresh)).EndInit();
             this.pnl_eventloader.ResumeLayout(false);
             this.pnl_eventloader.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_eventsearch)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cpb_addevent)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cpb_refresh)).EndInit();
+            this.pnl_prediction.ResumeLayout(false);
+            this.pnl_prediction.PerformLayout();
+            this.pnl_predictiondet.ResumeLayout(false);
+            this.pnl_predictiondet.PerformLayout();
+            this.pnl_predloader.ResumeLayout(false);
+            this.pnl_predloader.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -627,17 +701,6 @@
         private System.Windows.Forms.TextBox txt_search;
         private System.Windows.Forms.PictureBox pb_search;
         private System.Windows.Forms.Panel pnl_search;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.PictureBox pictureBox3;
-        private System.Windows.Forms.TextBox textBox1;
-        private UIComponents.CircularPictureBox circularPictureBox1;
-        private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel pnl_events;
         private System.Windows.Forms.Panel pnl_eventsearch;
         private System.Windows.Forms.Panel pnl_eventloader;
@@ -648,11 +711,28 @@
         private System.Windows.Forms.Panel pnl_eventspreview;
         private System.Windows.Forms.Panel pnl_eventlist;
         private System.Windows.Forms.Label lbl_eventheader;
-        private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.Label lbl_searchend;
         private System.Windows.Forms.Label lbl_searchstart;
         private System.Windows.Forms.DateTimePicker dtp_seachend;
         private System.Windows.Forms.DateTimePicker dtp_searchstart;
         private UIComponents.CircularPictureBox cpb_refresh;
+        private System.Windows.Forms.Panel pnl_prediction;
+        private System.Windows.Forms.Panel pnl_predloader;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.Panel pnl_predictiondet;
+        private System.Windows.Forms.Label lbl_predictionheader;
+        private System.Windows.Forms.Label label4;
+        private UIComponents.CircularProgressBar cpbar_appointments;
+        private UIComponents.CircularProgressBar cpbar_tasks;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lbl_events;
+        private System.Windows.Forms.Label lbl_dailyAverage;
+        private System.Windows.Forms.Label lbl_MonthlyAverage;
+        private System.Windows.Forms.Label lbl_weeklyAverage;
+        private System.Windows.Forms.Label lbl_monthlyavgtext;
+        private System.Windows.Forms.Label lbl_weeklyavgtext;
+        private System.Windows.Forms.Label lbl_dailyavgtext;
+        private System.Windows.Forms.Label lbl_upcoming;
+        private System.Windows.Forms.Label lbl_pastmonth;
     }
 }

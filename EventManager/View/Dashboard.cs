@@ -21,11 +21,11 @@ namespace EventManager.View
         ContactHelper contactHelper = new ContactHelper();
         EventHelper eventHelper = new EventHelper();
         CommonUtil commonUtil = new CommonUtil();
-
+        PredictionUtility PredictionUtility = new PredictionUtility();
         public Dashboard()
         {
             InitializeComponent();
-            panel1.BringToFront();
+            pnl_events.BringToFront();
             pnl_eventloader.BringToFront();
 
             txt_search.Enabled = false;
@@ -360,12 +360,16 @@ namespace EventManager.View
 
         private List<EventListView> GenerateEventtList(String type)
         {
+            WeekStartEnd weekStartEnd = new WeekStartEnd();
+            weekStartEnd.WeekStart = DateTime.Now.AddDays(-(int)DateTime.Now.DayOfWeek).Date;
+            weekStartEnd.WeekEnd = weekStartEnd.WeekStart.Date.AddDays(7).AddSeconds(-1);
+
             this.AddEventSeachHeaderAndClose();
 
             List<UserEvent> contactList = new List<UserEvent>();
             if (type.Equals("load"))
             {
-                contactList = eventHelper.GetUserEvents();
+                contactList = eventHelper.SearchUserEvent(weekStartEnd.WeekStart,weekStartEnd.WeekEnd);
             }
             else if (type.Equals("search"))
             {
@@ -480,7 +484,7 @@ namespace EventManager.View
                 }
                 else
                 {
-                    pnl_contactlist.Controls.Add(this.GenerateNoContacsLabel("No Event(s) Found"));
+                    pnl_eventlist.Controls.Add(this.GenerateNoContacsLabel("No Event(s) Found"));
                 }
             }
             
@@ -494,6 +498,33 @@ namespace EventManager.View
             this.pnl_loader.BringToFront();
             this.pnl_eventlist.Controls.Clear();
             this.pnl_eventlist.Refresh();
+        }
+
+        private void btn_predictions_Click(object sender, EventArgs e)
+        {
+            this.pnl_prediction.BringToFront();
+
+            this.pnl_predloader.BringToFront();
+        }
+
+        private async void pnl_predictiondet_Paint(object sender, PaintEventArgs e)
+        {
+            Prediction prediction = new Prediction();
+            prediction = await Task.Run(() => PredictionUtility.PredictTimeConsumption());
+
+            cpbar_tasks.Progress = prediction.TaskCount;
+            cpbar_tasks.Multiplier = 360 / prediction.EventCount;
+            cpbar_tasks.Text = $"{prediction.TaskCount} / {prediction.EventCount}";
+
+            cpbar_appointments.Progress = prediction.AppointmentCount;
+            cpbar_appointments.Multiplier = 360 / prediction.EventCount;
+            cpbar_appointments.Text = $"{prediction.AppointmentCount} / {prediction.EventCount}";
+
+            lbl_dailyavgtext.Text = $"For the next month you might spend {Math.Round(prediction.DailyAverage / 60, 1)} hours  on average for Events Daily";
+            lbl_weeklyavgtext.Text = $"For the next month you might spend {Math.Round(prediction.WeeklyAverage / 60, 1)} hours on average for Events Weekly";
+            lbl_monthlyavgtext.Text = $"For the next month you might spend {Math.Round(prediction.MonthlyAverage / 60, 1)} hours on average for Events Monthly";
+
+            pnl_predictiondet.BringToFront();
         }
     }
 

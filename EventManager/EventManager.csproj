@@ -112,13 +112,12 @@
     <Compile Include="Model\EventDates.cs" />
     <Compile Include="Model\EventEdits.cs" />
     <Compile Include="Model\MonthStartEnd.cs" />
+    <Compile Include="Model\Prediction.cs" />
     <Compile Include="Model\Tasks.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Model\UserCredential.cs" />
     <Compile Include="Model\UserEvent.cs" />
     <Compile Include="Model\WeekStartEnd.cs" />
-    <Compile Include="Model\XML Model\XMLEventContacts.cs" />
-    <Compile Include="Model\XML Model\XMLUserEvent.cs" />
     <Compile Include="UIComponents\Banner.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -127,6 +126,12 @@
     </Compile>
     <Compile Include="UIComponents\CircularPictureBox.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UIComponents\CircularProgressBar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UIComponents\CircularProgressBar.Designer.cs">
+      <DependentUpon>CircularProgressBar.cs</DependentUpon>
     </Compile>
     <Compile Include="UIComponents\ContactListView.cs">
       <SubType>UserControl</SubType>
@@ -144,6 +149,7 @@
     <Compile Include="Utility\EventGenerator.cs" />
     <Compile Include="Utility\FieldValidator.cs" />
     <Compile Include="Utility\MailSender.cs" />
+    <Compile Include="Utility\PredictionUtility.cs" />
     <Compile Include="Utility\UiBuilder.cs" />
     <Compile Include="Utility\UiMessageUtitlity.cs" />
     <Compile Include="View\Contacts\AddContact.cs">
@@ -243,6 +249,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UIComponents\Banner.resx">
       <DependentUpon>Banner.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIComponents\CircularProgressBar.resx">
+      <DependentUpon>CircularProgressBar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UIComponents\ContactListView.resx">
       <DependentUpon>ContactListView.cs</DependentUpon>

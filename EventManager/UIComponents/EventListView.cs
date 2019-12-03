@@ -39,8 +39,7 @@ namespace EventManager.UIComponents
 
             EventHelper eventHelper = new EventHelper();
             UserEvent userEvent = this.Tag as UserEvent;
-            if(userEvent.EndDate.Date == userEvent.RepeatTill.Date)
-            {
+          
                 var confirmResult = MessageBox.Show("Are you sure to delete this event?",
                                 "Confirm Delete!!",
                                 MessageBoxButtons.YesNo);
@@ -57,11 +56,7 @@ namespace EventManager.UIComponents
                 else
                 {
                 }
-            }
-            else
-            {
-                MessageBox.Show("This shit repeats ");
-            }
+
         }
 
         private void pb_edit_Click(object sender, EventArgs e)
