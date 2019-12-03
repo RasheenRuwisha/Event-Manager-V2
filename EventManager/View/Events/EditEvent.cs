@@ -29,7 +29,7 @@ namespace EventManager.View.Events
         readonly String userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
         UserEvent userEvent = new UserEvent();
         List<Contact> allContacts = new List<Contact>();
-
+        Logger logger = new Logger();
         public EditEvent()
         {
             InitializeComponent();
@@ -70,6 +70,14 @@ namespace EventManager.View.Events
                 }
             }
 
+            if (userEvent.Type.Equals("Task"))
+            {
+                rb_task.Checked = true;
+            }
+            else
+            {
+                rb_appointment.Checked = true;
+            }
 
 
 
@@ -229,6 +237,20 @@ namespace EventManager.View.Events
                     btn_save.Location = new Point(41, cmb_repeattype.Location.Y + cmb_repeattype.Height + 10);
 
                 }
+
+                if (lbl_repeatduration != null)
+                {
+                    lbl_repeatduration.Location = new Point(333, this.cmb_repeattype.Location.Y + 30);
+                    if (txt_duration != null)
+                    {
+                        txt_duration.Location = new Point(333, cmb_repeatfor.Location.Y);
+                    }
+                    else if (dtp_duration != null)
+                    {
+                        dtp_duration.Location = new Point(333, cmb_repeatfor.Location.Y);
+                    }
+
+                }
             }
         }
 
@@ -364,6 +386,7 @@ namespace EventManager.View.Events
             }
             catch (Exception ex)
             {
+                logger.LogException(ex);
                 return false;
             }
         }
@@ -654,7 +677,7 @@ namespace EventManager.View.Events
             TextBox dynamictxt_addressline1 = Controls.Find("dynamictxt_addressline1", true).FirstOrDefault() as TextBox;
             if (dynamictxt_addressline1 == null)
             {
-                this.Size = new Size(627, 600);
+                this.Size = new Size(627, 650);
 
             }
             else
@@ -696,11 +719,12 @@ namespace EventManager.View.Events
                     "Specific Number Of Times",
                     "Until",
                 });
-                combo.SelectedItem = userEvent.RepeatDuration;
-                combo.SelectedIndexChanged += new System.EventHandler(this.cmb_repeatfor_SelectedIndexChanged);
+          
+
                 Controls.Add(label);
                 Controls.Add(combo);
-
+                combo.SelectedIndexChanged += new System.EventHandler(this.cmb_repeatfor_SelectedIndexChanged);
+                combo.SelectedItem = userEvent.RepeatDuration;
                 if (cmb_repeatfor == null)
                 {
                     cmb_repeatfor = Controls.Find("cmb_repeatfor", true).FirstOrDefault() as ComboBox;
@@ -756,7 +780,7 @@ namespace EventManager.View.Events
                     ForeColor = System.Drawing.Color.White,
                     BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31))))),
                     Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F),
-                    Text = userEvent.RepeatCount.ToString(),
+                    Text = (userEvent.RepeatCount+1).ToString(),
 
                 };
                 Controls.Add(text);

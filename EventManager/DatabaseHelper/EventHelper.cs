@@ -15,7 +15,7 @@ namespace EventManager.DatabaseHelper
     {
         readonly String userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
         readonly EventGenerator eventGenerator = new EventGenerator();
-
+        Logger logger = new Logger();
 
         public bool AddEvent(UserEvent userEvent)
         {
@@ -40,16 +40,19 @@ namespace EventManager.DatabaseHelper
             }
             catch (System.Data.Entity.Core.EntityException ex)
             {
+                logger.LogException(ex);
                 this.AddEventXML(userEvent);
                 return true;
             }
             catch (System.Data.SqlClient.SqlException ex)
             {
+                logger.LogException(ex);
                 this.AddEventXML(userEvent);
                 return true;
             }
             catch (Exception ex)
             {
+                logger.LogException(ex);
                 return false;
             }
 
@@ -75,15 +78,17 @@ namespace EventManager.DatabaseHelper
             }
             catch (System.Data.Entity.Core.EntityException ex)
             {
+                logger.LogException(ex);
                 userEvents = this.SearchEventXML(eventid);
             }
             catch (System.Data.SqlClient.SqlException ex)
             {
+                logger.LogException(ex);
                 userEvents = this.SearchEventXML(eventid);
             }
             catch (Exception ex)
             {
-
+                logger.LogException(ex);
             }
             return userEvents;
         }
@@ -108,15 +113,17 @@ namespace EventManager.DatabaseHelper
             }
             catch (System.Data.Entity.Core.EntityException ex)
             {
+                logger.LogException(ex);
                 userEvents = this.FilterEventsXML(startDate);
             }
             catch (System.Data.SqlClient.SqlException ex)
             {
+                logger.LogException(ex);
                 userEvents = this.FilterEventsXML(startDate);
             }
             catch (Exception ex)
             {
-
+                logger.LogException(ex);
             }
            
                
@@ -156,16 +163,19 @@ namespace EventManager.DatabaseHelper
             }
             catch (System.Data.Entity.Core.EntityException ex)
             {
+                logger.LogException(ex);
                 this.RemoveEventXML(eventId);
                 return true;
             }
             catch (System.Data.SqlClient.SqlException ex)
             {
+                logger.LogException(ex);
                 this.RemoveEventXML(eventId);
                 return true;
             }
             catch (Exception ex)
             {
+                logger.LogException(ex);
                 return false;
             }
         }
@@ -214,17 +224,20 @@ namespace EventManager.DatabaseHelper
             }
             catch (System.Data.Entity.Core.EntityException ex)
             {
+                logger.LogException(ex);
                 this.UpdateEventXML(@event);
                 return true;
             }
             catch (System.Data.SqlClient.SqlException ex)
             {
+                logger.LogException(ex);
                 this.UpdateEventXML(@event);
                 return true;
 
             }
             catch (Exception ex)
             {
+                logger.LogException(ex);
                 return false;
             }
         }
@@ -271,6 +284,7 @@ namespace EventManager.DatabaseHelper
             }
             catch (Exception ex)
             {
+                logger.LogException(ex);
                 return false;
             }
         }
@@ -319,6 +333,7 @@ namespace EventManager.DatabaseHelper
             }
             catch (Exception ex)
             {
+                logger.LogException(ex);
                 return false;
             }
         }
@@ -339,6 +354,7 @@ namespace EventManager.DatabaseHelper
             }
             catch (Exception ex)
             {
+                logger.LogException(ex);
                 return false;
             }
         }
@@ -397,6 +413,7 @@ namespace EventManager.DatabaseHelper
             }
             catch (Exception ex)
             {
+                logger.LogException(ex);
                 return e;
             }
         }
@@ -442,6 +459,7 @@ namespace EventManager.DatabaseHelper
             }
             catch (Exception ex)
             {
+                logger.LogException(ex);
                 return e;
             }
         }

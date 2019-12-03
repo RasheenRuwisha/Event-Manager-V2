@@ -28,7 +28,7 @@ namespace EventManager.View
         CommonUtil commonUtil = new CommonUtil();
         Banner banner = new Banner();
         String otp;
-
+        Logger logger = new Logger();
         public ForgotPassword()
         {
             InitializeComponent();
@@ -117,6 +117,7 @@ namespace EventManager.View
             }
             catch (Exception ex)
             {
+                logger.LogException(ex);
                 return "faliure";
             }
         }

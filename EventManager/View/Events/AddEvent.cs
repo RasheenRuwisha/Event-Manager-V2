@@ -25,6 +25,7 @@ namespace EventManager.View.Events
         CommonUtil commonUtil = new CommonUtil();
         List<Contact> contacts = new List<Contact>();
         List<ComboBoxItem> comboBoxItems = new List<ComboBoxItem>();
+        Logger logger = new Logger();
         readonly String userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
 
 
@@ -102,7 +103,7 @@ namespace EventManager.View.Events
 
 
 
-        private void changeConrolLocations(string type)
+        private void ChangeConrolLocations(string type)
         {
             Label lbl_repeatduration = Controls.Find("lbl_repeatduration", true).FirstOrDefault() as Label;
             ComboBox cmb_repeatfor = Controls.Find("cmb_repeatfor", true).FirstOrDefault() as ComboBox;
@@ -170,6 +171,20 @@ namespace EventManager.View.Events
                     btn_save.Location = new Point(41, cmb_repeattype.Location.Y + cmb_repeattype.Height + 10);
 
                 }
+
+                if (lbl_repeatduration != null)
+                {
+                    lbl_repeatduration.Location = new Point(333, this.cmb_repeattype.Location.Y + 30);
+                    if (txt_duration != null)
+                    {
+                        txt_duration.Location = new Point(333, cmb_repeatfor.Location.Y);
+                    }
+                    else
+                    {
+                        dtp_duration.Location = new Point(333, cmb_repeatfor.Location.Y);
+                    }
+
+                }
             }
         }
 
@@ -227,7 +242,7 @@ namespace EventManager.View.Events
             Label rLabel = Controls.Find("lbl_repeatfor", true).FirstOrDefault() as Label;
             if (rLabel != null)
             {
-                this.Size = new Size(627, 600);
+                this.Size = new Size(627, 650);
             }
             else
             {
@@ -253,7 +268,7 @@ namespace EventManager.View.Events
             pbx.Click += new EventHandler(this.AddUiClick);
 
             Label label = uiBuilder.GenerateLabel(40, 390, "dynamiclbl_address", "Address");
-            this.changeConrolLocations("");
+            this.ChangeConrolLocations("");
             this.CenterToParent();
             this.Controls.Add(pbx);
             this.Controls.Add(label);
@@ -285,7 +300,7 @@ namespace EventManager.View.Events
         private void AddUiClick(object sender, EventArgs e)
         {
             this.AddAddressControls();
-            this.changeConrolLocations("add");
+            this.ChangeConrolLocations("add");
         }
 
         private void pb_close_Click(object sender, EventArgs e)
@@ -308,6 +323,7 @@ namespace EventManager.View.Events
             }
             catch (Exception ex)
             {
+                logger.LogException(ex);
                 return false;
             }
         }
@@ -398,18 +414,6 @@ namespace EventManager.View.Events
                 }
             }
         }
-
-
-        private EventDates generateStartEnd(DateTime startDateTime, DateTime endDateTime)
-        {
-            EventDates eventDate = new EventDates();
-            eventDate.StartDate = startDateTime;
-            eventDate.EndDate = endDateTime;
-            return eventDate;
-
-        }
-
-
 
         private void ShowErrors()
         {
@@ -596,7 +600,7 @@ namespace EventManager.View.Events
             TextBox dynamictxt_addressline1 = Controls.Find("dynamictxt_addressline1", true).FirstOrDefault() as TextBox;
             if(dynamictxt_addressline1 == null)
             {
-                this.Size = new Size(627, 600);
+                this.Size = new Size(627, 650);
 
             }
             else

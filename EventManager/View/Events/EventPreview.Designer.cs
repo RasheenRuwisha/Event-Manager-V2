@@ -35,8 +35,10 @@
             this.lbl_repeattype = new System.Windows.Forms.Label();
             this.lbl_enddate = new System.Windows.Forms.Label();
             this.lbl_startdate = new System.Windows.Forms.Label();
-            this.lbl_desscription = new System.Windows.Forms.Label();
+            this.lbl_description = new System.Windows.Forms.Label();
             this.lbl_title = new System.Windows.Forms.Label();
+            this.lbl_repeat = new System.Windows.Forms.Label();
+            this.lbl_desc = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lbl_address2
@@ -92,7 +94,7 @@
             this.lbl_repeattype.AutoSize = true;
             this.lbl_repeattype.Font = new System.Drawing.Font("HoloLens MDL2 Assets", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_repeattype.ForeColor = System.Drawing.Color.White;
-            this.lbl_repeattype.Location = new System.Drawing.Point(18, 128);
+            this.lbl_repeattype.Location = new System.Drawing.Point(133, 128);
             this.lbl_repeattype.Name = "lbl_repeattype";
             this.lbl_repeattype.Size = new System.Drawing.Size(42, 16);
             this.lbl_repeattype.TabIndex = 13;
@@ -105,9 +107,9 @@
             this.lbl_enddate.ForeColor = System.Drawing.Color.White;
             this.lbl_enddate.Location = new System.Drawing.Point(80, 93);
             this.lbl_enddate.Name = "lbl_enddate";
-            this.lbl_enddate.Size = new System.Drawing.Size(42, 16);
+            this.lbl_enddate.Size = new System.Drawing.Size(53, 16);
             this.lbl_enddate.TabIndex = 12;
-            this.lbl_enddate.Text = "label4";
+            this.lbl_enddate.Text = "enddate";
             // 
             // lbl_startdate
             // 
@@ -116,20 +118,20 @@
             this.lbl_startdate.ForeColor = System.Drawing.Color.White;
             this.lbl_startdate.Location = new System.Drawing.Point(18, 93);
             this.lbl_startdate.Name = "lbl_startdate";
-            this.lbl_startdate.Size = new System.Drawing.Size(42, 16);
+            this.lbl_startdate.Size = new System.Drawing.Size(55, 16);
             this.lbl_startdate.TabIndex = 11;
-            this.lbl_startdate.Text = "label3";
+            this.lbl_startdate.Text = "startdate";
             // 
-            // lbl_desscription
+            // lbl_description
             // 
-            this.lbl_desscription.AutoSize = true;
-            this.lbl_desscription.Font = new System.Drawing.Font("HoloLens MDL2 Assets", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_desscription.ForeColor = System.Drawing.Color.White;
-            this.lbl_desscription.Location = new System.Drawing.Point(18, 160);
-            this.lbl_desscription.Name = "lbl_desscription";
-            this.lbl_desscription.Size = new System.Drawing.Size(42, 16);
-            this.lbl_desscription.TabIndex = 10;
-            this.lbl_desscription.Text = "label2";
+            this.lbl_description.AutoSize = true;
+            this.lbl_description.Font = new System.Drawing.Font("HoloLens MDL2 Assets", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_description.ForeColor = System.Drawing.Color.White;
+            this.lbl_description.Location = new System.Drawing.Point(133, 160);
+            this.lbl_description.Name = "lbl_description";
+            this.lbl_description.Size = new System.Drawing.Size(42, 16);
+            this.lbl_description.TabIndex = 10;
+            this.lbl_description.Text = "label2";
             // 
             // lbl_title
             // 
@@ -138,15 +140,39 @@
             this.lbl_title.ForeColor = System.Drawing.Color.White;
             this.lbl_title.Location = new System.Drawing.Point(17, 56);
             this.lbl_title.Name = "lbl_title";
-            this.lbl_title.Size = new System.Drawing.Size(53, 19);
+            this.lbl_title.Size = new System.Drawing.Size(41, 19);
             this.lbl_title.TabIndex = 9;
-            this.lbl_title.Text = "label1";
+            this.lbl_title.Text = "Title";
+            // 
+            // lbl_repeat
+            // 
+            this.lbl_repeat.AutoSize = true;
+            this.lbl_repeat.Font = new System.Drawing.Font("HoloLens MDL2 Assets", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_repeat.ForeColor = System.Drawing.Color.White;
+            this.lbl_repeat.Location = new System.Drawing.Point(18, 128);
+            this.lbl_repeat.Name = "lbl_repeat";
+            this.lbl_repeat.Size = new System.Drawing.Size(85, 16);
+            this.lbl_repeat.TabIndex = 19;
+            this.lbl_repeat.Text = "Repeat Type :";
+            // 
+            // lbl_desc
+            // 
+            this.lbl_desc.AutoSize = true;
+            this.lbl_desc.Font = new System.Drawing.Font("HoloLens MDL2 Assets", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_desc.ForeColor = System.Drawing.Color.White;
+            this.lbl_desc.Location = new System.Drawing.Point(18, 160);
+            this.lbl_desc.Name = "lbl_desc";
+            this.lbl_desc.Size = new System.Drawing.Size(47, 16);
+            this.lbl_desc.TabIndex = 18;
+            this.lbl_desc.Text = "Notes :";
             // 
             // EventPreview
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
+            this.Controls.Add(this.lbl_repeat);
+            this.Controls.Add(this.lbl_desc);
             this.Controls.Add(this.lbl_address2);
             this.Controls.Add(this.lbl_address1);
             this.Controls.Add(this.lbl_address2header);
@@ -154,7 +180,7 @@
             this.Controls.Add(this.lbl_repeattype);
             this.Controls.Add(this.lbl_enddate);
             this.Controls.Add(this.lbl_startdate);
-            this.Controls.Add(this.lbl_desscription);
+            this.Controls.Add(this.lbl_description);
             this.Controls.Add(this.lbl_title);
             this.Name = "EventPreview";
             this.Size = new System.Drawing.Size(419, 706);
@@ -172,7 +198,9 @@
         private System.Windows.Forms.Label lbl_repeattype;
         private System.Windows.Forms.Label lbl_enddate;
         private System.Windows.Forms.Label lbl_startdate;
-        private System.Windows.Forms.Label lbl_desscription;
+        private System.Windows.Forms.Label lbl_description;
         private System.Windows.Forms.Label lbl_title;
+        private System.Windows.Forms.Label lbl_repeat;
+        private System.Windows.Forms.Label lbl_desc;
     }
 }

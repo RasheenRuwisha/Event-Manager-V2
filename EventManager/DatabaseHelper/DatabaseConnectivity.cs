@@ -11,9 +11,11 @@ namespace EventManager.DatabaseHelper
     class DatabaseConnectivity
     {
         private bool wasOffline = false;
+        int successNotificationCount = 0;
+        int failNotificationCount = 0;
+
         public async Task connectionValidator()
         {
-            int count = 0;
             String t = "";
             while (true)
             {
@@ -30,7 +32,7 @@ namespace EventManager.DatabaseHelper
                 db.Database.Connection.Open();
                 db.Database.Connection.Close();
                 Application.UserAppDataRegistry.SetValue("dbConnection", true);
-                if (wasOffline)
+                if (successNotificationCount == 0)
                 {
                     NotifyIcon notifyIcon = new NotifyIcon();
                     notifyIcon.Icon = new Icon(SystemIcons.Application, 40, 40);
@@ -41,12 +43,14 @@ namespace EventManager.DatabaseHelper
                     notifyIcon.BalloonTipTitle = "Database Connection";
                     notifyIcon.ShowBalloonTip(10000);
                 }
+                successNotificationCount++;
+                failNotificationCount =0;
                 return "success";
             }
             catch (Exception ex)
             {
                 Application.UserAppDataRegistry.SetValue("dbConnection", false);
-                if (!wasOffline)
+                if (failNotificationCount == 0)
                 {
                     NotifyIcon notifyIcon = new NotifyIcon();
                     notifyIcon.Icon = new Icon(SystemIcons.Application, 40, 40);
@@ -57,6 +61,8 @@ namespace EventManager.DatabaseHelper
                     notifyIcon.BalloonTipTitle = "Database Connection";
                     notifyIcon.ShowBalloonTip(10000);
                 }
+                failNotificationCount++;
+                successNotificationCount = 0;
                 return "false";
             }
         }

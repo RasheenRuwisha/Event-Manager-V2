@@ -11,6 +11,7 @@ namespace EventManager.DatabaseHelper
     public class UserHelper
     {
         CommonUtil commonUtil = new CommonUtil();
+        Logger logger = new Logger();
         public bool IsNewUser(String email)
         {
             using (var dbContext = new DatabaseModel())
@@ -37,6 +38,7 @@ namespace EventManager.DatabaseHelper
                 return true;
             }catch(Exception ex)
             {
+                logger.LogException(ex);
                 return false;
             }
         }

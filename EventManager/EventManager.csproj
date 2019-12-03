@@ -148,6 +148,7 @@
     <Compile Include="Utility\CommonUtil.cs" />
     <Compile Include="Utility\EventGenerator.cs" />
     <Compile Include="Utility\FieldValidator.cs" />
+    <Compile Include="Utility\Logger.cs" />
     <Compile Include="Utility\MailSender.cs" />
     <Compile Include="Utility\PredictionUtility.cs" />
     <Compile Include="Utility\UiBuilder.cs" />
@@ -360,6 +361,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\refreshh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imageedit_1_4840701268 %283%29.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

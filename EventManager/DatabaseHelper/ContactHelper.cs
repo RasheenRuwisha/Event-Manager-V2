@@ -1,4 +1,5 @@
 ﻿using EventManager.Model;
+using EventManager.Utility;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,6 +15,7 @@ namespace EventManager.DatabaseHelper
     public class ContactHelper
     {
         readonly String userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
+        Logger logger = new Logger();
         public bool DoesNameExist(String name)
         {
 
@@ -42,6 +44,7 @@ namespace EventManager.DatabaseHelper
             }
             catch (System.Data.Entity.Core.EntityException ex)
             {
+                logger.LogException(ex);
                 var userDetails = this.SearchContactXML(name, "Name");
                 if (userDetails != null)
                 {
@@ -50,6 +53,7 @@ namespace EventManager.DatabaseHelper
             }
             catch (System.Data.SqlClient.SqlException ex)
             {
+                logger.LogException(ex);
                 var userDetails = this.SearchContactXML(name, "Name");
                 if (userDetails != null)
                 {
@@ -58,6 +62,8 @@ namespace EventManager.DatabaseHelper
             }
             catch (Exception ex)
             {
+                logger.LogException(ex);
+                return false;
             }
             return true;
         }
@@ -89,6 +95,7 @@ namespace EventManager.DatabaseHelper
             }
             catch (System.Data.Entity.Core.EntityException ex)
             {
+                logger.LogException(ex);
                 var userDetails = this.SearchContactXML(email, "Email");
                 if (userDetails != null)
                 {
@@ -97,6 +104,7 @@ namespace EventManager.DatabaseHelper
             }
             catch (System.Data.SqlClient.SqlException ex)
             {
+                logger.LogException(ex);
                 var userDetails = this.SearchContactXML(email, "Email");
                 if (userDetails != null)
                 {
@@ -105,7 +113,8 @@ namespace EventManager.DatabaseHelper
             }
             catch (Exception ex)
             {
-
+                logger.LogException(ex);
+                return false;
             }
            
             return true;
@@ -134,16 +143,19 @@ namespace EventManager.DatabaseHelper
             }
             catch (System.Data.Entity.Core.EntityException ex)
             {
+                logger.LogException(ex);
                 this.AddContactXML(contact);
                 return true;
             }
             catch (System.Data.SqlClient.SqlException ex)
             {
+                logger.LogException(ex);
                 this.AddContactXML(contact);
                 return true;
             }
             catch (Exception ex)
             {
+                logger.LogException(ex);
                 return false;
             }
         }
@@ -189,16 +201,19 @@ namespace EventManager.DatabaseHelper
             }
             catch (System.Data.Entity.Core.EntityException ex)
             {
+                logger.LogException(ex);
                 this.RemoveContactXML(id);
                 return true;
             }
             catch (System.Data.SqlClient.SqlException ex)
             {
+                logger.LogException(ex);
                 this.RemoveContactXML(id);
                 return true;
             }
             catch (Exception ex)
             {
+                logger.LogException(ex);
                 return false;
             }
         }
@@ -225,14 +240,17 @@ namespace EventManager.DatabaseHelper
             }
             catch (System.Data.Entity.Core.EntityException ex)
             {
+                logger.LogException(ex);
                 contacts = this.GetAllContactsXML();
             }
             catch (System.Data.SqlClient.SqlException ex)
             {
+                logger.LogException(ex);
                 contacts = this.GetAllContactsXML();
             }
             catch (Exception ex)
             {
+                logger.LogException(ex);
             }
           
             return contacts;
@@ -259,14 +277,16 @@ namespace EventManager.DatabaseHelper
             catch (System.Data.Entity.Core.EntityException ex)
             {
                 contactDetails = this.SearchContactXML(contactId, "ContactId");
+                logger.LogException(ex);
             }
             catch (System.Data.SqlClient.SqlException ex)
             {
                 contactDetails = this.SearchContactXML(contactId, "ContactId");
+                logger.LogException(ex);
             }
             catch (Exception ex)
             {
-
+                logger.LogException(ex);
             }
             return contactDetails;
         }
@@ -303,16 +323,19 @@ namespace EventManager.DatabaseHelper
             }
             catch (System.Data.Entity.Core.EntityException ex)
             {
+                logger.LogException(ex);
                 this.UpdateContactXML(contact);
                 return true;
             }
             catch (System.Data.SqlClient.SqlException ex)
             {
+                logger.LogException(ex);
                 this.UpdateContactXML(contact);
                 return true;
             }
             catch (Exception ex)
             {
+                logger.LogException(ex);
                 return false;
             }
         }
@@ -337,15 +360,17 @@ namespace EventManager.DatabaseHelper
             }
             catch (System.Data.Entity.Core.EntityException ex)
             {
+                logger.LogException(ex);
                 contacts = this.SearchContactsXML(name);
             }
             catch (System.Data.SqlClient.SqlException ex)
             {
+                logger.LogException(ex);
                 contacts = this.SearchContactsXML(name);
             }
             catch (Exception ex)
             {
-                
+                logger.LogException(ex);
             }
         
             return contacts;
@@ -385,6 +410,7 @@ namespace EventManager.DatabaseHelper
             }
             catch (Exception ex)
             {
+                logger.LogException(ex);
                 return false;
             }
         }
@@ -419,6 +445,7 @@ namespace EventManager.DatabaseHelper
             }
             catch (Exception ex)
             {
+                logger.LogException(ex);
                 return false;
             }
         }
@@ -441,6 +468,7 @@ namespace EventManager.DatabaseHelper
             }
             catch (Exception ex)
             {
+                logger.LogException(ex);
                 return false;
             }
         }
@@ -449,11 +477,17 @@ namespace EventManager.DatabaseHelper
         private List<Contact> GetAllContactsXML()
         {
             List<Contact> contacts = null;
-
-            using (var reader = new StreamReader($"{userId}.xml"))
+            try
             {
-                XmlSerializer deserializer = new XmlSerializer(typeof(List<Contact>), new XmlRootAttribute("LocalStore"));
-                contacts = (List<Contact>)deserializer.Deserialize(reader);
+                using (var reader = new StreamReader($"{userId}.xml"))
+                {
+                    XmlSerializer deserializer = new XmlSerializer(typeof(List<Contact>), new XmlRootAttribute("LocalStore"));
+                    contacts = (List<Contact>)deserializer.Deserialize(reader);
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogException(ex);
             }
 
             return contacts;
@@ -486,6 +520,7 @@ namespace EventManager.DatabaseHelper
             }
             catch (Exception ex)
             {
+                logger.LogException(ex);
                 return contact;
             }
         }
@@ -517,6 +552,7 @@ namespace EventManager.DatabaseHelper
             }
             catch (Exception ex)
             {
+                logger.LogException(ex);
                 return contact;
             }
         }
