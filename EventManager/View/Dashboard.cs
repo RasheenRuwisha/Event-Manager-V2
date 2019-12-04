@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,12 +20,21 @@ namespace EventManager.View
     public partial class Dashboard : Form
     {
         readonly ContactHelper contactHelper = new ContactHelper();
+        readonly UserHelper userHelper = new UserHelper();
         readonly EventHelper eventHelper = new EventHelper();
         readonly CommonUtil commonUtil = new CommonUtil();
         readonly PredictionUtility predictionUtility = new PredictionUtility();
+        User user = new User();
+
         public Dashboard()
         {
             InitializeComponent();
+            if (Application.UserAppDataRegistry.GetValue("username") != null)
+            {
+                this.lbl_username.Text = Application.UserAppDataRegistry.GetValue("username").ToString();
+            }
+
+
             pnl_events.BringToFront();
             pnl_eventloader.BringToFront();
 
@@ -57,6 +67,15 @@ namespace EventManager.View
 
             this.dtp_searchstart.ValueChanged += new EventHandler(startDatePickerValueChanged);
         }
+
+        private Bitmap getImage(string image)
+        {
+            byte[] byteArray = Convert.FromBase64String(image);
+            MemoryStream memoryStream = new MemoryStream(byteArray);
+            Bitmap bitmap = new Bitmap((Bitmap)Image.FromStream(memoryStream));
+            return bitmap;
+        }
+
 
         void startDatePickerValueChanged(object sender, EventArgs e)
         {
@@ -634,6 +653,13 @@ namespace EventManager.View
             addContact.FormClosing += new FormClosingEventHandler(this.AddContact_FormClosing);
             addContact.ShowDialog();
         }
+
+        private void btn_profile_Click(object sender, EventArgs e)
+        {
+            this.pnl_pr
+        }
+
+
 
         // Common Controls End
     }

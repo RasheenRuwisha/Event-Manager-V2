@@ -73,5 +73,15 @@ namespace EventManager.DatabaseHelper
             }
             return false;
         }
+
+        public User GetUser(String userId)
+        {
+            User user = new User();
+            using (var dbContext = new DatabaseModel())
+            {
+                user = dbContext.Users.Where(users => users.UserId.Equals(userId)).FirstOrDefault();
+            }
+            return user;
+        }
     }
 }
