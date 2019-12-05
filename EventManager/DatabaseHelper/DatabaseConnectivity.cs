@@ -10,7 +10,8 @@ namespace EventManager.DatabaseHelper
 {
     class DatabaseConnectivity
     {
-        private bool wasOffline = false;
+
+        DatabaseDataValidator databaseDataValidator = new DatabaseDataValidator();
         int successNotificationCount = 0;
         int failNotificationCount = 0;
 
@@ -42,6 +43,10 @@ namespace EventManager.DatabaseHelper
                     notifyIcon.BalloonTipIcon = ToolTipIcon.Info;
                     notifyIcon.BalloonTipTitle = "Database Connection";
                     notifyIcon.ShowBalloonTip(10000);
+                }
+                if(Application.UserAppDataRegistry.GetValue("userId") != null)
+                {
+                    databaseDataValidator.dataValidator();
                 }
                 successNotificationCount++;
                 failNotificationCount =0;

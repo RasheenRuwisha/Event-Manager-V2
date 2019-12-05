@@ -24,7 +24,7 @@ namespace EventManager.UIComponents
         }
 
 
-        public string Text
+        public string CircleText
         {
             set
             {

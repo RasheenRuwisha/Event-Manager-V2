@@ -323,7 +323,7 @@ namespace EventManager.View.Events
             }
             catch (Exception ex)
             {
-                logger.LogException(ex);
+                logger.LogException(ex, true);
                 return false;
             }
         }
@@ -561,7 +561,6 @@ namespace EventManager.View.Events
         private async void btn_save_Click(object sender, EventArgs e)
         {
             eventid = commonUtil.generateUserId("event");
-            bool isAppointment = false;
 
             PictureBox pictureBox = commonUtil.addLoaderImage(this.btn_save.Location.X + 205, this.btn_save.Location.Y + 2);
             this.Controls.Add(pictureBox);

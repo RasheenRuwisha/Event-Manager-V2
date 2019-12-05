@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.pnl_menu = new System.Windows.Forms.Panel();
+            this.btn_profile = new System.Windows.Forms.Button();
             this.cpb_userimage = new EventManager.UIComponents.CircularPictureBox();
             this.btn_logout = new System.Windows.Forms.Button();
             this.lbl_username = new System.Windows.Forms.Label();
@@ -41,8 +42,8 @@
             this.cpb_cont_addevent = new EventManager.UIComponents.CircularPictureBox();
             this.pnl_search = new System.Windows.Forms.Panel();
             this.pnl_loader = new System.Windows.Forms.Panel();
-            this.lbl_loading = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.lbl_cont_loadertext = new System.Windows.Forms.Label();
+            this.pb_cont_loaderimage = new System.Windows.Forms.PictureBox();
             this.pb_search = new System.Windows.Forms.PictureBox();
             this.txt_search = new System.Windows.Forms.TextBox();
             this.pnl_contactpreview = new System.Windows.Forms.Panel();
@@ -57,8 +58,8 @@
             this.dtp_seachend = new System.Windows.Forms.DateTimePicker();
             this.dtp_searchstart = new System.Windows.Forms.DateTimePicker();
             this.pnl_eventloader = new System.Windows.Forms.Panel();
-            this.label3 = new System.Windows.Forms.Label();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.lbl_evnt_loadertext = new System.Windows.Forms.Label();
+            this.pb_evnt_loaderimage = new System.Windows.Forms.PictureBox();
             this.pb_eventsearch = new System.Windows.Forms.PictureBox();
             this.cpb_evnt_addevent = new EventManager.UIComponents.CircularPictureBox();
             this.pnl_eventspreview = new System.Windows.Forms.Panel();
@@ -77,24 +78,14 @@
             this.lbl_MonthlyAverage = new System.Windows.Forms.Label();
             this.lbl_weeklyAverage = new System.Windows.Forms.Label();
             this.lbl_dailyAverage = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lbl_appointments = new System.Windows.Forms.Label();
             this.lbl_events = new System.Windows.Forms.Label();
             this.cpbar_appointments = new EventManager.UIComponents.CircularProgressBar();
             this.cpbar_tasks = new EventManager.UIComponents.CircularProgressBar();
             this.pnl_predloader = new System.Windows.Forms.Panel();
-            this.label4 = new System.Windows.Forms.Label();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.lbl_pred_loadertext = new System.Windows.Forms.Label();
+            this.pb_pred_loaderimage = new System.Windows.Forms.PictureBox();
             this.lbl_predictionheader = new System.Windows.Forms.Label();
-            this.pnl_profile = new System.Windows.Forms.Panel();
-            this.circularPictureBox1 = new EventManager.UIComponents.CircularPictureBox();
-            this.circularPictureBox2 = new EventManager.UIComponents.CircularPictureBox();
-            this.pnl_profileloader = new System.Windows.Forms.Panel();
-            this.circularPictureBox3 = new EventManager.UIComponents.CircularPictureBox();
-            this.pnl_profiledetails = new System.Windows.Forms.Panel();
-            this.lbl_profileheader = new System.Windows.Forms.Label();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.btn_profile = new System.Windows.Forms.Button();
             this.pnl_menu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cpb_userimage)).BeginInit();
             this.pnl_contacts.SuspendLayout();
@@ -102,13 +93,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.cpb_cont_refresh)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cpb_cont_addevent)).BeginInit();
             this.pnl_loader.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_cont_loaderimage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_search)).BeginInit();
             this.pnl_events.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cpb_evnt_addcont)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cpb_evnt_refresh)).BeginInit();
             this.pnl_eventloader.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_evnt_loaderimage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_eventsearch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cpb_evnt_addevent)).BeginInit();
             this.pnl_prediction.SuspendLayout();
@@ -117,13 +108,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.cpb_pred_addevent)).BeginInit();
             this.pnl_predictiondet.SuspendLayout();
             this.pnl_predloader.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            this.pnl_profile.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.circularPictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.circularPictureBox2)).BeginInit();
-            this.pnl_profileloader.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.circularPictureBox3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_pred_loaderimage)).BeginInit();
             this.SuspendLayout();
             // 
             // pnl_menu
@@ -141,6 +126,21 @@
             this.pnl_menu.Size = new System.Drawing.Size(332, 706);
             this.pnl_menu.TabIndex = 1;
             // 
+            // btn_profile
+            // 
+            this.btn_profile.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
+            this.btn_profile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_profile.Font = new System.Drawing.Font("HoloLens MDL2 Assets", 12F, System.Drawing.FontStyle.Bold);
+            this.btn_profile.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.btn_profile.Location = new System.Drawing.Point(8, 208);
+            this.btn_profile.Name = "btn_profile";
+            this.btn_profile.Size = new System.Drawing.Size(338, 41);
+            this.btn_profile.TabIndex = 20;
+            this.btn_profile.Text = "Prediction";
+            this.btn_profile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btn_profile.UseVisualStyleBackColor = true;
+            this.btn_profile.Click += new System.EventHandler(this.btn_profile_Click);
+            // 
             // cpb_userimage
             // 
             this.cpb_userimage.BackColor = System.Drawing.Color.Transparent;
@@ -151,6 +151,7 @@
             this.cpb_userimage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.cpb_userimage.TabIndex = 19;
             this.cpb_userimage.TabStop = false;
+            this.cpb_userimage.Click += new System.EventHandler(this.cpb_userimage_Click);
             // 
             // btn_logout
             // 
@@ -289,32 +290,32 @@
             // pnl_loader
             // 
             this.pnl_loader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
-            this.pnl_loader.Controls.Add(this.lbl_loading);
-            this.pnl_loader.Controls.Add(this.pictureBox1);
+            this.pnl_loader.Controls.Add(this.lbl_cont_loadertext);
+            this.pnl_loader.Controls.Add(this.pb_cont_loaderimage);
             this.pnl_loader.Location = new System.Drawing.Point(1, 87);
             this.pnl_loader.Name = "pnl_loader";
             this.pnl_loader.Size = new System.Drawing.Size(622, 619);
             this.pnl_loader.TabIndex = 9;
             // 
-            // lbl_loading
+            // lbl_cont_loadertext
             // 
-            this.lbl_loading.AutoSize = true;
-            this.lbl_loading.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_loading.Location = new System.Drawing.Point(283, 328);
-            this.lbl_loading.Name = "lbl_loading";
-            this.lbl_loading.Size = new System.Drawing.Size(139, 39);
-            this.lbl_loading.TabIndex = 1;
-            this.lbl_loading.Text = "Loading";
+            this.lbl_cont_loadertext.AutoSize = true;
+            this.lbl_cont_loadertext.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_cont_loadertext.Location = new System.Drawing.Point(283, 328);
+            this.lbl_cont_loadertext.Name = "lbl_cont_loadertext";
+            this.lbl_cont_loadertext.Size = new System.Drawing.Size(139, 39);
+            this.lbl_cont_loadertext.TabIndex = 1;
+            this.lbl_cont_loadertext.Text = "Loading";
             // 
-            // pictureBox1
+            // pb_cont_loaderimage
             // 
-            this.pictureBox1.Image = global::EventManager.Properties.Resources.loader;
-            this.pictureBox1.Location = new System.Drawing.Point(184, 318);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(83, 61);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+            this.pb_cont_loaderimage.Image = global::EventManager.Properties.Resources.loader;
+            this.pb_cont_loaderimage.Location = new System.Drawing.Point(184, 318);
+            this.pb_cont_loaderimage.Name = "pb_cont_loaderimage";
+            this.pb_cont_loaderimage.Size = new System.Drawing.Size(83, 61);
+            this.pb_cont_loaderimage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pb_cont_loaderimage.TabIndex = 0;
+            this.pb_cont_loaderimage.TabStop = false;
             // 
             // pb_search
             // 
@@ -439,6 +440,8 @@
             // 
             // dtp_seachend
             // 
+            this.dtp_seachend.CustomFormat = "dd-MM-yyyy hh:mm ";
+            this.dtp_seachend.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtp_seachend.Location = new System.Drawing.Point(349, 65);
             this.dtp_seachend.Name = "dtp_seachend";
             this.dtp_seachend.Size = new System.Drawing.Size(200, 20);
@@ -446,6 +449,8 @@
             // 
             // dtp_searchstart
             // 
+            this.dtp_searchstart.CustomFormat = "dd-MM-yyyy hh:mm ";
+            this.dtp_searchstart.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtp_searchstart.Location = new System.Drawing.Point(68, 65);
             this.dtp_searchstart.Name = "dtp_searchstart";
             this.dtp_searchstart.Size = new System.Drawing.Size(200, 20);
@@ -454,32 +459,32 @@
             // pnl_eventloader
             // 
             this.pnl_eventloader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
-            this.pnl_eventloader.Controls.Add(this.label3);
-            this.pnl_eventloader.Controls.Add(this.pictureBox4);
+            this.pnl_eventloader.Controls.Add(this.lbl_evnt_loadertext);
+            this.pnl_eventloader.Controls.Add(this.pb_evnt_loaderimage);
             this.pnl_eventloader.Location = new System.Drawing.Point(1, 87);
             this.pnl_eventloader.Name = "pnl_eventloader";
             this.pnl_eventloader.Size = new System.Drawing.Size(622, 619);
             this.pnl_eventloader.TabIndex = 9;
             // 
-            // label3
+            // lbl_evnt_loadertext
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(283, 328);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(139, 39);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "Loading";
+            this.lbl_evnt_loadertext.AutoSize = true;
+            this.lbl_evnt_loadertext.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_evnt_loadertext.Location = new System.Drawing.Point(283, 328);
+            this.lbl_evnt_loadertext.Name = "lbl_evnt_loadertext";
+            this.lbl_evnt_loadertext.Size = new System.Drawing.Size(139, 39);
+            this.lbl_evnt_loadertext.TabIndex = 1;
+            this.lbl_evnt_loadertext.Text = "Loading";
             // 
-            // pictureBox4
+            // pb_evnt_loaderimage
             // 
-            this.pictureBox4.Image = global::EventManager.Properties.Resources.loader;
-            this.pictureBox4.Location = new System.Drawing.Point(184, 318);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(83, 61);
-            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox4.TabIndex = 0;
-            this.pictureBox4.TabStop = false;
+            this.pb_evnt_loaderimage.Image = global::EventManager.Properties.Resources.loader;
+            this.pb_evnt_loaderimage.Location = new System.Drawing.Point(184, 318);
+            this.pb_evnt_loaderimage.Name = "pb_evnt_loaderimage";
+            this.pb_evnt_loaderimage.Size = new System.Drawing.Size(83, 61);
+            this.pb_evnt_loaderimage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pb_evnt_loaderimage.TabIndex = 0;
+            this.pb_evnt_loaderimage.TabStop = false;
             // 
             // pb_eventsearch
             // 
@@ -594,7 +599,7 @@
             this.pnl_predictiondet.Controls.Add(this.lbl_MonthlyAverage);
             this.pnl_predictiondet.Controls.Add(this.lbl_weeklyAverage);
             this.pnl_predictiondet.Controls.Add(this.lbl_dailyAverage);
-            this.pnl_predictiondet.Controls.Add(this.label1);
+            this.pnl_predictiondet.Controls.Add(this.lbl_appointments);
             this.pnl_predictiondet.Controls.Add(this.lbl_events);
             this.pnl_predictiondet.Controls.Add(this.cpbar_appointments);
             this.pnl_predictiondet.Controls.Add(this.cpbar_tasks);
@@ -684,15 +689,15 @@
             this.lbl_dailyAverage.TabIndex = 5;
             this.lbl_dailyAverage.Text = "Daily  Average :";
             // 
-            // label1
+            // lbl_appointments
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Franklin Gothic Medium", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(650, 257);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(118, 16);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Appointments Created";
+            this.lbl_appointments.AutoSize = true;
+            this.lbl_appointments.Font = new System.Drawing.Font("Franklin Gothic Medium", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_appointments.Location = new System.Drawing.Point(650, 257);
+            this.lbl_appointments.Name = "lbl_appointments";
+            this.lbl_appointments.Size = new System.Drawing.Size(118, 16);
+            this.lbl_appointments.TabIndex = 4;
+            this.lbl_appointments.Text = "Appointments Created";
             // 
             // lbl_events
             // 
@@ -723,32 +728,32 @@
             // pnl_predloader
             // 
             this.pnl_predloader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
-            this.pnl_predloader.Controls.Add(this.label4);
-            this.pnl_predloader.Controls.Add(this.pictureBox2);
+            this.pnl_predloader.Controls.Add(this.lbl_pred_loadertext);
+            this.pnl_predloader.Controls.Add(this.pb_pred_loaderimage);
             this.pnl_predloader.Location = new System.Drawing.Point(1, 87);
             this.pnl_predloader.Name = "pnl_predloader";
             this.pnl_predloader.Size = new System.Drawing.Size(1040, 619);
             this.pnl_predloader.TabIndex = 9;
             // 
-            // label4
+            // lbl_pred_loadertext
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(518, 328);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(139, 39);
-            this.label4.TabIndex = 1;
-            this.label4.Text = "Loading";
+            this.lbl_pred_loadertext.AutoSize = true;
+            this.lbl_pred_loadertext.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_pred_loadertext.Location = new System.Drawing.Point(518, 328);
+            this.lbl_pred_loadertext.Name = "lbl_pred_loadertext";
+            this.lbl_pred_loadertext.Size = new System.Drawing.Size(139, 39);
+            this.lbl_pred_loadertext.TabIndex = 1;
+            this.lbl_pred_loadertext.Text = "Loading";
             // 
-            // pictureBox2
+            // pb_pred_loaderimage
             // 
-            this.pictureBox2.Image = global::EventManager.Properties.Resources.loader;
-            this.pictureBox2.Location = new System.Drawing.Point(419, 318);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(83, 61);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox2.TabIndex = 0;
-            this.pictureBox2.TabStop = false;
+            this.pb_pred_loaderimage.Image = global::EventManager.Properties.Resources.loader;
+            this.pb_pred_loaderimage.Location = new System.Drawing.Point(419, 318);
+            this.pb_pred_loaderimage.Name = "pb_pred_loaderimage";
+            this.pb_pred_loaderimage.Size = new System.Drawing.Size(83, 61);
+            this.pb_pred_loaderimage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pb_pred_loaderimage.TabIndex = 0;
+            this.pb_pred_loaderimage.TabStop = false;
             // 
             // lbl_predictionheader
             // 
@@ -761,127 +766,14 @@
             this.lbl_predictionheader.TabIndex = 6;
             this.lbl_predictionheader.Text = "Prediction";
             // 
-            // pnl_profile
-            // 
-            this.pnl_profile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.pnl_profile.Controls.Add(this.circularPictureBox1);
-            this.pnl_profile.Controls.Add(this.circularPictureBox2);
-            this.pnl_profile.Controls.Add(this.pnl_profileloader);
-            this.pnl_profile.Controls.Add(this.circularPictureBox3);
-            this.pnl_profile.Controls.Add(this.pnl_profiledetails);
-            this.pnl_profile.Controls.Add(this.lbl_profileheader);
-            this.pnl_profile.ForeColor = System.Drawing.Color.White;
-            this.pnl_profile.Location = new System.Drawing.Point(324, -1);
-            this.pnl_profile.Name = "pnl_profile";
-            this.pnl_profile.Size = new System.Drawing.Size(1052, 706);
-            this.pnl_profile.TabIndex = 19;
-            // 
-            // circularPictureBox1
-            // 
-            this.circularPictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.circularPictureBox1.Image = global::EventManager.Properties.Resources.adduser;
-            this.circularPictureBox1.Location = new System.Drawing.Point(930, 21);
-            this.circularPictureBox1.Name = "circularPictureBox1";
-            this.circularPictureBox1.Size = new System.Drawing.Size(50, 50);
-            this.circularPictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.circularPictureBox1.TabIndex = 18;
-            this.circularPictureBox1.TabStop = false;
-            // 
-            // circularPictureBox2
-            // 
-            this.circularPictureBox2.BackColor = System.Drawing.Color.Transparent;
-            this.circularPictureBox2.Image = global::EventManager.Properties.Resources.refresh;
-            this.circularPictureBox2.Location = new System.Drawing.Point(874, 21);
-            this.circularPictureBox2.Name = "circularPictureBox2";
-            this.circularPictureBox2.Size = new System.Drawing.Size(50, 50);
-            this.circularPictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.circularPictureBox2.TabIndex = 17;
-            this.circularPictureBox2.TabStop = false;
-            // 
-            // pnl_profileloader
-            // 
-            this.pnl_profileloader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
-            this.pnl_profileloader.Controls.Add(this.label6);
-            this.pnl_profileloader.Controls.Add(this.pictureBox3);
-            this.pnl_profileloader.Location = new System.Drawing.Point(1, 87);
-            this.pnl_profileloader.Name = "pnl_profileloader";
-            this.pnl_profileloader.Size = new System.Drawing.Size(1051, 619);
-            this.pnl_profileloader.TabIndex = 9;
-            // 
-            // circularPictureBox3
-            // 
-            this.circularPictureBox3.BackColor = System.Drawing.Color.Transparent;
-            this.circularPictureBox3.Image = global::EventManager.Properties.Resources.eventadd;
-            this.circularPictureBox3.Location = new System.Drawing.Point(990, 25);
-            this.circularPictureBox3.Name = "circularPictureBox3";
-            this.circularPictureBox3.Size = new System.Drawing.Size(40, 40);
-            this.circularPictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.circularPictureBox3.TabIndex = 10;
-            this.circularPictureBox3.TabStop = false;
-            // 
-            // pnl_profiledetails
-            // 
-            this.pnl_profiledetails.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
-            this.pnl_profiledetails.Location = new System.Drawing.Point(1, 87);
-            this.pnl_profiledetails.Name = "pnl_profiledetails";
-            this.pnl_profiledetails.Size = new System.Drawing.Size(1051, 619);
-            this.pnl_profiledetails.TabIndex = 8;
-            // 
-            // lbl_profileheader
-            // 
-            this.lbl_profileheader.AutoSize = true;
-            this.lbl_profileheader.Font = new System.Drawing.Font("HoloLens MDL2 Assets", 12F, System.Drawing.FontStyle.Bold);
-            this.lbl_profileheader.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.lbl_profileheader.Location = new System.Drawing.Point(26, 21);
-            this.lbl_profileheader.Name = "lbl_profileheader";
-            this.lbl_profileheader.Size = new System.Drawing.Size(50, 16);
-            this.lbl_profileheader.TabIndex = 6;
-            this.lbl_profileheader.Text = "Profile";
-            // 
-            // pictureBox3
-            // 
-            this.pictureBox3.Image = global::EventManager.Properties.Resources.loader;
-            this.pictureBox3.Location = new System.Drawing.Point(395, 256);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(83, 61);
-            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox3.TabIndex = 0;
-            this.pictureBox3.TabStop = false;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(494, 266);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(139, 39);
-            this.label6.TabIndex = 1;
-            this.label6.Text = "Loading";
-            // 
-            // btn_profile
-            // 
-            this.btn_profile.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
-            this.btn_profile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_profile.Font = new System.Drawing.Font("HoloLens MDL2 Assets", 12F, System.Drawing.FontStyle.Bold);
-            this.btn_profile.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.btn_profile.Location = new System.Drawing.Point(8, 208);
-            this.btn_profile.Name = "btn_profile";
-            this.btn_profile.Size = new System.Drawing.Size(338, 41);
-            this.btn_profile.TabIndex = 20;
-            this.btn_profile.Text = "Prediction";
-            this.btn_profile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btn_profile.UseVisualStyleBackColor = true;
-            this.btn_profile.Click += new System.EventHandler(this.btn_profile_Click);
-            // 
             // Dashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
             this.ClientSize = new System.Drawing.Size(1366, 705);
-            this.Controls.Add(this.pnl_profile);
-            this.Controls.Add(this.pnl_events);
             this.Controls.Add(this.pnl_contacts);
+            this.Controls.Add(this.pnl_events);
             this.Controls.Add(this.pnl_prediction);
             this.Controls.Add(this.pnl_menu);
             this.Name = "Dashboard";
@@ -898,7 +790,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.cpb_cont_addevent)).EndInit();
             this.pnl_loader.ResumeLayout(false);
             this.pnl_loader.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_cont_loaderimage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_search)).EndInit();
             this.pnl_events.ResumeLayout(false);
             this.pnl_events.PerformLayout();
@@ -906,7 +798,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.cpb_evnt_refresh)).EndInit();
             this.pnl_eventloader.ResumeLayout(false);
             this.pnl_eventloader.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_evnt_loaderimage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_eventsearch)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cpb_evnt_addevent)).EndInit();
             this.pnl_prediction.ResumeLayout(false);
@@ -918,15 +810,7 @@
             this.pnl_predictiondet.PerformLayout();
             this.pnl_predloader.ResumeLayout(false);
             this.pnl_predloader.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            this.pnl_profile.ResumeLayout(false);
-            this.pnl_profile.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.circularPictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.circularPictureBox2)).EndInit();
-            this.pnl_profileloader.ResumeLayout(false);
-            this.pnl_profileloader.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.circularPictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_pred_loaderimage)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -944,16 +828,16 @@
         private System.Windows.Forms.Panel pnl_contactlist;
         private System.Windows.Forms.Label lbl_contact_header;
         private System.Windows.Forms.Panel pnl_loader;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label lbl_loading;
+        private System.Windows.Forms.PictureBox pb_cont_loaderimage;
+        private System.Windows.Forms.Label lbl_cont_loadertext;
         private System.Windows.Forms.TextBox txt_search;
         private System.Windows.Forms.PictureBox pb_search;
         private System.Windows.Forms.Panel pnl_search;
         private System.Windows.Forms.Panel pnl_events;
         private System.Windows.Forms.Panel pnl_eventsearch;
         private System.Windows.Forms.Panel pnl_eventloader;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.PictureBox pictureBox4;
+        private System.Windows.Forms.Label lbl_evnt_loadertext;
+        private System.Windows.Forms.PictureBox pb_evnt_loaderimage;
         private System.Windows.Forms.PictureBox pb_eventsearch;
         private UIComponents.CircularPictureBox cpb_evnt_addevent;
         private System.Windows.Forms.Panel pnl_eventspreview;
@@ -966,13 +850,13 @@
         private UIComponents.CircularPictureBox cpb_evnt_refresh;
         private System.Windows.Forms.Panel pnl_prediction;
         private System.Windows.Forms.Panel pnl_predloader;
-        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.PictureBox pb_pred_loaderimage;
         private System.Windows.Forms.Panel pnl_predictiondet;
         private System.Windows.Forms.Label lbl_predictionheader;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lbl_pred_loadertext;
         private UIComponents.CircularProgressBar cpbar_appointments;
         private UIComponents.CircularProgressBar cpbar_tasks;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lbl_appointments;
         private System.Windows.Forms.Label lbl_events;
         private System.Windows.Forms.Label lbl_dailyAverage;
         private System.Windows.Forms.Label lbl_MonthlyAverage;
@@ -990,15 +874,6 @@
         private UIComponents.CircularPictureBox cpb_pred_refresh;
         private UIComponents.CircularPictureBox cpb_pred_addevent;
         private UIComponents.CircularPictureBox cpb_userimage;
-        private System.Windows.Forms.Panel pnl_profile;
-        private UIComponents.CircularPictureBox circularPictureBox1;
-        private UIComponents.CircularPictureBox circularPictureBox2;
-        private System.Windows.Forms.Panel pnl_profileloader;
-        private UIComponents.CircularPictureBox circularPictureBox3;
-        private System.Windows.Forms.Panel pnl_profiledetails;
-        private System.Windows.Forms.Label lbl_profileheader;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.Button btn_profile;
     }
 }

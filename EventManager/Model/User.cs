@@ -11,13 +11,16 @@ namespace EventManager.Model
     {
 
         [Key]
+        [MaxLength(10)]
         public string UserId { get; set; }
-
-
+        [MaxLength(75)]
         public string Email { get; set; }
         public string Image { get; set; }
+        [MaxLength(30)]
         public string Username { get; set; }
-        public string Firstname { get; set; }
-        public string Lastname { get; set; }
+        [MaxLength(50)]
+        public string Name { get; set; }
+        [MaxLength(15)]
+        public string Phone { get; set; }
     }
 }

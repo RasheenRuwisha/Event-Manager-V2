@@ -11,7 +11,7 @@ namespace EventManager.Utility
     public class Logger
     {
 
-        public void LogException(Exception ex)
+        public void LogException(Exception ex, bool showError)
         {
             String workingDir = Directory.GetCurrentDirectory();
             string filePath = workingDir + @"\" + DateTime.Now.ToString("MM-dd-yyyy-h-mm-tt") + ex.GetType().Name + ".txt";
@@ -47,7 +47,10 @@ namespace EventManager.Utility
                 }
             }
 
-            MessageBox.Show("Something went wrong. The error has been logged to " + filePath);
+            if (showError)
+            {
+                MessageBox.Show("Something went wrong. The error has been logged to " + filePath);
+            }
         }
     }
 

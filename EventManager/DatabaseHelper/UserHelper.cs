@@ -2,9 +2,11 @@
 using EventManager.Utility;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace EventManager.DatabaseHelper
 {
@@ -38,7 +40,7 @@ namespace EventManager.DatabaseHelper
                 return true;
             }catch(Exception ex)
             {
-                logger.LogException(ex);
+                logger.LogException(ex,true);
                 return false;
             }
         }
@@ -64,8 +66,16 @@ namespace EventManager.DatabaseHelper
                 var userDetails = dbContext.Userscredentials.Where(user => user.Email.Equals(email)).FirstOrDefault();
                 if (userDetails != null)
                 {
-                    if (userDetails.Password.Equals(password)){
+                    if (PasswordHasher.Validate(password, userDetails.Password)){
                         commonUtil.AddUserDetailsToLocalApp(userDetails);
+                        String workingDir = Directory.GetCurrentDirectory();
+
+                        if (!File.Exists(workingDir + $@"\{userDetails.UserId}.xml"))
+                        {
+                            XDocument xmlDoc = new XDocument();
+                            xmlDoc.Add(new XElement("LocalStore"));
+                            xmlDoc.Save(workingDir + $@"\{userDetails.UserId}.xml");
+                        }
                         return true;
                     }
                     return false;

@@ -19,13 +19,14 @@ namespace EventManager.View
 {
     public partial class Dashboard : Form
     {
+        readonly String userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
         readonly ContactHelper contactHelper = new ContactHelper();
         readonly UserHelper userHelper = new UserHelper();
         readonly EventHelper eventHelper = new EventHelper();
         readonly CommonUtil commonUtil = new CommonUtil();
         readonly PredictionUtility predictionUtility = new PredictionUtility();
         User user = new User();
-
+        string ActivePanel = "Event";
         public Dashboard()
         {
             InitializeComponent();
@@ -68,15 +69,6 @@ namespace EventManager.View
             this.dtp_searchstart.ValueChanged += new EventHandler(startDatePickerValueChanged);
         }
 
-        private Bitmap getImage(string image)
-        {
-            byte[] byteArray = Convert.FromBase64String(image);
-            MemoryStream memoryStream = new MemoryStream(byteArray);
-            Bitmap bitmap = new Bitmap((Bitmap)Image.FromStream(memoryStream));
-            return bitmap;
-        }
-
-
         void startDatePickerValueChanged(object sender, EventArgs e)
         {
             if (dtp_seachend.Value < dtp_searchstart.Value)
@@ -103,6 +95,7 @@ namespace EventManager.View
         /// <param name="e"></param>
         private async void pnl_contactlist_Paint(object sender, PaintEventArgs e)
         {
+            if(pnl_contactlist.Controls.Count == 0) { 
             List<ContactListView> contacts = await Task.Run(() => this.GenerateContactList("load"));
             if (contacts.Count != 0)
             {
@@ -135,6 +128,7 @@ namespace EventManager.View
             else
             {
                 pnl_contactlist.Controls.Add(this.GenerateNotFoundLabel("No Contact(s) Found"));
+            }
             }
             pnl_contactlist.BringToFront();
             txt_search.Enabled = true;
@@ -538,11 +532,11 @@ namespace EventManager.View
             {
                 cpbar_tasks.Progress = prediction.TaskCount;
                 cpbar_tasks.Multiplier = 360 / prediction.EventCount;
-                cpbar_tasks.Text = $"{prediction.TaskCount} / {prediction.EventCount}";
+                cpbar_tasks.CircleText = $"{prediction.TaskCount} / {prediction.EventCount}";
 
                 cpbar_appointments.Progress = prediction.AppointmentCount;
                 cpbar_appointments.Multiplier = 360 / prediction.EventCount;
-                cpbar_appointments.Text = $"{prediction.AppointmentCount} / {prediction.EventCount}";
+                cpbar_appointments.CircleText = $"{prediction.AppointmentCount} / {prediction.EventCount}";
 
                 lbl_dailyavgtext.Text = $"For the next month you might spend {Math.Round(prediction.DailyAverage / 60, 1)} hours  on average for Events Daily";
                 lbl_weeklyavgtext.Text = $"For the next month you might spend {Math.Round(prediction.WeeklyAverage / 60, 1)} hours on average for Events Weekly";
@@ -560,12 +554,14 @@ namespace EventManager.View
 
         private void btn_predictions_Click(object sender, EventArgs e)
         {
-            this.pnl_prediction.BringToFront();
+            if (!ActivePanel.Equals("Prediction"))
+            {
+                this.pnl_prediction.BringToFront();
+                this.pnl_predloader.BringToFront();
+                ActivePanel = "Prediction";
+            }
 
-            this.pnl_predloader.BringToFront();
         }
-
-
 
         private void cpb_refresh_Click(object sender, EventArgs e)
         {
@@ -577,16 +573,22 @@ namespace EventManager.View
 
         private void btn_events_Click(object sender, EventArgs e)
         {
-            pnl_eventloader.BringToFront();
-            pnl_contactlist.Controls.Clear();
-            pnl_events.BringToFront();
+            if (!ActivePanel.Equals("Event"))
+            {
+                pnl_eventloader.BringToFront();
+                pnl_events.BringToFront();
+                ActivePanel = "Event";
+            }
         }
 
         private void btn_contact_Click(object sender, EventArgs e)
         {
-            pnl_eventlist.Controls.Clear();
-            pnl_contacts.BringToFront();
-            pnl_loader.BringToFront();
+            if (!ActivePanel.Equals("Contact"))
+            {
+                pnl_contacts.BringToFront();
+                pnl_loader.BringToFront();
+                ActivePanel = "Contact";
+            }
         }
 
         private void btn_logout_Click(object sender, EventArgs e)
@@ -647,8 +649,6 @@ namespace EventManager.View
 
         private void cpb_evnt_addcont_Click(object sender, EventArgs e)
         {
-            this.pnl_loader.BringToFront();
-            pnl_contacts.BringToFront();
             AddContact addContact = new AddContact();
             addContact.FormClosing += new FormClosingEventHandler(this.AddContact_FormClosing);
             addContact.ShowDialog();
@@ -656,7 +656,12 @@ namespace EventManager.View
 
         private void btn_profile_Click(object sender, EventArgs e)
         {
-            this.pnl_pr
+        }
+
+        private void cpb_userimage_Click(object sender, EventArgs e)
+        {
+            UserProfile userProfile = new UserProfile();
+            userProfile.ShowDialog();
         }
 
 

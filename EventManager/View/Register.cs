@@ -10,7 +10,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Threading.Tasks;
 namespace EventManager.View
 {
     public partial class Register : Form
@@ -35,11 +34,11 @@ namespace EventManager.View
             this.txt_email.AutoSize = false;
             this.txt_email.Size = new System.Drawing.Size(250, 30);
 
-            this.txt_firstname.AutoSize = false;
-            this.txt_firstname.Size = new System.Drawing.Size(250, 30);
+            this.txt_name.AutoSize = false;
+            this.txt_name.Size = new System.Drawing.Size(250, 30);
 
-            this.txt_lastname.AutoSize = false;
-            this.txt_lastname.Size = new System.Drawing.Size(250, 30);
+            this.txt_phone.AutoSize = false;
+            this.txt_phone.Size = new System.Drawing.Size(250, 30);
 
             this.txt_password.AutoSize = false;
             this.txt_password.Size = new System.Drawing.Size(250, 30);
@@ -103,7 +102,7 @@ namespace EventManager.View
         {
             this.ShowErrors();
             if (txt_username.Text.Trim().Equals("") || txt_email.Text.Trim().Equals("") ||
-               txt_firstname.Text.Trim().Equals("") || txt_lastname.Text.Trim().Equals("") ||
+               txt_name.Text.Trim().Equals("") || txt_phone.Text.Trim().Equals("") ||
                txt_password.Text.Trim().Equals("") || txt_confirmpassword.Text.Trim().Equals(""))
             {
                 return false;
@@ -217,15 +216,15 @@ namespace EventManager.View
                 UserId = id,
                 Email = txt_email.Text.Trim(),
                 Username = txt_username.Text.Trim(),
-                Firstname = txt_firstname.Text.Trim(),
-                Lastname = txt_lastname.Text.Trim(),
+                Name = txt_name.Text.Trim(),
+                Phone = txt_phone.Text.Trim(),
                 Image = commonUtil.BitmapToBase64(cpb_userimage.Image)
             };
 
             UserCredential userCredential = new UserCredential()
             {
                 UserId = id,
-                Password = txt_password.Text.Trim(),
+                Password = PasswordHasher.CreatePasswordHash(txt_password.Text.Trim()),
                 Email = txt_email.Text.Trim(),
                 Username = txt_username.Text.Trim()
             };
@@ -233,7 +232,7 @@ namespace EventManager.View
             if (task)
             {
                 bool register = await Task.Run(() => userHelper.AddUser(user, userCredential));
-                if (task)
+                if (register)
                 {
                     Controls.Remove(picture);
                     Login login = new Login();

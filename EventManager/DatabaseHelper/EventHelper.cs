@@ -40,19 +40,19 @@ namespace EventManager.DatabaseHelper
             }
             catch (System.Data.Entity.Core.EntityException ex)
             {
-                logger.LogException(ex);
+                logger.LogException(ex,false);
                 this.AddEventXML(userEvent);
                 return true;
             }
             catch (System.Data.SqlClient.SqlException ex)
             {
-                logger.LogException(ex);
+                logger.LogException(ex, false);
                 this.AddEventXML(userEvent);
                 return true;
             }
             catch (Exception ex)
             {
-                logger.LogException(ex);
+                logger.LogException(ex, true);
                 return false;
             }
 
@@ -68,7 +68,7 @@ namespace EventManager.DatabaseHelper
                 {
                     using (var dbContext = new DatabaseModel())
                     {
-                        userEvents = dbContext.Events.Where(events => events.EventId.Equals(eventid)).Include(e => e.EventContacts).FirstOrDefault();
+                        userEvents = dbContext.Events.Where(events => events.UserId.Equals(userId)).Where(events => events.EventId.Equals(eventid)).Include(e => e.EventContacts).FirstOrDefault();
                     }
                 }
                 else
@@ -78,17 +78,17 @@ namespace EventManager.DatabaseHelper
             }
             catch (System.Data.Entity.Core.EntityException ex)
             {
-                logger.LogException(ex);
+                logger.LogException(ex,false);
                 userEvents = this.SearchEventXML(eventid);
             }
             catch (System.Data.SqlClient.SqlException ex)
             {
-                logger.LogException(ex);
+                logger.LogException(ex, false);
                 userEvents = this.SearchEventXML(eventid);
             }
             catch (Exception ex)
             {
-                logger.LogException(ex);
+                logger.LogException(ex, true);
             }
             return userEvents;
         }
@@ -103,7 +103,7 @@ namespace EventManager.DatabaseHelper
                 {
                     using (var dbContext = new DatabaseModel())
                     {
-                        userEvents = dbContext.Events.Where(events => events.RepeatTill >= startDate.Date).Include(e => e.EventContacts).ToList();
+                        userEvents = dbContext.Events.Where(events => events.UserId.Equals(userId)).Where(events => events.RepeatTill >= startDate.Date).Include(e => e.EventContacts).ToList();
                     }
                 }
                 else
@@ -113,17 +113,17 @@ namespace EventManager.DatabaseHelper
             }
             catch (System.Data.Entity.Core.EntityException ex)
             {
-                logger.LogException(ex);
+                logger.LogException(ex, false);
                 userEvents = this.FilterEventsXML(startDate);
             }
             catch (System.Data.SqlClient.SqlException ex)
             {
-                logger.LogException(ex);
+                logger.LogException(ex, false);
                 userEvents = this.FilterEventsXML(startDate);
             }
             catch (Exception ex)
             {
-                logger.LogException(ex);
+                logger.LogException(ex, true);
             }
            
                
@@ -163,19 +163,19 @@ namespace EventManager.DatabaseHelper
             }
             catch (System.Data.Entity.Core.EntityException ex)
             {
-                logger.LogException(ex);
+                logger.LogException(ex, false);
                 this.RemoveEventXML(eventId);
                 return true;
             }
             catch (System.Data.SqlClient.SqlException ex)
             {
-                logger.LogException(ex);
+                logger.LogException(ex, false);
                 this.RemoveEventXML(eventId);
                 return true;
             }
             catch (Exception ex)
             {
-                logger.LogException(ex);
+                logger.LogException(ex, true);
                 return false;
             }
         }
@@ -224,20 +224,20 @@ namespace EventManager.DatabaseHelper
             }
             catch (System.Data.Entity.Core.EntityException ex)
             {
-                logger.LogException(ex);
+                logger.LogException(ex, false);
                 this.UpdateEventXML(@event);
                 return true;
             }
             catch (System.Data.SqlClient.SqlException ex)
             {
-                logger.LogException(ex);
+                logger.LogException(ex, false);
                 this.UpdateEventXML(@event);
                 return true;
 
             }
             catch (Exception ex)
             {
-                logger.LogException(ex);
+                logger.LogException(ex, true);
                 return false;
             }
         }
@@ -253,38 +253,50 @@ namespace EventManager.DatabaseHelper
             try
             {
                 xmlDoc = XDocument.Load($"{userId}.xml");
+                var updateQuery = (from item in xmlDoc.Descendants("UserEvent")
+                                   where item.Element("EventId").Value == userEvent.EventId
+                                   select item).FirstOrDefault();
+                XElement xEvent = null;
+                if (updateQuery == null)
+                {
+                    xEvent = new XElement("UserEvent",
+                   new XElement("EventId", userEvent.EventId),
+                   new XElement("UserId", userEvent.UserId),
+                   new XElement("Title", userEvent.Title),
+                   new XElement("Description", userEvent.Description),
+                   new XElement("Type", userEvent.Type),
+                   new XElement("StartDate", userEvent.StartDate),
+                   new XElement("EndDate", userEvent.EndDate),
+                   new XElement("RepeatType", userEvent.RepeatType),
+                   new XElement("RepeatDuration", userEvent.RepeatDuration),
+                   new XElement("RepeatCount", userEvent.RepeatCount),
+                   new XElement("RepeatTill", userEvent.RepeatTill),
+                   new XElement("AddressLine1", userEvent.AddressLine1),
+                   new XElement("AddressLine2", userEvent.AddressLine2),
+                   new XElement("City", userEvent.City),
+                   new XElement("State", userEvent.State),
+                   new XElement("Zipcode", userEvent.Zipcode),
+                   new XElement("EventContacts", userEvent.EventContacts.Select(x => new XElement("EventContact",
+                                                                new XElement("Id", x.Id),
+                                                                new XElement("ContactId", x.ContactId),
+                                                                new XElement("UserId", x.UserId),
+                                                                new XElement("EventId", x.EventId)))));
 
-                XElement xEvent = new XElement("UserEvent",
-                    new XElement("EventId", userEvent.EventId),
-                    new XElement("UserId", userEvent.EventId),
-                    new XElement("Title", userEvent.Title),
-                    new XElement("Description", userEvent.Description),
-                    new XElement("Type", userEvent.Type),
-                    new XElement("StartDate", userEvent.StartDate),
-                    new XElement("EndDate", userEvent.EndDate),
-                    new XElement("RepeatType", userEvent.RepeatType),
-                    new XElement("RepeatDuration", userEvent.RepeatDuration),
-                    new XElement("RepeatCount", userEvent.RepeatCount),
-                    new XElement("RepeatTill", userEvent.RepeatTill),
-                    new XElement("AddressLine1", userEvent.AddressLine1),
-                    new XElement("AddressLine2", userEvent.AddressLine2),
-                    new XElement("City", userEvent.City),
-                    new XElement("State", userEvent.State),
-                    new XElement("Zipcode", userEvent.Zipcode),
-                    new XElement("EventContacts", userEvent.EventContacts.Select(x => new XElement("EventContact",
-                                                                 new XElement("Id", x.Id),
-                                                                 new XElement("ContactId", x.ContactId),
-                                                                 new XElement("UserId", x.UserId),
-                                                                 new XElement("EventId", x.EventId)))));
 
+                }
 
                 xmlDoc.Element("LocalStore").Add(xEvent);
                 xmlDoc.Save($"{userId}.xml");
+                if (Application.UserAppDataRegistry.GetValue("dbConnection").ToString().Equals("False"))
+                {
+                    InitLocalEventFileAddEvent(xEvent);
+
+                }
                 return true;
             }
             catch (Exception ex)
             {
-                logger.LogException(ex);
+                logger.LogException(ex, true);
                 return false;
             }
         }
@@ -318,22 +330,34 @@ namespace EventManager.DatabaseHelper
                 updateQuery.Element("State").SetValue(userEvent.State);
                 updateQuery.Element("Zipcode").SetValue(userEvent.Zipcode);
                 updateQuery.Element("EventContacts").Remove();
-                foreach(EventContact eventContact in userEvent.EventContacts)
+                if (userEvent.EventContacts.Count == 0)
                 {
-                    updateQuery.Add(new XElement("EventContacts", userEvent.EventContacts.Select(x => new XElement("EventContact",
-                                                new XElement("Id", eventContact.Id),
-                                                new XElement("ContactId", eventContact.ContactId),
-                                                new XElement("UserId", eventContact.UserId),
-                                                new XElement("EventId", eventContact.EventId)))));
+                    updateQuery.Add(new XElement("EventContacts"));
                 }
-
+                else
+                {
+                    foreach (EventContact eventContact in userEvent.EventContacts)
+                    {
+                        updateQuery.Add(new XElement("EventContacts", userEvent.EventContacts.Select(x => new XElement("EventContact",
+                                                    new XElement("Id", eventContact.Id),
+                                                    new XElement("ContactId", eventContact.ContactId),
+                                                    new XElement("UserId", eventContact.UserId),
+                                                    new XElement("EventId", eventContact.EventId)))));
+                    }
+                }
+              
 
                 xmlDoc.Save($"{userId}.xml");
+                if (Application.UserAppDataRegistry.GetValue("dbConnection").ToString().Equals("False"))
+                {
+                    InitLocalEventFileUpdateEvent(updateQuery);
+
+                }
                 return true;
             }
             catch (Exception ex)
             {
-                logger.LogException(ex);
+                logger.LogException(ex,true);
                 return false;
             }
         }
@@ -348,31 +372,22 @@ namespace EventManager.DatabaseHelper
                                    where item.Element("EventId").Value == userEvent
                                    select item).FirstOrDefault();
 
+                if (Application.UserAppDataRegistry.GetValue("dbConnection").ToString().Equals("False"))
+                {
+                    InitLocalEventFileRemovevent(removeQuery);
+                }
+
                 removeQuery.Remove();
                 xmlDoc.Save($"{userId}.xml");
                 return true;
             }
             catch (Exception ex)
             {
-                logger.LogException(ex);
+                logger.LogException(ex, true);
                 return false;
             }
         }
 
-
-        private List<UserEvent> GetAllEventsXML()
-        {
-            List<UserEvent> e = null;
-
-            using (var reader = new StreamReader($"{userId}.xml"))
-            {
-                XmlSerializer deserializer = new XmlSerializer(typeof(List<UserEvent>),
-                    new XmlRootAttribute("LocalStore"));
-                e = (List<UserEvent>)deserializer.Deserialize(reader);
-            }
-
-            return e;
-        }
 
         private UserEvent SearchEventXML(string userEvent)
         {
@@ -413,7 +428,7 @@ namespace EventManager.DatabaseHelper
             }
             catch (Exception ex)
             {
-                logger.LogException(ex);
+                logger.LogException(ex, true);
                 return e;
             }
         }
@@ -459,8 +474,120 @@ namespace EventManager.DatabaseHelper
             }
             catch (Exception ex)
             {
-                logger.LogException(ex);
+                logger.LogException(ex, true);
                 return e;
+            }
+        }
+
+
+
+        public  List<UserEvent> GettAllUpdateEvent(String fileepath)
+        {
+
+            List<UserEvent> e = new List<UserEvent>();
+            XDocument xmlDoc = new XDocument();
+            try
+            {
+                xmlDoc = XDocument.Load(fileepath);
+                var filterQuery = (from item in xmlDoc.Descendants("UserEvent")
+                                   select new UserEvent
+                                   {
+                                       EventId = item.Element("EventId").Value,
+                                       Title = item.Element("Title").Value,
+                                       UserId = item.Element("UserId").Value,
+                                       Description = item.Element("Description").Value,
+                                       Type = item.Element("Type").Value,
+                                       RepeatType = item.Element("RepeatType").Value,
+                                       RepeatDuration = item.Element("RepeatDuration").Value,
+                                       RepeatCount = Convert.ToInt32(item.Element("RepeatCount").Value),
+                                       RepeatTill = DateTime.Parse(item.Element("RepeatTill").Value),
+                                       StartDate = DateTime.Parse(item.Element("StartDate").Value),
+                                       EndDate = DateTime.Parse(item.Element("EndDate").Value),
+                                       AddressLine1 = item.Element("AddressLine1").Value,
+                                       AddressLine2 = item.Element("AddressLine2").Value,
+                                       City = item.Element("City").Value,
+                                       State = item.Element("State").Value,
+                                       Zipcode = item.Element("Zipcode").Value,
+                                       EventContacts = item.Element("EventContacts").Elements("EventContact").Select(c => new EventContact
+                                       {
+                                           Id = Convert.ToInt32(c.Element("Id").Value),
+                                           UserId = c.Element("UserId").Value,
+                                           EventId = c.Element("EventId").Value,
+                                           ContactId = c.Element("ContactId").Value,
+                                       }).ToList()
+                                   }).ToList();
+
+                return filterQuery;
+            }
+            catch (Exception ex)
+            {
+                logger.LogException(ex, true);
+                return e;
+            }
+        }
+
+
+
+        public void InitLocalEventFileAddEvent(XElement xElement)
+        {
+            Application.UserAppDataRegistry.SetValue("dbMatch", false);
+
+            String workingDir = Directory.GetCurrentDirectory();
+
+            if (File.Exists(workingDir + @"\event_add.xml"))
+            {
+                XDocument xmlDoc = XDocument.Load(workingDir + @"\event_add.xml");
+                xmlDoc.Element("LocalStore").Add(xElement);
+                xmlDoc.Save(workingDir + @"\event_add.xml");
+            }
+            else
+            {
+                XDocument xmlDoc = new XDocument();
+                xmlDoc.Add(new XElement("LocalStore"));
+                xmlDoc.Element("LocalStore").Add(xElement);
+                xmlDoc.Save(workingDir + @"\event_add.xml");
+            }
+        }
+
+        public void InitLocalEventFileUpdateEvent(XElement xElement)
+        {
+            Application.UserAppDataRegistry.SetValue("dbMatch", false);
+
+            String workingDir = Directory.GetCurrentDirectory();
+
+            if (File.Exists(workingDir + @"\event_update.xml"))
+            {
+                XDocument xmlDoc = XDocument.Load(workingDir + @"\event_update.xml");
+                xmlDoc.Element("LocalStore").Add(xElement);
+                xmlDoc.Save(workingDir + @"\event_update.xml");
+            }
+            else
+            {
+                XDocument xmlDoc = new XDocument();
+                xmlDoc.Add(new XElement("LocalStore"));
+                xmlDoc.Element("LocalStore").Add(xElement);
+                xmlDoc.Save(workingDir + @"\event_update.xml");
+            }
+        }
+
+        public void InitLocalEventFileRemovevent(XElement xElement)
+        {
+            Application.UserAppDataRegistry.SetValue("dbMatch", false);
+
+            String workingDir = Directory.GetCurrentDirectory();
+
+            if (File.Exists(workingDir + @"\event_remove.xml"))
+            {
+                XDocument xmlDoc = XDocument.Load(workingDir + @"\event_remove.xml");
+                xmlDoc.Element("LocalStore").Add(xElement);
+                xmlDoc.Save(workingDir + @"\event_remove.xml");
+            }
+            else
+            {
+                XDocument xmlDoc = new XDocument();
+                xmlDoc.Add(new XElement("LocalStore"));
+                xmlDoc.Element("LocalStore").Add(xElement);
+                xmlDoc.Save(workingDir + @"\event_remove.xml");
             }
         }
     }

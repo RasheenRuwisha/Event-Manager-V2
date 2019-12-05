@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="DatabaseHelper\ContactHelper.cs" />
     <Compile Include="DatabaseHelper\DatabaseConnectivity.cs" />
+    <Compile Include="DatabaseHelper\DatabaseDataValidator.cs" />
     <Compile Include="DatabaseHelper\EventHelper.cs" />
     <Compile Include="DatabaseHelper\UserHelper.cs" />
     <Compile Include="DatabaseModel.cs" />
@@ -104,6 +105,14 @@
     <Compile Include="Migrations\201912021656113_AddEventContacts.Designer.cs">
       <DependentUpon>201912021656113_AddEventContacts.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912051545493_AddDbLimits.cs" />
+    <Compile Include="Migrations\201912051545493_AddDbLimits.Designer.cs">
+      <DependentUpon>201912051545493_AddDbLimits.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912051731314_RemovePasswordMaxLength.cs" />
+    <Compile Include="Migrations\201912051731314_RemovePasswordMaxLength.Designer.cs">
+      <DependentUpon>201912051731314_RemovePasswordMaxLength.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Appointment.cs" />
     <Compile Include="Model\ComboBoxItem.cs" />
@@ -150,6 +159,7 @@
     <Compile Include="Utility\FieldValidator.cs" />
     <Compile Include="Utility\Logger.cs" />
     <Compile Include="Utility\MailSender.cs" />
+    <Compile Include="Utility\PasswordHasher.cs" />
     <Compile Include="Utility\PredictionUtility.cs" />
     <Compile Include="Utility\UiBuilder.cs" />
     <Compile Include="Utility\UiMessageUtitlity.cs" />
@@ -215,6 +225,12 @@
     <Compile Include="View\Register.Designer.cs">
       <DependentUpon>Register.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\UserProfile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\UserProfile.Designer.cs">
+      <DependentUpon>UserProfile.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Migrations\201911281644286_EventContacs.resx">
       <DependentUpon>201911281644286_EventContacs.cs</DependentUpon>
     </EmbeddedResource>
@@ -247,6 +263,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912021656113_AddEventContacts.resx">
       <DependentUpon>201912021656113_AddEventContacts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912051545493_AddDbLimits.resx">
+      <DependentUpon>201912051545493_AddDbLimits.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912051731314_RemovePasswordMaxLength.resx">
+      <DependentUpon>201912051731314_RemovePasswordMaxLength.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UIComponents\Banner.resx">
       <DependentUpon>Banner.cs</DependentUpon>
@@ -299,6 +321,9 @@
     </Compile>
     <EmbeddedResource Include="View\Register.resx">
       <DependentUpon>Register.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\UserProfile.resx">
+      <DependentUpon>UserProfile.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

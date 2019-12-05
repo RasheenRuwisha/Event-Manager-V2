@@ -117,7 +117,7 @@ namespace EventManager.View
             }
             catch (Exception ex)
             {
-                logger.LogException(ex);
+                logger.LogException(ex, true);
                 return "faliure";
             }
         }

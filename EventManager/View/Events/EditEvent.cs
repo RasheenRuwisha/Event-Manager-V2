@@ -386,7 +386,7 @@ namespace EventManager.View.Events
             }
             catch (Exception ex)
             {
-                logger.LogException(ex);
+                logger.LogException(ex, true);
                 return false;
             }
         }
@@ -636,7 +636,6 @@ namespace EventManager.View.Events
 
         private async void btn_save_Click(object sender, EventArgs e)
         {
-            bool isAppointment = false;
             Tasks tasks = new Tasks();
             Appointment appointment = new Appointment();
 

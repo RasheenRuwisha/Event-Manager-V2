@@ -12,7 +12,9 @@ namespace EventManager.Model
     {
 
         [Key]
+        [MaxLength(75)]
         public string Email { get; set; }
+        [MaxLength(30)]
         public string Username { get; set; }
         public string Password { get; set; }
 

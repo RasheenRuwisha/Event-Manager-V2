@@ -31,6 +31,9 @@ namespace EventManager
 
             DatabaseConnectivity databaseConnectivity = new DatabaseConnectivity();
             databaseConnectivity.connectionValidator();
+
+
+ 
             Application.Run();
         }
     }
