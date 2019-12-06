@@ -11,13 +11,14 @@ namespace EventManager.Utility
     public class UiBuilder
     {
 
-        public TextBox GenerateLongTextBox(int x, int y, String name, String text)
+        public TextBox GenerateLongTextBox(int x, int y, String name, String text, int maxLength)
         {
             TextBox textBox = new TextBox();
             textBox.AutoSize = false;
             textBox.Location = new Point(x, y);
             textBox.Size = new Size(250, 30);
             textBox.Name = name;
+            textBox.MaxLength = maxLength;
             textBox.Text = text;
             textBox.BackColor = Color.FromArgb(31, 31, 31);
             textBox.ForeColor = Color.White;
@@ -27,7 +28,7 @@ namespace EventManager.Utility
         }
 
 
-        public TextBox GenerateShortTextBox(int x, int y, String name, String text)
+        public TextBox GenerateShortTextBox(int x, int y, String name, String text, int maxLength)
         {
             TextBox textBox = new TextBox();
             textBox.AutoSize = false;
@@ -35,6 +36,7 @@ namespace EventManager.Utility
             textBox.Size = new Size(128, 30);
             textBox.Name = name;
             textBox.Text = text;
+            textBox.MaxLength = maxLength;
             textBox.BackColor = Color.FromArgb(31, 31, 31);
             textBox.ForeColor = Color.White;
             textBox.BorderStyle = BorderStyle.Fixed3D;

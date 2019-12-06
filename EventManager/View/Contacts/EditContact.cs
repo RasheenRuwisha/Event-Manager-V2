@@ -68,11 +68,11 @@ namespace EventManager.View.Contacts
             PictureBox pbx = uiBuilder.GeneratePictureBox(17, 293, "dynamicpbx_chevup", Properties.Resources.chevup, 15, 15);
                 pbx.Click += new EventHandler(this.RemoveUiClick);
             this.Controls.Add(pbx);
-            this.Controls.Add(uiBuilder.GenerateLongTextBox(42, 310, "dynamictxt_addressline1", addressline1));
-            this.Controls.Add(uiBuilder.GenerateLongTextBox(330, 310, "dynamictxt_addressline2", addressline2));
-            this.Controls.Add(uiBuilder.GenerateShortTextBox(42, 372, "dynamictxt_city", city));
-            this.Controls.Add(uiBuilder.GenerateShortTextBox(243, 372, "dynamictxt_state", state));
-            this.Controls.Add(uiBuilder.GenerateShortTextBox(451, 372, "dynamictxt_zip", zip));
+            this.Controls.Add(uiBuilder.GenerateLongTextBox(42, 310, "dynamictxt_addressline1", addressline1,50));
+            this.Controls.Add(uiBuilder.GenerateLongTextBox(330, 310, "dynamictxt_addressline2", addressline2,50));
+            this.Controls.Add(uiBuilder.GenerateShortTextBox(42, 372, "dynamictxt_city", city,50));
+            this.Controls.Add(uiBuilder.GenerateShortTextBox(243, 372, "dynamictxt_state", state,50));
+            this.Controls.Add(uiBuilder.GenerateShortTextBox(451, 372, "dynamictxt_zip", zip,10));
             this.Controls.Add(uiBuilder.GenerateLabel(40, 293, "dynamiclbl_addressline1", "Address Line 1 "));
             this.Controls.Add(uiBuilder.GenerateLabel(329, 293, "dynamiclbl_addressline2", "Address Line 2 "));
             this.Controls.Add(uiBuilder.GenerateLabel(40, 355, "dynamiclbl_city", "City "));
@@ -215,8 +215,7 @@ namespace EventManager.View.Contacts
                             PictureBox pictureBox = Controls.Find("ptx_" + control.Name, true).FirstOrDefault() as PictureBox;
                             if (pictureBox == null)
                             {
-                                using (PictureBox error = uiMessage.AddErrorIcon(control.Name, control.Location.X + 255, control.Location.Y + 2))
-                                {
+                                PictureBox error = uiMessage.AddErrorIcon(control.Name, control.Location.X + 255, control.Location.Y + 2);
                                     if (this.InvokeRequired)
                                     {
                                         this.Invoke(new MethodInvoker(this.ShowErrors));
@@ -225,7 +224,6 @@ namespace EventManager.View.Contacts
                                     {
                                         this.Controls.Add(error);
                                     }
-                                }
 
                             }
                         }
@@ -302,7 +300,18 @@ namespace EventManager.View.Contacts
                 if (update)
                 {
                     this.Controls.Remove(pictureBox);
-                    this.Close();
+                    Notification notification = new Notification("Contact Updated Successfully");
+                    Timer timer = new Timer();
+                    notification.Show();
+
+                    timer.Tick += (o, ea) =>
+                    {
+                        notification.Close();
+                        this.Close();
+                    };
+
+                    timer.Interval = 1000;
+                    timer.Start();
                 }
                 else
                 {

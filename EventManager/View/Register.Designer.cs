@@ -235,6 +235,7 @@
             this.cpb_userimage.Size = new System.Drawing.Size(100, 100);
             this.cpb_userimage.TabIndex = 33;
             this.cpb_userimage.TabStop = false;
+            this.cpb_userimage.Click += new System.EventHandler(this.cpb_userimage_Click);
             // 
             // Register
             // 

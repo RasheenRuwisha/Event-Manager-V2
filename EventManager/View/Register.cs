@@ -69,8 +69,7 @@ namespace EventManager.View
                         PictureBox pictureBox = Controls.Find("ptx_" + contorl.Name, true).FirstOrDefault() as PictureBox;
                         if (pictureBox == null)
                         {
-                            using (PictureBox error = uiMessageUtitlity.AddErrorIcon(contorl.Name, contorl.Location.X + 255, contorl.Location.Y + 2))
-                            {
+                            PictureBox error = uiMessageUtitlity.AddErrorIcon(contorl.Name, contorl.Location.X + 255, contorl.Location.Y + 2);
                                 if (this.InvokeRequired)
                                 {
                                     this.Invoke(new MethodInvoker(this.ShowErrors));
@@ -79,7 +78,6 @@ namespace EventManager.View
                                 {
                                     this.Controls.Add(error);
                                 }
-                            }
                         }
                     }
                     else
@@ -260,6 +258,19 @@ namespace EventManager.View
             Login login = new Login();
             login.Show();
             this.Close();
+        }
+
+        private void cpb_userimage_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png"
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                bitmap = new Bitmap(openFileDialog.FileName);
+                cpb_userimage.Image = bitmap;
+            }
         }
     }
 }

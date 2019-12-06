@@ -6,13 +6,13 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Xml.Linq;
 
 namespace EventManager.DatabaseHelper
 {
     public class UserHelper
     {
-        Logger logger = new Logger();
         public static bool IsNewUser(String email)
         {
             using (var dbContext = new DatabaseModel())
@@ -77,6 +77,8 @@ namespace EventManager.DatabaseHelper
                             xmlDoc.Add(new XElement("LocalStore"));
                             xmlDoc.Save(workingDir + $@"\{userDetails.UserId}.xml");
                         }
+                        var user = dbContext.Users.Where(userD => userD.Email.Equals(email)).FirstOrDefault();
+                        Application.UserAppDataRegistry.SetValue("image", user.Image);
                         return true;
                     }
                     return false;
@@ -93,6 +95,33 @@ namespace EventManager.DatabaseHelper
                 user = dbContext.Users.Where(users => users.UserId.Equals(userId)).FirstOrDefault();
             }
             return user;
+        }
+
+        public static bool UpdateUser(User userUpdate)
+        {
+
+            try
+            {
+                User user = new User();
+                using (var dbContext = new DatabaseModel())
+                {
+                    user = dbContext.Users.Where(users => users.UserId.Equals(userUpdate.UserId)).FirstOrDefault();
+                    user.Email = userUpdate.Email;
+                    user.Phone = userUpdate.Phone;
+                    user.Name = userUpdate.Name;
+                    user.Email = userUpdate.Email;
+                    user.Username = userUpdate.Username;
+                    dbContext.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Logger.LogException(ex, true);
+                return false;
+            }
+
+
         }
     }
 }

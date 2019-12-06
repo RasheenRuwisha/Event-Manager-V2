@@ -42,7 +42,7 @@
             this.dtp_startdate = new System.Windows.Forms.DateTimePicker();
             this.pb_close = new System.Windows.Forms.PictureBox();
             this.btn_save = new System.Windows.Forms.Button();
-            this.lbl_collaborators = new System.Windows.Forms.Label();
+            this.lbl_contacts = new System.Windows.Forms.Label();
             this.lbl_header = new System.Windows.Forms.Label();
             this.lbl_email = new System.Windows.Forms.Label();
             this.lbl_endtime = new System.Windows.Forms.Label();
@@ -50,6 +50,7 @@
             this.lbl_name = new System.Windows.Forms.Label();
             this.txt_email = new System.Windows.Forms.TextBox();
             this.txt_name = new System.Windows.Forms.TextBox();
+            this.lbl_collaborators = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pb_close)).BeginInit();
             this.SuspendLayout();
             // 
@@ -119,7 +120,6 @@
             this.rb_appointment.TabIndex = 73;
             this.rb_appointment.Text = "Appointment";
             this.rb_appointment.UseVisualStyleBackColor = true;
-            //this.rb_appointment.CheckedChanged += new System.EventHandler(this.rb_appointment_CheckedChanged);
             // 
             // rb_task
             // 
@@ -206,15 +206,15 @@
             this.btn_save.UseVisualStyleBackColor = false;
             this.btn_save.Click += new System.EventHandler(this.btn_save_Click);
             // 
-            // lbl_collaborators
+            // lbl_contacts
             // 
-            this.lbl_collaborators.AutoSize = true;
-            this.lbl_collaborators.ForeColor = System.Drawing.Color.White;
-            this.lbl_collaborators.Location = new System.Drawing.Point(41, 421);
-            this.lbl_collaborators.Name = "lbl_collaborators";
-            this.lbl_collaborators.Size = new System.Drawing.Size(68, 13);
-            this.lbl_collaborators.TabIndex = 64;
-            this.lbl_collaborators.Text = "Collabortaors";
+            this.lbl_contacts.AutoSize = true;
+            this.lbl_contacts.ForeColor = System.Drawing.Color.White;
+            this.lbl_contacts.Location = new System.Drawing.Point(41, 421);
+            this.lbl_contacts.Name = "lbl_contacts";
+            this.lbl_contacts.Size = new System.Drawing.Size(49, 13);
+            this.lbl_contacts.TabIndex = 64;
+            this.lbl_contacts.Text = "Contacts";
             // 
             // lbl_header
             // 
@@ -290,12 +290,23 @@
             this.txt_name.Size = new System.Drawing.Size(250, 24);
             this.txt_name.TabIndex = 57;
             // 
+            // lbl_collaborators
+            // 
+            this.lbl_collaborators.AutoSize = true;
+            this.lbl_collaborators.ForeColor = System.Drawing.Color.White;
+            this.lbl_collaborators.Location = new System.Drawing.Point(335, 421);
+            this.lbl_collaborators.Name = "lbl_collaborators";
+            this.lbl_collaborators.Size = new System.Drawing.Size(99, 13);
+            this.lbl_collaborators.TabIndex = 79;
+            this.lbl_collaborators.Text = "Event Collaborators";
+            // 
             // EditEvent
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ClientSize = new System.Drawing.Size(627, 626);
+            this.Controls.Add(this.lbl_collaborators);
             this.Controls.Add(this.btn_removecollab);
             this.Controls.Add(this.cmb_evetncollab);
             this.Controls.Add(this.lbl_addcollab);
@@ -310,7 +321,7 @@
             this.Controls.Add(this.dtp_startdate);
             this.Controls.Add(this.pb_close);
             this.Controls.Add(this.btn_save);
-            this.Controls.Add(this.lbl_collaborators);
+            this.Controls.Add(this.lbl_contacts);
             this.Controls.Add(this.lbl_header);
             this.Controls.Add(this.lbl_email);
             this.Controls.Add(this.lbl_endtime);
@@ -344,7 +355,7 @@
         private System.Windows.Forms.DateTimePicker dtp_startdate;
         private System.Windows.Forms.PictureBox pb_close;
         private System.Windows.Forms.Button btn_save;
-        private System.Windows.Forms.Label lbl_collaborators;
+        private System.Windows.Forms.Label lbl_contacts;
         private System.Windows.Forms.Label lbl_header;
         private System.Windows.Forms.Label lbl_email;
         private System.Windows.Forms.Label lbl_endtime;
@@ -352,5 +363,6 @@
         private System.Windows.Forms.Label lbl_name;
         private System.Windows.Forms.TextBox txt_email;
         private System.Windows.Forms.TextBox txt_name;
+        private System.Windows.Forms.Label lbl_collaborators;
     }
 }

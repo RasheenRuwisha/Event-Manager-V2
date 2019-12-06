@@ -52,7 +52,6 @@ namespace EventManager.View.Contacts
             this.cpb_userimage.Left = this.Width / 2 - this.cpb_userimage.Width / 2;
             this.cpb_userimage.SizeMode = PictureBoxSizeMode.StretchImage;
             this.cpb_userimage.Image = bitmap;
-            bitmap.Dispose();
         }
 
 
@@ -70,11 +69,11 @@ namespace EventManager.View.Contacts
             PictureBox pbx = uiBuilder.GeneratePictureBox(17, 293, "dynamicpbx_chevup", Properties.Resources.chevup, 15, 15);
             pbx.Click += new EventHandler(this.RemoveUiClick);
             this.Controls.Add(pbx);
-            this.Controls.Add(uiBuilder.GenerateLongTextBox(42, 310, "dynamictxt_addressline1", ""));
-            this.Controls.Add(uiBuilder.GenerateLongTextBox(330, 310, "dynamictxt_addressline2", ""));
-            this.Controls.Add(uiBuilder.GenerateShortTextBox(42, 372, "dynamictxt_city", ""));
-            this.Controls.Add(uiBuilder.GenerateShortTextBox(243, 372, "dynamictxt_state", ""));
-            this.Controls.Add(uiBuilder.GenerateShortTextBox(451, 372, "dynamictxt_zip", ""));
+            this.Controls.Add(uiBuilder.GenerateLongTextBox(42, 310, "dynamictxt_addressline1", "",50));
+            this.Controls.Add(uiBuilder.GenerateLongTextBox(330, 310, "dynamictxt_addressline2", "",50));
+            this.Controls.Add(uiBuilder.GenerateShortTextBox(42, 372, "dynamictxt_city", "",50));
+            this.Controls.Add(uiBuilder.GenerateShortTextBox(243, 372, "dynamictxt_state", "",50));
+            this.Controls.Add(uiBuilder.GenerateShortTextBox(451, 372, "dynamictxt_zip", "",10));
             this.Controls.Add(uiBuilder.GenerateLabel(40, 293, "dynamiclbl_addressline1", "Address Line 1 "));
             this.Controls.Add(uiBuilder.GenerateLabel(329, 293, "dynamiclbl_addressline2", "Address Line 2 "));
             this.Controls.Add(uiBuilder.GenerateLabel(40, 355, "dynamiclbl_city", "City "));
@@ -185,8 +184,7 @@ namespace EventManager.View.Contacts
                             PictureBox pictureBox = Controls.Find("ptx_" + control.Name, true).FirstOrDefault() as PictureBox;
                             if (pictureBox == null)
                             {
-                                using (PictureBox error = uiMessage.AddErrorIcon(control.Name, control.Location.X + 255, control.Location.Y + 2))
-                                {
+                                PictureBox error = uiMessage.AddErrorIcon(control.Name, control.Location.X + 255, control.Location.Y + 2);
                                     if (this.InvokeRequired)
                                     {
                                         this.Invoke(new MethodInvoker(this.ShowErrors));
@@ -195,7 +193,6 @@ namespace EventManager.View.Contacts
                                     {
                                         this.Controls.Add(error);
                                     }
-                                }
 
                             }
                         }
@@ -264,8 +261,8 @@ namespace EventManager.View.Contacts
             else
             {
                 Banner banner = uiMessage.AddBanner("Contact with email already exists", "error");
-                banner.BringToFront();
                 this.Controls.Add(banner);
+                banner.BringToFront();
                 PictureBox error = uiMessage.AddErrorIcon(txt_email.Name, txt_email.Location.X + 255, txt_email.Location.Y + 2);
                 this.Controls.Add(error);
             }
@@ -280,8 +277,8 @@ namespace EventManager.View.Contacts
             else
             {
                 Banner banner = uiMessage.AddBanner("Contact with name already exists", "error");
-                banner.BringToFront();
                 this.Controls.Add(banner);
+                banner.BringToFront();
                 PictureBox error = uiMessage.AddErrorIcon(txt_email.Name, txt_email.Location.X + 255, txt_email.Location.Y + 2);
                 this.Controls.Add(error);
             }
@@ -328,7 +325,18 @@ namespace EventManager.View.Contacts
                 if (contact)
                 {
                     this.Controls.Remove(pictureBox);
-                    this.Close();
+                    Notification notification = new Notification("Contact Added Successfully");
+                    Timer timer = new Timer();
+                    notification.Show();
+
+                    timer.Tick += (o, ea) =>
+                    {
+                        notification.Close();
+                        this.Close();
+                    };
+
+                    timer.Interval = 1000;
+                    timer.Start();
                 }
                 else
                 {

@@ -61,17 +61,32 @@ namespace EventManager.View
             pnl_search.HorizontalScroll.Maximum = 0;
             pnl_search.AutoScroll = true;
 
-            this.dtp_searchstart.ValueChanged += new EventHandler(startDatePickerValueChanged);
+            this.dtp_searchstart.ValueChanged += new EventHandler(startPickerValueChanged);
+            this.dtp_seachend.ValueChanged += new EventHandler(endDate_ValueChanged);
+
+            dtp_searchstart.Value = DateTime.Today;
+            dtp_seachend.Value = DateTime.Today.AddHours(24).AddSeconds(-1);
+            cpb_userimage.Image = commonUtil.Base64ToBitmap(Application.UserAppDataRegistry.GetValue("image").ToString());
         }
 
-        void startDatePickerValueChanged(object sender, EventArgs e)
+        void startPickerValueChanged(object sender, EventArgs e)
+        {
+            if (dtp_searchstart.Value < dtp_seachend.Value)
+            {
+                this.dtp_searchstart.Value = this.dtp_seachend.Value;
+            }
+
+        }
+
+        private void endDate_ValueChanged(object sender, EventArgs e)
         {
             if (dtp_seachend.Value < dtp_searchstart.Value)
             {
-                this.dtp_seachend.Value = this.dtp_searchstart.Value;
-
+                dtp_seachend.Value = dtp_searchstart.Value.AddHours(24).AddSeconds(-1); ;
             }
         }
+
+
 
 
         // Contact Manegement Start
@@ -606,8 +621,6 @@ namespace EventManager.View
 
         private void cpb_pred_addevent_Click(object sender, EventArgs e)
         {
-            this.pnl_eventloader.BringToFront();
-            pnl_events.BringToFront();
             AddEvent addEvent = new AddEvent();
             addEvent.FormClosing += new FormClosingEventHandler(this.AddEvent_FormClosing);
             addEvent.ShowDialog();
@@ -615,8 +628,6 @@ namespace EventManager.View
 
         private void cpb_pred_adduser_Click(object sender, EventArgs e)
         {
-            this.pnl_loader.BringToFront();
-            pnl_contacts.BringToFront();
             AddContact addContact = new AddContact();
             addContact.FormClosing += new FormClosingEventHandler(this.AddContact_FormClosing);
             addContact.ShowDialog();
@@ -631,8 +642,6 @@ namespace EventManager.View
 
         private void cpb_cont_addevent_Click(object sender, EventArgs e)
         {
-            this.pnl_eventloader.BringToFront();
-            pnl_events.BringToFront();
             AddEvent addEvent = new AddEvent();
             addEvent.FormClosing += new FormClosingEventHandler(this.AddEvent_FormClosing);
             addEvent.ShowDialog();

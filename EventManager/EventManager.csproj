@@ -113,6 +113,10 @@
     <Compile Include="Migrations\201912051731314_RemovePasswordMaxLength.Designer.cs">
       <DependentUpon>201912051731314_RemovePasswordMaxLength.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912061227422_AddedContactName.cs" />
+    <Compile Include="Migrations\201912061227422_AddedContactName.Designer.cs">
+      <DependentUpon>201912061227422_AddedContactName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Appointment.cs" />
     <Compile Include="Model\ComboBoxItem.cs" />
@@ -153,6 +157,12 @@
     </Compile>
     <Compile Include="UIComponents\EventListView.Designer.cs">
       <DependentUpon>EventListView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIComponents\Notification.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIComponents\Notification.Designer.cs">
+      <DependentUpon>Notification.cs</DependentUpon>
     </Compile>
     <Compile Include="Utility\CommonUtil.cs" />
     <Compile Include="Utility\EventGenerator.cs" />
@@ -270,6 +280,9 @@
     <EmbeddedResource Include="Migrations\201912051731314_RemovePasswordMaxLength.resx">
       <DependentUpon>201912051731314_RemovePasswordMaxLength.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912061227422_AddedContactName.resx">
+      <DependentUpon>201912061227422_AddedContactName.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UIComponents\Banner.resx">
       <DependentUpon>Banner.cs</DependentUpon>
     </EmbeddedResource>
@@ -281,6 +294,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UIComponents\EventListView.resx">
       <DependentUpon>EventListView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIComponents\Notification.resx">
+      <DependentUpon>Notification.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\Contacts\AddContact.resx">
       <DependentUpon>AddContact.cs</DependentUpon>

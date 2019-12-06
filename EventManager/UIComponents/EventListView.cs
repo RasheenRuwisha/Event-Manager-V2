@@ -26,7 +26,7 @@ namespace EventManager.UIComponents
             {
                 this.lbl_title.Text = value.Title;
                 this.lbl_startdate.Text = value.StartDate.ToString();
-                this.lbl_enddate.Text = value.EndDate.ToString();
+                this.lbl_enddate.Text = $"- {value.EndDate.ToString()}";
                 this.Tag = value;
 
                 this.lbl_enddate.Location = new Point(this.lbl_startdate.Width + 20, this.lbl_startdate.Location.Y);

@@ -20,11 +20,17 @@ namespace EventManager.View
         UiMessageUtitlity uiMessageUtitlity = new UiMessageUtitlity();
         CommonUtil commonUtil = new CommonUtil();
         Banner banner = new Banner();
-        String otp;
+        string otp;
+        string window;
         public ForgotPassword()
         {
             InitializeComponent();
+        }
 
+        public ForgotPassword(string window)
+        {
+            InitializeComponent();
+            this.window = window;
 
             this.logo.Image = Properties.Resources.logo;
             this.logo.AutoSize = false;
@@ -43,13 +49,19 @@ namespace EventManager.View
             this.txt_otp.Size = new System.Drawing.Size(250, 30);
 
             this.email_panel.BringToFront();
+            if (!window.Equals("Login"))
+            {
+                txt_email.Text = Application.UserAppDataRegistry.GetValue("email").ToString();
+                txt_email.Enabled = false;
+                Controls.Remove(lbl_login);
+            }
         }
 
         private async void btn_send_mail_Click(object sender, EventArgs e)
         {
             PictureBox picture = commonUtil.addLoaderImage(this.btn_send_mail.Location.X + 205, this.btn_send_mail.Location.Y + 2);
             btn_send_mail.Enabled = false;
-            Controls.Add(picture);
+            email_panel.Controls.Add(picture);
             if(banner != null)
             {
                 this.email_panel.Controls.Remove(banner);
@@ -96,7 +108,7 @@ namespace EventManager.View
             }
 
             btn_send_mail.Enabled = true;
-            Controls.Remove(picture);
+            email_panel.Controls.Remove(picture);
         }
 
         private String sendEmail()
@@ -136,19 +148,33 @@ namespace EventManager.View
         {
             if (this.validatePassword())
             {
+                string password = PasswordHasher.CreatePasswordHash(txt_password.Text.Trim());
                 UserCredential usersCredential = new UserCredential();
                 using(DatabaseModel db = new DatabaseModel())
                 {
                     usersCredential = db.Userscredentials.Find(this.txt_email.Text.Trim().ToLower());
-                    usersCredential.Password = txt_password.Text.Trim();
+                    usersCredential.Password = password;
                     db.SaveChanges();
                 }
-                Application.UserAppDataRegistry.SetValue("remeberMe", false);
-                Application.UserAppDataRegistry.SetValue("username", "");
-                Application.UserAppDataRegistry.SetValue("password", "");
-                Login login = new Login();
-                login.Show();
-                this.Close();
+
+                MessageBox.Show("Password Resetted Successfully");
+
+                if (window.Equals("Login"))
+                {
+                    Application.UserAppDataRegistry.SetValue("remeberMe", false);
+                    Application.UserAppDataRegistry.SetValue("username", "");
+                    Application.UserAppDataRegistry.SetValue("password", "");
+                    Login login = new Login();
+                    login.Show();
+                    this.Close();
+                }
+                else
+                {
+                    Application.UserAppDataRegistry.SetValue("password", password);
+                    this.Close();
+                }
+        
+                
             }
         }
 
@@ -157,6 +183,18 @@ namespace EventManager.View
             if (this.txt_otp.Text.Trim().Equals(this.otp))
             {
                 this.reset_panel.BringToFront();
+            }
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            if (window.Equals("Login"))
+            {
+                Application.Exit();
+            }
+            else
+            {
+                this.Hide();
             }
         }
     }

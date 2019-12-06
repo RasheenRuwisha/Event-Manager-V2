@@ -347,6 +347,7 @@ namespace EventManager.DatabaseHelper
                     {
                         updateQuery.Add(new XElement("EventContacts", userEvent.EventContacts.Select(x => new XElement("EventContact",
                                                     new XElement("Id", eventContact.Id),
+                                                    new XElement("ContactName", eventContact.ContactName),
                                                     new XElement("ContactId", eventContact.ContactId),
                                                     new XElement("UserId", eventContact.UserId),
                                                     new XElement("EventId", eventContact.EventId)))));
@@ -429,6 +430,7 @@ namespace EventManager.DatabaseHelper
                                        EventContacts = item.Element("EventContacts").Elements("EventContact").Select(c => new EventContact
                                        {
                                            Id = Convert.ToInt32(c.Element("Id").Value),
+                                           ContactName = c.Element("ContactName").Value,
                                            UserId = c.Element("UserId").Value,
                                            EventId = c.Element("EventId").Value,
                                            ContactId = c.Element("ContactId").Value,
@@ -477,6 +479,7 @@ namespace EventManager.DatabaseHelper
                                        EventContacts = item.Element("EventContacts").Elements("EventContact").Select(c => new EventContact
                                        {
                                            Id = Convert.ToInt32(c.Element("Id").Value),
+                                           ContactName = c.Element("ContactName").Value,
                                            UserId = c.Element("UserId").Value,
                                            EventId = c.Element("EventId").Value,
                                            ContactId = c.Element("ContactId").Value,
@@ -516,7 +519,7 @@ namespace EventManager.DatabaseHelper
             catch (Exception ex)
             {
                 Logger.LogException(ex, true);
-                return e;
+                return filterQuery;
             }
         }
 

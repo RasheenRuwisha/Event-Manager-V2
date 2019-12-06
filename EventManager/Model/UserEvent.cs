@@ -39,7 +39,7 @@ namespace EventManager.Model
         public string City { get; set; }
         [MaxLength(50)]
         public string State { get; set; }
-        [MaxLength(50)]
+        [MaxLength(10)]
         public string Zipcode { get; set; }
     }
 }

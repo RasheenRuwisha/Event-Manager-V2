@@ -30,16 +30,12 @@
         {
             this.pnl_menu = new System.Windows.Forms.Panel();
             this.btn_profile = new System.Windows.Forms.Button();
-            this.cpb_userimage = new EventManager.UIComponents.CircularPictureBox();
             this.btn_logout = new System.Windows.Forms.Button();
             this.lbl_username = new System.Windows.Forms.Label();
             this.btn_contact = new System.Windows.Forms.Button();
             this.btn_predictions = new System.Windows.Forms.Button();
             this.btn_events = new System.Windows.Forms.Button();
             this.pnl_contacts = new System.Windows.Forms.Panel();
-            this.cpb_cont_adduser = new EventManager.UIComponents.CircularPictureBox();
-            this.cpb_cont_refresh = new EventManager.UIComponents.CircularPictureBox();
-            this.cpb_cont_addevent = new EventManager.UIComponents.CircularPictureBox();
             this.pnl_search = new System.Windows.Forms.Panel();
             this.pnl_loader = new System.Windows.Forms.Panel();
             this.lbl_cont_loadertext = new System.Windows.Forms.Label();
@@ -50,8 +46,6 @@
             this.pnl_contactlist = new System.Windows.Forms.Panel();
             this.lbl_contact_header = new System.Windows.Forms.Label();
             this.pnl_events = new System.Windows.Forms.Panel();
-            this.cpb_evnt_addcont = new EventManager.UIComponents.CircularPictureBox();
-            this.cpb_evnt_refresh = new EventManager.UIComponents.CircularPictureBox();
             this.pnl_eventsearch = new System.Windows.Forms.Panel();
             this.lbl_searchend = new System.Windows.Forms.Label();
             this.lbl_searchstart = new System.Windows.Forms.Label();
@@ -61,14 +55,10 @@
             this.lbl_evnt_loadertext = new System.Windows.Forms.Label();
             this.pb_evnt_loaderimage = new System.Windows.Forms.PictureBox();
             this.pb_eventsearch = new System.Windows.Forms.PictureBox();
-            this.cpb_evnt_addevent = new EventManager.UIComponents.CircularPictureBox();
             this.pnl_eventspreview = new System.Windows.Forms.Panel();
             this.pnl_eventlist = new System.Windows.Forms.Panel();
             this.lbl_eventheader = new System.Windows.Forms.Label();
             this.pnl_prediction = new System.Windows.Forms.Panel();
-            this.cpb_pred_adduser = new EventManager.UIComponents.CircularPictureBox();
-            this.cpb_pred_refresh = new EventManager.UIComponents.CircularPictureBox();
-            this.cpb_pred_addevent = new EventManager.UIComponents.CircularPictureBox();
             this.pnl_predictiondet = new System.Windows.Forms.Panel();
             this.lbl_upcoming = new System.Windows.Forms.Label();
             this.lbl_pastmonth = new System.Windows.Forms.Label();
@@ -80,35 +70,45 @@
             this.lbl_dailyAverage = new System.Windows.Forms.Label();
             this.lbl_appointments = new System.Windows.Forms.Label();
             this.lbl_events = new System.Windows.Forms.Label();
-            this.cpbar_appointments = new EventManager.UIComponents.CircularProgressBar();
-            this.cpbar_tasks = new EventManager.UIComponents.CircularProgressBar();
             this.pnl_predloader = new System.Windows.Forms.Panel();
             this.lbl_pred_loadertext = new System.Windows.Forms.Label();
             this.pb_pred_loaderimage = new System.Windows.Forms.PictureBox();
             this.lbl_predictionheader = new System.Windows.Forms.Label();
+            this.cpb_evnt_addcont = new EventManager.UIComponents.CircularPictureBox();
+            this.cpb_evnt_refresh = new EventManager.UIComponents.CircularPictureBox();
+            this.cpb_evnt_addevent = new EventManager.UIComponents.CircularPictureBox();
+            this.cpb_cont_adduser = new EventManager.UIComponents.CircularPictureBox();
+            this.cpb_cont_refresh = new EventManager.UIComponents.CircularPictureBox();
+            this.cpb_cont_addevent = new EventManager.UIComponents.CircularPictureBox();
+            this.cpb_pred_adduser = new EventManager.UIComponents.CircularPictureBox();
+            this.cpb_pred_refresh = new EventManager.UIComponents.CircularPictureBox();
+            this.cpb_pred_addevent = new EventManager.UIComponents.CircularPictureBox();
+            this.cpbar_appointments = new EventManager.UIComponents.CircularProgressBar();
+            this.cpbar_tasks = new EventManager.UIComponents.CircularProgressBar();
+            this.cpb_userimage = new EventManager.UIComponents.CircularPictureBox();
             this.pnl_menu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.cpb_userimage)).BeginInit();
             this.pnl_contacts.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.cpb_cont_adduser)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cpb_cont_refresh)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cpb_cont_addevent)).BeginInit();
             this.pnl_loader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_cont_loaderimage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_search)).BeginInit();
             this.pnl_events.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.cpb_evnt_addcont)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cpb_evnt_refresh)).BeginInit();
             this.pnl_eventloader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_evnt_loaderimage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_eventsearch)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cpb_evnt_addevent)).BeginInit();
             this.pnl_prediction.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.cpb_pred_adduser)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cpb_pred_refresh)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cpb_pred_addevent)).BeginInit();
             this.pnl_predictiondet.SuspendLayout();
             this.pnl_predloader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_pred_loaderimage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cpb_evnt_addcont)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cpb_evnt_refresh)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cpb_evnt_addevent)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cpb_cont_adduser)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cpb_cont_refresh)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cpb_cont_addevent)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cpb_pred_adduser)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cpb_pred_refresh)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cpb_pred_addevent)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cpb_userimage)).BeginInit();
             this.SuspendLayout();
             // 
             // pnl_menu
@@ -140,18 +140,6 @@
             this.btn_profile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btn_profile.UseVisualStyleBackColor = true;
             this.btn_profile.Click += new System.EventHandler(this.btn_profile_Click);
-            // 
-            // cpb_userimage
-            // 
-            this.cpb_userimage.BackColor = System.Drawing.Color.Transparent;
-            this.cpb_userimage.Image = global::EventManager.Properties.Resources.refresh;
-            this.cpb_userimage.Location = new System.Drawing.Point(21, 13);
-            this.cpb_userimage.Name = "cpb_userimage";
-            this.cpb_userimage.Size = new System.Drawing.Size(50, 50);
-            this.cpb_userimage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.cpb_userimage.TabIndex = 19;
-            this.cpb_userimage.TabStop = false;
-            this.cpb_userimage.Click += new System.EventHandler(this.cpb_userimage_Click);
             // 
             // btn_logout
             // 
@@ -242,42 +230,6 @@
             this.pnl_contacts.Name = "pnl_contacts";
             this.pnl_contacts.Size = new System.Drawing.Size(1052, 706);
             this.pnl_contacts.TabIndex = 4;
-            // 
-            // cpb_cont_adduser
-            // 
-            this.cpb_cont_adduser.BackColor = System.Drawing.Color.Transparent;
-            this.cpb_cont_adduser.Image = global::EventManager.Properties.Resources.adduser;
-            this.cpb_cont_adduser.Location = new System.Drawing.Point(930, 21);
-            this.cpb_cont_adduser.Name = "cpb_cont_adduser";
-            this.cpb_cont_adduser.Size = new System.Drawing.Size(50, 50);
-            this.cpb_cont_adduser.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.cpb_cont_adduser.TabIndex = 21;
-            this.cpb_cont_adduser.TabStop = false;
-            this.cpb_cont_adduser.Click += new System.EventHandler(this.cpb_cont_adduser_Click);
-            // 
-            // cpb_cont_refresh
-            // 
-            this.cpb_cont_refresh.BackColor = System.Drawing.Color.Transparent;
-            this.cpb_cont_refresh.Image = global::EventManager.Properties.Resources.refresh;
-            this.cpb_cont_refresh.Location = new System.Drawing.Point(874, 21);
-            this.cpb_cont_refresh.Name = "cpb_cont_refresh";
-            this.cpb_cont_refresh.Size = new System.Drawing.Size(50, 50);
-            this.cpb_cont_refresh.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.cpb_cont_refresh.TabIndex = 20;
-            this.cpb_cont_refresh.TabStop = false;
-            this.cpb_cont_refresh.Click += new System.EventHandler(this.cpb_cont_refresh_Click);
-            // 
-            // cpb_cont_addevent
-            // 
-            this.cpb_cont_addevent.BackColor = System.Drawing.Color.Transparent;
-            this.cpb_cont_addevent.Image = global::EventManager.Properties.Resources.eventadd;
-            this.cpb_cont_addevent.Location = new System.Drawing.Point(990, 25);
-            this.cpb_cont_addevent.Name = "cpb_cont_addevent";
-            this.cpb_cont_addevent.Size = new System.Drawing.Size(40, 40);
-            this.cpb_cont_addevent.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.cpb_cont_addevent.TabIndex = 19;
-            this.cpb_cont_addevent.TabStop = false;
-            this.cpb_cont_addevent.Click += new System.EventHandler(this.cpb_cont_addevent_Click);
             // 
             // pnl_search
             // 
@@ -388,30 +340,6 @@
             this.pnl_events.Size = new System.Drawing.Size(1052, 706);
             this.pnl_events.TabIndex = 13;
             // 
-            // cpb_evnt_addcont
-            // 
-            this.cpb_evnt_addcont.BackColor = System.Drawing.Color.Transparent;
-            this.cpb_evnt_addcont.Image = global::EventManager.Properties.Resources.adduser;
-            this.cpb_evnt_addcont.Location = new System.Drawing.Point(930, 21);
-            this.cpb_evnt_addcont.Name = "cpb_evnt_addcont";
-            this.cpb_evnt_addcont.Size = new System.Drawing.Size(50, 50);
-            this.cpb_evnt_addcont.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.cpb_evnt_addcont.TabIndex = 18;
-            this.cpb_evnt_addcont.TabStop = false;
-            this.cpb_evnt_addcont.Click += new System.EventHandler(this.cpb_evnt_addcont_Click);
-            // 
-            // cpb_evnt_refresh
-            // 
-            this.cpb_evnt_refresh.BackColor = System.Drawing.Color.Transparent;
-            this.cpb_evnt_refresh.Image = global::EventManager.Properties.Resources.refresh;
-            this.cpb_evnt_refresh.Location = new System.Drawing.Point(874, 21);
-            this.cpb_evnt_refresh.Name = "cpb_evnt_refresh";
-            this.cpb_evnt_refresh.Size = new System.Drawing.Size(50, 50);
-            this.cpb_evnt_refresh.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.cpb_evnt_refresh.TabIndex = 17;
-            this.cpb_evnt_refresh.TabStop = false;
-            this.cpb_evnt_refresh.Click += new System.EventHandler(this.cpb_refresh_Click);
-            // 
             // pnl_eventsearch
             // 
             this.pnl_eventsearch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
@@ -441,7 +369,6 @@
             // dtp_seachend
             // 
             this.dtp_seachend.CustomFormat = "dd-MM-yyyy hh:mm ";
-            this.dtp_seachend.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtp_seachend.Location = new System.Drawing.Point(349, 65);
             this.dtp_seachend.Name = "dtp_seachend";
             this.dtp_seachend.Size = new System.Drawing.Size(200, 20);
@@ -450,9 +377,9 @@
             // dtp_searchstart
             // 
             this.dtp_searchstart.CustomFormat = "dd-MM-yyyy hh:mm ";
-            this.dtp_searchstart.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtp_searchstart.Location = new System.Drawing.Point(68, 65);
             this.dtp_searchstart.Name = "dtp_searchstart";
+            this.dtp_searchstart.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.dtp_searchstart.Size = new System.Drawing.Size(200, 20);
             this.dtp_searchstart.TabIndex = 13;
             // 
@@ -497,18 +424,6 @@
             this.pb_eventsearch.TabStop = false;
             this.pb_eventsearch.Click += new System.EventHandler(this.pb_eventsearch_Click);
             // 
-            // cpb_evnt_addevent
-            // 
-            this.cpb_evnt_addevent.BackColor = System.Drawing.Color.Transparent;
-            this.cpb_evnt_addevent.Image = global::EventManager.Properties.Resources.eventadd;
-            this.cpb_evnt_addevent.Location = new System.Drawing.Point(990, 25);
-            this.cpb_evnt_addevent.Name = "cpb_evnt_addevent";
-            this.cpb_evnt_addevent.Size = new System.Drawing.Size(40, 40);
-            this.cpb_evnt_addevent.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.cpb_evnt_addevent.TabIndex = 10;
-            this.cpb_evnt_addevent.TabStop = false;
-            this.cpb_evnt_addevent.Click += new System.EventHandler(this.cpb_addevent_Click);
-            // 
             // pnl_eventspreview
             // 
             this.pnl_eventspreview.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
@@ -551,42 +466,6 @@
             this.pnl_prediction.Name = "pnl_prediction";
             this.pnl_prediction.Size = new System.Drawing.Size(1052, 706);
             this.pnl_prediction.TabIndex = 18;
-            // 
-            // cpb_pred_adduser
-            // 
-            this.cpb_pred_adduser.BackColor = System.Drawing.Color.Transparent;
-            this.cpb_pred_adduser.Image = global::EventManager.Properties.Resources.adduser;
-            this.cpb_pred_adduser.Location = new System.Drawing.Point(930, 21);
-            this.cpb_pred_adduser.Name = "cpb_pred_adduser";
-            this.cpb_pred_adduser.Size = new System.Drawing.Size(50, 50);
-            this.cpb_pred_adduser.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.cpb_pred_adduser.TabIndex = 24;
-            this.cpb_pred_adduser.TabStop = false;
-            this.cpb_pred_adduser.Click += new System.EventHandler(this.cpb_pred_adduser_Click);
-            // 
-            // cpb_pred_refresh
-            // 
-            this.cpb_pred_refresh.BackColor = System.Drawing.Color.Transparent;
-            this.cpb_pred_refresh.Image = global::EventManager.Properties.Resources.refresh;
-            this.cpb_pred_refresh.Location = new System.Drawing.Point(874, 21);
-            this.cpb_pred_refresh.Name = "cpb_pred_refresh";
-            this.cpb_pred_refresh.Size = new System.Drawing.Size(50, 50);
-            this.cpb_pred_refresh.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.cpb_pred_refresh.TabIndex = 23;
-            this.cpb_pred_refresh.TabStop = false;
-            this.cpb_pred_refresh.Click += new System.EventHandler(this.cpb_pred_refresh_Click);
-            // 
-            // cpb_pred_addevent
-            // 
-            this.cpb_pred_addevent.BackColor = System.Drawing.Color.Transparent;
-            this.cpb_pred_addevent.Image = global::EventManager.Properties.Resources.eventadd;
-            this.cpb_pred_addevent.Location = new System.Drawing.Point(990, 25);
-            this.cpb_pred_addevent.Name = "cpb_pred_addevent";
-            this.cpb_pred_addevent.Size = new System.Drawing.Size(40, 40);
-            this.cpb_pred_addevent.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.cpb_pred_addevent.TabIndex = 22;
-            this.cpb_pred_addevent.TabStop = false;
-            this.cpb_pred_addevent.Click += new System.EventHandler(this.cpb_pred_addevent_Click);
             // 
             // pnl_predictiondet
             // 
@@ -709,22 +588,6 @@
             this.lbl_events.TabIndex = 3;
             this.lbl_events.Text = "Tasks Created";
             // 
-            // cpbar_appointments
-            // 
-            this.cpbar_appointments.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
-            this.cpbar_appointments.Location = new System.Drawing.Point(600, 70);
-            this.cpbar_appointments.Name = "cpbar_appointments";
-            this.cpbar_appointments.Size = new System.Drawing.Size(200, 200);
-            this.cpbar_appointments.TabIndex = 2;
-            // 
-            // cpbar_tasks
-            // 
-            this.cpbar_tasks.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
-            this.cpbar_tasks.Location = new System.Drawing.Point(251, 70);
-            this.cpbar_tasks.Name = "cpbar_tasks";
-            this.cpbar_tasks.Size = new System.Drawing.Size(200, 200);
-            this.cpbar_tasks.TabIndex = 1;
-            // 
             // pnl_predloader
             // 
             this.pnl_predloader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
@@ -766,14 +629,150 @@
             this.lbl_predictionheader.TabIndex = 6;
             this.lbl_predictionheader.Text = "Prediction";
             // 
+            // cpb_evnt_addcont
+            // 
+            this.cpb_evnt_addcont.BackColor = System.Drawing.Color.Transparent;
+            this.cpb_evnt_addcont.Image = global::EventManager.Properties.Resources.adduser;
+            this.cpb_evnt_addcont.Location = new System.Drawing.Point(930, 21);
+            this.cpb_evnt_addcont.Name = "cpb_evnt_addcont";
+            this.cpb_evnt_addcont.Size = new System.Drawing.Size(50, 50);
+            this.cpb_evnt_addcont.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.cpb_evnt_addcont.TabIndex = 18;
+            this.cpb_evnt_addcont.TabStop = false;
+            this.cpb_evnt_addcont.Click += new System.EventHandler(this.cpb_evnt_addcont_Click);
+            // 
+            // cpb_evnt_refresh
+            // 
+            this.cpb_evnt_refresh.BackColor = System.Drawing.Color.Transparent;
+            this.cpb_evnt_refresh.Image = global::EventManager.Properties.Resources.refresh;
+            this.cpb_evnt_refresh.Location = new System.Drawing.Point(874, 21);
+            this.cpb_evnt_refresh.Name = "cpb_evnt_refresh";
+            this.cpb_evnt_refresh.Size = new System.Drawing.Size(50, 50);
+            this.cpb_evnt_refresh.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.cpb_evnt_refresh.TabIndex = 17;
+            this.cpb_evnt_refresh.TabStop = false;
+            this.cpb_evnt_refresh.Click += new System.EventHandler(this.cpb_refresh_Click);
+            // 
+            // cpb_evnt_addevent
+            // 
+            this.cpb_evnt_addevent.BackColor = System.Drawing.Color.Transparent;
+            this.cpb_evnt_addevent.Image = global::EventManager.Properties.Resources.eventadd;
+            this.cpb_evnt_addevent.Location = new System.Drawing.Point(990, 25);
+            this.cpb_evnt_addevent.Name = "cpb_evnt_addevent";
+            this.cpb_evnt_addevent.Size = new System.Drawing.Size(40, 40);
+            this.cpb_evnt_addevent.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.cpb_evnt_addevent.TabIndex = 10;
+            this.cpb_evnt_addevent.TabStop = false;
+            this.cpb_evnt_addevent.Click += new System.EventHandler(this.cpb_addevent_Click);
+            // 
+            // cpb_cont_adduser
+            // 
+            this.cpb_cont_adduser.BackColor = System.Drawing.Color.Transparent;
+            this.cpb_cont_adduser.Image = global::EventManager.Properties.Resources.adduser;
+            this.cpb_cont_adduser.Location = new System.Drawing.Point(930, 21);
+            this.cpb_cont_adduser.Name = "cpb_cont_adduser";
+            this.cpb_cont_adduser.Size = new System.Drawing.Size(50, 50);
+            this.cpb_cont_adduser.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.cpb_cont_adduser.TabIndex = 21;
+            this.cpb_cont_adduser.TabStop = false;
+            this.cpb_cont_adduser.Click += new System.EventHandler(this.cpb_cont_adduser_Click);
+            // 
+            // cpb_cont_refresh
+            // 
+            this.cpb_cont_refresh.BackColor = System.Drawing.Color.Transparent;
+            this.cpb_cont_refresh.Image = global::EventManager.Properties.Resources.refresh;
+            this.cpb_cont_refresh.Location = new System.Drawing.Point(874, 21);
+            this.cpb_cont_refresh.Name = "cpb_cont_refresh";
+            this.cpb_cont_refresh.Size = new System.Drawing.Size(50, 50);
+            this.cpb_cont_refresh.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.cpb_cont_refresh.TabIndex = 20;
+            this.cpb_cont_refresh.TabStop = false;
+            this.cpb_cont_refresh.Click += new System.EventHandler(this.cpb_cont_refresh_Click);
+            // 
+            // cpb_cont_addevent
+            // 
+            this.cpb_cont_addevent.BackColor = System.Drawing.Color.Transparent;
+            this.cpb_cont_addevent.Image = global::EventManager.Properties.Resources.eventadd;
+            this.cpb_cont_addevent.Location = new System.Drawing.Point(990, 25);
+            this.cpb_cont_addevent.Name = "cpb_cont_addevent";
+            this.cpb_cont_addevent.Size = new System.Drawing.Size(40, 40);
+            this.cpb_cont_addevent.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.cpb_cont_addevent.TabIndex = 19;
+            this.cpb_cont_addevent.TabStop = false;
+            this.cpb_cont_addevent.Click += new System.EventHandler(this.cpb_cont_addevent_Click);
+            // 
+            // cpb_pred_adduser
+            // 
+            this.cpb_pred_adduser.BackColor = System.Drawing.Color.Transparent;
+            this.cpb_pred_adduser.Image = global::EventManager.Properties.Resources.adduser;
+            this.cpb_pred_adduser.Location = new System.Drawing.Point(930, 21);
+            this.cpb_pred_adduser.Name = "cpb_pred_adduser";
+            this.cpb_pred_adduser.Size = new System.Drawing.Size(50, 50);
+            this.cpb_pred_adduser.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.cpb_pred_adduser.TabIndex = 24;
+            this.cpb_pred_adduser.TabStop = false;
+            this.cpb_pred_adduser.Click += new System.EventHandler(this.cpb_pred_adduser_Click);
+            // 
+            // cpb_pred_refresh
+            // 
+            this.cpb_pred_refresh.BackColor = System.Drawing.Color.Transparent;
+            this.cpb_pred_refresh.Image = global::EventManager.Properties.Resources.refresh;
+            this.cpb_pred_refresh.Location = new System.Drawing.Point(874, 21);
+            this.cpb_pred_refresh.Name = "cpb_pred_refresh";
+            this.cpb_pred_refresh.Size = new System.Drawing.Size(50, 50);
+            this.cpb_pred_refresh.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.cpb_pred_refresh.TabIndex = 23;
+            this.cpb_pred_refresh.TabStop = false;
+            this.cpb_pred_refresh.Click += new System.EventHandler(this.cpb_pred_refresh_Click);
+            // 
+            // cpb_pred_addevent
+            // 
+            this.cpb_pred_addevent.BackColor = System.Drawing.Color.Transparent;
+            this.cpb_pred_addevent.Image = global::EventManager.Properties.Resources.eventadd;
+            this.cpb_pred_addevent.Location = new System.Drawing.Point(990, 25);
+            this.cpb_pred_addevent.Name = "cpb_pred_addevent";
+            this.cpb_pred_addevent.Size = new System.Drawing.Size(40, 40);
+            this.cpb_pred_addevent.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.cpb_pred_addevent.TabIndex = 22;
+            this.cpb_pred_addevent.TabStop = false;
+            this.cpb_pred_addevent.Click += new System.EventHandler(this.cpb_pred_addevent_Click);
+            // 
+            // cpbar_appointments
+            // 
+            this.cpbar_appointments.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
+            this.cpbar_appointments.Location = new System.Drawing.Point(600, 70);
+            this.cpbar_appointments.Name = "cpbar_appointments";
+            this.cpbar_appointments.Size = new System.Drawing.Size(200, 200);
+            this.cpbar_appointments.TabIndex = 2;
+            // 
+            // cpbar_tasks
+            // 
+            this.cpbar_tasks.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
+            this.cpbar_tasks.Location = new System.Drawing.Point(251, 70);
+            this.cpbar_tasks.Name = "cpbar_tasks";
+            this.cpbar_tasks.Size = new System.Drawing.Size(200, 200);
+            this.cpbar_tasks.TabIndex = 1;
+            // 
+            // cpb_userimage
+            // 
+            this.cpb_userimage.BackColor = System.Drawing.Color.Transparent;
+            this.cpb_userimage.Image = global::EventManager.Properties.Resources.refresh;
+            this.cpb_userimage.Location = new System.Drawing.Point(21, 13);
+            this.cpb_userimage.Name = "cpb_userimage";
+            this.cpb_userimage.Size = new System.Drawing.Size(50, 50);
+            this.cpb_userimage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.cpb_userimage.TabIndex = 19;
+            this.cpb_userimage.TabStop = false;
+            this.cpb_userimage.Click += new System.EventHandler(this.cpb_userimage_Click);
+            // 
             // Dashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
             this.ClientSize = new System.Drawing.Size(1366, 705);
-            this.Controls.Add(this.pnl_contacts);
             this.Controls.Add(this.pnl_events);
+            this.Controls.Add(this.pnl_contacts);
             this.Controls.Add(this.pnl_prediction);
             this.Controls.Add(this.pnl_menu);
             this.Name = "Dashboard";
@@ -782,35 +781,35 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.pnl_menu.ResumeLayout(false);
             this.pnl_menu.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.cpb_userimage)).EndInit();
             this.pnl_contacts.ResumeLayout(false);
             this.pnl_contacts.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.cpb_cont_adduser)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cpb_cont_refresh)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cpb_cont_addevent)).EndInit();
             this.pnl_loader.ResumeLayout(false);
             this.pnl_loader.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_cont_loaderimage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_search)).EndInit();
             this.pnl_events.ResumeLayout(false);
             this.pnl_events.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.cpb_evnt_addcont)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cpb_evnt_refresh)).EndInit();
             this.pnl_eventloader.ResumeLayout(false);
             this.pnl_eventloader.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_evnt_loaderimage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_eventsearch)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cpb_evnt_addevent)).EndInit();
             this.pnl_prediction.ResumeLayout(false);
             this.pnl_prediction.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.cpb_pred_adduser)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cpb_pred_refresh)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cpb_pred_addevent)).EndInit();
             this.pnl_predictiondet.ResumeLayout(false);
             this.pnl_predictiondet.PerformLayout();
             this.pnl_predloader.ResumeLayout(false);
             this.pnl_predloader.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_pred_loaderimage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cpb_evnt_addcont)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cpb_evnt_refresh)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cpb_evnt_addevent)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cpb_cont_adduser)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cpb_cont_refresh)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cpb_cont_addevent)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cpb_pred_adduser)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cpb_pred_refresh)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cpb_pred_addevent)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cpb_userimage)).EndInit();
             this.ResumeLayout(false);
 
         }

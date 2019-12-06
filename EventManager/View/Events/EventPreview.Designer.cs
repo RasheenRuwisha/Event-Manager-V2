@@ -39,6 +39,7 @@
             this.lbl_title = new System.Windows.Forms.Label();
             this.lbl_repeat = new System.Windows.Forms.Label();
             this.lbl_desc = new System.Windows.Forms.Label();
+            this.lbl_collabs = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lbl_address2
@@ -166,11 +167,24 @@
             this.lbl_desc.TabIndex = 18;
             this.lbl_desc.Text = "Notes :";
             // 
+            // lbl_collabs
+            // 
+            this.lbl_collabs.AutoSize = true;
+            this.lbl_collabs.Font = new System.Drawing.Font("HoloLens MDL2 Assets", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_collabs.ForeColor = System.Drawing.Color.White;
+            this.lbl_collabs.Location = new System.Drawing.Point(17, 274);
+            this.lbl_collabs.Name = "lbl_collabs";
+            this.lbl_collabs.Size = new System.Drawing.Size(106, 19);
+            this.lbl_collabs.TabIndex = 21;
+            this.lbl_collabs.Text = "Collaborators";
+            this.lbl_collabs.Visible = false;
+            // 
             // EventPreview
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
+            this.Controls.Add(this.lbl_collabs);
             this.Controls.Add(this.lbl_repeat);
             this.Controls.Add(this.lbl_desc);
             this.Controls.Add(this.lbl_address2);
@@ -202,5 +216,6 @@
         private System.Windows.Forms.Label lbl_title;
         private System.Windows.Forms.Label lbl_repeat;
         private System.Windows.Forms.Label lbl_desc;
+        private System.Windows.Forms.Label lbl_collabs;
     }
 }

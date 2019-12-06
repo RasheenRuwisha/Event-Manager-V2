@@ -102,5 +102,11 @@ namespace EventManager.Utility
             Application.UserAppDataRegistry.SetValue("password", user.Password);
             Application.UserAppDataRegistry.SetValue("remeberMe", true);
         }
+
+        public void AddUserUpdatedDetailsToLocalApp(User user)
+        {
+            Application.UserAppDataRegistry.SetValue("username", user.Username);
+            Application.UserAppDataRegistry.SetValue("email", user.Email);
+        }
     }
 }

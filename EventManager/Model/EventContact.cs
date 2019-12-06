@@ -19,7 +19,7 @@ namespace EventManager.Model
         [ForeignKey("Contact")]
         public string ContactId { get; set; }
         public virtual Contact Contact { get; set; }
-
+        public string ContactName { get; set; }
         public string EventId { get; set; }
     }
 }

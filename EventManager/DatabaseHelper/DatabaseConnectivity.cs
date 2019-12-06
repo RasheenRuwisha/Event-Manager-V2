@@ -20,7 +20,7 @@ namespace EventManager.DatabaseHelper
             while (true)
             {
                 t = await Task.Run(() => this.checkConnection());
-                await Task.Delay(10000);
+                await Task.Delay(20000);
             }
         }
 

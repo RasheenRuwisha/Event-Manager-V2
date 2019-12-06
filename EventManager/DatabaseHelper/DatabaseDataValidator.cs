@@ -61,6 +61,38 @@ namespace EventManager.DatabaseHelper
                             File.Delete(workingDir + @"\event_remove.xml");
                         }
 
+                        if (File.Exists(workingDir + @"\contact_add.xml"))
+                        {
+                            List<Contact> contacts = ContactHelper.GettAllUpdateContact(workingDir + @"\contact_add.xml");
+                            foreach (Contact contact in contacts)
+                            {
+                                ContactHelper.AddContact(contact);
+                            }
+                            File.Delete(workingDir + @"\contact_add.xml");
+                        }
+
+
+                        if (File.Exists(workingDir + @"\contact_update.xml"))
+                        {
+                            List<Contact> contactUpdates = ContactHelper.GettAllUpdateContact(workingDir + @"\contact_update.xml");
+                            foreach (Contact contact in contactUpdates)
+                            {
+                                ContactHelper.UpdateContacts(contact);
+                            }
+                            File.Delete(workingDir + @"\contact_update.xml");
+                        }
+
+
+                        if (File.Exists(workingDir + @"\contact_remove.xml"))
+                        {
+                            List<Contact> contactRemove = ContactHelper.GettAllUpdateContact(workingDir + @"\contact_remove.xml");
+                            foreach (Contact contact in contactRemove)
+                            {
+                                ContactHelper.RemoveContact(contact.ContactId);
+                            }
+                            File.Delete(workingDir + @"\contact_remove.xml");
+                        }
+
                         Application.UserAppDataRegistry.SetValue("dbMatch", true);
                         NotifyIcon notifyIcon = new NotifyIcon
                         {

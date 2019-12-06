@@ -51,7 +51,7 @@ namespace EventManager
 
         private void lbl_forgotpassword_Click(object sender, EventArgs e)
         {
-            ForgotPassword forgotPassword = new ForgotPassword();
+            ForgotPassword forgotPassword = new ForgotPassword("Login");
             forgotPassword.Show();
             this.Close();
         }
@@ -100,8 +100,7 @@ namespace EventManager
                         PictureBox pictureBox = Controls.Find("ptx_" + contorl.Name, true).FirstOrDefault() as PictureBox;
                         if (pictureBox == null)
                         {
-                            using (PictureBox error = uiMessageUtitlity.AddErrorIcon(contorl.Name, contorl.Location.X + 255, contorl.Location.Y + 2))
-                            {
+                            PictureBox error = uiMessageUtitlity.AddErrorIcon(contorl.Name, contorl.Location.X + 255, contorl.Location.Y + 2);
                                 if (this.InvokeRequired)
                                 {
                                     this.Invoke(new MethodInvoker(this.ShowErrors));
@@ -110,7 +109,6 @@ namespace EventManager
                                 {
                                     this.Controls.Add(error);
                                 }
-                            }
 
                         }
                     }

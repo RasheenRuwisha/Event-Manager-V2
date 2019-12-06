@@ -26,6 +26,7 @@ namespace EventManager.View.Events
         List<ComboBoxItem> comboBoxItems = new List<ComboBoxItem>();
         UserEvent userEvent = new UserEvent();
         List<Contact> allContacts = new List<Contact>();
+
         public EditEvent()
         {
             InitializeComponent();
@@ -64,6 +65,11 @@ namespace EventManager.View.Events
                     comboBoxItems.Add(comboBoxItem);
 
                 }
+                if (userEvent.EventContacts.Count != 0)
+                {
+                    cmb_evetncollab.SelectedItem = 0;
+                }
+      
             }
 
             if (userEvent.Type.Equals("Task"))
@@ -75,7 +81,7 @@ namespace EventManager.View.Events
                 rb_appointment.Checked = true;
             }
 
-
+           allContacts.RemoveAll(x => userEvent.EventContacts.Exists(y => y.ContactId == x.ContactId));
 
             if (allContacts != null)
             {
@@ -94,7 +100,15 @@ namespace EventManager.View.Events
                     cmb_contacts.Items.Add(comboBoxItem);
                 }
                 cmb_contacts.Items.Remove("Loading....");
-                //cmb_contacts.SelectedIndex = 0;
+                if(allContacts.Count != 0)
+                {
+                    cmb_contacts.SelectedIndex = 0;
+                }
+                else
+                {
+                    cmb_contacts.Items.Add("No Contacts");
+                    cmb_contacts.SelectedIndex = 0;
+                }
 
             }
 
@@ -138,32 +152,6 @@ namespace EventManager.View.Events
             return name;
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         private void changeConrolLocations(string type)
         {
             Label lbl_repeatduration = Controls.Find("lbl_repeatduration", true).FirstOrDefault() as Label;
@@ -174,8 +162,9 @@ namespace EventManager.View.Events
 
             if (type.Equals("add"))
             {
-                lbl_collaborators.Location = new Point(41, 512);
-                cmb_contacts.Location = new Point(41, lbl_collaborators.Location.Y + lbl_collaborators.Height + 10);
+                lbl_contacts.Location = new Point(41, 512);
+                cmb_contacts.Location = new Point(41, lbl_contacts.Location.Y + lbl_contacts.Height + 10);
+                lbl_collaborators.Location = new Point(335, lbl_contacts.Location.Y );
                 lbl_addcollab.Location = new Point(299, cmb_contacts.Location.Y);
                 cmb_evetncollab.Location = new Point(333, cmb_contacts.Location.Y);
                 btn_removecollab.Location = new Point(589, cmb_contacts.Location.Y);
@@ -214,8 +203,9 @@ namespace EventManager.View.Events
             }
             else
             {
-                lbl_collaborators.Location = new Point(41, 388);
-                cmb_contacts.Location = new Point(41, lbl_collaborators.Location.Y + lbl_collaborators.Height + 10);
+                lbl_contacts.Location = new Point(41, 421);
+                cmb_contacts.Location = new Point(41, lbl_contacts.Location.Y + lbl_contacts.Height + 10);
+                lbl_collaborators.Location = new Point(335, lbl_contacts.Location.Y);
                 lbl_addcollab.Location = new Point(299, cmb_contacts.Location.Y);
                 cmb_evetncollab.Location = new Point(333, cmb_contacts.Location.Y);
                 btn_removecollab.Location = new Point(589, cmb_contacts.Location.Y);
@@ -271,11 +261,11 @@ namespace EventManager.View.Events
             {
                 this.Size = new Size(627, 700);
             }
-            this.Controls.Add(uiBuilder.GenerateLongTextBox(42, 400, "dynamictxt_addressline1", userEvent.AddressLine1));
-            this.Controls.Add(uiBuilder.GenerateLongTextBox(330, 400, "dynamictxt_addressline2", userEvent.AddressLine2));
-            this.Controls.Add(uiBuilder.GenerateShortTextBox(42, 467, "dynamictxt_city", userEvent.City ));
-            this.Controls.Add(uiBuilder.GenerateShortTextBox(243, 467, "dynamictxt_state", userEvent.State ));
-            this.Controls.Add(uiBuilder.GenerateShortTextBox(451, 467, "dynamictxt_zip", userEvent.Zipcode));
+            this.Controls.Add(uiBuilder.GenerateLongTextBox(42, 410, "dynamictxt_addressline1", userEvent.AddressLine1,50));
+            this.Controls.Add(uiBuilder.GenerateLongTextBox(330, 410, "dynamictxt_addressline2", userEvent.AddressLine2,50));
+            this.Controls.Add(uiBuilder.GenerateShortTextBox(42, 467, "dynamictxt_city", userEvent.City ,50));
+            this.Controls.Add(uiBuilder.GenerateShortTextBox(243, 467, "dynamictxt_state", userEvent.State ,50));
+            this.Controls.Add(uiBuilder.GenerateShortTextBox(451, 467, "dynamictxt_zip", userEvent.Zipcode,10));
             this.Controls.Add(uiBuilder.GenerateLabel(40, 388, "dynamiclbl_addressline1", "Address Line 1 "));
             this.Controls.Add(uiBuilder.GenerateLabel(329, 388, "dynamiclbl_addressline2", "Address Line 2 "));
             this.Controls.Add(uiBuilder.GenerateLabel(40, 445, "dynamiclbl_city", "City "));
@@ -308,7 +298,7 @@ namespace EventManager.View.Events
             }
             else
             {
-                this.Size = new Size(627, 550);
+                this.Size = new Size(627, 626);
             }
             List<Control> controlsList = new List<Control>();
             foreach (Control currentControl in this.Controls)
@@ -494,8 +484,7 @@ namespace EventManager.View.Events
             {
                 if (pictureBox == null)
                 {
-                    using (PictureBox error = uiMessage.AddErrorIcon(txt_name.Name, txt_name.Location.X + 255, txt_name.Location.Y + 2))
-                    {
+                    PictureBox error = uiMessage.AddErrorIcon(txt_name.Name, txt_name.Location.X + 255, txt_name.Location.Y + 2);
                         if (this.InvokeRequired)
                         {
                             this.Invoke(new MethodInvoker(this.ShowErrors));
@@ -504,7 +493,6 @@ namespace EventManager.View.Events
                         {
                             this.Controls.Add(error);
                         }
-                    }
 
                 }
             }
@@ -548,6 +536,7 @@ namespace EventManager.View.Events
                 EventContact eventContact = new EventContact()
                 {
                     ContactId = cmb.ContactId,
+                    ContactName = cmb.Name,
                     EventId = userEvent.EventId,
                     UserId = userId,
                 };
@@ -650,7 +639,20 @@ namespace EventManager.View.Events
                 if (contact)
                 {
                     this.Controls.Remove(pictureBox);
-                    this.Close();
+                    Notification notification = new Notification("Event Updated Successfully");
+                    Timer timer = new Timer();
+                    notification.Show();
+
+                    timer.Tick += (o, ea) =>
+                    {
+                        notification.Close();
+                        this.Close();
+                    };
+
+                    timer.Interval = 1000;
+                    timer.Start();
+                    
+
                 }
                 else
                 {

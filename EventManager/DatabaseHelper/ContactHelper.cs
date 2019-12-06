@@ -417,6 +417,12 @@ namespace EventManager.DatabaseHelper
                 );
                 xmlDoc.Element("LocalStore").Add(xEvent);
                 xmlDoc.Save($"{userId}.xml");
+
+                if (Application.UserAppDataRegistry.GetValue("dbConnection").ToString().Equals("False"))
+                {
+                    InitLocalEventFileAddContact(xEvent);
+
+                }
                 return true;
             }
             catch (Exception ex)
@@ -447,13 +453,18 @@ namespace EventManager.DatabaseHelper
                 updateQuery.Element("Phone").SetValue(contact.Phone);
                 updateQuery.Element("Image").SetValue(contact.Image);
                 updateQuery.Element("Name").SetValue(contact.Name);
-                updateQuery.Element("Addressline1").SetValue(contact.AddressLine1);
-                updateQuery.Element("Addressline2").SetValue(contact.AddressLine2);
+                updateQuery.Element("AddressLine1").SetValue(contact.AddressLine1);
+                updateQuery.Element("AddressLine2").SetValue(contact.AddressLine2);
                 updateQuery.Element("City").SetValue(contact.City);
                 updateQuery.Element("State").SetValue(contact.State);
                 updateQuery.Element("Zipcode").SetValue(contact.Zipcode);
 
                 xmlDoc.Save($"{userId}.xml");
+
+                if (Application.UserAppDataRegistry.GetValue("dbConnection").ToString().Equals("False"))
+                {
+                    InitLocalEventFileUpdateContact(updateQuery);
+                }
                 return true;
             }
             catch (Exception ex)
@@ -476,6 +487,11 @@ namespace EventManager.DatabaseHelper
                                    select item).FirstOrDefault();
 
                 var removeEventContact = xmlDoc.Descendants("EventContact").Where(e => e.Element("ContactId").Value.Equals(contactId)).ToList();
+
+                if (Application.UserAppDataRegistry.GetValue("dbConnection").ToString().Equals("False"))
+                {
+                    InitLocalEventFileRemoveContact(removeQuery);
+                }
                 removeEventContact.Remove();
                 removeQuery.Remove();
                 xmlDoc.Save($"{userId}.xml");
@@ -520,14 +536,14 @@ namespace EventManager.DatabaseHelper
             {
                 xmlDoc = XDocument.Load($"{userId}.xml");
                 var searchQuery = (from item in xmlDoc.Descendants("Contact")
-                                   where item.Element("Name").Value == name
+                                   where item.Element("ContactId").Value == name
                                    select new Contact
                                    {
-                                       Name = item.Element("EventId").Value,
-                                       ContactId = item.Element("Title").Value,
-                                       Image = item.Element("Description").Value,
-                                       UserId = item.Element("Type").Value,
-                                       Phone = item.Element("RepeatType").Value,
+                                       ContactId = item.Element("ContactId").Value,
+                                       Email = item.Element("Email").Value,
+                                       Phone = item.Element("Phone").Value,
+                                       Image = item.Element("Image").Value,
+                                       Name = item.Element("Name").Value,
                                        AddressLine1 = item.Element("AddressLine1").Value,
                                        AddressLine2 = item.Element("AddressLine2").Value,
                                        City = item.Element("City").Value,
@@ -557,11 +573,11 @@ namespace EventManager.DatabaseHelper
                                    where item.Element(element).Value == name
                                    select new Contact
                                    {
-                                       Name = item.Element("EventId").Value,
-                                       ContactId = item.Element("Title").Value,
-                                       Image = item.Element("Description").Value,
-                                       UserId = item.Element("Type").Value,
-                                       Phone = item.Element("RepeatType").Value,
+                                       ContactId = item.Element("ContactId").Value,
+                                       Email = item.Element("Email").Value,
+                                       Phone = item.Element("Phone").Value,
+                                       Image = item.Element("Image").Value,
+                                       Name = item.Element("Name").Value,
                                        AddressLine1 = item.Element("AddressLine1").Value,
                                        AddressLine2 = item.Element("AddressLine2").Value,
                                        City = item.Element("City").Value,
@@ -578,6 +594,88 @@ namespace EventManager.DatabaseHelper
             }
         }
 
+        public static List<Contact> GettAllUpdateContact(String fileepath)
+        {
+            List<Contact> contacts = null;
+            try
+            {
+                using (var reader = new StreamReader(fileepath))
+                {
+                    XmlSerializer deserializer = new XmlSerializer(typeof(List<Contact>), new XmlRootAttribute("LocalStore"));
+                    contacts = (List<Contact>)deserializer.Deserialize(reader);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.LogException(ex, true);
+            }
 
+            return contacts;
+        }
+
+
+
+        public static void InitLocalEventFileAddContact(XElement xElement)
+        {
+            Application.UserAppDataRegistry.SetValue("dbMatch", false);
+
+            String workingDir = Directory.GetCurrentDirectory();
+
+            if (File.Exists(workingDir + @"\contact_add.xml"))
+            {
+                XDocument xmlDoc = XDocument.Load(workingDir + @"\contact_add.xml");
+                xmlDoc.Element("LocalStore").Add(xElement);
+                xmlDoc.Save(workingDir + @"\contact_add.xml");
+            }
+            else
+            {
+                XDocument xmlDoc = new XDocument();
+                xmlDoc.Add(new XElement("LocalStore"));
+                xmlDoc.Element("LocalStore").Add(xElement);
+                xmlDoc.Save(workingDir + @"\contact_add.xml");
+            }
+        }
+
+        public static void InitLocalEventFileUpdateContact(XElement xElement)
+        {
+            Application.UserAppDataRegistry.SetValue("dbMatch", false);
+
+            String workingDir = Directory.GetCurrentDirectory();
+
+            if (File.Exists(workingDir + @"\contact_update.xml"))
+            {
+                XDocument xmlDoc = XDocument.Load(workingDir + @"\contact_update.xml");
+                xmlDoc.Element("LocalStore").Add(xElement);
+                xmlDoc.Save(workingDir + @"\contact_update.xml");
+            }
+            else
+            {
+                XDocument xmlDoc = new XDocument();
+                xmlDoc.Add(new XElement("LocalStore"));
+                xmlDoc.Element("LocalStore").Add(xElement);
+                xmlDoc.Save(workingDir + @"\contact_update.xml");
+            }
+        }
+
+        public static void InitLocalEventFileRemoveContact(XElement xElement)
+        {
+            Application.UserAppDataRegistry.SetValue("dbMatch", false);
+
+            String workingDir = Directory.GetCurrentDirectory();
+
+            if (File.Exists(workingDir + @"\contact_remove.xml"))
+            {
+                XDocument xmlDoc = XDocument.Load(workingDir + @"\contact_remove.xml");
+                xmlDoc.Element("LocalStore").Add(xElement);
+                xmlDoc.Save(workingDir + @"\contact_remove.xml");
+            }
+            else
+            {
+                XDocument xmlDoc = new XDocument();
+                xmlDoc.Add(new XElement("LocalStore"));
+                xmlDoc.Element("LocalStore").Add(xElement);
+                xmlDoc.Save(workingDir + @"\contact_remove.xml");
+            }
+        }
     }
 }
