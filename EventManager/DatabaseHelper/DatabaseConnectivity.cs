@@ -10,8 +10,7 @@ namespace EventManager.DatabaseHelper
 {
     class DatabaseConnectivity
     {
-
-        DatabaseDataValidator databaseDataValidator = new DatabaseDataValidator();
+        readonly DatabaseDataValidator databaseDataValidator = new DatabaseDataValidator();
         int successNotificationCount = 0;
         int failNotificationCount = 0;
 
@@ -33,16 +32,21 @@ namespace EventManager.DatabaseHelper
                 db.Database.Connection.Open();
                 db.Database.Connection.Close();
                 Application.UserAppDataRegistry.SetValue("dbConnection", true);
-                if (successNotificationCount == 0)
+                if (Application.UserAppDataRegistry.GetValue("dbMatch") != null)
                 {
-                    NotifyIcon notifyIcon = new NotifyIcon();
-                    notifyIcon.Icon = new Icon(SystemIcons.Application, 40, 40);
-                    notifyIcon.Visible = true;
-                    notifyIcon.Text = "Event Manager";
-                    notifyIcon.BalloonTipText = "The database connection was restablished.Please Refresh to sync data";
-                    notifyIcon.BalloonTipIcon = ToolTipIcon.Info;
-                    notifyIcon.BalloonTipTitle = "Database Connection";
-                    notifyIcon.ShowBalloonTip(10000);
+                    if (Application.UserAppDataRegistry.GetValue("dbMatch").Equals("False"))
+                    {
+                        NotifyIcon notifyIcon = new NotifyIcon
+                        {
+                            Icon = new Icon(SystemIcons.Application, 40, 40),
+                            Visible = true,
+                            Text = "Event Manager",
+                            BalloonTipText = "The database connection was restablished.Syncing Data to Database.",
+                            BalloonTipIcon = ToolTipIcon.Info,
+                            BalloonTipTitle = "Database Connection"
+                        };
+                        notifyIcon.ShowBalloonTip(5000);
+                    }
                 }
                 if(Application.UserAppDataRegistry.GetValue("userId") != null)
                 {
@@ -57,13 +61,15 @@ namespace EventManager.DatabaseHelper
                 Application.UserAppDataRegistry.SetValue("dbConnection", false);
                 if (failNotificationCount == 0)
                 {
-                    NotifyIcon notifyIcon = new NotifyIcon();
-                    notifyIcon.Icon = new Icon(SystemIcons.Application, 40, 40);
-                    notifyIcon.Visible = true;
-                    notifyIcon.Text = "Event Manager";
-                    notifyIcon.BalloonTipText = "The database connection could not be established.Data will be saved offline";
-                    notifyIcon.BalloonTipIcon = ToolTipIcon.Error;
-                    notifyIcon.BalloonTipTitle = "Database Connection";
+                    NotifyIcon notifyIcon = new NotifyIcon
+                    {
+                        Icon = new Icon(SystemIcons.Application, 40, 40),
+                        Visible = true,
+                        Text = "Event Manager",
+                        BalloonTipText = "The database connection could not be established.Data will be saved offline",
+                        BalloonTipIcon = ToolTipIcon.Error,
+                        BalloonTipTitle = "Database Connection"
+                    };
                     notifyIcon.ShowBalloonTip(10000);
                 }
                 failNotificationCount++;

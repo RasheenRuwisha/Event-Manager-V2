@@ -15,9 +15,7 @@ namespace EventManager.UIComponents
 {
     public partial class ContactListView : UserControl
     {
-
-        ContactHelper contactHelper = new ContactHelper();
-        CommonUtil commonUtil = new CommonUtil();
+        readonly CommonUtil commonUtil = new CommonUtil();
         public ContactListView()
         {
             InitializeComponent();
@@ -65,24 +63,26 @@ namespace EventManager.UIComponents
             if (confirmResult == DialogResult.Yes)
             {
                 Controls.Clear();
-                Label label = new Label();
-                label.Text = "Removing";
-                label.Font = new Font("Microsoft Sans Serif", 11.25F);
-                label.ForeColor = Color.White;
+                Label label = new Label
+                {
+                    Text = "Removing",
+                    Font = new Font("Microsoft Sans Serif", 11.25F),
+                    ForeColor = Color.White
+                };
                 label.Location = new Point(this.Width / 2 - label.Width / 2, this.Height / 2 - label.Height / 2);
                 Controls.Add(label);
                 Controls.Add(commonUtil.addLoaderImage(label.Location.X - 30, label.Location.Y - 3));
 
-                bool removeContact = await Task.Run(() => contactHelper.RemoveContact(this.Tag.ToString()));
+                bool removeContact = await Task.Run(() => ContactHelper.RemoveContact(this.Tag.ToString()));
                 if (removeContact)
                 {
 
-                    Panel panel = this.Parent.Parent.Controls.Find("pnl_contactlist", true).FirstOrDefault() as Panel;
+                    Panel panel = Parent.Parent.Controls.Find("pnl_contactlist", true).FirstOrDefault() as Panel;
                     panel.Controls.Clear();
                     panel.Refresh();
                     panel.BringToFront();
 
-                    Panel parentPanel = this.Parent as Panel;
+                    Panel parentPanel = Parent as Panel;
                     if(parentPanel != null)
                     {
                         parentPanel.Controls.Clear();

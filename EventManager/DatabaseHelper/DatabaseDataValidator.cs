@@ -21,7 +21,6 @@ namespace EventManager.DatabaseHelper
 
         public String doesMatch()
         {
-            EventHelper eventHelper = new EventHelper();
 
             string zzz = Application.UserAppDataRegistry.GetValue("dbMatch").ToString();
             if (Application.UserAppDataRegistry.GetValue("dbMatch").ToString().Equals("False"))
@@ -32,10 +31,10 @@ namespace EventManager.DatabaseHelper
                     {
                         if (File.Exists(workingDir + @"\event_add.xml"))
                         {
-                            List<UserEvent> userEvents = eventHelper.GettAllUpdateEvent(workingDir + @"\event_add.xml");
+                            List<UserEvent> userEvents = EventHelper.GettAllUpdateEvent(workingDir + @"\event_add.xml");
                             foreach (UserEvent userEvent in userEvents)
                             {
-                                eventHelper.AddEvent(userEvent);
+                                EventHelper.AddEvent(userEvent);
                             }
                             File.Delete(workingDir + @"\event_add.xml");
                         }
@@ -43,10 +42,10 @@ namespace EventManager.DatabaseHelper
 
                         if (File.Exists(workingDir + @"\event_update.xml"))
                         {
-                            List<UserEvent> userEventUpdate = eventHelper.GettAllUpdateEvent(workingDir + @"\event_update.xml");
+                            List<UserEvent> userEventUpdate = EventHelper.GettAllUpdateEvent(workingDir + @"\event_update.xml");
                             foreach (UserEvent userEvent in userEventUpdate)
                             {
-                                eventHelper.UpdateEvent(userEvent);
+                                EventHelper.UpdateEvent(userEvent);
                             }
                             File.Delete(workingDir + @"\event_update.xml");
                         }
@@ -54,22 +53,24 @@ namespace EventManager.DatabaseHelper
 
                         if (File.Exists(workingDir + @"\event_remove.xml"))
                         {
-                            List<UserEvent> userEventRemove = eventHelper.GettAllUpdateEvent(workingDir + @"\event_remove.xml");
+                            List<UserEvent> userEventRemove = EventHelper.GettAllUpdateEvent(workingDir + @"\event_remove.xml");
                             foreach (UserEvent userEvent in userEventRemove)
                             {
-                                eventHelper.RemoveEvent(userEvent.EventId);
+                                EventHelper.RemoveEvent(userEvent.EventId);
                             }
                             File.Delete(workingDir + @"\event_remove.xml");
                         }
 
                         Application.UserAppDataRegistry.SetValue("dbMatch", true);
-                        NotifyIcon notifyIcon = new NotifyIcon();
-                        notifyIcon.Icon = new Icon(SystemIcons.Application, 40, 40);
-                        notifyIcon.Visible = true;
-                        notifyIcon.Text = "Event Manager";
-                        notifyIcon.BalloonTipText = "Data has been synced successfully. Please refresh the view to retreive synced data!";
-                        notifyIcon.BalloonTipIcon = ToolTipIcon.Info;
-                        notifyIcon.BalloonTipTitle = "Database Connection";
+                        NotifyIcon notifyIcon = new NotifyIcon
+                        {
+                            Icon = new Icon(SystemIcons.Application, 40, 40),
+                            Visible = true,
+                            Text = "Event Manager",
+                            BalloonTipText = "Data has been synced successfully.",
+                            BalloonTipIcon = ToolTipIcon.Info,
+                            BalloonTipTitle = "Database Connection"
+                        };
                         notifyIcon.ShowBalloonTip(10000);
                         return "success";
                     }

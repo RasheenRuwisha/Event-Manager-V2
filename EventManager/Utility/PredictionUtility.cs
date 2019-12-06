@@ -9,26 +9,19 @@ namespace EventManager.Utility
     public class PredictionUtility
     {
 
-        EventHelper eventHelper = new EventHelper();
-
-
         readonly DateTime Today = DateTime.Now;
 
         public Prediction PredictTimeConsumption()
         {
 
             double TimeConsumtion = 0.0;
-            double DailyConsumption = 0.0;
-            double WeeklyConsumption = 0.0;
             int TaskCount = 0;
             int AppointmentCount = 0;
 
-            DateTime MonthStart = Today.AddDays(1 - Today.Day).Date;
-            DateTime MonthEnd = MonthStart.AddMonths(1).AddSeconds(-1).Date;
-
-            List<UserEvent> userEvents = new List<UserEvent>();
-            userEvents = this.eventHelper.SearchUserEvent(MonthStart, MonthEnd);
-            foreach(UserEvent userEvent in userEvents)
+            DateTime MonthStart = Today.AddDays(-30).Date;
+            DateTime MonthEnd = DateTime.Today.Date;
+            List<UserEvent> userEvents = EventHelper.SearchUserEvent(MonthStart, MonthEnd);
+            foreach (UserEvent userEvent in userEvents)
             {
                 TimeConsumtion += (userEvent.EndDate - userEvent.StartDate).TotalMinutes;
                 if (userEvent.Type.Equals("Appointment"))
@@ -40,8 +33,8 @@ namespace EventManager.Utility
                     TaskCount += 1;
                 }
             }
-            DailyConsumption = TimeConsumtion / 31;
-            WeeklyConsumption = TimeConsumtion / 4;
+            double DailyConsumption = TimeConsumtion / 31;
+            double WeeklyConsumption = TimeConsumtion / 4;
 
             Prediction prediction = new Prediction()
             {

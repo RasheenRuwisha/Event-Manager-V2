@@ -13,11 +13,8 @@ namespace EventManager.DatabaseHelper
 {
     public class EventHelper
     {
-        readonly String userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
-        readonly EventGenerator eventGenerator = new EventGenerator();
-        Logger logger = new Logger();
 
-        public bool AddEvent(UserEvent userEvent)
+        public static bool AddEvent(UserEvent userEvent)
         {
 
             try
@@ -28,39 +25,41 @@ namespace EventManager.DatabaseHelper
                     {
                         dbContext.Events.Add(userEvent);
                         dbContext.SaveChanges();
-                        this.AddEventXML(userEvent);
+                        AddEventXML(userEvent);
                     }
                 }
                 else
                 {
-                    this.AddEventXML(userEvent);
+                    AddEventXML(userEvent);
                 }
 
                 return true;
             }
             catch (System.Data.Entity.Core.EntityException ex)
             {
-                logger.LogException(ex,false);
-                this.AddEventXML(userEvent);
+                Logger.LogException(ex,false);
+                AddEventXML(userEvent);
                 return true;
             }
             catch (System.Data.SqlClient.SqlException ex)
             {
-                logger.LogException(ex, false);
-                this.AddEventXML(userEvent);
+                Logger.LogException(ex, false);
+                AddEventXML(userEvent);
                 return true;
             }
             catch (Exception ex)
             {
-                logger.LogException(ex, true);
+                Logger.LogException(ex, true);
                 return false;
             }
 
         }
     
 
-        public UserEvent GetUserEvent(string eventid)
+        public static UserEvent GetUserEvent(string eventid)
         {
+            string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
+
             UserEvent userEvents = new UserEvent();
             try
             {
@@ -73,29 +72,31 @@ namespace EventManager.DatabaseHelper
                 }
                 else
                 {
-                    userEvents = this.SearchEventXML(eventid);
+                    userEvents = SearchEventXML(eventid);
                 }
             }
             catch (System.Data.Entity.Core.EntityException ex)
             {
-                logger.LogException(ex,false);
-                userEvents = this.SearchEventXML(eventid);
+                Logger.LogException(ex,false);
+                userEvents = SearchEventXML(eventid);
             }
             catch (System.Data.SqlClient.SqlException ex)
             {
-                logger.LogException(ex, false);
-                userEvents = this.SearchEventXML(eventid);
+                Logger.LogException(ex, false);
+                userEvents = SearchEventXML(eventid);
             }
             catch (Exception ex)
             {
-                logger.LogException(ex, true);
+                Logger.LogException(ex, true);
             }
             return userEvents;
         }
 
 
-        public List<UserEvent> SearchUserEvent(DateTime startDate, DateTime endDate)
+        public static List<UserEvent> SearchUserEvent(DateTime startDate, DateTime endDate)
         {
+            string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
+
             List<UserEvent> userEvents = new List<UserEvent>();
             try
             {
@@ -108,31 +109,33 @@ namespace EventManager.DatabaseHelper
                 }
                 else
                 {
-                    userEvents = this.FilterEventsXML(startDate);
+                    userEvents = FilterEventsXML(startDate);
                 }
             }
             catch (System.Data.Entity.Core.EntityException ex)
             {
-                logger.LogException(ex, false);
-                userEvents = this.FilterEventsXML(startDate);
+                Logger.LogException(ex, false);
+                userEvents = FilterEventsXML(startDate);
             }
             catch (System.Data.SqlClient.SqlException ex)
             {
-                logger.LogException(ex, false);
-                userEvents = this.FilterEventsXML(startDate);
+                Logger.LogException(ex, false);
+                userEvents = FilterEventsXML(startDate);
             }
             catch (Exception ex)
             {
-                logger.LogException(ex, true);
+                Logger.LogException(ex, true);
             }
            
                
-            return eventGenerator.GenerateEvents(userEvents, startDate.Date, endDate.Date);
+            return EventGenerator.GenerateEvents(userEvents, startDate.Date, endDate.Date);
         }
 
 
-        public bool RemoveEvent(string eventId)
+        public static bool RemoveEvent(string eventId)
         {
+            string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
+
             UserEvent userEvent = new UserEvent();
 
             try
@@ -151,36 +154,36 @@ namespace EventManager.DatabaseHelper
                         dbContext.Events.Remove(userEvent);
 
                         dbContext.SaveChanges();
-                        this.RemoveEventXML(eventId);
+                        RemoveEventXML(eventId);
                     }
                 }
                 else
                 {
-                    this.RemoveEventXML(eventId);
+                    RemoveEventXML(eventId);
                 }
 
                 return true;
             }
             catch (System.Data.Entity.Core.EntityException ex)
             {
-                logger.LogException(ex, false);
-                this.RemoveEventXML(eventId);
+                Logger.LogException(ex, false);
+                RemoveEventXML(eventId);
                 return true;
             }
             catch (System.Data.SqlClient.SqlException ex)
             {
-                logger.LogException(ex, false);
-                this.RemoveEventXML(eventId);
+                Logger.LogException(ex, false);
+                RemoveEventXML(eventId);
                 return true;
             }
             catch (Exception ex)
             {
-                logger.LogException(ex, true);
+                Logger.LogException(ex, true);
                 return false;
             }
         }
 
-        public bool UpdateEvent(UserEvent @event)
+        public static bool UpdateEvent(UserEvent @event)
         {
             try
             {
@@ -211,33 +214,33 @@ namespace EventManager.DatabaseHelper
                         userEvent.StartDate = @event.StartDate;
                         userEvent.EndDate = @event.EndDate;
                         dbContext.SaveChanges();
-                        this.UpdateEventXML(@event);
+                        UpdateEventXML(@event);
 
                     }
                 }
                 else
                 {
-                    this.UpdateEventXML(@event);
+                    UpdateEventXML(@event);
                 }
 
                 return true;
             }
             catch (System.Data.Entity.Core.EntityException ex)
             {
-                logger.LogException(ex, false);
-                this.UpdateEventXML(@event);
+                Logger.LogException(ex, false);
+                UpdateEventXML(@event);
                 return true;
             }
             catch (System.Data.SqlClient.SqlException ex)
             {
-                logger.LogException(ex, false);
-                this.UpdateEventXML(@event);
+                Logger.LogException(ex, false);
+                UpdateEventXML(@event);
                 return true;
 
             }
             catch (Exception ex)
             {
-                logger.LogException(ex, true);
+                Logger.LogException(ex, true);
                 return false;
             }
         }
@@ -247,8 +250,10 @@ namespace EventManager.DatabaseHelper
 
 
 
-        private bool AddEventXML(UserEvent userEvent)
+        private static bool AddEventXML(UserEvent userEvent)
         {
+            string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
+
             XDocument xmlDoc = new XDocument();
             try
             {
@@ -296,7 +301,7 @@ namespace EventManager.DatabaseHelper
             }
             catch (Exception ex)
             {
-                logger.LogException(ex, true);
+                Logger.LogException(ex, true);
                 return false;
             }
         }
@@ -304,8 +309,10 @@ namespace EventManager.DatabaseHelper
 
 
 
-        private bool UpdateEventXML(UserEvent userEvent)
+        private static bool UpdateEventXML(UserEvent userEvent)
         {
+            string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
+
             XDocument xmlDoc = new XDocument();
             try
             {
@@ -357,13 +364,15 @@ namespace EventManager.DatabaseHelper
             }
             catch (Exception ex)
             {
-                logger.LogException(ex,true);
+                Logger.LogException(ex,true);
                 return false;
             }
         }
 
-        private bool RemoveEventXML(string userEvent)
+        private static bool RemoveEventXML(string userEvent)
         {
+            string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
+
             XDocument xmlDoc = new XDocument();
             try
             {
@@ -383,14 +392,16 @@ namespace EventManager.DatabaseHelper
             }
             catch (Exception ex)
             {
-                logger.LogException(ex, true);
+                Logger.LogException(ex, true);
                 return false;
             }
         }
 
 
-        private UserEvent SearchEventXML(string userEvent)
+        private static UserEvent SearchEventXML(string userEvent)
         {
+            string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
+
             UserEvent e = new UserEvent();
             XDocument xmlDoc = new XDocument();
             try
@@ -428,14 +439,16 @@ namespace EventManager.DatabaseHelper
             }
             catch (Exception ex)
             {
-                logger.LogException(ex, true);
+                Logger.LogException(ex, true);
                 return e;
             }
         }
 
 
-        private List<UserEvent> FilterEventsXML(DateTime startDate)
+        private static List<UserEvent> FilterEventsXML(DateTime startDate)
         {
+
+            string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
 
             List<UserEvent> e = new List<UserEvent>();
             XDocument xmlDoc = new XDocument();
@@ -474,62 +487,45 @@ namespace EventManager.DatabaseHelper
             }
             catch (Exception ex)
             {
-                logger.LogException(ex, true);
+                Logger.LogException(ex, true);
                 return e;
             }
         }
 
 
 
-        public  List<UserEvent> GettAllUpdateEvent(String fileepath)
+        public static List<UserEvent> GettAllUpdateEvent(String fileepath)
         {
+            string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
 
-            List<UserEvent> e = new List<UserEvent>();
+
+            List<UserEvent> filterQuery = new List<UserEvent>();
             XDocument xmlDoc = new XDocument();
             try
             {
-                xmlDoc = XDocument.Load(fileepath);
-                var filterQuery = (from item in xmlDoc.Descendants("UserEvent")
-                                   select new UserEvent
-                                   {
-                                       EventId = item.Element("EventId").Value,
-                                       Title = item.Element("Title").Value,
-                                       UserId = item.Element("UserId").Value,
-                                       Description = item.Element("Description").Value,
-                                       Type = item.Element("Type").Value,
-                                       RepeatType = item.Element("RepeatType").Value,
-                                       RepeatDuration = item.Element("RepeatDuration").Value,
-                                       RepeatCount = Convert.ToInt32(item.Element("RepeatCount").Value),
-                                       RepeatTill = DateTime.Parse(item.Element("RepeatTill").Value),
-                                       StartDate = DateTime.Parse(item.Element("StartDate").Value),
-                                       EndDate = DateTime.Parse(item.Element("EndDate").Value),
-                                       AddressLine1 = item.Element("AddressLine1").Value,
-                                       AddressLine2 = item.Element("AddressLine2").Value,
-                                       City = item.Element("City").Value,
-                                       State = item.Element("State").Value,
-                                       Zipcode = item.Element("Zipcode").Value,
-                                       EventContacts = item.Element("EventContacts").Elements("EventContact").Select(c => new EventContact
-                                       {
-                                           Id = Convert.ToInt32(c.Element("Id").Value),
-                                           UserId = c.Element("UserId").Value,
-                                           EventId = c.Element("EventId").Value,
-                                           ContactId = c.Element("ContactId").Value,
-                                       }).ToList()
-                                   }).ToList();
+                using (var reader = new StreamReader($"{userId}.xml"))
+            {
+                XmlSerializer deserializer = new XmlSerializer(typeof(List<UserEvent>),
+                    new XmlRootAttribute("LocalStore"));
+                    filterQuery = (List<UserEvent>)deserializer.Deserialize(reader);
+            }
+
 
                 return filterQuery;
             }
             catch (Exception ex)
             {
-                logger.LogException(ex, true);
+                Logger.LogException(ex, true);
                 return e;
             }
         }
 
 
 
-        public void InitLocalEventFileAddEvent(XElement xElement)
+        public static void InitLocalEventFileAddEvent(XElement xElement)
         {
+            string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
+
             Application.UserAppDataRegistry.SetValue("dbMatch", false);
 
             String workingDir = Directory.GetCurrentDirectory();
@@ -549,7 +545,7 @@ namespace EventManager.DatabaseHelper
             }
         }
 
-        public void InitLocalEventFileUpdateEvent(XElement xElement)
+        public static void InitLocalEventFileUpdateEvent(XElement xElement)
         {
             Application.UserAppDataRegistry.SetValue("dbMatch", false);
 
@@ -570,7 +566,7 @@ namespace EventManager.DatabaseHelper
             }
         }
 
-        public void InitLocalEventFileRemovevent(XElement xElement)
+        public static void InitLocalEventFileRemovevent(XElement xElement)
         {
             Application.UserAppDataRegistry.SetValue("dbMatch", false);
 

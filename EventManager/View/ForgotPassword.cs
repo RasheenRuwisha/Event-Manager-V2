@@ -17,18 +17,10 @@ namespace EventManager.View
     public partial class ForgotPassword : Form
     {
 
-        User userModel = new User();
-        UserCredential usersCredentialModel = new UserCredential();
-
-        DatabaseModel db = new DatabaseModel();
-        UserHelper userHelper = new UserHelper();
-        MailSender mailSender = new MailSender();
-
         UiMessageUtitlity uiMessageUtitlity = new UiMessageUtitlity();
         CommonUtil commonUtil = new CommonUtil();
         Banner banner = new Banner();
         String otp;
-        Logger logger = new Logger();
         public ForgotPassword()
         {
             InitializeComponent();
@@ -80,7 +72,7 @@ namespace EventManager.View
                     PictureBox error = uiMessageUtitlity.AddErrorIcon(this.txt_email.Name, this.txt_email.Location.X + 255, this.txt_email.Location.Y + 2);
                     this.email_panel.Controls.Remove(error);
                 }
-                if (userHelper.UserExists(txt_email.Text.Trim()))
+                if (UserHelper.UserExists(txt_email.Text.Trim()))
                 {
                     this.otp = commonUtil.generateOTP();
                     String t = await Task.Run(() => this.sendEmail());
@@ -117,7 +109,7 @@ namespace EventManager.View
             }
             catch (Exception ex)
             {
-                logger.LogException(ex, true);
+                Logger.LogException(ex, true);
                 return "faliure";
             }
         }
@@ -145,9 +137,12 @@ namespace EventManager.View
             if (this.validatePassword())
             {
                 UserCredential usersCredential = new UserCredential();
-                usersCredential = db.Userscredentials.Find(this.txt_email.Text.Trim().ToLower());
-                usersCredential.Password = txt_password.Text.Trim();
-                db.SaveChanges();
+                using(DatabaseModel db = new DatabaseModel())
+                {
+                    usersCredential = db.Userscredentials.Find(this.txt_email.Text.Trim().ToLower());
+                    usersCredential.Password = txt_password.Text.Trim();
+                    db.SaveChanges();
+                }
                 Application.UserAppDataRegistry.SetValue("remeberMe", false);
                 Application.UserAppDataRegistry.SetValue("username", "");
                 Application.UserAppDataRegistry.SetValue("password", "");

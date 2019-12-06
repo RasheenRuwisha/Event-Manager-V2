@@ -16,12 +16,11 @@ namespace EventManager.View.Contacts
 {
     public partial class AddContact : Form
     {
-        UiBuilder uiBuilder = new UiBuilder();
-        UiMessageUtitlity uiMessage = new UiMessageUtitlity();
-        ContactHelper contactHelper = new ContactHelper();
-        Bitmap bitmap = new Bitmap(Properties.Resources.user);
-        FieldValidator fieldValidator = new FieldValidator();
-        CommonUtil commonUtil = new CommonUtil();
+        readonly UiBuilder uiBuilder = new UiBuilder();
+        readonly UiMessageUtitlity uiMessage = new UiMessageUtitlity();
+        private Bitmap bitmap = new Bitmap(Properties.Resources.user);
+        readonly FieldValidator fieldValidator = new FieldValidator();
+        readonly CommonUtil commonUtil = new CommonUtil();
 
         public AddContact()
         {
@@ -53,6 +52,7 @@ namespace EventManager.View.Contacts
             this.cpb_userimage.Left = this.Width / 2 - this.cpb_userimage.Width / 2;
             this.cpb_userimage.SizeMode = PictureBoxSizeMode.StretchImage;
             this.cpb_userimage.Image = bitmap;
+            bitmap.Dispose();
         }
 
 
@@ -160,8 +160,10 @@ namespace EventManager.View.Contacts
 
         private void cpb_userimage_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png";
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png"
+            };
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 bitmap = new Bitmap(openFileDialog.FileName);
@@ -183,14 +185,16 @@ namespace EventManager.View.Contacts
                             PictureBox pictureBox = Controls.Find("ptx_" + control.Name, true).FirstOrDefault() as PictureBox;
                             if (pictureBox == null)
                             {
-                                PictureBox error = uiMessage.AddErrorIcon(control.Name, control.Location.X + 255, control.Location.Y + 2);
-                                if (this.InvokeRequired)
+                                using (PictureBox error = uiMessage.AddErrorIcon(control.Name, control.Location.X + 255, control.Location.Y + 2))
                                 {
-                                    this.Invoke(new MethodInvoker(this.ShowErrors));
-                                }
-                                else
-                                {
-                                    this.Controls.Add(error);
+                                    if (this.InvokeRequired)
+                                    {
+                                        this.Invoke(new MethodInvoker(this.ShowErrors));
+                                    }
+                                    else
+                                    {
+                                        this.Controls.Add(error);
+                                    }
                                 }
 
                             }
@@ -229,7 +233,7 @@ namespace EventManager.View.Contacts
         private bool CheckExistingEmail()
         {
 
-            if (contactHelper.DoesEmailExist(txt_email.Text.Trim()))
+            if (ContactHelper.DoesEmailExist(txt_email.Text.Trim()))
             {
                 return true;
             }
@@ -241,7 +245,7 @@ namespace EventManager.View.Contacts
 
         private bool CheckExistingName()
         {
-            if (contactHelper.DoesNameExist(txt_name.Text.Trim()))
+            if (ContactHelper.DoesNameExist(txt_name.Text.Trim()))
             {
                 return true;
             }
@@ -320,7 +324,7 @@ namespace EventManager.View.Contacts
             bool task = await Task.Run(() => this.DoValidations());
             if (task)
             {
-                bool contact = await Task.Run(()=> contactHelper.AddContact(contactDetails));
+                bool contact = await Task.Run(()=> ContactHelper.AddContact(contactDetails));
                 if (contact)
                 {
                     this.Controls.Remove(pictureBox);

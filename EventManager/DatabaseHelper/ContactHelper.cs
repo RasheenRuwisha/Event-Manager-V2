@@ -14,10 +14,9 @@ namespace EventManager.DatabaseHelper
 {
     public class ContactHelper
     {
-        readonly String userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
-        Logger logger = new Logger();
-        public bool DoesNameExist(String name)
+        public static bool DoesNameExist(String name)
         {
+            String userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
 
             try
             {
@@ -35,7 +34,7 @@ namespace EventManager.DatabaseHelper
                 else
                 {
 
-                    var userDetails = this.SearchContactXML(name, "Name");
+                    var userDetails = SearchContactXML(name, "Name");
                     if (userDetails != null)
                     {
                         return false;
@@ -44,8 +43,8 @@ namespace EventManager.DatabaseHelper
             }
             catch (System.Data.Entity.Core.EntityException ex)
             {
-                logger.LogException(ex, false);
-                var userDetails = this.SearchContactXML(name, "Name");
+                Logger.LogException(ex, false);
+                var userDetails = SearchContactXML(name, "Name");
                 if (userDetails != null)
                 {
                     return false;
@@ -53,8 +52,8 @@ namespace EventManager.DatabaseHelper
             }
             catch (System.Data.SqlClient.SqlException ex)
             {
-                logger.LogException(ex, false);
-                var userDetails = this.SearchContactXML(name, "Name");
+                Logger.LogException(ex, false);
+                var userDetails = SearchContactXML(name, "Name");
                 if (userDetails != null)
                 {
                     return false;
@@ -62,14 +61,16 @@ namespace EventManager.DatabaseHelper
             }
             catch (Exception ex)
             {
-                logger.LogException(ex, true);
+                Logger.LogException(ex, true);
                 return false;
             }
             return true;
         }
 
-        public bool DoesEmailExist(String email)
+        public static bool DoesEmailExist(String email)
         {
+            String userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
+
             try
             {
                 if (Application.UserAppDataRegistry.GetValue("dbConnection").ToString().Equals("True"))
@@ -86,7 +87,7 @@ namespace EventManager.DatabaseHelper
                 else
                 {
 
-                    var userDetails = this.SearchContactXML(email, "Email");
+                    var userDetails = SearchContactXML(email, "Email");
                     if (userDetails != null)
                     {
                         return false;
@@ -95,8 +96,8 @@ namespace EventManager.DatabaseHelper
             }
             catch (System.Data.Entity.Core.EntityException ex)
             {
-                logger.LogException(ex, false);
-                var userDetails = this.SearchContactXML(email, "Email");
+                Logger.LogException(ex, false);
+                var userDetails = SearchContactXML(email, "Email");
                 if (userDetails != null)
                 {
                     return false;
@@ -104,8 +105,8 @@ namespace EventManager.DatabaseHelper
             }
             catch (System.Data.SqlClient.SqlException ex)
             {
-                logger.LogException(ex, false);
-                var userDetails = this.SearchContactXML(email, "Email");
+                Logger.LogException(ex, false);
+                var userDetails = SearchContactXML(email, "Email");
                 if (userDetails != null)
                 {
                     return false;
@@ -113,7 +114,7 @@ namespace EventManager.DatabaseHelper
             }
             catch (Exception ex)
             {
-                logger.LogException(ex, true);
+                Logger.LogException(ex, true);
                 return false;
             }
            
@@ -121,8 +122,10 @@ namespace EventManager.DatabaseHelper
         }
 
 
-        public bool AddContact(Contact contact)
+        public static bool AddContact(Contact contact)
         {
+            String userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
+
             try
             {
                 if (Application.UserAppDataRegistry.GetValue("dbConnection").ToString().Equals("True"))
@@ -131,37 +134,39 @@ namespace EventManager.DatabaseHelper
                     {
                         dbContext.Contacts.Add(contact);
                         dbContext.SaveChanges();
-                        this.AddContactXML(contact);
+                        AddContactXML(contact);
                     }
                 }
                 else
                 {
-                    this.AddContactXML(contact);
+                    AddContactXML(contact);
                 }
 
                 return true;
             }
             catch (System.Data.Entity.Core.EntityException ex)
             {
-                logger.LogException(ex, false);
-                this.AddContactXML(contact);
+                Logger.LogException(ex, false);
+                AddContactXML(contact);
                 return true;
             }
             catch (System.Data.SqlClient.SqlException ex)
             {
-                logger.LogException(ex, false);
-                this.AddContactXML(contact);
+                Logger.LogException(ex, false);
+                AddContactXML(contact);
                 return true;
             }
             catch (Exception ex)
             {
-                logger.LogException(ex, true);
+                Logger.LogException(ex, true);
                 return false;
             }
         }
 
         private EventContact genEvCon(string id,string conid)
         {
+            String userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
+
             EventContact ewv = new EventContact()
             {
                 EventId = id,
@@ -172,7 +177,7 @@ namespace EventManager.DatabaseHelper
             return ewv;
         }
 
-        public bool RemoveContact(String id)
+        public static bool RemoveContact(String id)
         {
             try
             {
@@ -189,38 +194,40 @@ namespace EventManager.DatabaseHelper
                         }
                         dbContext.Contacts.Remove(contact);
                         dbContext.SaveChanges();
-                        this.RemoveContactXML(id);
+                        RemoveContactXML(id);
                     }
                 }
                 else
                 {
-                    this.RemoveContactXML(id);
+                    RemoveContactXML(id);
                 }
 
                 return true;
             }
             catch (System.Data.Entity.Core.EntityException ex)
             {
-                logger.LogException(ex, false);
-                this.RemoveContactXML(id);
+                Logger.LogException(ex, false);
+                RemoveContactXML(id);
                 return true;
             }
             catch (System.Data.SqlClient.SqlException ex)
             {
-                logger.LogException(ex, false);
-                this.RemoveContactXML(id);
+                Logger.LogException(ex, false);
+                RemoveContactXML(id);
                 return true;
             }
             catch (Exception ex)
             {
-                logger.LogException(ex, true);
+                Logger.LogException(ex, true);
                 return false;
             }
         }
 
 
-        public List<Contact> GetUserContacts()
+        public static List<Contact> GetUserContacts()
         {
+            String userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
+
             List<Contact> contacts = new List<Contact>();
 
             try
@@ -234,29 +241,29 @@ namespace EventManager.DatabaseHelper
                 }
                 else
                 {
-                    contacts = this.GetAllContactsXML();
+                    contacts = GetAllContactsXML();
                 }
 
             }
             catch (System.Data.Entity.Core.EntityException ex)
             {
-                logger.LogException(ex, false);
-                contacts = this.GetAllContactsXML();
+                Logger.LogException(ex, false);
+                contacts = GetAllContactsXML();
             }
             catch (System.Data.SqlClient.SqlException ex)
             {
-                logger.LogException(ex, false);
-                contacts = this.GetAllContactsXML();
+                Logger.LogException(ex, false);
+                contacts = GetAllContactsXML();
             }
             catch (Exception ex)
             {
-                logger.LogException(ex, true);
+                Logger.LogException(ex, true);
             }
           
             return contacts;
         }
 
-        public Contact GetContactDetails(string contactId)
+        public static Contact GetContactDetails(string contactId)
         {
             Contact contactDetails = new Contact();
 
@@ -271,27 +278,27 @@ namespace EventManager.DatabaseHelper
                 }
                 else
                 {
-                    contactDetails = this.SearchContactXML(contactId, "ContactId");
+                    contactDetails = SearchContactXML(contactId, "ContactId");
                 }
             }
             catch (System.Data.Entity.Core.EntityException ex)
             {
-                contactDetails = this.SearchContactXML(contactId, "ContactId");
-                logger.LogException(ex, false);
+                contactDetails = SearchContactXML(contactId, "ContactId");
+                Logger.LogException(ex, false);
             }
             catch (System.Data.SqlClient.SqlException ex)
             {
-                contactDetails = this.SearchContactXML(contactId, "ContactId");
-                logger.LogException(ex, false);
+                contactDetails = SearchContactXML(contactId, "ContactId");
+                Logger.LogException(ex, false);
             }
             catch (Exception ex)
             {
-                logger.LogException(ex, true);
+                Logger.LogException(ex, true);
             }
             return contactDetails;
         }
 
-        public bool UpdateContacts(Contact contact)
+        public static bool UpdateContacts(Contact contact)
         {
             try
             {
@@ -312,36 +319,38 @@ namespace EventManager.DatabaseHelper
                         contactDetails.Zipcode = contact.Zipcode;
                         dbContext.SaveChanges();
                     }
-                    this.UpdateContactXML(contact);
+                    UpdateContactXML(contact);
                 }
                 else
                 {
-                    this.UpdateContactXML(contact);
+                    UpdateContactXML(contact);
                 }
 
                 return true;
             }
             catch (System.Data.Entity.Core.EntityException ex)
             {
-                logger.LogException(ex, false);
-                this.UpdateContactXML(contact);
+                Logger.LogException(ex, false);
+                UpdateContactXML(contact);
                 return true;
             }
             catch (System.Data.SqlClient.SqlException ex)
             {
-                logger.LogException(ex, false);
-                this.UpdateContactXML(contact);
+                Logger.LogException(ex, false);
+                UpdateContactXML(contact);
                 return true;
             }
             catch (Exception ex)
             {
-                logger.LogException(ex, true);
+                Logger.LogException(ex, true);
                 return false;
             }
         }
 
-        public List<Contact> GetUserContactsByName(String name)
+        public static List<Contact> GetUserContactsByName(String name)
         {
+            String userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
+
             List<Contact> contacts = new List<Contact>();
             try
             {
@@ -351,26 +360,26 @@ namespace EventManager.DatabaseHelper
                     {
                         contacts = dbContext.Contacts.Where(contact => contact.UserId.Equals(userId)).Where(contact => contact.Name.Contains(name)).OrderBy(contact => contact.Name).ToList();
                     }
-                    contacts =this.SearchContactsXML(name);
+                    contacts =SearchContactsXML(name);
                 }
                 else
                 {
-                    contacts = this.SearchContactsXML(name);
+                    contacts = SearchContactsXML(name);
                 }
             }
             catch (System.Data.Entity.Core.EntityException ex)
             {
-                logger.LogException(ex, false);
-                contacts = this.SearchContactsXML(name);
+                Logger.LogException(ex, false);
+                contacts = SearchContactsXML(name);
             }
             catch (System.Data.SqlClient.SqlException ex)
             {
-                logger.LogException(ex, false);
-                contacts = this.SearchContactsXML(name);
+                Logger.LogException(ex, false);
+                contacts = SearchContactsXML(name);
             }
             catch (Exception ex)
             {
-                logger.LogException(ex, true);
+                Logger.LogException(ex, true);
             }
         
             return contacts;
@@ -385,8 +394,10 @@ namespace EventManager.DatabaseHelper
 
 
 
-        private bool AddContactXML(Contact contact)
+        private static bool AddContactXML(Contact contact)
         {
+            String userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
+
             try
             {
                 XDocument xmlDoc = XDocument.Load($"{userId}.xml");
@@ -410,7 +421,7 @@ namespace EventManager.DatabaseHelper
             }
             catch (Exception ex)
             {
-                logger.LogException(ex, true);
+                Logger.LogException(ex, true);
                 return false;
             }
         }
@@ -418,8 +429,10 @@ namespace EventManager.DatabaseHelper
 
 
 
-        private bool UpdateContactXML(Contact contact)
+        private static bool UpdateContactXML(Contact contact)
         {
+            String userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
+
             XDocument xmlDoc = new XDocument();
             try
             {
@@ -445,13 +458,15 @@ namespace EventManager.DatabaseHelper
             }
             catch (Exception ex)
             {
-                logger.LogException(ex, true);
+                Logger.LogException(ex, true);
                 return false;
             }
         }
 
-        private bool RemoveContactXML(string contactId)
+        private static bool RemoveContactXML(string contactId)
         {
+            String userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
+
             XDocument xmlDoc = new XDocument();
             try
             {
@@ -468,14 +483,16 @@ namespace EventManager.DatabaseHelper
             }
             catch (Exception ex)
             {
-                logger.LogException(ex, true);
+                Logger.LogException(ex, true);
                 return false;
             }
         }
 
 
-        private List<Contact> GetAllContactsXML()
+        private static List<Contact> GetAllContactsXML()
         {
+            String userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
+
             List<Contact> contacts = null;
             try
             {
@@ -487,14 +504,16 @@ namespace EventManager.DatabaseHelper
             }
             catch (Exception ex)
             {
-                logger.LogException(ex, true);
+                Logger.LogException(ex, true);
             }
 
             return contacts;
         }
 
-        private List<Contact> SearchContactsXML(string name)
+        private static List<Contact> SearchContactsXML(string name)
         {
+            String userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
+
             List<Contact> contact = new List<Contact>();
             XDocument xmlDoc = new XDocument();
             try
@@ -520,13 +539,15 @@ namespace EventManager.DatabaseHelper
             }
             catch (Exception ex)
             {
-                logger.LogException(ex, true);
+                Logger.LogException(ex, true);
                 return contact;
             }
         }
 
-        private Contact SearchContactXML(string name, string element)
+        private static Contact SearchContactXML(string name, string element)
         {
+            String userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
+
             Contact contact = new Contact();
             XDocument xmlDoc = new XDocument();
             try
@@ -552,7 +573,7 @@ namespace EventManager.DatabaseHelper
             }
             catch (Exception ex)
             {
-                logger.LogException(ex, true);
+                Logger.LogException(ex, true);
                 return contact;
             }
         }

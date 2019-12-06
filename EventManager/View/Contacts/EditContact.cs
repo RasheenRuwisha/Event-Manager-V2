@@ -16,15 +16,13 @@ namespace EventManager.View.Contacts
 {
     public partial class EditContact : Form
     {
-
-        UiBuilder uiBuilder = new UiBuilder();
-        UiMessageUtitlity uiMessage = new UiMessageUtitlity();
-        ContactHelper contactHelper = new ContactHelper();
-        Bitmap bitmap = new Bitmap(Properties.Resources.user);
-        FieldValidator fieldValidator = new FieldValidator();
-        CommonUtil commonUtil = new CommonUtil();
+        readonly UiBuilder uiBuilder = new UiBuilder();
+        readonly UiMessageUtitlity uiMessage = new UiMessageUtitlity();
+        private Bitmap bitmap = new Bitmap(Properties.Resources.user);
+        readonly FieldValidator fieldValidator = new FieldValidator();
+        readonly CommonUtil commonUtil = new CommonUtil();
         Contact contact = new Contact();
-        String contactId = "";
+        string contactId = "";
 
         public EditContact(string id)
         {
@@ -157,7 +155,7 @@ namespace EventManager.View.Contacts
 
         private async void EditContact_Load(object sender, EventArgs e)
         {
-            contact = await Task.Run(() => contactHelper.GetContactDetails(contactId));
+            contact = await Task.Run(() => ContactHelper.GetContactDetails(contactId));
             if (contact != null)
             {
                 this.InsertDataUsingContactRow();
@@ -217,14 +215,16 @@ namespace EventManager.View.Contacts
                             PictureBox pictureBox = Controls.Find("ptx_" + control.Name, true).FirstOrDefault() as PictureBox;
                             if (pictureBox == null)
                             {
-                                PictureBox error = uiMessage.AddErrorIcon(control.Name, control.Location.X + 255, control.Location.Y + 2);
-                                if (this.InvokeRequired)
+                                using (PictureBox error = uiMessage.AddErrorIcon(control.Name, control.Location.X + 255, control.Location.Y + 2))
                                 {
-                                    this.Invoke(new MethodInvoker(this.ShowErrors));
-                                }
-                                else
-                                {
-                                    this.Controls.Add(error);
+                                    if (this.InvokeRequired)
+                                    {
+                                        this.Invoke(new MethodInvoker(this.ShowErrors));
+                                    }
+                                    else
+                                    {
+                                        this.Controls.Add(error);
+                                    }
                                 }
 
                             }
@@ -298,7 +298,7 @@ namespace EventManager.View.Contacts
             bool task = await Task.Run(() => this.DoValidations());
             if (task)
             {
-                bool update = await Task.Run(() => contactHelper.UpdateContacts(contact));
+                bool update = await Task.Run(() => ContactHelper.UpdateContacts(contact));
                 if (update)
                 {
                     this.Controls.Remove(pictureBox);
@@ -341,8 +341,10 @@ namespace EventManager.View.Contacts
 
         private void cpb_userimage_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png";
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png"
+            };
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 bitmap = new Bitmap(openFileDialog.FileName);

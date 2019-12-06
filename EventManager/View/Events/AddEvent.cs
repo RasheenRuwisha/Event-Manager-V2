@@ -16,16 +16,11 @@ namespace EventManager.View.Events
 {
     public partial class AddEvent : Form
     {
-        UiBuilder uiBuilder = new UiBuilder();
-        UiMessageUtitlity uiMessage = new UiMessageUtitlity();
-        ContactHelper contactHelper = new ContactHelper();
-        EventHelper eventHelper = new EventHelper();
-        Bitmap bitmap = new Bitmap(Properties.Resources.user);
-        FieldValidator fieldValidator = new FieldValidator();
-        CommonUtil commonUtil = new CommonUtil();
+        readonly UiBuilder uiBuilder = new UiBuilder();
+        readonly UiMessageUtitlity uiMessage = new UiMessageUtitlity();
+        readonly CommonUtil commonUtil = new CommonUtil();
         List<Contact> contacts = new List<Contact>();
         List<ComboBoxItem> comboBoxItems = new List<ComboBoxItem>();
-        Logger logger = new Logger();
         readonly String userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
 
 
@@ -317,13 +312,13 @@ namespace EventManager.View.Events
         {
             try
             {
-                contacts = contactHelper.GetUserContacts();
+                contacts = ContactHelper.GetUserContacts();
                 this.AddContactList();
                 return true;
             }
             catch (Exception ex)
             {
-                logger.LogException(ex, true);
+                Logger.LogException(ex, true);
                 return false;
             }
         }
@@ -366,8 +361,7 @@ namespace EventManager.View.Events
             }
             else
             {
-                ComboBoxItem comboBoxItem = new ComboBoxItem();
-                comboBoxItem = cmb_contacts.SelectedItem as ComboBoxItem;
+                ComboBoxItem comboBoxItem = cmb_contacts.SelectedItem as ComboBoxItem;
                 comboBoxItems.Add(comboBoxItem);
                 cmb_evetncollab.Items.Add(comboBoxItem);
                 cmb_contacts.Items.Remove(comboBoxItem);
@@ -395,8 +389,7 @@ namespace EventManager.View.Events
             }
             else
             {
-                ComboBoxItem comboBoxItem = new ComboBoxItem();
-                comboBoxItem = cmb_evetncollab.SelectedItem as ComboBoxItem;
+                ComboBoxItem comboBoxItem = cmb_evetncollab.SelectedItem as ComboBoxItem;
                 cmb_contacts.Items.Add(comboBoxItem);
                 cmb_evetncollab.Items.Remove(comboBoxItem);
                 comboBoxItems.Remove(comboBoxItem);
@@ -424,17 +417,19 @@ namespace EventManager.View.Events
             {
                 if (pictureBox == null)
                 {
-                    PictureBox error = uiMessage.AddErrorIcon(textbox.Name, textbox.Location.X + 255, textbox.Location.Y + 2);
-                    if (this.InvokeRequired)
+                    using (PictureBox error = uiMessage.AddErrorIcon(textbox.Name, textbox.Location.X + 255, textbox.Location.Y + 2))
                     {
-                        this.Invoke(new MethodInvoker(this.ShowErrors));
-                    }
-                    else
-                    {
-                        this.Controls.Add(error);
+                        if (this.InvokeRequired)
+                        {
+                            this.Invoke(new MethodInvoker(this.ShowErrors));
+                        }
+                        else
+                        {
+                            this.Controls.Add(error);
+                        }
                     }
 
-                }             
+                }
             }
             else
             {
@@ -571,7 +566,7 @@ namespace EventManager.View.Events
             {
 
                 bool contact = false;
-                    contact = await Task.Run(() => eventHelper.AddEvent(userEvent));
+                    contact = await Task.Run(() => EventHelper.AddEvent(userEvent));
                 if (contact)
                 {
                     this.Controls.Remove(pictureBox);

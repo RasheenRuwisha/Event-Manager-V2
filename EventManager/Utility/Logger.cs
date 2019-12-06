@@ -11,7 +11,7 @@ namespace EventManager.Utility
     public class Logger
     {
 
-        public void LogException(Exception ex, bool showError)
+        public static void LogException(Exception ex, bool showError)
         {
             String workingDir = Directory.GetCurrentDirectory();
             string filePath = workingDir + @"\" + DateTime.Now.ToString("MM-dd-yyyy-h-mm-tt") + ex.GetType().Name + ".txt";

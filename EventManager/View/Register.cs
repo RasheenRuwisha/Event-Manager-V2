@@ -69,14 +69,16 @@ namespace EventManager.View
                         PictureBox pictureBox = Controls.Find("ptx_" + contorl.Name, true).FirstOrDefault() as PictureBox;
                         if (pictureBox == null)
                         {
-                            PictureBox error = uiMessageUtitlity.AddErrorIcon(contorl.Name, contorl.Location.X + 255, contorl.Location.Y + 2);
-                            if (this.InvokeRequired)
+                            using (PictureBox error = uiMessageUtitlity.AddErrorIcon(contorl.Name, contorl.Location.X + 255, contorl.Location.Y + 2))
                             {
-                                this.Invoke(new MethodInvoker(this.ShowErrors));
-                            }
-                            else
-                            {
-                                this.Controls.Add(error);
+                                if (this.InvokeRequired)
+                                {
+                                    this.Invoke(new MethodInvoker(this.ShowErrors));
+                                }
+                                else
+                                {
+                                    this.Controls.Add(error);
+                                }
                             }
                         }
                     }
@@ -177,7 +179,7 @@ namespace EventManager.View
 
         private bool CheckExistingEmail()
         {
-            if (userHelper.IsNewUser(txt_email.Text.Trim()))
+            if (UserHelper.IsNewUser(txt_email.Text.Trim()))
             {
                 return true;
             }
@@ -231,7 +233,7 @@ namespace EventManager.View
             bool task = await Task.Run(() => this.DoValidations());
             if (task)
             {
-                bool register = await Task.Run(() => userHelper.AddUser(user, userCredential));
+                bool register = await Task.Run(() => UserHelper.AddUser(user, userCredential));
                 if (register)
                 {
                     Controls.Remove(picture);

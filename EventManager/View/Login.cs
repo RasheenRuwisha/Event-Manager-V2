@@ -65,7 +65,7 @@ namespace EventManager
             bool task = await Task.Run(() => this.DoValidations());
             if (task)
             {
-                bool login = await Task.Run(() => userHelper.ValidateUser(txt_email.Text.Trim(), txt_password.Text.Trim()));
+                bool login = await Task.Run(() => UserHelper.ValidateUser(txt_email.Text.Trim(), txt_password.Text.Trim()));
                 if (login)
                 {
                     Dashboard dashboard = new Dashboard();
@@ -100,16 +100,18 @@ namespace EventManager
                         PictureBox pictureBox = Controls.Find("ptx_" + contorl.Name, true).FirstOrDefault() as PictureBox;
                         if (pictureBox == null)
                         {
-                            PictureBox error = uiMessageUtitlity.AddErrorIcon(contorl.Name, contorl.Location.X + 255, contorl.Location.Y + 2);
-                            if (this.InvokeRequired)
+                            using (PictureBox error = uiMessageUtitlity.AddErrorIcon(contorl.Name, contorl.Location.X + 255, contorl.Location.Y + 2))
                             {
-                                this.Invoke(new MethodInvoker(this.ShowErrors));
+                                if (this.InvokeRequired)
+                                {
+                                    this.Invoke(new MethodInvoker(this.ShowErrors));
+                                }
+                                else
+                                {
+                                    this.Controls.Add(error);
+                                }
                             }
-                            else
-                            {
-                                this.Controls.Add(error);
-                            }
-                           
+
                         }
                     }
                     else
@@ -145,7 +147,7 @@ namespace EventManager
 
         private bool CheckExistingEmail()
         {
-            if (userHelper.UserExists(txt_email.Text.Trim()))
+            if (UserHelper.UserExists(txt_email.Text.Trim()))
             {
                 return true;
             }

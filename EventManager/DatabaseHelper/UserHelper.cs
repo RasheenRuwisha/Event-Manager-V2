@@ -12,9 +12,8 @@ namespace EventManager.DatabaseHelper
 {
     public class UserHelper
     {
-        CommonUtil commonUtil = new CommonUtil();
         Logger logger = new Logger();
-        public bool IsNewUser(String email)
+        public static bool IsNewUser(String email)
         {
             using (var dbContext = new DatabaseModel())
             {
@@ -27,7 +26,7 @@ namespace EventManager.DatabaseHelper
             return true;
         }
 
-        public bool AddUser(User user, UserCredential userCredential)
+        public static bool AddUser(User user, UserCredential userCredential)
         {
             try
             {
@@ -40,13 +39,13 @@ namespace EventManager.DatabaseHelper
                 return true;
             }catch(Exception ex)
             {
-                logger.LogException(ex,true);
+                Logger.LogException(ex,true);
                 return false;
             }
         }
 
 
-        public bool UserExists(String email)
+        public static bool UserExists(String email)
         {
             using (var dbContext = new DatabaseModel())
             {
@@ -59,8 +58,10 @@ namespace EventManager.DatabaseHelper
             return false;
         }
 
-        public bool ValidateUser(String email, String password)
+        public static bool ValidateUser(String email, String password)
         {
+            CommonUtil commonUtil = new CommonUtil();
+
             using (var dbContext = new DatabaseModel())
             {
                 var userDetails = dbContext.Userscredentials.Where(user => user.Email.Equals(email)).FirstOrDefault();
@@ -84,7 +85,7 @@ namespace EventManager.DatabaseHelper
             return false;
         }
 
-        public User GetUser(String userId)
+        public static User GetUser(String userId)
         {
             User user = new User();
             using (var dbContext = new DatabaseModel())

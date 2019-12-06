@@ -37,7 +37,6 @@ namespace EventManager.UIComponents
         private void pb_delete_Click(object sender, EventArgs e)
         {
 
-            EventHelper eventHelper = new EventHelper();
             UserEvent userEvent = this.Tag as UserEvent;
           
                 var confirmResult = MessageBox.Show("Are you sure to delete this event?",
@@ -47,7 +46,7 @@ namespace EventManager.UIComponents
                 {
 
 
-                    eventHelper.RemoveEvent(userEvent.EventId);
+                    EventHelper.RemoveEvent(userEvent.EventId);
                     Panel panel = this.Parent as Panel;
 
                     panel.Controls.Clear();

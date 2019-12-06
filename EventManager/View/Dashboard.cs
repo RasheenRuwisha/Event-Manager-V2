@@ -19,13 +19,8 @@ namespace EventManager.View
 {
     public partial class Dashboard : Form
     {
-        readonly String userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
-        readonly ContactHelper contactHelper = new ContactHelper();
-        readonly UserHelper userHelper = new UserHelper();
-        readonly EventHelper eventHelper = new EventHelper();
         readonly CommonUtil commonUtil = new CommonUtil();
         readonly PredictionUtility predictionUtility = new PredictionUtility();
-        User user = new User();
         string ActivePanel = "Event";
         public Dashboard()
         {
@@ -149,22 +144,24 @@ namespace EventManager.View
             List<Contact> contactList = new List<Contact>();
             if (type.Equals("load"))
             {
-                contactList = contactHelper.GetUserContacts();
+                contactList = ContactHelper.GetUserContacts();
             }
             else if (type.Equals("search"))
             {
-                contactList = contactHelper.GetUserContactsByName(txt_search.Text.Trim());
+                contactList = ContactHelper.GetUserContactsByName(txt_search.Text.Trim());
             }
             List<ContactListView> contactLists = new List<ContactListView>();
             foreach (Contact contactDetails in contactList)
             {
-                ContactListView contact = new ContactListView();
-                contact.Tag = contactDetails.ContactId;
-                contact.ContactName = contactDetails.Name;
-                contact.ContactEmail = contactDetails.Email;
-                contact.ContactId = contactDetails.ContactId;
-                contact.ContactImage = commonUtil.Base64ToBitmap(contactDetails.Image);
-                contact.Name = $"ctx_";
+                ContactListView contact = new ContactListView
+                {
+                    Tag = contactDetails.ContactId,
+                    ContactName = contactDetails.Name,
+                    ContactEmail = contactDetails.Email,
+                    ContactId = contactDetails.ContactId,
+                    ContactImage = commonUtil.Base64ToBitmap(contactDetails.Image),
+                    Name = $"ctx_"
+                };
                 contact.Click += new EventHandler(this.ContactControlClick);
                 contactLists.Add(contact);
 
@@ -284,13 +281,15 @@ namespace EventManager.View
         public void ContactControlClick(object sender, EventArgs e)
         {
             ContactListView contactList = (ContactListView)sender;
-            Contact contact = this.contactHelper.GetContactDetails(contactList.Tag.ToString());
-            ContactPreview contactPreview = new ContactPreview();
-            contactPreview.ContactName = contact.Name;
-            contactPreview.ContactEmail = contact.Email;
-            contactPreview.ContactAddressLine1 = contact.AddressLine1 + ", " + contact.AddressLine2;
-            contactPreview.ContactAddressLine2 = contact.City + ", " + contact.State + ", " + contact.Zipcode;
-            contactPreview.ContactImage = commonUtil.Base64ToBitmap(contact.Image);
+            Contact contact = ContactHelper.GetContactDetails(contactList.Tag.ToString());
+            ContactPreview contactPreview = new ContactPreview
+            {
+                ContactName = contact.Name,
+                ContactEmail = contact.Email,
+                ContactAddressLine1 = contact.AddressLine1 + ", " + contact.AddressLine2,
+                ContactAddressLine2 = contact.City + ", " + contact.State + ", " + contact.Zipcode,
+                ContactImage = commonUtil.Base64ToBitmap(contact.Image)
+            };
 
             this.pnl_contactpreview.Controls.Clear();
             this.pnl_contactpreview.Controls.Add(contactPreview);
@@ -387,27 +386,31 @@ namespace EventManager.View
 
         private List<EventListView> GenerateEventList(String type)
         {
-            WeekStartEnd weekStartEnd = new WeekStartEnd();
-            weekStartEnd.WeekStart = DateTime.Now.AddDays(-(int)DateTime.Now.DayOfWeek).Date;
-            weekStartEnd.WeekEnd = weekStartEnd.WeekStart.Date.AddDays(7).AddSeconds(-1);
+            WeekStartEnd weekStartEnd = new WeekStartEnd
+            {
+                WeekStart = DateTime.Now.Date,
+                WeekEnd = DateTime.Now.AddDays(7).AddSeconds(-1).Date
+
+        };
 
             this.AddEventSeachHeaderAndClose();
 
             List<UserEvent> contactList = new List<UserEvent>();
             if (type.Equals("load"))
             {
-                contactList = eventHelper.SearchUserEvent(weekStartEnd.WeekStart,weekStartEnd.WeekEnd);
+                contactList = EventHelper.SearchUserEvent(weekStartEnd.WeekStart,weekStartEnd.WeekEnd);
             }
             else if (type.Equals("search"))
             {
-                contactList = eventHelper.SearchUserEvent(dtp_searchstart.Value, dtp_seachend.Value);
+                contactList = EventHelper.SearchUserEvent(dtp_searchstart.Value.Date, dtp_seachend.Value.Date);
             }
             List<EventListView> contactLists = new List<EventListView>();
             foreach (UserEvent contactDetails in contactList)
             {
-                EventListView contact = new EventListView();
-                contact.userEvent = contactDetails;
-                contact.Name = $"ctx_";
+                EventListView contact = new EventListView
+                {
+                    userEvent = contactDetails,
+                };
                 contact.Click += new EventHandler(this.EventControlClick);
                 //contact.deleteEvent = new EventHandler(this.removePreview);
                 //contact.editEvent = new FormClosingEventHandler(this.generateContactPreview);
@@ -421,8 +424,10 @@ namespace EventManager.View
         {
             EventListView eventListView = (EventListView)sender;
             UserEvent contact = eventListView.Tag as UserEvent;
-            EventPreview contactPreview = new EventPreview();
-            contactPreview.userEvent = contact;
+            EventPreview contactPreview = new EventPreview
+            {
+                userEvent = contact
+            };
             this.pnl_eventspreview.Controls.Clear();
             this.pnl_eventspreview.Controls.Add(contactPreview);
         }

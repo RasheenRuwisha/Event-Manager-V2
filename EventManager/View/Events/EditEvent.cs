@@ -16,20 +16,16 @@ namespace EventManager.View.Events
 {
     public partial class EditEvent : Form
     {
+        readonly UiBuilder uiBuilder = new UiBuilder();
+        readonly UiMessageUtitlity uiMessage = new UiMessageUtitlity();
+        readonly CommonUtil commonUtil = new CommonUtil();
+        readonly String userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
 
-        UiBuilder uiBuilder = new UiBuilder();
-        UiMessageUtitlity uiMessage = new UiMessageUtitlity();
-        ContactHelper contactHelper = new ContactHelper();
-        EventHelper eventHelper = new EventHelper();
-        Bitmap bitmap = new Bitmap(Properties.Resources.user);
-        FieldValidator fieldValidator = new FieldValidator();
-        CommonUtil commonUtil = new CommonUtil();
+
         List<Contact> contacts = new List<Contact>();
         List<ComboBoxItem> comboBoxItems = new List<ComboBoxItem>();
-        readonly String userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
         UserEvent userEvent = new UserEvent();
         List<Contact> allContacts = new List<Contact>();
-        Logger logger = new Logger();
         public EditEvent()
         {
             InitializeComponent();
@@ -39,7 +35,7 @@ namespace EventManager.View.Events
         {
             InitializeComponent();
             
-            userEvent = eventHelper.GetUserEvent(eventid);
+            userEvent = EventHelper.GetUserEvent(eventid);
             txt_name.Text = userEvent.Title;
             txt_email.Text = userEvent.Description;
             dtp_startdate.Value = userEvent.StartDate;
@@ -47,7 +43,7 @@ namespace EventManager.View.Events
             dtp_enddate.Value = userEvent.StartDate;
             dtp_endtime.Value = userEvent.EndDate;
 
-            allContacts = contactHelper.GetUserContacts();
+            allContacts = ContactHelper.GetUserContacts();
             allContacts.RemoveAll(x => contacts.Exists(y => y.ContactId == x.ContactId));
 
             if(userEvent.EventContacts != null)
@@ -380,13 +376,13 @@ namespace EventManager.View.Events
         {
             try
             {
-                contacts = contactHelper.GetUserContacts();
+                contacts = ContactHelper.GetUserContacts();
                 this.AddContactList();
                 return true;
             }
             catch (Exception ex)
             {
-                logger.LogException(ex, true);
+                Logger.LogException(ex, true);
                 return false;
             }
         }
@@ -429,8 +425,7 @@ namespace EventManager.View.Events
             }
             else
             {
-                ComboBoxItem comboBoxItem = new ComboBoxItem();
-                comboBoxItem = cmb_contacts.SelectedItem as ComboBoxItem;
+                ComboBoxItem comboBoxItem = cmb_contacts.SelectedItem as ComboBoxItem;
                 comboBoxItems.Add(comboBoxItem);
                 cmb_evetncollab.Items.Add(comboBoxItem);
                 cmb_contacts.Items.Remove(comboBoxItem);
@@ -458,8 +453,7 @@ namespace EventManager.View.Events
             }
             else
             {
-                ComboBoxItem comboBoxItem = new ComboBoxItem();
-                comboBoxItem = cmb_evetncollab.SelectedItem as ComboBoxItem;
+                ComboBoxItem comboBoxItem = cmb_evetncollab.SelectedItem as ComboBoxItem;
                 cmb_contacts.Items.Add(comboBoxItem);
                 cmb_evetncollab.Items.Remove(comboBoxItem);
                 comboBoxItems.Remove(comboBoxItem);
@@ -481,9 +475,11 @@ namespace EventManager.View.Events
 
         private EventDates generateStartEnd(DateTime startDateTime, DateTime endDateTime)
         {
-            EventDates eventDate = new EventDates();
-            eventDate.StartDate = startDateTime;
-            eventDate.EndDate = endDateTime;
+            EventDates eventDate = new EventDates
+            {
+                StartDate = startDateTime,
+                EndDate = endDateTime
+            };
             return eventDate;
 
         }
@@ -498,14 +494,16 @@ namespace EventManager.View.Events
             {
                 if (pictureBox == null)
                 {
-                    PictureBox error = uiMessage.AddErrorIcon(txt_name.Name, txt_name.Location.X + 255, txt_name.Location.Y + 2);
-                    if (this.InvokeRequired)
+                    using (PictureBox error = uiMessage.AddErrorIcon(txt_name.Name, txt_name.Location.X + 255, txt_name.Location.Y + 2))
                     {
-                        this.Invoke(new MethodInvoker(this.ShowErrors));
-                    }
-                    else
-                    {
-                        this.Controls.Add(error);
+                        if (this.InvokeRequired)
+                        {
+                            this.Invoke(new MethodInvoker(this.ShowErrors));
+                        }
+                        else
+                        {
+                            this.Controls.Add(error);
+                        }
                     }
 
                 }
@@ -648,7 +646,7 @@ namespace EventManager.View.Events
             {
 
                 bool contact = false;
-                contact = await Task.Run(() => eventHelper.UpdateEvent(userEvent));
+                contact = await Task.Run(() => EventHelper.UpdateEvent(userEvent));
                 if (contact)
                 {
                     this.Controls.Remove(pictureBox);

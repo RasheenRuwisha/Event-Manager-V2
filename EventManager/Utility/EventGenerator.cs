@@ -9,7 +9,7 @@ namespace EventManager.Utility
 {
     public class EventGenerator
     {
-        public List<UserEvent> GenerateEvents(List<UserEvent> events, DateTime startDate, DateTime endDate)
+        public static List<UserEvent> GenerateEvents(List<UserEvent> events, DateTime startDate, DateTime endDate)
         {
 
             int timeDifference = (endDate - startDate).Days;
@@ -38,7 +38,7 @@ namespace EventManager.Utility
                             if(i <= userEvent.RepeatCount)
                             {
                                 UserEvent evnt =  new UserEvent();
-                                evnt = this.GenerateEventObject(userEvent);
+                                evnt = GenerateEventObject(userEvent);
                                 evnt.StartDate = userEvent.StartDate.AddDays(i);
                                 evnt.EndDate = userEvent.EndDate.AddDays(i);
                                 if(evnt.StartDate >= startDate && evnt.EndDate <= endDate)
@@ -51,7 +51,7 @@ namespace EventManager.Utility
                         for (int i = 1; i <= timeDifference; i++)
                             {
                                 UserEvent evnt = new UserEvent();
-                                evnt = this.GenerateEventObject(userEvent);
+                                evnt = GenerateEventObject(userEvent);
                                 evnt.StartDate = userEvent.StartDate.AddDays(i);
                                 evnt.EndDate = userEvent.EndDate.AddDays(i);
                                 if (evnt.StartDate >= startDate && evnt.EndDate <= endDate)
@@ -66,7 +66,7 @@ namespace EventManager.Utility
                         for (int i = 1; i <= timeDifference; i++)
                         {
                             UserEvent evnt = new UserEvent();
-                            evnt = this.GenerateEventObject(userEvent);
+                            evnt = GenerateEventObject(userEvent);
                             evnt.StartDate = userEvent.StartDate.AddDays(i);
                             evnt.EndDate = userEvent.EndDate.AddDays(i);
                             if (evnt.StartDate >= startDate && evnt.EndDate <= endDate)
@@ -103,7 +103,7 @@ namespace EventManager.Utility
                             if (i <= userEvent.RepeatCount)
                             {
                                 UserEvent evnt = new UserEvent();
-                                evnt = this.GenerateEventObject(userEvent);
+                                evnt = GenerateEventObject(userEvent);
                                 evnt.StartDate = userEvent.StartDate.AddDays(i*7);
                                 evnt.EndDate = userEvent.EndDate.AddDays(i*7);
                                 if (evnt.StartDate >= startDate && evnt.EndDate <= endDate)
@@ -117,7 +117,7 @@ namespace EventManager.Utility
                         for (int i = 1; i <= timeDifference; i++)
                         {
                             UserEvent evnt = new UserEvent();
-                            evnt = this.GenerateEventObject(userEvent);
+                            evnt = GenerateEventObject(userEvent);
                             evnt.StartDate = userEvent.StartDate.AddDays(i*7);
                             evnt.EndDate = userEvent.EndDate.AddDays(i*7);
                             if (evnt.StartDate >= startDate && evnt.EndDate <= endDate)
@@ -132,7 +132,7 @@ namespace EventManager.Utility
                             for (int i = 1; i <= timeDifference; i++)
                             {
                                 UserEvent evnt = new UserEvent();
-                                evnt = this.GenerateEventObject(userEvent);
+                                evnt = GenerateEventObject(userEvent);
                                 evnt.StartDate = userEvent.StartDate.AddDays(i*7);
                                 evnt.EndDate = userEvent.EndDate.AddDays(i*7);
                                 if (evnt.StartDate >= startDate && evnt.EndDate <= endDate)
@@ -164,7 +164,7 @@ namespace EventManager.Utility
                             if (i <= userEvent.RepeatCount)
                             {
                                 UserEvent evnt = new UserEvent();
-                                evnt = this.GenerateEventObject(userEvent);
+                                evnt = GenerateEventObject(userEvent);
                                 evnt.StartDate = userEvent.StartDate.AddMonths(i);
                                 evnt.EndDate = userEvent.EndDate.AddMonths(i);
                                 if (evnt.StartDate >= startDate && evnt.EndDate <= endDate)
@@ -178,7 +178,7 @@ namespace EventManager.Utility
                         for (int i = 1; i <= timeDifference; i++)
                         {
                             UserEvent evnt = new UserEvent();
-                            evnt = this.GenerateEventObject(userEvent);
+                            evnt = GenerateEventObject(userEvent);
                             evnt.StartDate = userEvent.StartDate.AddMonths(i);
                             evnt.EndDate = userEvent.EndDate.AddMonths(i);
                             if (evnt.StartDate >= startDate && evnt.EndDate <= endDate)
@@ -193,7 +193,7 @@ namespace EventManager.Utility
                             for (int i = 1; i <= timeDifference; i++)
                             {
                                 UserEvent evnt = new UserEvent();
-                                evnt = this.GenerateEventObject(userEvent);
+                                evnt = GenerateEventObject(userEvent);
                                 evnt.StartDate = userEvent.StartDate.AddMonths(i);
                                 evnt.EndDate = userEvent.EndDate.AddMonths(i);
                                 if (evnt.StartDate >= startDate && evnt.EndDate <= endDate)
@@ -216,7 +216,7 @@ namespace EventManager.Utility
             return userEvents;
         }
 
-        public UserEvent GenerateEventObject(UserEvent userEvent)
+        public static UserEvent GenerateEventObject(UserEvent userEvent)
         {
             UserEvent events = new UserEvent()
             {
