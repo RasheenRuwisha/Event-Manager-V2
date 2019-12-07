@@ -68,7 +68,7 @@
             this.cmb_repeattype.Location = new System.Drawing.Point(43, 507);
             this.cmb_repeattype.Name = "cmb_repeattype";
             this.cmb_repeattype.Size = new System.Drawing.Size(250, 21);
-            this.cmb_repeattype.TabIndex = 75;
+            this.cmb_repeattype.TabIndex = 18;
             this.cmb_repeattype.SelectedIndexChanged += new System.EventHandler(this.cmb_repeattype_SelectedIndexChanged);
             // 
             // lbl_repeat
@@ -88,7 +88,7 @@
             this.rb_appointment.Location = new System.Drawing.Point(128, 354);
             this.rb_appointment.Name = "rb_appointment";
             this.rb_appointment.Size = new System.Drawing.Size(84, 17);
-            this.rb_appointment.TabIndex = 73;
+            this.rb_appointment.TabIndex = 8;
             this.rb_appointment.Text = "Appointment";
             this.rb_appointment.UseVisualStyleBackColor = true;
             // 
@@ -100,7 +100,7 @@
             this.rb_task.Location = new System.Drawing.Point(43, 354);
             this.rb_task.Name = "rb_task";
             this.rb_task.Size = new System.Drawing.Size(49, 17);
-            this.rb_task.TabIndex = 72;
+            this.rb_task.TabIndex = 7;
             this.rb_task.TabStop = true;
             this.rb_task.Text = "Task";
             this.rb_task.UseVisualStyleBackColor = true;
@@ -112,7 +112,7 @@
             this.dtp_endtime.Name = "dtp_endtime";
             this.dtp_endtime.ShowUpDown = true;
             this.dtp_endtime.Size = new System.Drawing.Size(92, 20);
-            this.dtp_endtime.TabIndex = 71;
+            this.dtp_endtime.TabIndex = 6;
             // 
             // dtp_starttime
             // 
@@ -121,7 +121,7 @@
             this.dtp_starttime.Name = "dtp_starttime";
             this.dtp_starttime.ShowUpDown = true;
             this.dtp_starttime.Size = new System.Drawing.Size(92, 20);
-            this.dtp_starttime.TabIndex = 70;
+            this.dtp_starttime.TabIndex = 4;
             // 
             // cmb_contacts
             // 
@@ -133,7 +133,7 @@
             this.cmb_contacts.Location = new System.Drawing.Point(43, 446);
             this.cmb_contacts.Name = "cmb_contacts";
             this.cmb_contacts.Size = new System.Drawing.Size(250, 21);
-            this.cmb_contacts.TabIndex = 69;
+            this.cmb_contacts.TabIndex = 14;
             // 
             // dtp_enddate
             // 
@@ -141,7 +141,7 @@
             this.dtp_enddate.Location = new System.Drawing.Point(44, 317);
             this.dtp_enddate.Name = "dtp_enddate";
             this.dtp_enddate.Size = new System.Drawing.Size(249, 20);
-            this.dtp_enddate.TabIndex = 68;
+            this.dtp_enddate.TabIndex = 5;
             // 
             // dtp_startdate
             // 
@@ -149,7 +149,7 @@
             this.dtp_startdate.Location = new System.Drawing.Point(44, 262);
             this.dtp_startdate.Name = "dtp_startdate";
             this.dtp_startdate.Size = new System.Drawing.Size(249, 20);
-            this.dtp_startdate.TabIndex = 67;
+            this.dtp_startdate.TabIndex = 3;
             // 
             // btn_save
             // 
@@ -228,7 +228,7 @@
             this.txt_email.Multiline = true;
             this.txt_email.Name = "txt_email";
             this.txt_email.Size = new System.Drawing.Size(250, 69);
-            this.txt_email.TabIndex = 58;
+            this.txt_email.TabIndex = 2;
             // 
             // txt_name
             // 
@@ -238,7 +238,7 @@
             this.txt_name.Location = new System.Drawing.Point(43, 92);
             this.txt_name.Name = "txt_name";
             this.txt_name.Size = new System.Drawing.Size(250, 24);
-            this.txt_name.TabIndex = 57;
+            this.txt_name.TabIndex = 1;
             // 
             // pb_close
             // 
@@ -256,7 +256,7 @@
             this.lbl_addcollab.Location = new System.Drawing.Point(299, 444);
             this.lbl_addcollab.Name = "lbl_addcollab";
             this.lbl_addcollab.Size = new System.Drawing.Size(25, 23);
-            this.lbl_addcollab.TabIndex = 76;
+            this.lbl_addcollab.TabIndex = 15;
             this.lbl_addcollab.Text = "+";
             this.lbl_addcollab.UseVisualStyleBackColor = true;
             this.lbl_addcollab.Click += new System.EventHandler(this.lbl_addcollab_Click);
@@ -266,7 +266,7 @@
             this.btn_removecollab.Location = new System.Drawing.Point(589, 443);
             this.btn_removecollab.Name = "btn_removecollab";
             this.btn_removecollab.Size = new System.Drawing.Size(25, 23);
-            this.btn_removecollab.TabIndex = 78;
+            this.btn_removecollab.TabIndex = 17;
             this.btn_removecollab.Text = "-";
             this.btn_removecollab.UseVisualStyleBackColor = true;
             this.btn_removecollab.Click += new System.EventHandler(this.btn_removecollab_Click);
@@ -279,7 +279,7 @@
             this.cmb_evetncollab.Location = new System.Drawing.Point(333, 445);
             this.cmb_evetncollab.Name = "cmb_evetncollab";
             this.cmb_evetncollab.Size = new System.Drawing.Size(250, 21);
-            this.cmb_evetncollab.TabIndex = 77;
+            this.cmb_evetncollab.TabIndex = 16;
             // 
             // lbl_contacts
             // 

@@ -261,6 +261,7 @@
             this.Controls.Add(this.txt_username);
             this.MinimumSize = new System.Drawing.Size(750, 569);
             this.Name = "Register";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Register";
             ((System.ComponentModel.ISupportInitialize)(this.pb_logo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cpb_userimage)).EndInit();

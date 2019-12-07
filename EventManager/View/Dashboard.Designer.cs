@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.pnl_menu = new System.Windows.Forms.Panel();
-            this.btn_profile = new System.Windows.Forms.Button();
             this.btn_logout = new System.Windows.Forms.Button();
             this.lbl_username = new System.Windows.Forms.Label();
             this.btn_contact = new System.Windows.Forms.Button();
@@ -114,7 +113,6 @@
             // pnl_menu
             // 
             this.pnl_menu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.pnl_menu.Controls.Add(this.btn_profile);
             this.pnl_menu.Controls.Add(this.cpb_userimage);
             this.pnl_menu.Controls.Add(this.btn_logout);
             this.pnl_menu.Controls.Add(this.lbl_username);
@@ -125,21 +123,6 @@
             this.pnl_menu.Name = "pnl_menu";
             this.pnl_menu.Size = new System.Drawing.Size(332, 706);
             this.pnl_menu.TabIndex = 1;
-            // 
-            // btn_profile
-            // 
-            this.btn_profile.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
-            this.btn_profile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_profile.Font = new System.Drawing.Font("HoloLens MDL2 Assets", 12F, System.Drawing.FontStyle.Bold);
-            this.btn_profile.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.btn_profile.Location = new System.Drawing.Point(8, 208);
-            this.btn_profile.Name = "btn_profile";
-            this.btn_profile.Size = new System.Drawing.Size(338, 41);
-            this.btn_profile.TabIndex = 20;
-            this.btn_profile.Text = "Prediction";
-            this.btn_profile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btn_profile.UseVisualStyleBackColor = true;
-            this.btn_profile.Click += new System.EventHandler(this.btn_profile_Click);
             // 
             // btn_logout
             // 
@@ -159,13 +142,13 @@
             // lbl_username
             // 
             this.lbl_username.AutoSize = true;
-            this.lbl_username.Font = new System.Drawing.Font("HoloLens MDL2 Assets", 12F, System.Drawing.FontStyle.Bold);
+            this.lbl_username.Font = new System.Drawing.Font("HoloLens MDL2 Assets", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_username.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.lbl_username.Location = new System.Drawing.Point(98, 13);
+            this.lbl_username.Location = new System.Drawing.Point(97, 15);
             this.lbl_username.Name = "lbl_username";
-            this.lbl_username.Size = new System.Drawing.Size(48, 16);
+            this.lbl_username.Size = new System.Drawing.Size(87, 21);
             this.lbl_username.TabIndex = 4;
-            this.lbl_username.Text = "label1";
+            this.lbl_username.Text = "Username";
             // 
             // btn_contact
             // 
@@ -202,7 +185,7 @@
             this.btn_events.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
             this.btn_events.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_events.Font = new System.Drawing.Font("HoloLens MDL2 Assets", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_events.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.btn_events.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(174)))), ((int)(((byte)(191)))));
             this.btn_events.Location = new System.Drawing.Point(8, 87);
             this.btn_events.Name = "btn_events";
             this.btn_events.Size = new System.Drawing.Size(338, 41);
@@ -310,11 +293,11 @@
             // lbl_contact_header
             // 
             this.lbl_contact_header.AutoSize = true;
-            this.lbl_contact_header.Font = new System.Drawing.Font("HoloLens MDL2 Assets", 12F, System.Drawing.FontStyle.Bold);
+            this.lbl_contact_header.Font = new System.Drawing.Font("HoloLens MDL2 Assets", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_contact_header.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.lbl_contact_header.Location = new System.Drawing.Point(26, 21);
+            this.lbl_contact_header.Location = new System.Drawing.Point(5, 6);
             this.lbl_contact_header.Name = "lbl_contact_header";
-            this.lbl_contact_header.Size = new System.Drawing.Size(63, 16);
+            this.lbl_contact_header.Size = new System.Drawing.Size(89, 24);
             this.lbl_contact_header.TabIndex = 6;
             this.lbl_contact_header.Text = "Contacts";
             // 
@@ -444,11 +427,11 @@
             // lbl_eventheader
             // 
             this.lbl_eventheader.AutoSize = true;
-            this.lbl_eventheader.Font = new System.Drawing.Font("HoloLens MDL2 Assets", 12F, System.Drawing.FontStyle.Bold);
+            this.lbl_eventheader.Font = new System.Drawing.Font("HoloLens MDL2 Assets", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_eventheader.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.lbl_eventheader.Location = new System.Drawing.Point(26, 21);
+            this.lbl_eventheader.Location = new System.Drawing.Point(5, 6);
             this.lbl_eventheader.Name = "lbl_eventheader";
-            this.lbl_eventheader.Size = new System.Drawing.Size(50, 16);
+            this.lbl_eventheader.Size = new System.Drawing.Size(71, 24);
             this.lbl_eventheader.TabIndex = 6;
             this.lbl_eventheader.Text = "Events";
             // 
@@ -514,9 +497,9 @@
             this.lbl_monthlyavgtext.Font = new System.Drawing.Font("Franklin Gothic Medium", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_monthlyavgtext.Location = new System.Drawing.Point(138, 443);
             this.lbl_monthlyavgtext.Name = "lbl_monthlyavgtext";
-            this.lbl_monthlyavgtext.Size = new System.Drawing.Size(94, 16);
+            this.lbl_monthlyavgtext.Size = new System.Drawing.Size(92, 16);
             this.lbl_monthlyavgtext.TabIndex = 10;
-            this.lbl_monthlyavgtext.Text = "Monthy Average :";
+            this.lbl_monthlyavgtext.Text = "Not Enough Data";
             // 
             // lbl_weeklyavgtext
             // 
@@ -524,9 +507,9 @@
             this.lbl_weeklyavgtext.Font = new System.Drawing.Font("Franklin Gothic Medium", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_weeklyavgtext.Location = new System.Drawing.Point(138, 415);
             this.lbl_weeklyavgtext.Name = "lbl_weeklyavgtext";
-            this.lbl_weeklyavgtext.Size = new System.Drawing.Size(94, 16);
+            this.lbl_weeklyavgtext.Size = new System.Drawing.Size(92, 16);
             this.lbl_weeklyavgtext.TabIndex = 9;
-            this.lbl_weeklyavgtext.Text = "Weekly Average :";
+            this.lbl_weeklyavgtext.Text = "Not Enough Data";
             // 
             // lbl_dailyavgtext
             // 
@@ -534,9 +517,9 @@
             this.lbl_dailyavgtext.Font = new System.Drawing.Font("Franklin Gothic Medium", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_dailyavgtext.Location = new System.Drawing.Point(138, 384);
             this.lbl_dailyavgtext.Name = "lbl_dailyavgtext";
-            this.lbl_dailyavgtext.Size = new System.Drawing.Size(85, 16);
+            this.lbl_dailyavgtext.Size = new System.Drawing.Size(92, 16);
             this.lbl_dailyavgtext.TabIndex = 8;
-            this.lbl_dailyavgtext.Text = "Daily  Average :";
+            this.lbl_dailyavgtext.Text = "Not Enough Data";
             // 
             // lbl_MonthlyAverage
             // 
@@ -621,11 +604,11 @@
             // lbl_predictionheader
             // 
             this.lbl_predictionheader.AutoSize = true;
-            this.lbl_predictionheader.Font = new System.Drawing.Font("HoloLens MDL2 Assets", 12F, System.Drawing.FontStyle.Bold);
+            this.lbl_predictionheader.Font = new System.Drawing.Font("HoloLens MDL2 Assets", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_predictionheader.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.lbl_predictionheader.Location = new System.Drawing.Point(26, 21);
+            this.lbl_predictionheader.Location = new System.Drawing.Point(5, 6);
             this.lbl_predictionheader.Name = "lbl_predictionheader";
-            this.lbl_predictionheader.Size = new System.Drawing.Size(73, 16);
+            this.lbl_predictionheader.Size = new System.Drawing.Size(100, 24);
             this.lbl_predictionheader.TabIndex = 6;
             this.lbl_predictionheader.Text = "Prediction";
             // 
@@ -756,7 +739,6 @@
             // cpb_userimage
             // 
             this.cpb_userimage.BackColor = System.Drawing.Color.Transparent;
-            this.cpb_userimage.Image = global::EventManager.Properties.Resources.refresh;
             this.cpb_userimage.Location = new System.Drawing.Point(21, 13);
             this.cpb_userimage.Name = "cpb_userimage";
             this.cpb_userimage.Size = new System.Drawing.Size(50, 50);
@@ -873,6 +855,5 @@
         private UIComponents.CircularPictureBox cpb_pred_refresh;
         private UIComponents.CircularPictureBox cpb_pred_addevent;
         private UIComponents.CircularPictureBox cpb_userimage;
-        private System.Windows.Forms.Button btn_profile;
     }
 }

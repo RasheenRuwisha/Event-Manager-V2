@@ -58,32 +58,40 @@ namespace EventManager
 
         private async void btn_login_Click(object sender, EventArgs e)
         {
-            pnl_error.Controls.Clear();
-            PictureBox picture = commonUtil.addLoaderImage(this.btn_login.Location.X + 205, this.btn_login.Location.Y + 2);
-            btn_login.Enabled = false;
-            Controls.Add(picture);
-            bool task = await Task.Run(() => this.DoValidations());
-            if (task)
+            if (Application.UserAppDataRegistry.GetValue("dbConnection").ToString().Equals("True"))
             {
-                bool login = await Task.Run(() => UserHelper.ValidateUser(txt_email.Text.Trim(), txt_password.Text.Trim()));
-                if (login)
+                pnl_error.Controls.Clear();
+                PictureBox picture = commonUtil.addLoaderImage(this.btn_login.Location.X + 205, this.btn_login.Location.Y + 2);
+                btn_login.Enabled = false;
+                Controls.Add(picture);
+                bool task = await Task.Run(() => this.DoValidations());
+                if (task)
                 {
-                    Dashboard dashboard = new Dashboard();
-                    dashboard.Show();
-                    this.Close();
+                    bool login = await Task.Run(() => UserHelper.ValidateUser(txt_email.Text.Trim(), txt_password.Text.Trim(), cb_rememberme.Checked));
+                    if (login)
+                    {
+                        Dashboard dashboard = new Dashboard();
+                        dashboard.Show();
+                        this.Close();
+                    }
+                    else
+                    {
+                        this.pnl_error.Controls.Add(uiMessage.AddBanner("Username and passwords do not match", "error"));
+                        btn_login.Enabled = true;
+                        Controls.Remove(picture);
+                    }
                 }
                 else
                 {
-                    this.pnl_error.Controls.Add(uiMessage.AddBanner("Username and passwords do not match", "error"));
                     btn_login.Enabled = true;
                     Controls.Remove(picture);
                 }
             }
             else
             {
-                btn_login.Enabled = true;
-                Controls.Remove(picture);
+                MessageBox.Show("Unable to connect to server! Please try again");
             }
+               
         }
 
 
@@ -170,6 +178,16 @@ namespace EventManager
         private bool DoValidations()
         {
             return this.ValidateFields() && this.CheckExistingEmail();
+        }
+
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            if (Application.OpenForms.Count == 1)
+            {
+                Application.Exit();
+            }
+            base.OnFormClosing(e);
         }
     }
 }

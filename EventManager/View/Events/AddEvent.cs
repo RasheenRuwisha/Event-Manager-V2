@@ -32,9 +32,11 @@ namespace EventManager.View.Events
             this.dtp_endtime.Value = this.dtp_starttime.Value.AddHours(1);
             this.dtp_starttime.ValueChanged += new EventHandler(startPickerValueChanged);
             this.dtp_startdate.ValueChanged += new EventHandler(startDatePickerValueChanged);
-            this.dtp_startdate.ValueChanged += new EventHandler(startDate_ValueChanged);
             this.dtp_enddate.ValueChanged += new EventHandler(endDate_ValueChanged);
             this.dtp_endtime.ValueChanged += new EventHandler(endTime_ValueChanged);
+
+            this.dtp_startdate.ValueChanged += new EventHandler(DisableRepeatTyps);
+            this.dtp_enddate.ValueChanged += new EventHandler(DisableRepeatTyps);
 
             this.lbl_header.AutoSize = false;
             this.lbl_header.Left = this.Width / 2 - this.lbl_header.Width / 2;
@@ -43,6 +45,7 @@ namespace EventManager.View.Events
             this.txt_name.AutoSize = false;
             this.txt_name.Size = new System.Drawing.Size(250, 30);
 
+            cmb_repeattype.SelectedIndex = 0;
 
             PictureBox pbx = uiBuilder.GeneratePictureBox(17, 390, "dynamicpbx_chevdown", Properties.Resources.chevdown, 15, 15);
             pbx.Click += new EventHandler(this.AddUiClick);
@@ -53,6 +56,62 @@ namespace EventManager.View.Events
             this.Controls.Add(label);
         }
 
+        void DisableRepeatTyps(object sender, EventArgs e)
+        {
+            if ((dtp_enddate.Value - dtp_startdate.Value).Days >= 30)
+            {
+                cmb_repeattype.Items.Remove("Monthly");
+                cmb_repeattype.Items.Remove("Weekly");
+                cmb_repeattype.Items.Remove("Daily");
+            }
+            else
+            {
+                if (!cmb_repeattype.Items.Contains("Daily"))
+                {
+                    cmb_repeattype.Items.Add("Daily");
+                }
+                if (!cmb_repeattype.Items.Contains("Weekly"))
+                {
+                    cmb_repeattype.Items.Add("Weekly");
+                }
+                if (!cmb_repeattype.Items.Contains("Monthly"))
+                {
+                    cmb_repeattype.Items.Add("Monthly");
+                }
+            }
+
+            if ((dtp_enddate.Value - dtp_startdate.Value).Days >= 7)
+            {
+                cmb_repeattype.Items.Remove("Weekly");
+                cmb_repeattype.Items.Remove("Daily");
+            }
+            else
+            {
+                if (!cmb_repeattype.Items.Contains("Daily"))
+                {
+                    cmb_repeattype.Items.Add("Daily");
+                }
+                if (!cmb_repeattype.Items.Contains("Weekly"))
+                {
+                    cmb_repeattype.Items.Add("Weekly");
+                }
+            }
+
+
+            if ((dtp_enddate.Value - dtp_startdate.Value).Days >= 1)
+            {
+                cmb_repeattype.Items.Remove("Daily");
+            }
+            else
+            {
+                if (!cmb_repeattype.Items.Contains("Daily"))
+                {
+                    cmb_repeattype.Items.Add("Daily");
+                }
+            }
+
+
+        }
 
         void startPickerValueChanged(object sender, EventArgs e)
         {
@@ -69,14 +128,6 @@ namespace EventManager.View.Events
             {
                 this.dtp_enddate.Value = this.dtp_startdate.Value;
 
-            }
-        }
-
-        private void startDate_ValueChanged(object sender, EventArgs e)
-        {
-            if (dtp_startdate.Value < DateTime.Now)
-            {
-                dtp_startdate.Value = DateTime.Now;
             }
         }
 
@@ -118,20 +169,21 @@ namespace EventManager.View.Events
                 lbl_repeat.Location = new Point(41, cmb_contacts.Location.Y + cmb_contacts.Height + 10);
                 cmb_repeattype.Location = new Point(41, lbl_repeat.Location.Y + lbl_repeat.Height + 10);
 
-                if(lbl_repeatfor != null)
+                if (lbl_repeatfor != null)
                 {
                     lbl_repeatfor.Location = new Point(41, this.cmb_repeattype.Location.Y + 30);
                     cmb_repeatfor.Location = new Point(41, lbl_repeatfor.Location.Y + 22);
                     btn_save.Location = new Point(41, cmb_repeatfor.Location.Y + cmb_repeatfor.Height + 10);
                 }
-                else {
+                else
+                {
                     btn_save.Location = new Point(41, cmb_repeattype.Location.Y + cmb_repeattype.Height + 10);
                 }
 
                 if (lbl_repeatduration != null)
                 {
                     lbl_repeatduration.Location = new Point(333, this.cmb_repeattype.Location.Y + 30);
-                    if(txt_duration != null)
+                    if (txt_duration != null)
                     {
                         txt_duration.Location = new Point(333, cmb_repeatfor.Location.Y);
                     }
@@ -207,12 +259,12 @@ namespace EventManager.View.Events
             {
                 this.Size = new Size(627, 700);
             }
-            
-            this.Controls.Add(uiBuilder.GenerateLongTextBox(42, 410, "dynamictxt_addressline1", "",50));
-            this.Controls.Add(uiBuilder.GenerateLongTextBox(330, 410, "dynamictxt_addressline2", "",50));
-            this.Controls.Add(uiBuilder.GenerateShortTextBox(42, 467, "dynamictxt_city", "",50));
-            this.Controls.Add(uiBuilder.GenerateShortTextBox(243, 467, "dynamictxt_state", "",50));
-            this.Controls.Add(uiBuilder.GenerateShortTextBox(451, 467, "dynamictxt_zip", "",10));
+
+            this.Controls.Add(uiBuilder.GenerateLongTextBox(42, 410, "dynamictxt_addressline1", "", 50,9));
+            this.Controls.Add(uiBuilder.GenerateLongTextBox(330, 410, "dynamictxt_addressline2", "", 50,10));
+            this.Controls.Add(uiBuilder.GenerateShortTextBox(42, 467, "dynamictxt_city", "", 50,11));
+            this.Controls.Add(uiBuilder.GenerateShortTextBox(243, 467, "dynamictxt_state", "", 50,12));
+            this.Controls.Add(uiBuilder.GenerateShortTextBox(451, 467, "dynamictxt_zip", "", 10,13));
             this.Controls.Add(uiBuilder.GenerateLabel(40, 388, "dynamiclbl_addressline1", "Address Line 1 "));
             this.Controls.Add(uiBuilder.GenerateLabel(329, 388, "dynamiclbl_addressline2", "Address Line 2 "));
             this.Controls.Add(uiBuilder.GenerateLabel(40, 445, "dynamiclbl_city", "City "));
@@ -282,7 +334,8 @@ namespace EventManager.View.Events
                 this.RemoveDynamicUis();
             }
 
-            else {
+            else
+            {
                 var confirmResult = MessageBox.Show("Address fields will be removed from the contact. Do you want to proceed?",
                        "Confirm Delete!!",
                        MessageBoxButtons.YesNo);
@@ -383,10 +436,12 @@ namespace EventManager.View.Events
                 {
                     cmb_contacts.Items.Add("No More Contacts");
                     lbl_addcollab.Enabled = false;
+                    cmb_contacts.SelectedIndex = 0;
                 }
                 else
                 {
                     lbl_addcollab.Enabled = true;
+                    cmb_contacts.SelectedIndex = 0;
                 }
 
             }
@@ -411,10 +466,12 @@ namespace EventManager.View.Events
                 {
                     cmb_evetncollab.Items.Add("No Contacts Added");
                     btn_removecollab.Enabled = false;
+                    cmb_evetncollab.SelectedIndex = 0;
                 }
                 else
                 {
                     btn_removecollab.Enabled = true;
+                    cmb_evetncollab.SelectedIndex = 0;
                 }
             }
         }
@@ -429,14 +486,14 @@ namespace EventManager.View.Events
                 if (pictureBox == null)
                 {
                     PictureBox error = uiMessage.AddErrorIcon(textbox.Name, textbox.Location.X + 255, textbox.Location.Y + 2);
-                        if (this.InvokeRequired)
-                        {
-                            this.Invoke(new MethodInvoker(this.ShowErrors));
-                        }
-                        else
-                        {
-                            this.Controls.Add(error);
-                        }
+                    if (this.InvokeRequired)
+                    {
+                        this.Invoke(new MethodInvoker(this.ShowErrors));
+                    }
+                    else
+                    {
+                        this.Controls.Add(error);
+                    }
 
                 }
             }
@@ -495,11 +552,12 @@ namespace EventManager.View.Events
             TextBox durationText = Controls.Find("txt_duration", true).FirstOrDefault() as TextBox;
 
             DateTime endDate = new DateTime();
-            if(cComboBox != null)
+            if (cComboBox != null)
             {
                 if (cComboBox.Text.Equals("Specific Number Of Times"))
                 {
-                    if (cmb_repeattype.Text.Equals("Daily")) {
+                    if (cmb_repeattype.Text.Equals("Daily"))
+                    {
                         endDate = dtp_enddate.Value.Date.AddDays(Int32.Parse(durationText.Text)).AddSeconds(-1);
 
                     }
@@ -508,12 +566,13 @@ namespace EventManager.View.Events
                         endDate = dtp_enddate.Value.Date.AddDays(Int32.Parse(durationText.Text) * 7).AddSeconds(-1);
 
                     }
-                    else if(cmb_repeattype.Text.Equals("Monthly"))
+                    else if (cmb_repeattype.Text.Equals("Monthly"))
                     {
                         endDate = dtp_enddate.Value.Date.AddMonths(Int32.Parse(durationText.Text)).AddSeconds(-1);
 
                     }
-                }else if (cComboBox.Text.Equals("Forever"))
+                }
+                else if (cComboBox.Text.Equals("Forever"))
                 {
                     endDate = DateTime.MaxValue;
                 }
@@ -576,7 +635,7 @@ namespace EventManager.View.Events
             {
 
                 bool contact = false;
-                    contact = await Task.Run(() => EventHelper.AddEvent(userEvent));
+                contact = await Task.Run(() => EventHelper.AddEvent(userEvent));
                 if (contact)
                 {
                     this.Controls.Remove(pictureBox);
@@ -613,7 +672,7 @@ namespace EventManager.View.Events
         private void cmb_repeattype_SelectedIndexChanged(object sender, EventArgs e)
         {
             TextBox dynamictxt_addressline1 = Controls.Find("dynamictxt_addressline1", true).FirstOrDefault() as TextBox;
-            if(dynamictxt_addressline1 == null)
+            if (dynamictxt_addressline1 == null)
             {
                 this.Size = new Size(627, 650);
 
@@ -625,7 +684,7 @@ namespace EventManager.View.Events
             }
             Label lbl_repeatfor = Controls.Find("lbl_repeatfor", true).FirstOrDefault() as Label;
             ComboBox cmb_repeatfor = Controls.Find("cmb_repeatfor", true).FirstOrDefault() as ComboBox;
-            if(lbl_repeatfor != null && cmb_repeatfor != null)
+            if (lbl_repeatfor != null && cmb_repeatfor != null)
             {
 
                 lbl_repeatfor.Dispose();
@@ -651,17 +710,18 @@ namespace EventManager.View.Events
                     ForeColor = System.Drawing.Color.White,
                     Size = new System.Drawing.Size(250, 21),
 
-            };
+                };
                 combo.Items.AddRange(new object[] {
                     "Forever",
                     "Specific Number Of Times",
                     "Until",
                 });
+                combo.SelectedIndex = 0;
                 combo.SelectedIndexChanged += new System.EventHandler(this.cmb_repeatfor_SelectedIndexChanged);
                 Controls.Add(label);
                 Controls.Add(combo);
 
-                if(cmb_repeatfor == null)
+                if (cmb_repeatfor == null)
                 {
                     cmb_repeatfor = Controls.Find("cmb_repeatfor", true).FirstOrDefault() as ComboBox;
                     btn_save.Location = new Point(41, cmb_repeatfor.Location.Y + cmb_repeatfor.Height + 10);
@@ -679,7 +739,7 @@ namespace EventManager.View.Events
             TextBox txt_duration = Controls.Find("txt_duration", true).FirstOrDefault() as TextBox;
             DateTimePicker dtp_duration = Controls.Find("dtp_duration", true).FirstOrDefault() as DateTimePicker;
 
-            if (lbl_duration != null )
+            if (lbl_duration != null)
             {
                 lbl_duration.Dispose();
             }
@@ -717,7 +777,7 @@ namespace EventManager.View.Events
                     BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31))))),
                     Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F),
 
-            };
+                };
                 Controls.Add(text);
             }
 

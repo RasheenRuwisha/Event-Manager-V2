@@ -59,56 +59,65 @@ namespace EventManager.View
 
         private async void btn_send_mail_Click(object sender, EventArgs e)
         {
-            PictureBox picture = commonUtil.addLoaderImage(this.btn_send_mail.Location.X + 205, this.btn_send_mail.Location.Y + 2);
-            btn_send_mail.Enabled = false;
-            email_panel.Controls.Add(picture);
-            if(banner != null)
+            if (Application.UserAppDataRegistry.GetValue("dbConnection").ToString().Equals("True"))
             {
-                this.email_panel.Controls.Remove(banner);
-            }
+                PictureBox picture = commonUtil.addLoaderImage(this.btn_send_mail.Location.X + 205, this.btn_send_mail.Location.Y + 2);
+                btn_send_mail.Enabled = false;
+                email_panel.Controls.Add(picture);
+                if (banner != null)
+                {
+                    this.email_panel.Controls.Remove(banner);
+                }
 
-            if (txt_email.Text.Trim().Equals(""))
-            {
-                PictureBox pictureBox = Controls.Find("ptx_" + this.txt_email, true).FirstOrDefault() as PictureBox;
-                if (pictureBox == null)
+                if (txt_email.Text.Trim().Equals(""))
                 {
-                    PictureBox error = uiMessageUtitlity.AddErrorIcon(this.txt_email.Name, this.txt_email.Location.X + 255, this.txt_email.Location.Y + 2);
-                    this.email_panel.Controls.Add(error);
-                }
-            }
-            else
-            {
-                PictureBox pictureBox = Controls.Find("ptx_" + this.txt_email, true).FirstOrDefault() as PictureBox;
-                if (pictureBox == null)
-                {
-                    PictureBox error = uiMessageUtitlity.AddErrorIcon(this.txt_email.Name, this.txt_email.Location.X + 255, this.txt_email.Location.Y + 2);
-                    this.email_panel.Controls.Remove(error);
-                }
-                if (UserHelper.UserExists(txt_email.Text.Trim()))
-                {
-                    this.otp = commonUtil.generateOTP();
-                    String t = await Task.Run(() => this.sendEmail());
-                    if (t.Equals("success"))
+                    PictureBox pictureBox = Controls.Find("ptx_" + this.txt_email, true).FirstOrDefault() as PictureBox;
+                    if (pictureBox == null)
                     {
-                        banner = uiMessageUtitlity.AddBanner($"Email has been sent to {txt_email.Text.Trim()}", "success");
-                        this.verification_panel.Controls.Add(banner); ;
-                        this.verification_panel.BringToFront();
-                    }
-                    else
-                    {
-                        banner = uiMessageUtitlity.AddBanner("Unable to send email! Please try again later!", "error");
-                        this.email_panel.Controls.Add(banner);
+                        PictureBox error = uiMessageUtitlity.AddErrorIcon(this.txt_email.Name, this.txt_email.Location.X + 255, this.txt_email.Location.Y + 2);
+                        this.email_panel.Controls.Add(error);
                     }
                 }
                 else
                 {
-                    banner = uiMessageUtitlity.AddBanner("Email Not Found", "error");
-                    this.email_panel.Controls.Add(banner);
+                    PictureBox pictureBox = Controls.Find("ptx_" + this.txt_email, true).FirstOrDefault() as PictureBox;
+                    if (pictureBox == null)
+                    {
+                        PictureBox error = uiMessageUtitlity.AddErrorIcon(this.txt_email.Name, this.txt_email.Location.X + 255, this.txt_email.Location.Y + 2);
+                        this.email_panel.Controls.Remove(error);
+                    }
+                    if (UserHelper.UserExists(txt_email.Text.Trim()))
+                    {
+                        this.otp = commonUtil.generateOTP();
+                        String t = await Task.Run(() => this.sendEmail());
+                        if (t.Equals("success"))
+                        {
+                            banner = uiMessageUtitlity.AddBanner($"Email has been sent to {txt_email.Text.Trim()}", "success");
+                            this.verification_panel.Controls.Add(banner); ;
+                            this.verification_panel.BringToFront();
+                        }
+                        else
+                        {
+                            banner = uiMessageUtitlity.AddBanner("Unable to send email! Please try again later!", "error");
+                            this.email_panel.Controls.Add(banner);
+                        }
+                    }
+                    else
+                    {
+                        banner = uiMessageUtitlity.AddBanner("Email Not Found", "error");
+                        this.email_panel.Controls.Add(banner);
+                    }
                 }
+                btn_send_mail.Enabled = true;
+                email_panel.Controls.Remove(picture);
+            }
+            else
+            {
+                MessageBox.Show("Unable to connect to server! Please try again");
+
             }
 
-            btn_send_mail.Enabled = true;
-            email_panel.Controls.Remove(picture);
+
         }
 
         private String sendEmail()
@@ -150,7 +159,7 @@ namespace EventManager.View
             {
                 string password = PasswordHasher.CreatePasswordHash(txt_password.Text.Trim());
                 UserCredential usersCredential = new UserCredential();
-                using(DatabaseModel db = new DatabaseModel())
+                using (DatabaseModel db = new DatabaseModel())
                 {
                     usersCredential = db.Userscredentials.Find(this.txt_email.Text.Trim().ToLower());
                     usersCredential.Password = password;
@@ -173,9 +182,11 @@ namespace EventManager.View
                     Application.UserAppDataRegistry.SetValue("password", password);
                     this.Close();
                 }
-        
-                
+
             }
+
+
+
         }
 
         private void txt_proceed_Click(object sender, EventArgs e)
@@ -190,12 +201,25 @@ namespace EventManager.View
         {
             if (window.Equals("Login"))
             {
-                Application.Exit();
+                if (Application.OpenForms.Count == 1)
+                {
+                    Application.Exit();
+                }
             }
             else
             {
-                this.Hide();
+                if (Application.OpenForms.Count == 1)
+                {
+                    this.Close();
+                }
             }
+        }
+
+        private void lbl_login_Click(object sender, EventArgs e)
+        {
+            Login login = new Login();
+            login.Show();
+            this.Close();
         }
     }
 }

@@ -117,6 +117,14 @@
     <Compile Include="Migrations\201912061227422_AddedContactName.Designer.cs">
       <DependentUpon>201912061227422_AddedContactName.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912071304461_AddedFKtoEventContacts.cs" />
+    <Compile Include="Migrations\201912071304461_AddedFKtoEventContacts.Designer.cs">
+      <DependentUpon>201912071304461_AddedFKtoEventContacts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912071419209_AddedParentId.cs" />
+    <Compile Include="Migrations\201912071419209_AddedParentId.Designer.cs">
+      <DependentUpon>201912071419209_AddedParentId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Appointment.cs" />
     <Compile Include="Model\ComboBoxItem.cs" />
@@ -163,6 +171,12 @@
     </Compile>
     <Compile Include="UIComponents\Notification.Designer.cs">
       <DependentUpon>Notification.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIComponents\RepeatEventConfirmation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIComponents\RepeatEventConfirmation.Designer.cs">
+      <DependentUpon>RepeatEventConfirmation.cs</DependentUpon>
     </Compile>
     <Compile Include="Utility\CommonUtil.cs" />
     <Compile Include="Utility\EventGenerator.cs" />
@@ -283,6 +297,12 @@
     <EmbeddedResource Include="Migrations\201912061227422_AddedContactName.resx">
       <DependentUpon>201912061227422_AddedContactName.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912071304461_AddedFKtoEventContacts.resx">
+      <DependentUpon>201912071304461_AddedFKtoEventContacts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912071419209_AddedParentId.resx">
+      <DependentUpon>201912071419209_AddedParentId.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UIComponents\Banner.resx">
       <DependentUpon>Banner.cs</DependentUpon>
     </EmbeddedResource>
@@ -297,6 +317,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UIComponents\Notification.resx">
       <DependentUpon>Notification.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIComponents\RepeatEventConfirmation.resx">
+      <DependentUpon>RepeatEventConfirmation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\Contacts\AddContact.resx">
       <DependentUpon>AddContact.cs</DependentUpon>

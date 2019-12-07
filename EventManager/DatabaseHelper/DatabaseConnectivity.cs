@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace EventManager.DatabaseHelper
 {
@@ -32,6 +34,7 @@ namespace EventManager.DatabaseHelper
                 db.Database.Connection.Open();
                 db.Database.Connection.Close();
                 Application.UserAppDataRegistry.SetValue("dbConnection", true);
+
                 if (Application.UserAppDataRegistry.GetValue("dbMatch") != null)
                 {
                     if (Application.UserAppDataRegistry.GetValue("dbMatch").Equals("False"))
@@ -78,5 +81,21 @@ namespace EventManager.DatabaseHelper
             }
         }
 
+
+        public void CreateLocalXmlFile()
+        {
+            if(Application.UserAppDataRegistry.GetValue("userID") != null)
+            {
+                string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
+                string workingDir = Directory.GetCurrentDirectory();
+
+                if (!File.Exists(workingDir + $@"\{userId}.xml"))
+                {
+                    XDocument xmlDoc = new XDocument();
+                    xmlDoc.Add(new XElement("LocalStore"));
+                    xmlDoc.Save(workingDir + $@"\{userId}.xml");
+                }
+            }
+        }
     }
 }

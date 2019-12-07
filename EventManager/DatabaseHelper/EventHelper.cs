@@ -93,6 +93,44 @@ namespace EventManager.DatabaseHelper
         }
 
 
+        public static List<UserEvent> GetChildEvents(string eventid)
+        {
+            string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
+
+            List<UserEvent> userEvents = new List<UserEvent>();
+            try
+            {
+                if (Application.UserAppDataRegistry.GetValue("dbConnection").ToString().Equals("True"))
+                {
+                    using (var dbContext = new DatabaseModel())
+                    {
+                        userEvents = dbContext.Events.Where(events => events.UserId.Equals(userId)).Where(events => events.ParentId.Equals(eventid)).Include(e => e.EventContacts).ToList();
+                    }
+                }
+                else
+                {
+                    userEvents = GetAllChildEvents(eventid);
+                }
+            }
+            catch (System.Data.Entity.Core.EntityException ex)
+            {
+                userEvents = GetAllChildEvents(eventid);
+                Logger.LogException(ex, false);
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                userEvents = GetAllChildEvents(eventid);
+                Logger.LogException(ex, false);
+            }
+            catch (Exception ex)
+            {
+                userEvents = GetAllChildEvents(eventid);
+                Logger.LogException(ex, true);
+            }
+            return userEvents;
+        }
+
+
         public static List<UserEvent> SearchUserEvent(DateTime startDate, DateTime endDate)
         {
             string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
@@ -128,7 +166,7 @@ namespace EventManager.DatabaseHelper
             }
            
                
-            return EventGenerator.GenerateEvents(userEvents, startDate.Date, endDate.Date);
+            return EventGenerator.GenerateEvents(userEvents, startDate.Date, endDate.Date.AddHours(24).AddSeconds(-1));
         }
 
 
@@ -190,12 +228,19 @@ namespace EventManager.DatabaseHelper
                 if (Application.UserAppDataRegistry.GetValue("dbConnection").ToString().Equals("True"))
                 {
                     UserEvent userEvent = new UserEvent();
+                    List<EventContact> eventContacts = new List<EventContact>();
                     using (var dbContext = new DatabaseModel())
                     {
                         userEvent = dbContext.Events.Find(@event.EventId);
+                        List<EventContact> eventContact = dbContext.EventContacts.Where(x => x.EventId == @event.EventId).ToList();
+                        foreach (var item in eventContact)
+                        {
+                            dbContext.EventContacts.Remove(item);
+                            dbContext.SaveChanges();
+                        }
+
 
                         userEvent.EventContacts.Clear();
-
                         userEvent.AddressLine1 = @event.AddressLine1;
                         userEvent.AddressLine2 = @event.AddressLine2;
                         userEvent.State = @event.State;
@@ -211,6 +256,7 @@ namespace EventManager.DatabaseHelper
                         userEvent.RepeatDuration = @event.RepeatDuration;
                         userEvent.RepeatCount = @event.RepeatCount;
                         userEvent.RepeatTill = @event.RepeatTill;
+                        userEvent.ParentId = @event.ParentId;
                         userEvent.StartDate = @event.StartDate;
                         userEvent.EndDate = @event.EndDate;
                         dbContext.SaveChanges();
@@ -280,6 +326,7 @@ namespace EventManager.DatabaseHelper
                    new XElement("AddressLine2", userEvent.AddressLine2),
                    new XElement("City", userEvent.City),
                    new XElement("State", userEvent.State),
+                   new XElement("ParentId", userEvent.ParentId == null ? "" : userEvent.ParentId),
                    new XElement("Zipcode", userEvent.Zipcode),
                    new XElement("EventContacts", userEvent.EventContacts.Select(x => new XElement("EventContact",
                                                                 new XElement("Id", x.Id),
@@ -336,6 +383,7 @@ namespace EventManager.DatabaseHelper
                 updateQuery.Element("City").SetValue(userEvent.City);
                 updateQuery.Element("State").SetValue(userEvent.State);
                 updateQuery.Element("Zipcode").SetValue(userEvent.Zipcode);
+                updateQuery.Element("ParentId").SetValue(userEvent.ParentId == null ? "" : userEvent.ParentId);
                 updateQuery.Element("EventContacts").Remove();
                 if (userEvent.EventContacts.Count == 0)
                 {
@@ -398,7 +446,6 @@ namespace EventManager.DatabaseHelper
             }
         }
 
-
         private static UserEvent SearchEventXML(string userEvent)
         {
             string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
@@ -427,6 +474,7 @@ namespace EventManager.DatabaseHelper
                                        City = item.Element("City").Value,
                                        State = item.Element("State").Value,
                                        Zipcode = item.Element("Zipcode").Value,
+                                       ParentId = item.Element("ParentId").Value,
                                        EventContacts = item.Element("EventContacts").Elements("EventContact").Select(c => new EventContact
                                        {
                                            Id = Convert.ToInt32(c.Element("Id").Value),
@@ -476,6 +524,7 @@ namespace EventManager.DatabaseHelper
                                        City = item.Element("City").Value,
                                        State = item.Element("State").Value,
                                        Zipcode = item.Element("Zipcode").Value,
+                                       ParentId = item.Element("ParentId").Value,
                                        EventContacts = item.Element("EventContacts").Elements("EventContact").Select(c => new EventContact
                                        {
                                            Id = Convert.ToInt32(c.Element("Id").Value),
@@ -495,6 +544,56 @@ namespace EventManager.DatabaseHelper
             }
         }
 
+
+
+        private static List<UserEvent> GetAllChildEvents(string eventId)
+        {
+
+            string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
+
+            List<UserEvent> e = new List<UserEvent>();
+            XDocument xmlDoc = new XDocument();
+            try
+            {
+                xmlDoc = XDocument.Load($"{userId}.xml");
+                var filterQuery = (from item in xmlDoc.Descendants("UserEvent")
+                                   where item.Element("ParentId").Value.Equals(eventId)
+                                   select new UserEvent
+                                   {
+                                       EventId = item.Element("EventId").Value,
+                                       Title = item.Element("Title").Value,
+                                       Description = item.Element("Description").Value,
+                                       Type = item.Element("Type").Value,
+                                       RepeatType = item.Element("RepeatType").Value,
+                                       RepeatDuration = item.Element("RepeatDuration").Value,
+                                       RepeatCount = Convert.ToInt32(item.Element("RepeatCount").Value),
+                                       RepeatTill = DateTime.Parse(item.Element("RepeatTill").Value),
+                                       StartDate = DateTime.Parse(item.Element("StartDate").Value),
+                                       EndDate = DateTime.Parse(item.Element("EndDate").Value),
+                                       AddressLine1 = item.Element("AddressLine1").Value,
+                                       AddressLine2 = item.Element("AddressLine2").Value,
+                                       City = item.Element("City").Value,
+                                       State = item.Element("State").Value,
+                                       Zipcode = item.Element("Zipcode").Value,
+                                       ParentId = item.Element("ParentId").Value,
+                                       EventContacts = item.Element("EventContacts").Elements("EventContact").Select(c => new EventContact
+                                       {
+                                           Id = Convert.ToInt32(c.Element("Id").Value),
+                                           ContactName = c.Element("ContactName").Value,
+                                           UserId = c.Element("UserId").Value,
+                                           EventId = c.Element("EventId").Value,
+                                           ContactId = c.Element("ContactId").Value,
+                                       }).ToList()
+                                   }).ToList();
+
+                return filterQuery;
+            }
+            catch (Exception ex)
+            {
+                Logger.LogException(ex, true);
+                return e;
+            }
+        }
 
 
         public static List<UserEvent> GettAllUpdateEvent(String fileepath)

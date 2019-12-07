@@ -58,7 +58,7 @@ namespace EventManager.DatabaseHelper
             return false;
         }
 
-        public static bool ValidateUser(String email, String password)
+        public static bool ValidateUser(String email, String password, bool rememberme)
         {
             CommonUtil commonUtil = new CommonUtil();
 
@@ -68,7 +68,7 @@ namespace EventManager.DatabaseHelper
                 if (userDetails != null)
                 {
                     if (PasswordHasher.Validate(password, userDetails.Password)){
-                        commonUtil.AddUserDetailsToLocalApp(userDetails);
+                        commonUtil.AddUserDetailsToLocalApp(userDetails,rememberme);
                         String workingDir = Directory.GetCurrentDirectory();
 
                         if (!File.Exists(workingDir + $@"\{userDetails.UserId}.xml"))

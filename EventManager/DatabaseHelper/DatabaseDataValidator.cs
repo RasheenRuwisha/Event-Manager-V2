@@ -21,95 +21,96 @@ namespace EventManager.DatabaseHelper
 
         public String doesMatch()
         {
-
-            string zzz = Application.UserAppDataRegistry.GetValue("dbMatch").ToString();
-            if (Application.UserAppDataRegistry.GetValue("dbMatch").ToString().Equals("False"))
+            if(Application.UserAppDataRegistry.GetValue("dbMatch") != null)
             {
-                if (Application.UserAppDataRegistry.GetValue("dbConnection").ToString().Equals("True"))
+                if (Application.UserAppDataRegistry.GetValue("dbMatch").ToString().Equals("False"))
                 {
-                    try
+                    if (Application.UserAppDataRegistry.GetValue("dbConnection").ToString().Equals("True"))
                     {
-                        if (File.Exists(workingDir + @"\event_add.xml"))
+                        try
                         {
-                            List<UserEvent> userEvents = EventHelper.GettAllUpdateEvent(workingDir + @"\event_add.xml");
-                            foreach (UserEvent userEvent in userEvents)
+                            if (File.Exists(workingDir + @"\event_add.xml"))
                             {
-                                EventHelper.AddEvent(userEvent);
+                                List<UserEvent> userEvents = EventHelper.GettAllUpdateEvent(workingDir + @"\event_add.xml");
+                                foreach (UserEvent userEvent in userEvents)
+                                {
+                                    EventHelper.AddEvent(userEvent);
+                                }
+                                File.Delete(workingDir + @"\event_add.xml");
                             }
-                            File.Delete(workingDir + @"\event_add.xml");
-                        }
 
 
-                        if (File.Exists(workingDir + @"\event_update.xml"))
-                        {
-                            List<UserEvent> userEventUpdate = EventHelper.GettAllUpdateEvent(workingDir + @"\event_update.xml");
-                            foreach (UserEvent userEvent in userEventUpdate)
+                            if (File.Exists(workingDir + @"\event_update.xml"))
                             {
-                                EventHelper.UpdateEvent(userEvent);
+                                List<UserEvent> userEventUpdate = EventHelper.GettAllUpdateEvent(workingDir + @"\event_update.xml");
+                                foreach (UserEvent userEvent in userEventUpdate)
+                                {
+                                    EventHelper.UpdateEvent(userEvent);
+                                }
+                                File.Delete(workingDir + @"\event_update.xml");
                             }
-                            File.Delete(workingDir + @"\event_update.xml");
-                        }
 
 
-                        if (File.Exists(workingDir + @"\event_remove.xml"))
-                        {
-                            List<UserEvent> userEventRemove = EventHelper.GettAllUpdateEvent(workingDir + @"\event_remove.xml");
-                            foreach (UserEvent userEvent in userEventRemove)
+                            if (File.Exists(workingDir + @"\event_remove.xml"))
                             {
-                                EventHelper.RemoveEvent(userEvent.EventId);
+                                List<UserEvent> userEventRemove = EventHelper.GettAllUpdateEvent(workingDir + @"\event_remove.xml");
+                                foreach (UserEvent userEvent in userEventRemove)
+                                {
+                                    EventHelper.RemoveEvent(userEvent.EventId);
+                                }
+                                File.Delete(workingDir + @"\event_remove.xml");
                             }
-                            File.Delete(workingDir + @"\event_remove.xml");
-                        }
 
-                        if (File.Exists(workingDir + @"\contact_add.xml"))
-                        {
-                            List<Contact> contacts = ContactHelper.GettAllUpdateContact(workingDir + @"\contact_add.xml");
-                            foreach (Contact contact in contacts)
+                            if (File.Exists(workingDir + @"\contact_add.xml"))
                             {
-                                ContactHelper.AddContact(contact);
+                                List<Contact> contacts = ContactHelper.GettAllUpdateContact(workingDir + @"\contact_add.xml");
+                                foreach (Contact contact in contacts)
+                                {
+                                    ContactHelper.AddContact(contact);
+                                }
+                                File.Delete(workingDir + @"\contact_add.xml");
                             }
-                            File.Delete(workingDir + @"\contact_add.xml");
-                        }
 
 
-                        if (File.Exists(workingDir + @"\contact_update.xml"))
-                        {
-                            List<Contact> contactUpdates = ContactHelper.GettAllUpdateContact(workingDir + @"\contact_update.xml");
-                            foreach (Contact contact in contactUpdates)
+                            if (File.Exists(workingDir + @"\contact_update.xml"))
                             {
-                                ContactHelper.UpdateContacts(contact);
+                                List<Contact> contactUpdates = ContactHelper.GettAllUpdateContact(workingDir + @"\contact_update.xml");
+                                foreach (Contact contact in contactUpdates)
+                                {
+                                    ContactHelper.UpdateContacts(contact);
+                                }
+                                File.Delete(workingDir + @"\contact_update.xml");
                             }
-                            File.Delete(workingDir + @"\contact_update.xml");
-                        }
 
 
-                        if (File.Exists(workingDir + @"\contact_remove.xml"))
-                        {
-                            List<Contact> contactRemove = ContactHelper.GettAllUpdateContact(workingDir + @"\contact_remove.xml");
-                            foreach (Contact contact in contactRemove)
+                            if (File.Exists(workingDir + @"\contact_remove.xml"))
                             {
-                                ContactHelper.RemoveContact(contact.ContactId);
+                                List<Contact> contactRemove = ContactHelper.GettAllUpdateContact(workingDir + @"\contact_remove.xml");
+                                foreach (Contact contact in contactRemove)
+                                {
+                                    ContactHelper.RemoveContact(contact.ContactId);
+                                }
+                                File.Delete(workingDir + @"\contact_remove.xml");
                             }
-                            File.Delete(workingDir + @"\contact_remove.xml");
-                        }
 
-                        Application.UserAppDataRegistry.SetValue("dbMatch", true);
-                        NotifyIcon notifyIcon = new NotifyIcon
+                            Application.UserAppDataRegistry.SetValue("dbMatch", true);
+                            NotifyIcon notifyIcon = new NotifyIcon
+                            {
+                                Icon = new Icon(SystemIcons.Application, 40, 40),
+                                Visible = true,
+                                Text = "Event Manager",
+                                BalloonTipText = "Data has been synced successfully.",
+                                BalloonTipIcon = ToolTipIcon.Info,
+                                BalloonTipTitle = "Database Connection"
+                            };
+                            notifyIcon.ShowBalloonTip(10000);
+                            return "success";
+                        }
+                        catch (Exception ex)
                         {
-                            Icon = new Icon(SystemIcons.Application, 40, 40),
-                            Visible = true,
-                            Text = "Event Manager",
-                            BalloonTipText = "Data has been synced successfully.",
-                            BalloonTipIcon = ToolTipIcon.Info,
-                            BalloonTipTitle = "Database Connection"
-                        };
-                        notifyIcon.ShowBalloonTip(10000);
-                        return "success";
-                    }
-                    catch (Exception ex)
-                    {
-                        Application.UserAppDataRegistry.SetValue("dbMatch", false);
-                        return "false";
+                            Application.UserAppDataRegistry.SetValue("dbMatch", false);
+                            return "false";
+                        }
                     }
                 }
             }

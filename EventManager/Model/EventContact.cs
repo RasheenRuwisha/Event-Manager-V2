@@ -20,6 +20,11 @@ namespace EventManager.Model
         public string ContactId { get; set; }
         public virtual Contact Contact { get; set; }
         public string ContactName { get; set; }
+
+        [ForeignKey("Event")]
         public string EventId { get; set; }
+        public virtual UserEvent Event { get; set; }
+
+
     }
 }

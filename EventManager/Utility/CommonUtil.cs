@@ -69,6 +69,7 @@ namespace EventManager.Utility
 
         public void removeSavedData()
         {
+            Application.UserAppDataRegistry.DeleteValue("dbMatch");
             Application.UserAppDataRegistry.DeleteValue("remeberMe");
             Application.UserAppDataRegistry.DeleteValue("userID");
             Application.UserAppDataRegistry.DeleteValue("username");
@@ -94,7 +95,7 @@ namespace EventManager.Utility
             return bitmap;
         }
 
-        public void AddUserDetailsToLocalApp(UserCredential  user)
+        public void AddUserDetailsToLocalApp(UserCredential  user, bool remebermer)
         {
             Application.UserAppDataRegistry.SetValue("userID", user.UserId);
             Application.UserAppDataRegistry.SetValue("username", user.Username);

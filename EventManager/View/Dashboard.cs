@@ -61,7 +61,7 @@ namespace EventManager.View
             pnl_search.HorizontalScroll.Maximum = 0;
             pnl_search.AutoScroll = true;
 
-            this.dtp_searchstart.ValueChanged += new EventHandler(startPickerValueChanged);
+            this.dtp_searchstart.ValueChanged += new EventHandler(endDate_ValueChanged);
             this.dtp_seachend.ValueChanged += new EventHandler(endDate_ValueChanged);
 
             dtp_searchstart.Value = DateTime.Today;
@@ -69,14 +69,6 @@ namespace EventManager.View
             cpb_userimage.Image = commonUtil.Base64ToBitmap(Application.UserAppDataRegistry.GetValue("image").ToString());
         }
 
-        void startPickerValueChanged(object sender, EventArgs e)
-        {
-            if (dtp_searchstart.Value < dtp_seachend.Value)
-            {
-                this.dtp_searchstart.Value = this.dtp_seachend.Value;
-            }
-
-        }
 
         private void endDate_ValueChanged(object sender, EventArgs e)
         {
@@ -85,7 +77,6 @@ namespace EventManager.View
                 dtp_seachend.Value = dtp_searchstart.Value.AddHours(24).AddSeconds(-1); ;
             }
         }
-
 
 
 
@@ -417,7 +408,7 @@ namespace EventManager.View
             }
             else if (type.Equals("search"))
             {
-                contactList = EventHelper.SearchUserEvent(dtp_searchstart.Value.Date, dtp_seachend.Value.Date);
+                contactList = EventHelper.SearchUserEvent(dtp_searchstart.Value.Date, dtp_seachend.Value.Date.AddHours(24).AddSeconds(-1));
             }
             List<EventListView> contactLists = new List<EventListView>();
             foreach (UserEvent contactDetails in contactList)
@@ -579,6 +570,9 @@ namespace EventManager.View
                 this.pnl_prediction.BringToFront();
                 this.pnl_predloader.BringToFront();
                 ActivePanel = "Prediction";
+                this.btn_events.ForeColor = Color.White;
+                this.btn_contact.ForeColor = Color.White;
+                this.btn_predictions.ForeColor = Color.FromArgb(24, 174, 191);
             }
 
         }
@@ -598,6 +592,9 @@ namespace EventManager.View
                 pnl_eventloader.BringToFront();
                 pnl_events.BringToFront();
                 ActivePanel = "Event";
+                this.btn_contact.ForeColor = Color.White;
+                this.btn_predictions.ForeColor = Color.White;
+                this.btn_events.ForeColor = Color.FromArgb(24, 174, 191);
             }
         }
 
@@ -608,6 +605,9 @@ namespace EventManager.View
                 pnl_contacts.BringToFront();
                 pnl_loader.BringToFront();
                 ActivePanel = "Contact";
+                this.btn_events.ForeColor = Color.White;
+                this.btn_predictions.ForeColor = Color.White;
+                this.btn_contact.ForeColor = Color.FromArgb(24, 174, 191);
             }
         }
 
@@ -681,6 +681,16 @@ namespace EventManager.View
 
 
         // Common Controls End
+
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            if(Application.OpenForms.Count == 1)
+            {
+                Application.Exit();
+            }
+            base.OnFormClosing(e);
+        }
     }
 
 }

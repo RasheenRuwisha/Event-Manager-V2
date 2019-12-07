@@ -205,39 +205,45 @@ namespace EventManager.View
 
         private async void btn_register_Click(object sender, EventArgs e)
         {
-
-           
-            String id = commonUtil.generateUserId("user");
-            PictureBox picture = commonUtil.addLoaderImage(this.btn_register.Location.X + 205, this.btn_register.Location.Y + 2);
-            btn_register.Enabled = false;
-            Controls.Add(picture);
-            User user = new User()
+            if (Application.UserAppDataRegistry.GetValue("dbConnection").ToString().Equals("True"))
             {
-                UserId = id,
-                Email = txt_email.Text.Trim(),
-                Username = txt_username.Text.Trim(),
-                Name = txt_name.Text.Trim(),
-                Phone = txt_phone.Text.Trim(),
-                Image = commonUtil.BitmapToBase64(cpb_userimage.Image)
-            };
-
-            UserCredential userCredential = new UserCredential()
-            {
-                UserId = id,
-                Password = PasswordHasher.CreatePasswordHash(txt_password.Text.Trim()),
-                Email = txt_email.Text.Trim(),
-                Username = txt_username.Text.Trim()
-            };
-            bool task = await Task.Run(() => this.DoValidations());
-            if (task)
-            {
-                bool register = await Task.Run(() => UserHelper.AddUser(user, userCredential));
-                if (register)
+                String id = commonUtil.generateUserId("user");
+                PictureBox picture = commonUtil.addLoaderImage(this.btn_register.Location.X + 205, this.btn_register.Location.Y + 2);
+                btn_register.Enabled = false;
+                Controls.Add(picture);
+                User user = new User()
                 {
-                    Controls.Remove(picture);
-                    Login login = new Login();
-                    login.Show();
-                    this.Close();
+                    UserId = id,
+                    Email = txt_email.Text.Trim(),
+                    Username = txt_username.Text.Trim(),
+                    Name = txt_name.Text.Trim(),
+                    Phone = txt_phone.Text.Trim(),
+                    Image = commonUtil.BitmapToBase64(cpb_userimage.Image)
+                };
+
+                UserCredential userCredential = new UserCredential()
+                {
+                    UserId = id,
+                    Password = PasswordHasher.CreatePasswordHash(txt_password.Text.Trim()),
+                    Email = txt_email.Text.Trim(),
+                    Username = txt_username.Text.Trim()
+                };
+                bool task = await Task.Run(() => this.DoValidations());
+                if (task)
+                {
+                    bool register = await Task.Run(() => UserHelper.AddUser(user, userCredential));
+                    if (register)
+                    {
+                        Controls.Remove(picture);
+                        Login login = new Login();
+                        login.Show();
+                        this.Close();
+                    }
+                    else
+                    {
+                        this.Controls.Remove(picture);
+                        this.btn_register.Enabled = true;
+                    }
                 }
                 else
                 {
@@ -247,9 +253,10 @@ namespace EventManager.View
             }
             else
             {
-                this.Controls.Remove(picture);
-                this.btn_register.Enabled = true;
+                MessageBox.Show("Unable to connect to server! Please try again");
             }
+
+
 
         }
 
@@ -271,6 +278,16 @@ namespace EventManager.View
                 bitmap = new Bitmap(openFileDialog.FileName);
                 cpb_userimage.Image = bitmap;
             }
+        }
+
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            if (Application.OpenForms.Count == 1)
+            {
+                Application.Exit();
+            }
+            base.OnFormClosing(e);
         }
     }
 }

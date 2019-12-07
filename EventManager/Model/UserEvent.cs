@@ -29,8 +29,7 @@ namespace EventManager.Model
         public int RepeatCount { get; set; }
         public DateTime RepeatTill { get; set; }
         public virtual List<EventContact> EventContacts { get; set; }
-        public string HasExceptions { get; set; }
-
+        public String ParentId { get; set; }
         [MaxLength(50)]
         public string AddressLine1 { get; set; }
         [MaxLength(50)]

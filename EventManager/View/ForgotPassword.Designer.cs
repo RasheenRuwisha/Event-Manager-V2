@@ -221,6 +221,7 @@
             this.lbl_login.Size = new System.Drawing.Size(73, 13);
             this.lbl_login.TabIndex = 21;
             this.lbl_login.Text = "Back to Login";
+            this.lbl_login.Click += new System.EventHandler(this.lbl_login_Click);
             // 
             // logo
             // 

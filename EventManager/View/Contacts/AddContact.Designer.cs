@@ -97,7 +97,7 @@
             this.txt_email.Location = new System.Drawing.Point(330, 200);
             this.txt_email.Name = "txt_email";
             this.txt_email.Size = new System.Drawing.Size(250, 24);
-            this.txt_email.TabIndex = 30;
+            this.txt_email.TabIndex = 2;
             // 
             // txt_name
             // 
@@ -107,7 +107,7 @@
             this.txt_name.Location = new System.Drawing.Point(42, 200);
             this.txt_name.Name = "txt_name";
             this.txt_name.Size = new System.Drawing.Size(250, 24);
-            this.txt_name.TabIndex = 29;
+            this.txt_name.TabIndex = 1;
             // 
             // pb_close
             // 
@@ -138,7 +138,7 @@
             this.txt_phone.Location = new System.Drawing.Point(42, 252);
             this.txt_phone.Name = "txt_phone";
             this.txt_phone.Size = new System.Drawing.Size(250, 24);
-            this.txt_phone.TabIndex = 37;
+            this.txt_phone.TabIndex = 3;
             // 
             // cpb_userimage
             // 

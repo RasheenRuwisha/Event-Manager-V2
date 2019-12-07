@@ -27,22 +27,31 @@ namespace EventManager.View.Events
         UserEvent userEvent = new UserEvent();
         List<Contact> allContacts = new List<Contact>();
 
+        bool doesEventRepeat = false;
+
         public EditEvent()
         {
             InitializeComponent();
         }
 
-        public EditEvent(string  eventid)
+        public EditEvent(UserEvent  eventid)
         {
             InitializeComponent();
-            
-            userEvent = EventHelper.GetUserEvent(eventid);
+
+            this.userEvent = eventid;
             txt_name.Text = userEvent.Title;
             txt_email.Text = userEvent.Description;
             dtp_startdate.Value = userEvent.StartDate;
             dtp_starttime.Value = userEvent.StartDate;
             dtp_enddate.Value = userEvent.StartDate;
             dtp_endtime.Value = userEvent.EndDate;
+
+            cmb_repeattype.SelectedIndex = 0;
+
+            if(userEvent.RepeatType.Equals("Daily") || userEvent.RepeatType.Equals("Weekly") || userEvent.RepeatType.Equals("Monthly"))
+            {
+                doesEventRepeat = true;
+            }
 
             allContacts = ContactHelper.GetUserContacts();
             allContacts.RemoveAll(x => contacts.Exists(y => y.ContactId == x.ContactId));
@@ -130,9 +139,111 @@ namespace EventManager.View.Events
 
             cmb_repeattype.SelectedItem = userEvent.RepeatType;
 
-           
+            this.dtp_starttime.ValueChanged += new EventHandler(startPickerValueChanged);
+            this.dtp_startdate.ValueChanged += new EventHandler(startDatePickerValueChanged);
+            this.dtp_enddate.ValueChanged += new EventHandler(endDate_ValueChanged);
+            this.dtp_endtime.ValueChanged += new EventHandler(endTime_ValueChanged);
+
+            this.dtp_startdate.ValueChanged += new EventHandler(DisableRepeatTyps);
+            this.dtp_enddate.ValueChanged += new EventHandler(DisableRepeatTyps);
 
         }
+
+
+        void DisableRepeatTyps(object sender, EventArgs e)
+        {
+            if ((dtp_enddate.Value - dtp_startdate.Value).Days >= 30)
+            {
+                cmb_repeattype.Items.Remove("Monthly");
+                cmb_repeattype.Items.Remove("Weekly");
+                cmb_repeattype.Items.Remove("Daily");
+                cmb_repeattype.SelectedIndex = 0;
+            }
+            else
+            {
+                if (!cmb_repeattype.Items.Contains("Daily"))
+                {
+                    cmb_repeattype.Items.Add("Daily");
+                }
+                if (!cmb_repeattype.Items.Contains("Weekly"))
+                {
+                    cmb_repeattype.Items.Add("Weekly");
+                }
+                if (!cmb_repeattype.Items.Contains("Monthly"))
+                {
+                    cmb_repeattype.Items.Add("Monthly");
+                }
+            }
+
+            if ((dtp_enddate.Value - dtp_startdate.Value).Days >= 7)
+            {
+                cmb_repeattype.Items.Remove("Weekly");
+                cmb_repeattype.Items.Remove("Daily");
+            }
+            else
+            {
+                if (!cmb_repeattype.Items.Contains("Daily"))
+                {
+                    cmb_repeattype.Items.Add("Daily");
+                }
+                if (!cmb_repeattype.Items.Contains("Weekly"))
+                {
+                    cmb_repeattype.Items.Add("Weekly");
+                }
+                cmb_repeattype.SelectedIndex = 0;
+
+            }
+
+
+            if ((dtp_enddate.Value - dtp_startdate.Value).Days >= 1)
+            {
+                cmb_repeattype.Items.Remove("Daily");
+            }
+            else
+            {
+                if (!cmb_repeattype.Items.Contains("Daily"))
+                {
+                    cmb_repeattype.Items.Add("Daily");
+                }
+                cmb_repeattype.SelectedIndex = 0;
+            }
+
+
+        }
+
+        void startPickerValueChanged(object sender, EventArgs e)
+        {
+            if (dtp_endtime.Value < dtp_starttime.Value)
+            {
+                this.dtp_endtime.Value = this.dtp_starttime.Value.AddHours(1);
+            }
+
+        }
+
+        void startDatePickerValueChanged(object sender, EventArgs e)
+        {
+            if (dtp_enddate.Value < dtp_startdate.Value)
+            {
+                this.dtp_enddate.Value = this.dtp_startdate.Value;
+
+            }
+        }
+
+        private void endDate_ValueChanged(object sender, EventArgs e)
+        {
+            if (dtp_enddate.Value < dtp_startdate.Value)
+            {
+                dtp_enddate.Value = dtp_startdate.Value;
+            }
+        }
+        private void endTime_ValueChanged(object sender, EventArgs e)
+        {
+            if (dtp_endtime.Value < dtp_starttime.Value)
+            {
+                dtp_endtime.Value = dtp_starttime.Value;
+            }
+        }
+
 
 
 
@@ -261,11 +372,11 @@ namespace EventManager.View.Events
             {
                 this.Size = new Size(627, 700);
             }
-            this.Controls.Add(uiBuilder.GenerateLongTextBox(42, 410, "dynamictxt_addressline1", userEvent.AddressLine1,50));
-            this.Controls.Add(uiBuilder.GenerateLongTextBox(330, 410, "dynamictxt_addressline2", userEvent.AddressLine2,50));
-            this.Controls.Add(uiBuilder.GenerateShortTextBox(42, 467, "dynamictxt_city", userEvent.City ,50));
-            this.Controls.Add(uiBuilder.GenerateShortTextBox(243, 467, "dynamictxt_state", userEvent.State ,50));
-            this.Controls.Add(uiBuilder.GenerateShortTextBox(451, 467, "dynamictxt_zip", userEvent.Zipcode,10));
+            this.Controls.Add(uiBuilder.GenerateLongTextBox(42, 410, "dynamictxt_addressline1", userEvent.AddressLine1,50,9));
+            this.Controls.Add(uiBuilder.GenerateLongTextBox(330, 410, "dynamictxt_addressline2", userEvent.AddressLine2,50,10));
+            this.Controls.Add(uiBuilder.GenerateShortTextBox(42, 467, "dynamictxt_city", userEvent.City ,50,11));
+            this.Controls.Add(uiBuilder.GenerateShortTextBox(243, 467, "dynamictxt_state", userEvent.State ,50,12));
+            this.Controls.Add(uiBuilder.GenerateShortTextBox(451, 467, "dynamictxt_zip", userEvent.Zipcode,10,13));
             this.Controls.Add(uiBuilder.GenerateLabel(40, 388, "dynamiclbl_addressline1", "Address Line 1 "));
             this.Controls.Add(uiBuilder.GenerateLabel(329, 388, "dynamiclbl_addressline2", "Address Line 2 "));
             this.Controls.Add(uiBuilder.GenerateLabel(40, 445, "dynamiclbl_city", "City "));
@@ -635,34 +746,35 @@ namespace EventManager.View.Events
             {
 
                 bool contact = false;
-                contact = await Task.Run(() => EventHelper.UpdateEvent(userEvent));
-                if (contact)
+                if (doesEventRepeat)
                 {
-                    this.Controls.Remove(pictureBox);
-                    Notification notification = new Notification("Event Updated Successfully");
-                    Timer timer = new Timer();
-                    notification.Show();
-
-                    timer.Tick += (o, ea) =>
-                    {
-                        notification.Close();
-                        this.Close();
-                    };
-
-                    timer.Interval = 1000;
-                    timer.Start();
-                    
-
+                    RepeatEventConfirmation repeatEventConfirmation = new RepeatEventConfirmation(userEvent, this);
+                    repeatEventConfirmation.ShowDialog();
                 }
                 else
                 {
-                    Banner banner = new Banner();
-                    banner = uiMessage.AddBanner("Unable to add Event. Please try again later", "error");
-                    this.Controls.Add(banner);
-                    banner.BringToFront();
-                    this.Controls.Remove(pictureBox);
-                    this.btn_save.Enabled = true;
+                    contact = await Task.Run(() => EventHelper.UpdateEvent(userEvent));
+                    if (contact)
+                    {
+                        this.Controls.Remove(pictureBox);
+                        Notification notification = new Notification("Event Updated Successfully");
+                        Timer timer = new Timer();
+                        notification.Show();
+
+                        timer.Tick += (o, ea) =>
+                        {
+                            notification.Close();
+                            this.Close();
+                        };
+
+                        timer.Interval = 1000;
+                        timer.Start();
+
+
+                    }
                 }
+               
+          
             }
             else
             {
@@ -718,7 +830,7 @@ namespace EventManager.View.Events
                     "Specific Number Of Times",
                     "Until",
                 });
-          
+                combo.SelectedIndex = 0;
 
                 Controls.Add(label);
                 Controls.Add(combo);

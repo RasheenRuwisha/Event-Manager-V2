@@ -29,11 +29,10 @@ namespace EventManager
                 login.Show();
             }
 
+
             DatabaseConnectivity databaseConnectivity = new DatabaseConnectivity();
+            databaseConnectivity.CreateLocalXmlFile();
             databaseConnectivity.connectionValidator();
-
-
- 
             Application.Run();
         }
     }

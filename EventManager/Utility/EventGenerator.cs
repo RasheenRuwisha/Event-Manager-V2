@@ -15,7 +15,7 @@ namespace EventManager.Utility
             int timeDifference = (endDate - startDate).Days;
 
             List<UserEvent> userEvents = new List<UserEvent>();
-            foreach(UserEvent userEvent in events)
+            foreach (UserEvent userEvent in events)
             {
 
                 if (userEvent.RepeatType.Equals("Daily"))
@@ -25,7 +25,7 @@ namespace EventManager.Utility
                         userEvents.Add(userEvent);
                     }
 
-                    int startDayDiff =(startDate - userEvent.StartDate).Days; 
+                    int startDayDiff = (startDate - userEvent.StartDate).Days;
                     int endDayDiff = (startDate - userEvent.EndDate).Days;
 
                     userEvent.StartDate = userEvent.StartDate.AddDays(startDayDiff > 0 ? startDayDiff : 0);
@@ -33,49 +33,68 @@ namespace EventManager.Utility
 
                     if (userEvent.RepeatDuration.Equals("Specific Number Of Times"))
                     {
-                        for(int i = 1; i <= timeDifference; i++)
-                        
-                            if(i <= userEvent.RepeatCount)
-                            {
-                                UserEvent evnt =  new UserEvent();
-                                evnt = GenerateEventObject(userEvent);
-                                evnt.StartDate = userEvent.StartDate.AddDays(i);
-                                evnt.EndDate = userEvent.EndDate.AddDays(i);
-                                if(evnt.StartDate >= startDate && evnt.EndDate <= endDate)
-                                {
-                                    userEvents.Add(evnt);
-                                }
-                            }
-                    }else if (userEvent.RepeatDuration.Equals("Forever"))
-                    {
                         for (int i = 1; i <= timeDifference; i++)
+
+                            if (i <= userEvent.RepeatCount)
                             {
                                 UserEvent evnt = new UserEvent();
                                 evnt = GenerateEventObject(userEvent);
                                 evnt.StartDate = userEvent.StartDate.AddDays(i);
                                 evnt.EndDate = userEvent.EndDate.AddDays(i);
-                                if (evnt.StartDate >= startDate && evnt.EndDate <= endDate)
+                                if (evnt.StartDate >= startDate && evnt.EndDate <= endDate && evnt.EndDate <= evnt.RepeatTill)
                                 {
                                     userEvents.Add(evnt);
                                 }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                break;
                             }
                     }
-                    else if (userEvent.RepeatDuration.Equals("Until"))
+                    else if (userEvent.RepeatDuration.Equals("Forever"))
                     {
-                        if(userEvent.RepeatTill >= endDate)
                         for (int i = 1; i <= timeDifference; i++)
                         {
                             UserEvent evnt = new UserEvent();
                             evnt = GenerateEventObject(userEvent);
                             evnt.StartDate = userEvent.StartDate.AddDays(i);
                             evnt.EndDate = userEvent.EndDate.AddDays(i);
-                            if (evnt.StartDate >= startDate && evnt.EndDate <= endDate)
+                            if (evnt.StartDate >= startDate && evnt.EndDate <= endDate && evnt.EndDate <= evnt.RepeatTill)
                             {
                                 userEvents.Add(evnt);
                             }
+                            else
+                            {
+                                break;
+                            }
+
                         }
                     }
-                }else if (userEvent.RepeatType.Equals("Weekly"))
+                    else if (userEvent.RepeatDuration.Equals("Until"))
+                    {
+                        if (userEvent.RepeatTill >= endDate)
+                            for (int i = 1; i <= timeDifference; i++)
+                            {
+                                UserEvent evnt = new UserEvent();
+                                evnt = GenerateEventObject(userEvent);
+                                evnt.StartDate = userEvent.StartDate.AddDays(i);
+                                evnt.EndDate = userEvent.EndDate.AddDays(i);
+                                if (evnt.StartDate >= startDate && evnt.EndDate <= endDate && evnt.EndDate <= evnt.RepeatTill)
+                                {
+                                    userEvents.Add(evnt);
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+                    }
+                }
+                else if (userEvent.RepeatType.Equals("Weekly"))
                 {
                     if (userEvent.StartDate >= startDate && userEvent.EndDate <= endDate)
                     {
@@ -83,7 +102,7 @@ namespace EventManager.Utility
                     }
 
                     int datediff = (startDate - userEvent.StartDate).Days;
-                    double mulof  = (double)datediff / (double)7;
+                    double mulof = (double)datediff / (double)7;
                     int mulOfInt = (int)Math.Floor(mulof);
 
 
@@ -104,12 +123,20 @@ namespace EventManager.Utility
                             {
                                 UserEvent evnt = new UserEvent();
                                 evnt = GenerateEventObject(userEvent);
-                                evnt.StartDate = userEvent.StartDate.AddDays(i*7);
-                                evnt.EndDate = userEvent.EndDate.AddDays(i*7);
-                                if (evnt.StartDate >= startDate && evnt.EndDate <= endDate)
+                                evnt.StartDate = userEvent.StartDate.AddDays(i * 7);
+                                evnt.EndDate = userEvent.EndDate.AddDays(i * 7);
+                                if (evnt.StartDate >= startDate && evnt.EndDate <= endDate && evnt.EndDate <= evnt.RepeatTill)
                                 {
                                     userEvents.Add(evnt);
                                 }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                break;
                             }
                     }
                     else if (userEvent.RepeatDuration.Equals("Forever"))
@@ -118,11 +145,15 @@ namespace EventManager.Utility
                         {
                             UserEvent evnt = new UserEvent();
                             evnt = GenerateEventObject(userEvent);
-                            evnt.StartDate = userEvent.StartDate.AddDays(i*7);
-                            evnt.EndDate = userEvent.EndDate.AddDays(i*7);
-                            if (evnt.StartDate >= startDate && evnt.EndDate <= endDate)
+                            evnt.StartDate = userEvent.StartDate.AddDays(i * 7);
+                            evnt.EndDate = userEvent.EndDate.AddDays(i * 7);
+                            if (evnt.StartDate >= startDate && evnt.EndDate <= endDate && evnt.EndDate <= evnt.RepeatTill)
                             {
                                 userEvents.Add(evnt);
+                            }
+                            else
+                            {
+                                break;
                             }
                         }
                     }
@@ -133,15 +164,20 @@ namespace EventManager.Utility
                             {
                                 UserEvent evnt = new UserEvent();
                                 evnt = GenerateEventObject(userEvent);
-                                evnt.StartDate = userEvent.StartDate.AddDays(i*7);
-                                evnt.EndDate = userEvent.EndDate.AddDays(i*7);
-                                if (evnt.StartDate >= startDate && evnt.EndDate <= endDate)
+                                evnt.StartDate = userEvent.StartDate.AddDays(i * 7);
+                                evnt.EndDate = userEvent.EndDate.AddDays(i * 7);
+                                if (evnt.StartDate >= startDate && evnt.EndDate <= endDate && evnt.EndDate <= evnt.RepeatTill)
                                 {
                                     userEvents.Add(evnt);
                                 }
+                                else
+                                {
+                                    break;
+                                }
                             }
                     }
-                }else if (userEvent.RepeatType.Equals("Monthly"))
+                }
+                else if (userEvent.RepeatType.Equals("Monthly"))
                 {
 
                     if (userEvent.StartDate >= startDate && userEvent.EndDate <= endDate)
@@ -149,7 +185,7 @@ namespace EventManager.Utility
                         userEvents.Add(userEvent);
                     }
 
-                    if(startDate >= userEvent.StartDate)
+                    if (startDate >= userEvent.StartDate)
                     {
                         DateTime newStart = new DateTime(startDate.Year, startDate.Month, userEvent.StartDate.Day, userEvent.StartDate.Hour, userEvent.StartDate.Minute, userEvent.StartDate.Second);
                         userEvent.StartDate = newStart;
@@ -167,10 +203,18 @@ namespace EventManager.Utility
                                 evnt = GenerateEventObject(userEvent);
                                 evnt.StartDate = userEvent.StartDate.AddMonths(i);
                                 evnt.EndDate = userEvent.EndDate.AddMonths(i);
-                                if (evnt.StartDate >= startDate && evnt.EndDate <= endDate)
+                                if (evnt.StartDate >= startDate && evnt.EndDate <= endDate && evnt.EndDate <= evnt.RepeatTill)
                                 {
                                     userEvents.Add(evnt);
                                 }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                break;
                             }
                     }
                     else if (userEvent.RepeatDuration.Equals("Forever"))
@@ -181,9 +225,13 @@ namespace EventManager.Utility
                             evnt = GenerateEventObject(userEvent);
                             evnt.StartDate = userEvent.StartDate.AddMonths(i);
                             evnt.EndDate = userEvent.EndDate.AddMonths(i);
-                            if (evnt.StartDate >= startDate && evnt.EndDate <= endDate)
+                            if (evnt.StartDate >= startDate && evnt.EndDate <= endDate && evnt.EndDate <= evnt.RepeatTill)
                             {
                                 userEvents.Add(evnt);
+                            }
+                            else
+                            {
+                                break;
                             }
                         }
                     }
@@ -196,9 +244,13 @@ namespace EventManager.Utility
                                 evnt = GenerateEventObject(userEvent);
                                 evnt.StartDate = userEvent.StartDate.AddMonths(i);
                                 evnt.EndDate = userEvent.EndDate.AddMonths(i);
-                                if (evnt.StartDate >= startDate && evnt.EndDate <= endDate)
+                                if (evnt.StartDate >= startDate && evnt.EndDate <= endDate && evnt.EndDate <= evnt.RepeatTill)
                                 {
                                     userEvents.Add(evnt);
+                                }
+                                else
+                                {
+                                    break;
                                 }
                             }
                     }
@@ -231,6 +283,7 @@ namespace EventManager.Utility
                 RepeatTill = userEvent.RepeatTill,
                 RepeatType = userEvent.RepeatType,
                 UserId = userEvent.UserId,
+                ParentId = userEvent.ParentId,
                 AddressLine1 = userEvent.AddressLine1,
                 AddressLine2 = userEvent.AddressLine2,
                 State = userEvent.State,

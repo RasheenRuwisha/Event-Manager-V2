@@ -69,11 +69,11 @@ namespace EventManager.View.Contacts
             PictureBox pbx = uiBuilder.GeneratePictureBox(17, 293, "dynamicpbx_chevup", Properties.Resources.chevup, 15, 15);
             pbx.Click += new EventHandler(this.RemoveUiClick);
             this.Controls.Add(pbx);
-            this.Controls.Add(uiBuilder.GenerateLongTextBox(42, 310, "dynamictxt_addressline1", "",50));
-            this.Controls.Add(uiBuilder.GenerateLongTextBox(330, 310, "dynamictxt_addressline2", "",50));
-            this.Controls.Add(uiBuilder.GenerateShortTextBox(42, 372, "dynamictxt_city", "",50));
-            this.Controls.Add(uiBuilder.GenerateShortTextBox(243, 372, "dynamictxt_state", "",50));
-            this.Controls.Add(uiBuilder.GenerateShortTextBox(451, 372, "dynamictxt_zip", "",10));
+            this.Controls.Add(uiBuilder.GenerateLongTextBox(42, 310, "dynamictxt_addressline1", "",50,4));
+            this.Controls.Add(uiBuilder.GenerateLongTextBox(330, 310, "dynamictxt_addressline2", "",50,5));
+            this.Controls.Add(uiBuilder.GenerateShortTextBox(42, 372, "dynamictxt_city", "",50,6));
+            this.Controls.Add(uiBuilder.GenerateShortTextBox(243, 372, "dynamictxt_state", "",50,7));
+            this.Controls.Add(uiBuilder.GenerateShortTextBox(451, 372, "dynamictxt_zip", "",10,8));
             this.Controls.Add(uiBuilder.GenerateLabel(40, 293, "dynamiclbl_addressline1", "Address Line 1 "));
             this.Controls.Add(uiBuilder.GenerateLabel(329, 293, "dynamiclbl_addressline2", "Address Line 2 "));
             this.Controls.Add(uiBuilder.GenerateLabel(40, 355, "dynamiclbl_city", "City "));
@@ -81,6 +81,7 @@ namespace EventManager.View.Contacts
             this.Controls.Add(uiBuilder.GenerateLabel(449, 355, "dynamiclbl_zip", "Zip "));
             this.btn_save.Location = new Point(181, 427);
             this.btn_save.Left = this.Width / 2 - this.btn_save.Width / 2;
+            this.btn_save.TabIndex = 9;
             this.CenterToParent();
         }
 

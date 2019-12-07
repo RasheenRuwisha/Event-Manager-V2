@@ -39,9 +39,11 @@ namespace EventManager.UIComponents
 
             UserEvent userEvent = this.Tag as UserEvent;
           
+            if(userEvent.RepeatType.Equals("") || userEvent.RepeatType.Equals("None"))
+            {
                 var confirmResult = MessageBox.Show("Are you sure to delete this event?",
-                                "Confirm Delete!!",
-                                MessageBoxButtons.YesNo);
+                               "Confirm Delete!!",
+                               MessageBoxButtons.YesNo);
                 if (confirmResult == DialogResult.Yes)
                 {
 
@@ -55,19 +57,42 @@ namespace EventManager.UIComponents
                 else
                 {
                 }
+            }
+            else
+            {
+                RepeatEventConfirmation repeatEventConfirmation = new RepeatEventConfirmation(userEvent);
+                repeatEventConfirmation.ShowDialog();
+                Panel panel = Parent.Parent.Controls.Find("pnl_eventlist", true).FirstOrDefault() as Panel;
+                panel.Controls.Clear();
+                panel.Refresh();
+                panel.BringToFront();
+
+                Panel parentPanel = Parent as Panel;
+                if (parentPanel != null)
+                {
+                    parentPanel.Controls.Clear();
+
+                }
+            }
+               
 
         }
 
         private void pb_edit_Click(object sender, EventArgs e)
         {
             UserEvent userEvent = this.Tag as UserEvent;
-            EditEvent editEvent = new EditEvent(userEvent.EventId);
+            EditEvent editEvent = new EditEvent(userEvent);
             editEvent.ShowDialog();
-
-            Panel panel = this.Parent as Panel;
-
+            Panel panel = Parent.Parent.Controls.Find("pnl_eventlist", true).FirstOrDefault() as Panel;
             panel.Controls.Clear();
             panel.Refresh();
+            panel.BringToFront();
+
+            Panel parentPanel = Parent as Panel;
+            if (parentPanel != null)
+            {
+                parentPanel.Controls.Clear();
+            }
+            }
         }
-    }
 }

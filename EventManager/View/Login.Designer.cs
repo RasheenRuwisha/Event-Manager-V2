@@ -38,6 +38,7 @@
             this.lbl_email = new System.Windows.Forms.Label();
             this.txt_email = new System.Windows.Forms.TextBox();
             this.btn_login = new System.Windows.Forms.Button();
+            this.cb_rememberme = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pb_logo)).BeginInit();
             this.SuspendLayout();
             // 
@@ -64,7 +65,7 @@
             this.lbl_forgotpassword.BackColor = System.Drawing.Color.Transparent;
             this.lbl_forgotpassword.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lbl_forgotpassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(174)))), ((int)(((byte)(191)))));
-            this.lbl_forgotpassword.Location = new System.Drawing.Point(153, 456);
+            this.lbl_forgotpassword.Location = new System.Drawing.Point(153, 465);
             this.lbl_forgotpassword.Name = "lbl_forgotpassword";
             this.lbl_forgotpassword.Size = new System.Drawing.Size(92, 13);
             this.lbl_forgotpassword.TabIndex = 19;
@@ -77,7 +78,7 @@
             this.lbl_register.BackColor = System.Drawing.Color.Transparent;
             this.lbl_register.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lbl_register.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(174)))), ((int)(((byte)(191)))));
-            this.lbl_register.Location = new System.Drawing.Point(221, 478);
+            this.lbl_register.Location = new System.Drawing.Point(221, 487);
             this.lbl_register.Name = "lbl_register";
             this.lbl_register.Size = new System.Drawing.Size(77, 13);
             this.lbl_register.TabIndex = 18;
@@ -89,7 +90,7 @@
             this.lbl_noaccount.AutoSize = true;
             this.lbl_noaccount.BackColor = System.Drawing.Color.Transparent;
             this.lbl_noaccount.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lbl_noaccount.Location = new System.Drawing.Point(101, 478);
+            this.lbl_noaccount.Location = new System.Drawing.Point(101, 487);
             this.lbl_noaccount.Name = "lbl_noaccount";
             this.lbl_noaccount.Size = new System.Drawing.Size(122, 13);
             this.lbl_noaccount.TabIndex = 17;
@@ -145,7 +146,7 @@
             this.btn_login.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(174)))), ((int)(((byte)(191)))));
             this.btn_login.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_login.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.btn_login.Location = new System.Drawing.Point(98, 395);
+            this.btn_login.Location = new System.Drawing.Point(98, 404);
             this.btn_login.Name = "btn_login";
             this.btn_login.Size = new System.Drawing.Size(200, 33);
             this.btn_login.TabIndex = 12;
@@ -153,12 +154,24 @@
             this.btn_login.UseVisualStyleBackColor = false;
             this.btn_login.Click += new System.EventHandler(this.btn_login_Click);
             // 
+            // cb_rememberme
+            // 
+            this.cb_rememberme.AutoSize = true;
+            this.cb_rememberme.ForeColor = System.Drawing.Color.White;
+            this.cb_rememberme.Location = new System.Drawing.Point(156, 381);
+            this.cb_rememberme.Name = "cb_rememberme";
+            this.cb_rememberme.Size = new System.Drawing.Size(95, 17);
+            this.cb_rememberme.TabIndex = 20;
+            this.cb_rememberme.Text = "Remember Me";
+            this.cb_rememberme.UseVisualStyleBackColor = true;
+            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
             this.ClientSize = new System.Drawing.Size(397, 563);
+            this.Controls.Add(this.cb_rememberme);
             this.Controls.Add(this.lbl_forgotpassword);
             this.Controls.Add(this.lbl_register);
             this.Controls.Add(this.lbl_noaccount);
@@ -190,5 +203,6 @@
         private System.Windows.Forms.Label lbl_email;
         private System.Windows.Forms.TextBox txt_email;
         private System.Windows.Forms.Button btn_login;
+        private System.Windows.Forms.CheckBox cb_rememberme;
     }
 }
