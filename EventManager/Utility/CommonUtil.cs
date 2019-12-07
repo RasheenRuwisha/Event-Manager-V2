@@ -69,7 +69,10 @@ namespace EventManager.Utility
 
         public void removeSavedData()
         {
-            Application.UserAppDataRegistry.DeleteValue("dbMatch");
+            if(Application.UserAppDataRegistry.GetValue("dbMatch") != null)
+            {
+                Application.UserAppDataRegistry.DeleteValue("dbMatch");
+            }
             Application.UserAppDataRegistry.DeleteValue("remeberMe");
             Application.UserAppDataRegistry.DeleteValue("userID");
             Application.UserAppDataRegistry.DeleteValue("username");

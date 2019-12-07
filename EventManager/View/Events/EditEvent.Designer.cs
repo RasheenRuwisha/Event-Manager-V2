@@ -331,6 +331,7 @@
             this.Controls.Add(this.txt_name);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "EditEvent";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "EditEvent";
             ((System.ComponentModel.ISupportInitialize)(this.pb_close)).EndInit();

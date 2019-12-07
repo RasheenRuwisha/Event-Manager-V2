@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Login));
             this.pb_logo = new System.Windows.Forms.PictureBox();
             this.pnl_error = new System.Windows.Forms.Panel();
             this.lbl_forgotpassword = new System.Windows.Forms.Label();
@@ -182,6 +183,7 @@
             this.Controls.Add(this.btn_login);
             this.Controls.Add(this.pnl_error);
             this.Controls.Add(this.pb_logo);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Login";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Login";

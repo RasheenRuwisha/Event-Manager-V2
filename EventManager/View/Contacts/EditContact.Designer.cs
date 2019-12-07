@@ -169,6 +169,7 @@
             this.Controls.Add(this.txt_name);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "EditContact";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "EditContact";
             this.Load += new System.EventHandler(this.EditContact_Load);

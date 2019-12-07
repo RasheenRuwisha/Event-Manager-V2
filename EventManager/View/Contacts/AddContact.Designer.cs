@@ -169,6 +169,7 @@
             this.Controls.Add(this.txt_name);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "AddContact";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "AddContact";
             ((System.ComponentModel.ISupportInitialize)(this.pb_close)).EndInit();

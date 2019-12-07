@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Register));
             this.lbl_login = new System.Windows.Forms.Label();
             this.btn_register = new System.Windows.Forms.Button();
             this.lbl_confirmpassword = new System.Windows.Forms.Label();
@@ -259,6 +260,7 @@
             this.Controls.Add(this.txt_name);
             this.Controls.Add(this.txt_email);
             this.Controls.Add(this.txt_username);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(750, 569);
             this.Name = "Register";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

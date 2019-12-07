@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ForgotPassword));
             this.reset_panel = new System.Windows.Forms.Panel();
             this.lbl_confirmpasword = new System.Windows.Forms.Label();
             this.txt_confirmpasword = new System.Windows.Forms.TextBox();
@@ -244,6 +245,7 @@
             this.Controls.Add(this.verification_panel);
             this.Controls.Add(this.lbl_login);
             this.Controls.Add(this.logo);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ForgotPassword";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ForgotPassword";
