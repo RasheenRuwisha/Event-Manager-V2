@@ -12,14 +12,13 @@ namespace EventManager.DatabaseHelper
 {
     public class DatabaseDataValidator
     {
-        readonly String workingDir = Directory.GetCurrentDirectory();
-        public async Task dataValidator()
+        readonly string workingDir = Directory.GetCurrentDirectory();
+        public async Task DataValidator()
         {
-            String t = "";
-            t = await Task.Run(() => this.doesMatch());
+            string t = await Task.Run(() => this.DoesMatch());
         }
 
-        public String doesMatch()
+        public string DoesMatch()
         {
             if(Application.UserAppDataRegistry.GetValue("dbMatch") != null)
             {

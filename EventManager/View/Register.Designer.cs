@@ -175,10 +175,11 @@
             this.txt_phone.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
             this.txt_phone.ForeColor = System.Drawing.Color.White;
             this.txt_phone.Location = new System.Drawing.Point(390, 361);
-            this.txt_phone.MaxLength = 15;
+            this.txt_phone.MaxLength = 10;
             this.txt_phone.Name = "txt_phone";
             this.txt_phone.Size = new System.Drawing.Size(250, 24);
             this.txt_phone.TabIndex = 4;
+            this.txt_phone.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_phone_KeyPress);
             // 
             // txt_name
             // 
@@ -191,6 +192,7 @@
             this.txt_name.Name = "txt_name";
             this.txt_name.Size = new System.Drawing.Size(250, 24);
             this.txt_name.TabIndex = 2;
+            this.txt_name.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_name_KeyPress);
             // 
             // txt_email
             // 
@@ -215,6 +217,7 @@
             this.txt_username.Name = "txt_username";
             this.txt_username.Size = new System.Drawing.Size(250, 24);
             this.txt_username.TabIndex = 1;
+            this.txt_username.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_username_KeyPress);
             // 
             // pb_logo
             // 

@@ -11,6 +11,10 @@ namespace EventManager.Utility
 
         readonly DateTime Today = DateTime.Now;
 
+        /// <summary>
+        /// This method predicts the time usage for upcoming month using the data available from the previous month
+        /// </summary>
+        /// <returns>Prediction object with the calculated results</returns>
         public Prediction PredictTimeConsumption()
         {
 

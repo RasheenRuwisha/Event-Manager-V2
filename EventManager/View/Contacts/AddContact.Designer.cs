@@ -34,12 +34,12 @@
             this.lbl_name = new System.Windows.Forms.Label();
             this.txt_email = new System.Windows.Forms.TextBox();
             this.txt_name = new System.Windows.Forms.TextBox();
-            this.pb_close = new System.Windows.Forms.PictureBox();
             this.lbl_phone = new System.Windows.Forms.Label();
             this.txt_phone = new System.Windows.Forms.TextBox();
             this.cpb_userimage = new EventManager.UIComponents.CircularPictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pb_close)).BeginInit();
+            this.pb_close = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.cpb_userimage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_close)).BeginInit();
             this.SuspendLayout();
             // 
             // btn_save
@@ -85,9 +85,9 @@
             this.lbl_name.ForeColor = System.Drawing.Color.White;
             this.lbl_name.Location = new System.Drawing.Point(40, 183);
             this.lbl_name.Name = "lbl_name";
-            this.lbl_name.Size = new System.Drawing.Size(55, 13);
+            this.lbl_name.Size = new System.Drawing.Size(35, 13);
             this.lbl_name.TabIndex = 31;
-            this.lbl_name.Text = "Username";
+            this.lbl_name.Text = "Name";
             // 
             // txt_email
             // 
@@ -95,6 +95,7 @@
             this.txt_email.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
             this.txt_email.ForeColor = System.Drawing.Color.White;
             this.txt_email.Location = new System.Drawing.Point(330, 200);
+            this.txt_email.MaxLength = 75;
             this.txt_email.Name = "txt_email";
             this.txt_email.Size = new System.Drawing.Size(250, 24);
             this.txt_email.TabIndex = 2;
@@ -105,20 +106,11 @@
             this.txt_name.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
             this.txt_name.ForeColor = System.Drawing.Color.White;
             this.txt_name.Location = new System.Drawing.Point(42, 200);
+            this.txt_name.MaxLength = 50;
             this.txt_name.Name = "txt_name";
             this.txt_name.Size = new System.Drawing.Size(250, 24);
             this.txt_name.TabIndex = 1;
-            // 
-            // pb_close
-            // 
-            this.pb_close.Image = global::EventManager.Properties.Resources.whitex;
-            this.pb_close.Location = new System.Drawing.Point(12, 17);
-            this.pb_close.Name = "pb_close";
-            this.pb_close.Size = new System.Drawing.Size(20, 20);
-            this.pb_close.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pb_close.TabIndex = 35;
-            this.pb_close.TabStop = false;
-            this.pb_close.Click += new System.EventHandler(this.pb_close_Click);
+            this.txt_name.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_name_KeyPress);
             // 
             // lbl_phone
             // 
@@ -136,9 +128,11 @@
             this.txt_phone.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
             this.txt_phone.ForeColor = System.Drawing.Color.White;
             this.txt_phone.Location = new System.Drawing.Point(42, 252);
+            this.txt_phone.MaxLength = 10;
             this.txt_phone.Name = "txt_phone";
             this.txt_phone.Size = new System.Drawing.Size(250, 24);
             this.txt_phone.TabIndex = 3;
+            this.txt_phone.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_phone_KeyPress);
             // 
             // cpb_userimage
             // 
@@ -150,6 +144,17 @@
             this.cpb_userimage.TabIndex = 36;
             this.cpb_userimage.TabStop = false;
             this.cpb_userimage.Click += new System.EventHandler(this.cpb_userimage_Click);
+            // 
+            // pb_close
+            // 
+            this.pb_close.Image = global::EventManager.Properties.Resources.whitex;
+            this.pb_close.Location = new System.Drawing.Point(12, 17);
+            this.pb_close.Name = "pb_close";
+            this.pb_close.Size = new System.Drawing.Size(20, 20);
+            this.pb_close.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pb_close.TabIndex = 35;
+            this.pb_close.TabStop = false;
+            this.pb_close.Click += new System.EventHandler(this.pb_close_Click);
             // 
             // AddContact
             // 
@@ -172,8 +177,8 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "AddContact";
-            ((System.ComponentModel.ISupportInitialize)(this.pb_close)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cpb_userimage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_close)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

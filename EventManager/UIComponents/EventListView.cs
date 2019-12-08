@@ -10,11 +10,15 @@ using System.Windows.Forms;
 using EventManager.DatabaseHelper;
 using EventManager.Model;
 using EventManager.View.Events;
+using EventManager.Utility;
 
 namespace EventManager.UIComponents
 {
     public partial class EventListView : UserControl
     {
+
+        readonly CommonUtil commonUtil = new CommonUtil();
+
         public EventListView()
         {
             InitializeComponent();
@@ -34,7 +38,7 @@ namespace EventManager.UIComponents
             }
         }
 
-        private void pb_delete_Click(object sender, EventArgs e)
+        private async void pb_delete_Click(object sender, EventArgs e)
         {
 
             UserEvent userEvent = this.Tag as UserEvent;
@@ -46,16 +50,29 @@ namespace EventManager.UIComponents
                                MessageBoxButtons.YesNo);
                 if (confirmResult == DialogResult.Yes)
                 {
+                    Controls.Clear();
+                    Label label = new Label
+                    {
+                        Text = "Removing",
+                        Font = new Font("Microsoft Sans Serif", 11.25F),
+                        ForeColor = Color.White
+                    };
+                    label.Location = new Point(this.Width / 2 - label.Width / 2, this.Height / 2 - label.Height / 2);
+                    Controls.Add(label);
+                    Controls.Add(commonUtil.AddLoaderImage(label.Location.X - 30, label.Location.Y - 3));
 
 
-                    EventHelper.RemoveEvent(userEvent.EventId);
-                    Panel panel = this.Parent as Panel;
-
-                    panel.Controls.Clear();
-                    panel.Refresh();
-                }
-                else
-                {
+                    bool removeEvent = await Task.Run(() => EventHelper.RemoveEvent(userEvent.EventId));
+                    if (removeEvent)
+                    {
+                        Panel panel = this.Parent as Panel;
+                        Panel panelPreview = Parent.Parent.Controls.Find("pnl_eventspreview", true).FirstOrDefault() as Panel;
+                        panelPreview.Controls.Clear();
+                        panel.Controls.Clear();
+                        panel.Refresh();
+                    }
+                  
+;
                 }
             }
             else
@@ -63,6 +80,9 @@ namespace EventManager.UIComponents
                 RepeatEventConfirmation repeatEventConfirmation = new RepeatEventConfirmation(userEvent);
                 repeatEventConfirmation.ShowDialog();
                 Panel panel = Parent.Parent.Controls.Find("pnl_eventlist", true).FirstOrDefault() as Panel;
+                Panel panelPreview = Parent.Parent.Controls.Find("pnl_eventspreview", true).FirstOrDefault() as Panel;
+                panelPreview.Controls.Clear();
+
                 panel.Controls.Clear();
                 panel.Refresh();
                 panel.BringToFront();
@@ -84,6 +104,9 @@ namespace EventManager.UIComponents
             EditEvent editEvent = new EditEvent(userEvent);
             editEvent.ShowDialog();
             Panel panel = Parent.Parent.Controls.Find("pnl_eventlist", true).FirstOrDefault() as Panel;
+            Panel panelPreview = Parent.Parent.Controls.Find("pnl_eventspreview", true).FirstOrDefault() as Panel;
+            panelPreview.Controls.Clear();
+
             panel.Controls.Clear();
             panel.Refresh();
             panel.BringToFront();

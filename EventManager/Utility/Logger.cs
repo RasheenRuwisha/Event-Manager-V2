@@ -10,7 +10,11 @@ namespace EventManager.Utility
 {
     public class Logger
     {
-
+        /// <summary>
+        /// Logger to log the exceptions that occur during the application runtime
+        /// </summary>
+        /// <param name="ex"></param>
+        /// <param name="showError"></param>
         public static void LogException(Exception ex, bool showError)
         {
             String workingDir = Directory.GetCurrentDirectory();

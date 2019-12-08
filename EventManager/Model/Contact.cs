@@ -16,7 +16,9 @@ namespace EventManager.Model
       
 
         public virtual User User { get; set; }
+        [MaxLength(75)]
         public string Email { get; set; }
+        [MaxLength(10)]
         public string Phone { get; set; }
         public string Image { get; set; }
         [MaxLength(50)]

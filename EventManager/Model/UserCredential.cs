@@ -20,6 +20,7 @@ namespace EventManager.Model
 
 
         [ForeignKey("User")]
+        [MaxLength(10)]
         public string UserId { get; set; }
         public virtual User User { get; set; }
 

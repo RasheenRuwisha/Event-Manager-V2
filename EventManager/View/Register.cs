@@ -60,16 +60,18 @@ namespace EventManager.View
         /// </summary>
         private void ShowErrors()
         {
-            foreach (Control contorl in this.Controls)
+            foreach (Control control in this.Controls)
             {
-                if (contorl is TextBox)
+                if (control is TextBox)
                 {
-                    if (String.IsNullOrEmpty(contorl.Text.Trim()))
+                    if (!control.Name.Equals("txt_phone"))
                     {
-                        PictureBox pictureBox = Controls.Find("ptx_" + contorl.Name, true).FirstOrDefault() as PictureBox;
-                        if (pictureBox == null)
+                        if (String.IsNullOrEmpty(control.Text.Trim()))
                         {
-                            PictureBox error = uiMessageUtitlity.AddErrorIcon(contorl.Name, contorl.Location.X + 255, contorl.Location.Y + 2);
+                            PictureBox pictureBox = Controls.Find("ptx_" + control.Name, true).FirstOrDefault() as PictureBox;
+                            if (pictureBox == null)
+                            {
+                                PictureBox error = uiMessageUtitlity.AddErrorIcon(control.Name, control.Location.X + 255, control.Location.Y + 2);
                                 if (this.InvokeRequired)
                                 {
                                     this.Invoke(new MethodInvoker(this.ShowErrors));
@@ -78,21 +80,21 @@ namespace EventManager.View
                                 {
                                     this.Controls.Add(error);
                                 }
-                        }
-                    }
-                    else
-                    {
-                        PictureBox pictureBox = Controls.Find("ptx_" + contorl.Name, true).FirstOrDefault() as PictureBox;
-                        if (this.InvokeRequired)
-                        {
-                            this.Invoke(new MethodInvoker(this.ShowErrors));
+                            }
                         }
                         else
                         {
-                            Controls.Remove(pictureBox);
+                            PictureBox pictureBox = Controls.Find("ptx_" + control.Name, true).FirstOrDefault() as PictureBox;
+                            if (this.InvokeRequired)
+                            {
+                                this.Invoke(new MethodInvoker(this.ShowErrors));
+                            }
+                            else
+                            {
+                                Controls.Remove(pictureBox);
+                            }
                         }
                     }
-
                 }
 
             }
@@ -102,7 +104,7 @@ namespace EventManager.View
         {
             this.ShowErrors();
             if (txt_username.Text.Trim().Equals("") || txt_email.Text.Trim().Equals("") ||
-               txt_name.Text.Trim().Equals("") || txt_phone.Text.Trim().Equals("") ||
+               txt_name.Text.Trim().Equals("") || 
                txt_password.Text.Trim().Equals("") || txt_confirmpassword.Text.Trim().Equals(""))
             {
                 return false;
@@ -125,6 +127,7 @@ namespace EventManager.View
                 if (txt_password.Text.Trim().Length <= 6)
                 {
                     this.AddPasswordError();
+                    MessageBox.Show("Password should contain atleast 6 characters");
                     return false;
                 }
                 else
@@ -182,6 +185,7 @@ namespace EventManager.View
                 return true;
             }
             this.AddEmailError();
+            MessageBox.Show("Email Already Exixts");
             return false;
         }
 
@@ -198,17 +202,40 @@ namespace EventManager.View
             }
         }
 
+        private bool ValidatePhone()
+        {
+            if (fieldValidator.IsValidPhone(txt_phone.Text.Trim()))
+            {
+                return true;
+            }
+            this.AddPhoneError();
+            return false;
+        }
+
+        private void AddPhoneError()
+        {
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new MethodInvoker(this.AddPhoneError));
+            }
+            else
+            {
+                PictureBox error = uiMessageUtitlity.AddErrorIcon(txt_phone.Name, txt_phone.Location.X + 255, txt_phone.Location.Y + 2);
+                this.Controls.Add(error);
+            }
+        }
+
         private bool DoValidations()
         {
-            return this.ValidateFields() && this.ValidateEmail()  && this.CheckExistingEmail() && this.ValidatePassword();
+            return this.ValidateFields() &&  this.ValidatePassword() && ValidatePhone() && this.ValidateEmail() && this.CheckExistingEmail();
         }
 
         private async void btn_register_Click(object sender, EventArgs e)
         {
             if (Application.UserAppDataRegistry.GetValue("dbConnection").ToString().Equals("True"))
             {
-                String id = commonUtil.generateUserId("user");
-                PictureBox picture = commonUtil.addLoaderImage(this.btn_register.Location.X + 205, this.btn_register.Location.Y + 2);
+                String id = commonUtil.GenerateUserId("user");
+                PictureBox picture = commonUtil.AddLoaderImage(this.btn_register.Location.X + 205, this.btn_register.Location.Y + 2);
                 btn_register.Enabled = false;
                 Controls.Add(picture);
                 User user = new User()
@@ -235,6 +262,7 @@ namespace EventManager.View
                     if (register)
                     {
                         Controls.Remove(picture);
+                        MessageBox.Show("Registration Successful");
                         Login login = new Login();
                         login.Show();
                         this.Close();
@@ -289,5 +317,42 @@ namespace EventManager.View
             }
             base.OnFormClosing(e);
         }
+
+
+        private void txt_name_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsLetter(e.KeyChar))
+            {
+                if (!char.IsControl(e.KeyChar))
+                {
+                    MessageBox.Show("Name can only contain alphabetical charatcters");
+                    e.Handled = true;
+
+                }
+            }
+        }
+
+        private void txt_phone_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsLetter(e.KeyChar))
+            {
+                MessageBox.Show("Phone can only contain numeric charatcters");
+                e.Handled = true;
+            }
+        }
+
+        private void txt_username_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsLetter(e.KeyChar))
+            {
+                if (!char.IsControl(e.KeyChar))
+                {
+                    MessageBox.Show("Username can only contain alphabetical charatcters");
+                    e.Handled = true;
+
+                }
+            }
+        }
     }
 }
+

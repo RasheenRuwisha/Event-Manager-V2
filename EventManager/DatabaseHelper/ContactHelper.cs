@@ -14,9 +14,9 @@ namespace EventManager.DatabaseHelper
 {
     public class ContactHelper
     {
-        public static bool DoesNameExist(String name)
+        public static bool DoesNameExist(string name)
         {
-            String userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
+            string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
 
             try
             {
@@ -67,9 +67,9 @@ namespace EventManager.DatabaseHelper
             return true;
         }
 
-        public static bool DoesEmailExist(String email)
+        public static bool DoesEmailExist(string email)
         {
-            String userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
+            string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
 
             try
             {
@@ -124,7 +124,7 @@ namespace EventManager.DatabaseHelper
 
         public static bool AddContact(Contact contact)
         {
-            String userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
+            string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
 
             try
             {
@@ -165,7 +165,7 @@ namespace EventManager.DatabaseHelper
 
         private EventContact genEvCon(string id,string conid)
         {
-            String userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
+            string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
 
             EventContact ewv = new EventContact()
             {
@@ -177,7 +177,7 @@ namespace EventManager.DatabaseHelper
             return ewv;
         }
 
-        public static bool RemoveContact(String id)
+        public static bool RemoveContact(string id)
         {
             try
             {
@@ -226,7 +226,7 @@ namespace EventManager.DatabaseHelper
 
         public static List<Contact> GetUserContacts()
         {
-            String userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
+            string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
 
             List<Contact> contacts = new List<Contact>();
 
@@ -347,9 +347,9 @@ namespace EventManager.DatabaseHelper
             }
         }
 
-        public static List<Contact> GetUserContactsByName(String name)
+        public static List<Contact> GetUserContactsByName(string name)
         {
-            String userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
+            string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
 
             List<Contact> contacts = new List<Contact>();
             try
@@ -360,7 +360,6 @@ namespace EventManager.DatabaseHelper
                     {
                         contacts = dbContext.Contacts.Where(contact => contact.UserId.Equals(userId)).Where(contact => contact.Name.Contains(name)).OrderBy(contact => contact.Name).ToList();
                     }
-                    contacts =SearchContactsXML(name);
                 }
                 else
                 {
@@ -396,7 +395,7 @@ namespace EventManager.DatabaseHelper
 
         private static bool AddContactXML(Contact contact)
         {
-            String userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
+            string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
 
             try
             {
@@ -437,7 +436,7 @@ namespace EventManager.DatabaseHelper
 
         private static bool UpdateContactXML(Contact contact)
         {
-            String userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
+            string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
 
             XDocument xmlDoc = new XDocument();
             try
@@ -476,7 +475,7 @@ namespace EventManager.DatabaseHelper
 
         private static bool RemoveContactXML(string contactId)
         {
-            String userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
+            string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
 
             XDocument xmlDoc = new XDocument();
             try
@@ -507,7 +506,7 @@ namespace EventManager.DatabaseHelper
 
         private static List<Contact> GetAllContactsXML()
         {
-            String userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
+            string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
 
             List<Contact> contacts = null;
             try
@@ -528,7 +527,7 @@ namespace EventManager.DatabaseHelper
 
         private static List<Contact> SearchContactsXML(string name)
         {
-            String userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
+            string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
 
             List<Contact> contact = new List<Contact>();
             XDocument xmlDoc = new XDocument();
@@ -562,7 +561,7 @@ namespace EventManager.DatabaseHelper
 
         private static Contact SearchContactXML(string name, string element)
         {
-            String userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
+            string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
 
             Contact contact = new Contact();
             XDocument xmlDoc = new XDocument();
@@ -594,7 +593,7 @@ namespace EventManager.DatabaseHelper
             }
         }
 
-        public static List<Contact> GettAllUpdateContact(String fileepath)
+        public static List<Contact> GettAllUpdateContact(string fileepath)
         {
             List<Contact> contacts = null;
             try
@@ -619,7 +618,7 @@ namespace EventManager.DatabaseHelper
         {
             Application.UserAppDataRegistry.SetValue("dbMatch", false);
 
-            String workingDir = Directory.GetCurrentDirectory();
+            string workingDir = Directory.GetCurrentDirectory();
 
             if (File.Exists(workingDir + @"\contact_add.xml"))
             {
@@ -661,7 +660,7 @@ namespace EventManager.DatabaseHelper
         {
             Application.UserAppDataRegistry.SetValue("dbMatch", false);
 
-            String workingDir = Directory.GetCurrentDirectory();
+            string workingDir = Directory.GetCurrentDirectory();
 
             if (File.Exists(workingDir + @"\contact_remove.xml"))
             {

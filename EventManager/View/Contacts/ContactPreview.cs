@@ -7,56 +7,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using EventManager.Model;
+using EventManager.Utility;
 
 namespace EventManager.View.Contacts
 {
     public partial class ContactPreview : UserControl
     {
+        CommonUtil commonUtil = new CommonUtil();
         public ContactPreview()
         {
             InitializeComponent();
         }
 
-        public String ContactName
+        public Contact ContactDetails
         {
-            set
-            {
-                lbl_name.Text = value;
+            set{
+                lbl_name.Text = value.Name;
                 this.lbl_name.Left = this.Width / 2 - this.lbl_name.Width / 2;
+                lbl_email.Text = value.Email;
+                lbl_phone.Text = value.Phone;
+                lbl_addressline1.Text = $"{value.AddressLine1} {value.AddressLine2}";
+                lbl_addressline2.Text = $"{value.City} {value.State}  {value.Zipcode}";
+                cpb_userimage.Image = commonUtil.Base64ToBitmap(value.Image);
+                cpb_userimage.Left = this.Width / 2 - cpb_userimage.Width / 2;
             }
         }
 
-        public String ContactEmail
-        {
-            set
-            {
-                lbl_email.Text = value;
-            }
-        }
-
-        public String ContactAddressLine1
-        {
-            set
-            {
-                lbl_addressline1.Text = value;
-            }
-        }
-
-        public String ContactAddressLine2
-        {
-            set
-            {
-                lbl_addressline2.Text = value;
-            }
-        }
-
-        public Image ContactImage
-        {
-            set
-            {
-                cpb_userimage.Image = value;
-                this.cpb_userimage.Left = this.Width / 2 - this.cpb_userimage.Width / 2;
-            }
-        }
     }
 }

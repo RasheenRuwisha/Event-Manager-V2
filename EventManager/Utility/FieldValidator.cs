@@ -23,5 +23,17 @@ namespace EventManager.Utility
         }
 
 
+        public bool IsValidPhone(string phone)
+        {
+            if(phone.Length > 0)
+            {
+                if (phone.Length < 10)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
     }
 }

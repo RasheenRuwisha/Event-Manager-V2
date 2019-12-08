@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EventManager.Model
 {
-    public class EventDates
+    public class EventDate
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }

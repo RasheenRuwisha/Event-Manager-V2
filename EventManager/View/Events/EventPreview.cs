@@ -22,7 +22,7 @@ namespace EventManager.View.Events
         {
             set
             {
-                lbl_title.Text = value.Title;
+                lbl_title.Text = $"{value.Title}  - (Type) {value.Type}";
                 lbl_startdate.Text = value.StartDate.ToString();
                 lbl_enddate.Text = $"- {value.EndDate.ToString()}";
                 if (!value.AddressLine1.Equals(""))

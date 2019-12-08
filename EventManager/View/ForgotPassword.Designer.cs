@@ -80,9 +80,11 @@
             this.txt_confirmpasword.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txt_confirmpasword.ForeColor = System.Drawing.Color.White;
             this.txt_confirmpasword.Location = new System.Drawing.Point(21, 139);
+            this.txt_confirmpasword.MaxLength = 30;
             this.txt_confirmpasword.Name = "txt_confirmpasword";
+            this.txt_confirmpasword.PasswordChar = '*';
             this.txt_confirmpasword.Size = new System.Drawing.Size(150, 24);
-            this.txt_confirmpasword.TabIndex = 10;
+            this.txt_confirmpasword.TabIndex = 8;
             // 
             // btn_reset
             // 
@@ -116,7 +118,9 @@
             this.txt_password.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txt_password.ForeColor = System.Drawing.Color.White;
             this.txt_password.Location = new System.Drawing.Point(20, 82);
+            this.txt_password.MaxLength = 30;
             this.txt_password.Name = "txt_password";
+            this.txt_password.PasswordChar = '*';
             this.txt_password.Size = new System.Drawing.Size(150, 24);
             this.txt_password.TabIndex = 7;
             // 

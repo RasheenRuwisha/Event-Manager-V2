@@ -85,9 +85,9 @@
             this.lbl_name.ForeColor = System.Drawing.Color.White;
             this.lbl_name.Location = new System.Drawing.Point(40, 183);
             this.lbl_name.Name = "lbl_name";
-            this.lbl_name.Size = new System.Drawing.Size(55, 13);
+            this.lbl_name.Size = new System.Drawing.Size(35, 13);
             this.lbl_name.TabIndex = 39;
-            this.lbl_name.Text = "Username";
+            this.lbl_name.Text = "Name";
             // 
             // txt_email
             // 
@@ -95,6 +95,7 @@
             this.txt_email.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
             this.txt_email.ForeColor = System.Drawing.Color.White;
             this.txt_email.Location = new System.Drawing.Point(330, 200);
+            this.txt_email.MaxLength = 75;
             this.txt_email.Name = "txt_email";
             this.txt_email.Size = new System.Drawing.Size(250, 24);
             this.txt_email.TabIndex = 38;
@@ -105,9 +106,11 @@
             this.txt_name.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
             this.txt_name.ForeColor = System.Drawing.Color.White;
             this.txt_name.Location = new System.Drawing.Point(42, 200);
+            this.txt_name.MaxLength = 50;
             this.txt_name.Name = "txt_name";
             this.txt_name.Size = new System.Drawing.Size(250, 24);
             this.txt_name.TabIndex = 37;
+            this.txt_name.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_name_KeyPress);
             // 
             // cpb_userimage
             // 
@@ -147,9 +150,11 @@
             this.txt_phone.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
             this.txt_phone.ForeColor = System.Drawing.Color.White;
             this.txt_phone.Location = new System.Drawing.Point(42, 252);
+            this.txt_phone.MaxLength = 10;
             this.txt_phone.Name = "txt_phone";
             this.txt_phone.Size = new System.Drawing.Size(250, 24);
             this.txt_phone.TabIndex = 45;
+            this.txt_phone.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_phone_KeyPress);
             // 
             // EditContact
             // 

@@ -599,7 +599,7 @@ namespace EventManager.View.Events
                 EventId = this.eventid,
                 UserId = Application.UserAppDataRegistry.GetValue("userID").ToString(),
                 Title = txt_name.Text,
-                Description = txt_email.Text,
+                Description = txt_notes.Text,
                 RepeatType = cmb_repeattype.Text,
                 EventContacts = GenerateEventContacts(),
                 RepeatDuration = cComboBox != null ? cComboBox.Text : "",
@@ -624,9 +624,9 @@ namespace EventManager.View.Events
 
         private async void btn_save_Click(object sender, EventArgs e)
         {
-            eventid = commonUtil.generateUserId("event");
+            eventid = commonUtil.GenerateUserId("event");
 
-            PictureBox pictureBox = commonUtil.addLoaderImage(this.btn_save.Location.X + 205, this.btn_save.Location.Y + 2);
+            PictureBox pictureBox = commonUtil.AddLoaderImage(this.btn_save.Location.X + 205, this.btn_save.Location.Y + 2);
             this.Controls.Add(pictureBox);
             this.btn_save.Enabled = false;
             bool task = await Task.Run(() => this.DoValidations());

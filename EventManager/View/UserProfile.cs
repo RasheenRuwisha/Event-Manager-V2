@@ -65,7 +65,7 @@ namespace EventManager.View
         private async void btn_update_Click(object sender, EventArgs e)
         {
 
-            user.Name = txt_name.Text.Trim(); 
+            user.Name = txt_name.Text.Trim();
             user.Email = txt_email.Text.Trim();
             user.Phone = txt_phone.Text.Trim();
             user.Username = txt_username.Text.Trim();
@@ -98,6 +98,41 @@ namespace EventManager.View
             {
                 Bitmap bitmap = new Bitmap(openFileDialog.FileName);
                 cpb_image.Image = bitmap;
+            }
+        }
+
+        private void txt_name_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsLetter(e.KeyChar))
+            {
+                if (!char.IsControl(e.KeyChar))
+                {
+                    MessageBox.Show("Name can only contain alphabetical charatcters");
+                    e.Handled = true;
+
+                }
+            }
+        }
+
+        private void txt_username_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsLetter(e.KeyChar))
+            {
+                if (!char.IsControl(e.KeyChar))
+                {
+                    MessageBox.Show("Username can only contain alphabetical charatcters");
+                    e.Handled = true;
+
+                }
+            }
+        }
+
+        private void txt_phone_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsLetter(e.KeyChar))
+            {
+                MessageBox.Show("Phone can only contain numeric charatcters");
+                e.Handled = true;
             }
         }
     }

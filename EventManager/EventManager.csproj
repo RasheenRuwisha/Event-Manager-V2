@@ -128,16 +128,17 @@
     <Compile Include="Migrations\201912071419209_AddedParentId.Designer.cs">
       <DependentUpon>201912071419209_AddedParentId.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912080741123_AddedMaxLengths.cs" />
+    <Compile Include="Migrations\201912080741123_AddedMaxLengths.Designer.cs">
+      <DependentUpon>201912080741123_AddedMaxLengths.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Model\Appointment.cs" />
     <Compile Include="Model\ComboBoxItem.cs" />
     <Compile Include="Model\Contact.cs" />
     <Compile Include="Model\EventContact.cs" />
-    <Compile Include="Model\EventDates.cs" />
-    <Compile Include="Model\EventEdits.cs" />
+    <Compile Include="Model\EventDate.cs" />
     <Compile Include="Model\MonthStartEnd.cs" />
     <Compile Include="Model\Prediction.cs" />
-    <Compile Include="Model\Tasks.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Model\UserCredential.cs" />
     <Compile Include="Model\UserEvent.cs" />
@@ -305,6 +306,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201912071419209_AddedParentId.resx">
       <DependentUpon>201912071419209_AddedParentId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912080741123_AddedMaxLengths.resx">
+      <DependentUpon>201912080741123_AddedMaxLengths.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UIComponents\Banner.resx">
       <DependentUpon>Banner.cs</DependentUpon>

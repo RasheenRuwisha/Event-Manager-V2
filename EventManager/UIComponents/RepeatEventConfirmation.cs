@@ -84,7 +84,8 @@ namespace EventManager.UIComponents
                 eventDetails.StartDate = existingEvent.StartDate;
                 eventDetails.EndDate = existingEvent.EndDate;
                 eventDetails.RepeatTill = existingEvent.RepeatTill;
-                await Task.Run(() => EventHelper.UpdateEvent(eventDetails));
+                await Task.Run(() => EventHelper.RemoveEvent(eventDetails.EventId));
+                await Task.Run(() => EventHelper.AddEvent(eventDetails));
 
                 Notification notification = new Notification("Event Updated Successfully");
                 Timer timer = new Timer();
@@ -109,8 +110,16 @@ namespace EventManager.UIComponents
             if (form == null)
             {
                 UserEvent existingEvent = EventHelper.GetUserEvent(eventDetails.EventId);
-                existingEvent.RepeatTill = eventDetails.StartDate.Date;
-                await Task.Run(() => EventHelper.UpdateEvent(existingEvent));
+                if (existingEvent.StartDate == eventDetails.StartDate)
+                {
+                    await Task.Run(() => EventHelper.RemoveEvent(eventDetails.EventId));
+                }
+                else
+                {
+                    existingEvent.RepeatTill = eventDetails.StartDate.Date;
+                    await Task.Run(() => EventHelper.UpdateEvent(existingEvent)); 
+                }
+               
 
                 Notification notification = new Notification("Event Deleted Successfully");
                 Timer timer = new Timer();
@@ -128,10 +137,18 @@ namespace EventManager.UIComponents
             else
             {
                 UserEvent existingEvent = EventHelper.GetUserEvent(eventDetails.EventId);
-                existingEvent.RepeatTill = eventDetails.StartDate.Date;
-                eventDetails.EventId = commonUtil.generateUserId("event");
-                await Task.Run(() => EventHelper.UpdateEvent(existingEvent));
-                await Task.Run(() => EventHelper.AddEvent(eventDetails));
+                if (existingEvent.StartDate == eventDetails.StartDate)
+                {
+                    await Task.Run(() => EventHelper.RemoveEvent(eventDetails.EventId));
+                }
+                else
+                {
+                    existingEvent.RepeatTill = eventDetails.StartDate.Date;
+                    eventDetails.EventId = commonUtil.GenerateUserId("event");
+                    await Task.Run(() => EventHelper.RemoveEvent(existingEvent.EventId));
+                    await Task.Run(() => EventHelper.AddEvent(existingEvent));
+                    await Task.Run(() => EventHelper.AddEvent(eventDetails));
+                }
 
                 Notification notification = new Notification("Event Updated Successfully");
                 Timer timer = new Timer();
@@ -183,7 +200,7 @@ namespace EventManager.UIComponents
                 {
 
                     existingEvent.RepeatTill = eventDetails.StartDate.Date;
-                    eventDetails.EventId = commonUtil.generateUserId("event");
+                    eventDetails.EventId = commonUtil.GenerateUserId("event");
                     if (existingEvent.ParentId == null)
                     {
                         eventDetails.ParentId = existingEvent.EventId;
@@ -236,7 +253,7 @@ namespace EventManager.UIComponents
                 await Task.Run(() => EventHelper.UpdateEvent(existingEvent));
 
 
-                eventDetails.EventId = commonUtil.generateUserId("event");
+                eventDetails.EventId = commonUtil.GenerateUserId("event");
                 eventDetails.ParentId = existingEvent.EventId;
                 eventDetails.RepeatTill = eventDetails.EndDate.Date;
                 await Task.Run(() => EventHelper.AddEvent(eventDetails));
@@ -258,7 +275,7 @@ namespace EventManager.UIComponents
                     existingEvent.EndDate = eventDetails.EndDate.AddDays(30);
                 }
                 existingEvent.ParentId = eventDetails.ParentId;
-                existingEvent.EventId = commonUtil.generateUserId("event");
+                existingEvent.EventId = commonUtil.GenerateUserId("event");
                 await Task.Run(() => EventHelper.AddEvent(existingEvent));
 
                 Notification notification = new Notification("Event Updated Successfully");

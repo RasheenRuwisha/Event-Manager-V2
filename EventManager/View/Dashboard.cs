@@ -65,7 +65,7 @@ namespace EventManager.View
             this.dtp_seachend.ValueChanged += new EventHandler(endDate_ValueChanged);
 
             dtp_searchstart.Value = DateTime.Today;
-            dtp_seachend.Value = DateTime.Today.AddHours(24).AddSeconds(-1);
+            dtp_seachend.Value = DateTime.Today.AddDays(7).AddHours(24).AddSeconds(-1);
             cpb_userimage.Image = commonUtil.Base64ToBitmap(Application.UserAppDataRegistry.GetValue("image").ToString());
         }
 
@@ -75,6 +75,12 @@ namespace EventManager.View
             if (dtp_seachend.Value < dtp_searchstart.Value)
             {
                 dtp_seachend.Value = dtp_searchstart.Value.AddHours(24).AddSeconds(-1); ;
+            }
+
+            if((dtp_seachend.Value - dtp_searchstart.Value).Days > 30)
+            {
+                dtp_seachend.Value = dtp_searchstart.Value.AddDays(30).AddHours(24).AddSeconds(-1);
+                MessageBox.Show("Search results can be filtered only for 1 month");
             }
         }
 
@@ -161,12 +167,7 @@ namespace EventManager.View
             {
                 ContactListView contact = new ContactListView
                 {
-                    Tag = contactDetails.ContactId,
-                    ContactName = contactDetails.Name,
-                    ContactEmail = contactDetails.Email,
-                    ContactId = contactDetails.ContactId,
-                    ContactImage = commonUtil.Base64ToBitmap(contactDetails.Image),
-                    Name = $"ctx_"
+                    ContactDetails = contactDetails
                 };
                 contact.Click += new EventHandler(this.ContactControlClick);
                 contactLists.Add(contact);
@@ -287,14 +288,10 @@ namespace EventManager.View
         public void ContactControlClick(object sender, EventArgs e)
         {
             ContactListView contactList = (ContactListView)sender;
-            Contact contact = ContactHelper.GetContactDetails(contactList.Tag.ToString());
+            Contact contact = contactList.Tag as Contact;
             ContactPreview contactPreview = new ContactPreview
             {
-                ContactName = contact.Name,
-                ContactEmail = contact.Email,
-                ContactAddressLine1 = contact.AddressLine1 + ", " + contact.AddressLine2,
-                ContactAddressLine2 = contact.City + ", " + contact.State + ", " + contact.Zipcode,
-                ContactImage = commonUtil.Base64ToBitmap(contact.Image)
+                ContactDetails = contact
             };
 
             this.pnl_contactpreview.Controls.Clear();
@@ -549,9 +546,9 @@ namespace EventManager.View
                 cpbar_appointments.Multiplier = 360 / prediction.EventCount;
                 cpbar_appointments.CircleText = $"{prediction.AppointmentCount} / {prediction.EventCount}";
 
-                lbl_dailyavgtext.Text = $"For the next month you might spend {Math.Round(prediction.DailyAverage / 60, 1)} hours  on average for Events Daily";
-                lbl_weeklyavgtext.Text = $"For the next month you might spend {Math.Round(prediction.WeeklyAverage / 60, 1)} hours on average for Events Weekly";
-                lbl_monthlyavgtext.Text = $"For the next month you might spend {Math.Round(prediction.MonthlyAverage / 60, 1)} hours on average for Events Monthly";
+                lbl_dailyavgtext.Text = $"For the next month you might spend {Math.Round(prediction.DailyAverage / 60, 2)} hours  on average for Events Daily";
+                lbl_weeklyavgtext.Text = $"For the next month you might spend {Math.Round(prediction.WeeklyAverage / 60, 2)} hours on average for Events Weekly";
+                lbl_monthlyavgtext.Text = $"For the next month you might spend {Math.Round(prediction.MonthlyAverage / 60, 2)} hours on average for Events Monthly";
 
             }
 
@@ -613,7 +610,7 @@ namespace EventManager.View
 
         private void btn_logout_Click(object sender, EventArgs e)
         {
-            commonUtil.removeSavedData();
+            commonUtil.RemoveSavedData();
             Login login = new Login();
             login.Show();
             this.Close();

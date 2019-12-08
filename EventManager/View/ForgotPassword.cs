@@ -61,7 +61,7 @@ namespace EventManager.View
         {
             if (Application.UserAppDataRegistry.GetValue("dbConnection").ToString().Equals("True"))
             {
-                PictureBox picture = commonUtil.addLoaderImage(this.btn_send_mail.Location.X + 205, this.btn_send_mail.Location.Y + 2);
+                PictureBox picture = commonUtil.AddLoaderImage(this.btn_send_mail.Location.X + 205, this.btn_send_mail.Location.Y + 2);
                 btn_send_mail.Enabled = false;
                 email_panel.Controls.Add(picture);
                 if (banner != null)
@@ -88,7 +88,7 @@ namespace EventManager.View
                     }
                     if (UserHelper.UserExists(txt_email.Text.Trim()))
                     {
-                        this.otp = commonUtil.generateOTP();
+                        this.otp = commonUtil.GenerateOTP();
                         String t = await Task.Run(() => this.sendEmail());
                         if (t.Equals("success"))
                         {
@@ -194,6 +194,12 @@ namespace EventManager.View
             if (this.txt_otp.Text.Trim().Equals(this.otp))
             {
                 this.reset_panel.BringToFront();
+            }
+            else
+            {
+                verification_panel.Controls.Remove(banner);
+                banner = uiMessageUtitlity.AddBanner("Invalid OTP!", "error");
+                verification_panel.Controls.Add(banner);
             }
         }
 

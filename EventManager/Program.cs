@@ -20,8 +20,17 @@ namespace EventManager
             Application.SetCompatibleTextRenderingDefault(false);
             if (Application.UserAppDataRegistry.GetValue("remeberMe") != null)
             {
-                Dashboard dashboard = new Dashboard();
-                dashboard.Show();
+                if (Application.UserAppDataRegistry.GetValue("remeberMe").ToString().Equals("True"))
+                {
+                    Dashboard dashboard = new Dashboard();
+                    dashboard.Show();
+                }
+                else
+                {
+                    Login login = new Login();
+                    login.Show();
+                }
+            
             }
             else
             {
@@ -32,7 +41,7 @@ namespace EventManager
 
             DatabaseConnectivity databaseConnectivity = new DatabaseConnectivity();
             databaseConnectivity.CreateLocalXmlFile();
-            databaseConnectivity.connectionValidator();
+            databaseConnectivity.ConnectionValidator();
             Application.Run();
         }
     }

@@ -22,12 +22,11 @@ namespace EventManager.View.Contacts
         readonly FieldValidator fieldValidator = new FieldValidator();
         readonly CommonUtil commonUtil = new CommonUtil();
         Contact contact = new Contact();
-        string contactId = "";
 
-        public EditContact(string id)
+        public EditContact(Contact contactDetails)
         {
             InitializeComponent();
-            contactId = id;
+            contact = contactDetails;
 
 
             this.lbl_header.AutoSize = false;
@@ -66,13 +65,13 @@ namespace EventManager.View.Contacts
             }
             this.Size = new Size(627, 470);
             PictureBox pbx = uiBuilder.GeneratePictureBox(17, 293, "dynamicpbx_chevup", Properties.Resources.chevup, 15, 15);
-                pbx.Click += new EventHandler(this.RemoveUiClick);
+            pbx.Click += new EventHandler(this.RemoveUiClick);
             this.Controls.Add(pbx);
-            this.Controls.Add(uiBuilder.GenerateLongTextBox(42, 310, "dynamictxt_addressline1", addressline1,50,4));
-            this.Controls.Add(uiBuilder.GenerateLongTextBox(330, 310, "dynamictxt_addressline2", addressline2,50,5));
-            this.Controls.Add(uiBuilder.GenerateShortTextBox(42, 372, "dynamictxt_city", city,50,6));
-            this.Controls.Add(uiBuilder.GenerateShortTextBox(243, 372, "dynamictxt_state", state,50,7));
-            this.Controls.Add(uiBuilder.GenerateShortTextBox(451, 372, "dynamictxt_zip", zip,10,8));
+            this.Controls.Add(uiBuilder.GenerateLongTextBox(42, 310, "dynamictxt_addressline1", addressline1, 50, 4));
+            this.Controls.Add(uiBuilder.GenerateLongTextBox(330, 310, "dynamictxt_addressline2", addressline2, 50, 5));
+            this.Controls.Add(uiBuilder.GenerateShortTextBox(42, 372, "dynamictxt_city", city, 50, 6));
+            this.Controls.Add(uiBuilder.GenerateShortTextBox(243, 372, "dynamictxt_state", state, 50, 7));
+            this.Controls.Add(uiBuilder.GenerateShortTextBox(451, 372, "dynamictxt_zip", zip, 10, 8));
             this.Controls.Add(uiBuilder.GenerateLabel(40, 293, "dynamiclbl_addressline1", "Address Line 1 "));
             this.Controls.Add(uiBuilder.GenerateLabel(329, 293, "dynamiclbl_addressline2", "Address Line 2 "));
             this.Controls.Add(uiBuilder.GenerateLabel(40, 355, "dynamiclbl_city", "City "));
@@ -156,7 +155,6 @@ namespace EventManager.View.Contacts
 
         private async void EditContact_Load(object sender, EventArgs e)
         {
-            contact = await Task.Run(() => ContactHelper.GetContactDetails(contactId));
             if (contact != null)
             {
                 this.InsertDataUsingContactRow();
@@ -217,14 +215,14 @@ namespace EventManager.View.Contacts
                             if (pictureBox == null)
                             {
                                 PictureBox error = uiMessage.AddErrorIcon(control.Name, control.Location.X + 255, control.Location.Y + 2);
-                                    if (this.InvokeRequired)
-                                    {
-                                        this.Invoke(new MethodInvoker(this.ShowErrors));
-                                    }
-                                    else
-                                    {
-                                        this.Controls.Add(error);
-                                    }
+                                if (this.InvokeRequired)
+                                {
+                                    this.Invoke(new MethodInvoker(this.ShowErrors));
+                                }
+                                else
+                                {
+                                    this.Controls.Add(error);
+                                }
 
                             }
                         }
@@ -283,14 +281,39 @@ namespace EventManager.View.Contacts
             }
         }
 
+
+        private bool ValidatePhone()
+        {
+            if (fieldValidator.IsValidPhone(txt_phone.Text.Trim()))
+            {
+                return true;
+            }
+            this.AddPhoneError();
+            return false;
+        }
+
+        private void AddPhoneError()
+        {
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new MethodInvoker(this.AddPhoneError));
+            }
+            else
+            {
+                PictureBox error = uiMessage.AddErrorIcon(txt_phone.Name, txt_phone.Location.X + 255, txt_phone.Location.Y + 2);
+                this.Controls.Add(error);
+            }
+        }
+
+
         private bool DoValidations()
         {
-            return this.ValidateFields() && this.ValidateEmail();
+            return ValidateFields() && ValidatePhone() && ValidateEmail();
         }
 
         private async void btn_save_Click(object sender, EventArgs e)
         {
-            PictureBox pictureBox = commonUtil.addLoaderImage(this.btn_save.Location.X + 205, this.btn_save.Location.Y + 2);
+            PictureBox pictureBox = commonUtil.AddLoaderImage(this.btn_save.Location.X + 205, this.btn_save.Location.Y + 2);
             this.Controls.Add(pictureBox);
             this.btn_save.Enabled = false;
             this.GenerateContactObject();
@@ -359,6 +382,28 @@ namespace EventManager.View.Contacts
             {
                 bitmap = new Bitmap(openFileDialog.FileName);
                 cpb_userimage.Image = bitmap;
+            }
+        }
+
+        private void txt_name_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsLetter(e.KeyChar))
+            {
+                if (!char.IsControl(e.KeyChar))
+                {
+                    MessageBox.Show("Name can only contain alphabetical charatcters");
+                    e.Handled = true;
+
+                }
+            }
+        }
+
+        private void txt_phone_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsLetter(e.KeyChar))
+            {
+                MessageBox.Show("Phone can only contain numeric charatcters");
+                e.Handled = true;
             }
         }
     }

@@ -81,9 +81,11 @@
             this.txt_username.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txt_username.ForeColor = System.Drawing.Color.White;
             this.txt_username.Location = new System.Drawing.Point(124, 255);
+            this.txt_username.MaxLength = 30;
             this.txt_username.Name = "txt_username";
             this.txt_username.Size = new System.Drawing.Size(150, 24);
-            this.txt_username.TabIndex = 14;
+            this.txt_username.TabIndex = 2;
+            this.txt_username.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_username_KeyPress);
             // 
             // txt_email
             // 
@@ -91,9 +93,10 @@
             this.txt_email.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txt_email.ForeColor = System.Drawing.Color.White;
             this.txt_email.Location = new System.Drawing.Point(124, 292);
+            this.txt_email.MaxLength = 75;
             this.txt_email.Name = "txt_email";
             this.txt_email.Size = new System.Drawing.Size(150, 24);
-            this.txt_email.TabIndex = 15;
+            this.txt_email.TabIndex = 3;
             // 
             // txt_phone
             // 
@@ -101,9 +104,11 @@
             this.txt_phone.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txt_phone.ForeColor = System.Drawing.Color.White;
             this.txt_phone.Location = new System.Drawing.Point(124, 328);
+            this.txt_phone.MaxLength = 10;
             this.txt_phone.Name = "txt_phone";
             this.txt_phone.Size = new System.Drawing.Size(150, 24);
-            this.txt_phone.TabIndex = 16;
+            this.txt_phone.TabIndex = 4;
+            this.txt_phone.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_phone_KeyPress);
             // 
             // txt_name
             // 
@@ -111,9 +116,11 @@
             this.txt_name.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txt_name.ForeColor = System.Drawing.Color.White;
             this.txt_name.Location = new System.Drawing.Point(124, 217);
+            this.txt_name.MaxLength = 50;
             this.txt_name.Name = "txt_name";
             this.txt_name.Size = new System.Drawing.Size(150, 24);
-            this.txt_name.TabIndex = 19;
+            this.txt_name.TabIndex = 1;
+            this.txt_name.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_name_KeyPress);
             // 
             // lbl_name
             // 
@@ -135,7 +142,7 @@
             this.btn_update.Location = new System.Drawing.Point(111, 454);
             this.btn_update.Name = "btn_update";
             this.btn_update.Size = new System.Drawing.Size(200, 33);
-            this.btn_update.TabIndex = 20;
+            this.btn_update.TabIndex = 6;
             this.btn_update.Text = "Update Profile";
             this.btn_update.UseVisualStyleBackColor = false;
             this.btn_update.Click += new System.EventHandler(this.btn_update_Click);
@@ -149,7 +156,7 @@
             this.lbl_forgotpassword.Location = new System.Drawing.Point(171, 428);
             this.lbl_forgotpassword.Name = "lbl_forgotpassword";
             this.lbl_forgotpassword.Size = new System.Drawing.Size(84, 13);
-            this.lbl_forgotpassword.TabIndex = 21;
+            this.lbl_forgotpassword.TabIndex = 5;
             this.lbl_forgotpassword.Text = "Reset Password";
             this.lbl_forgotpassword.Click += new System.EventHandler(this.lbl_forgotpassword_Click);
             // 

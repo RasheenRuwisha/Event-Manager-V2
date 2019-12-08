@@ -9,6 +9,18 @@ namespace EventManager.Utility
 {
     public class EventGenerator
     {
+
+
+
+        /// <summary>
+        /// This Method generates the events that are repetaed for a time perioed.
+        /// If the event repeats the start date and end date is diiferencieted and a loop will be run for the time difference, which will then add the number of events for the repeat and keep continuing if the start date and end date is between the user asked startdate and end date
+        /// If its not the loop will be broken from there onwards
+        /// </summary>
+        /// <param name="events">The initial event list</param>
+        /// <param name="startDate">The start Date provided by the user</param>
+        /// <param name="endDate">The end Date provided by the user</param>
+        /// <returns>The list of user events for a certain time period with all repeat and non repeating events</returns>
         public static List<UserEvent> GenerateEvents(List<UserEvent> events, DateTime startDate, DateTime endDate)
         {
 
@@ -268,6 +280,12 @@ namespace EventManager.Utility
             return userEvents;
         }
 
+
+        /// <summary>
+        /// Generates the Event object from the user event that is provided
+        /// </summary>
+        /// <param name="userEvent"></param>
+        /// <returns>UserEvent</returns>
         public static UserEvent GenerateEventObject(UserEvent userEvent)
         {
             UserEvent events = new UserEvent()

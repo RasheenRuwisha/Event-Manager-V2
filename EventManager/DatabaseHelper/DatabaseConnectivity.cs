@@ -13,26 +13,26 @@ namespace EventManager.DatabaseHelper
     class DatabaseConnectivity
     {
         readonly DatabaseDataValidator databaseDataValidator = new DatabaseDataValidator();
-        int successNotificationCount = 0;
         int failNotificationCount = 0;
 
-        public async Task connectionValidator()
+        public async Task ConnectionValidator()
         {
-            String t = "";
+            string t = "";
             while (true)
             {
-                t = await Task.Run(() => this.checkConnection());
+                t = await Task.Run(() => this.CheckConnection());
                 await Task.Delay(20000);
             }
         }
 
-        public String checkConnection()
+        public string CheckConnection()
         {
             try
             {
                 DatabaseModel db = new DatabaseModel();
                 db.Database.Connection.Open();
                 db.Database.Connection.Close();
+                db.Dispose();
                 Application.UserAppDataRegistry.SetValue("dbConnection", true);
 
                 if (Application.UserAppDataRegistry.GetValue("dbMatch") != null)
@@ -53,9 +53,8 @@ namespace EventManager.DatabaseHelper
                 }
                 if(Application.UserAppDataRegistry.GetValue("userId") != null)
                 {
-                    databaseDataValidator.dataValidator();
+                    databaseDataValidator.DataValidator();
                 }
-                successNotificationCount++;
                 failNotificationCount =0;
                 return "success";
             }
@@ -73,10 +72,9 @@ namespace EventManager.DatabaseHelper
                         BalloonTipIcon = ToolTipIcon.Error,
                         BalloonTipTitle = "Database Connection"
                     };
-                    notifyIcon.ShowBalloonTip(10000);
+                    notifyIcon.ShowBalloonTip(5000);
                 }
                 failNotificationCount++;
-                successNotificationCount = 0;
                 return "false";
             }
         }

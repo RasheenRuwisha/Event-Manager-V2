@@ -44,7 +44,7 @@
             this.lbl_endtime = new System.Windows.Forms.Label();
             this.lbl_startadate = new System.Windows.Forms.Label();
             this.lbl_name = new System.Windows.Forms.Label();
-            this.txt_email = new System.Windows.Forms.TextBox();
+            this.txt_notes = new System.Windows.Forms.TextBox();
             this.txt_name = new System.Windows.Forms.TextBox();
             this.pb_close = new System.Windows.Forms.PictureBox();
             this.lbl_addcollab = new System.Windows.Forms.Button();
@@ -218,17 +218,17 @@
             this.lbl_name.TabIndex = 59;
             this.lbl_name.Text = "Title";
             // 
-            // txt_email
+            // txt_notes
             // 
-            this.txt_email.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
-            this.txt_email.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
-            this.txt_email.ForeColor = System.Drawing.Color.White;
-            this.txt_email.Location = new System.Drawing.Point(44, 156);
-            this.txt_email.MaxLength = 500;
-            this.txt_email.Multiline = true;
-            this.txt_email.Name = "txt_email";
-            this.txt_email.Size = new System.Drawing.Size(250, 69);
-            this.txt_email.TabIndex = 2;
+            this.txt_notes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
+            this.txt_notes.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
+            this.txt_notes.ForeColor = System.Drawing.Color.White;
+            this.txt_notes.Location = new System.Drawing.Point(44, 156);
+            this.txt_notes.MaxLength = 500;
+            this.txt_notes.Multiline = true;
+            this.txt_notes.Name = "txt_notes";
+            this.txt_notes.Size = new System.Drawing.Size(250, 69);
+            this.txt_notes.TabIndex = 2;
             // 
             // txt_name
             // 
@@ -328,7 +328,7 @@
             this.Controls.Add(this.lbl_endtime);
             this.Controls.Add(this.lbl_startadate);
             this.Controls.Add(this.lbl_name);
-            this.Controls.Add(this.txt_email);
+            this.Controls.Add(this.txt_notes);
             this.Controls.Add(this.txt_name);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "AddEvent";
@@ -360,7 +360,7 @@
         private System.Windows.Forms.Label lbl_endtime;
         private System.Windows.Forms.Label lbl_startadate;
         private System.Windows.Forms.Label lbl_name;
-        private System.Windows.Forms.TextBox txt_email;
+        private System.Windows.Forms.TextBox txt_notes;
         private System.Windows.Forms.TextBox txt_name;
         private System.Windows.Forms.Button lbl_addcollab;
         private System.Windows.Forms.Button btn_removecollab;

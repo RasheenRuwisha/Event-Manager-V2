@@ -184,13 +184,21 @@ namespace EventManager.DatabaseHelper
                     {
                         userEvent = dbContext.Events.Where(events => events.EventId.Equals(eventId)).FirstOrDefault();
                         List<EventContact> eventDates = new List<EventContact>();
+
+                        foreach (var item in eventDates)
+                        {
+                            dbContext.EventContacts.Remove(item);
+                            dbContext.SaveChanges();
+                        }
+
+
                         foreach (EventContact contact in userEvent.EventContacts)
                         {
                             eventDates.Add(contact);
                         }
                         userEvent.EventContacts = eventDates;
                         dbContext.Events.Remove(userEvent);
-
+                     
                         dbContext.SaveChanges();
                         RemoveEventXML(eventId);
                     }

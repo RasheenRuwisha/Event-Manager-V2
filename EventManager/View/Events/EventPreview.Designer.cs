@@ -95,7 +95,7 @@
             this.lbl_repeattype.AutoSize = true;
             this.lbl_repeattype.Font = new System.Drawing.Font("HoloLens MDL2 Assets", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_repeattype.ForeColor = System.Drawing.Color.White;
-            this.lbl_repeattype.Location = new System.Drawing.Point(133, 128);
+            this.lbl_repeattype.Location = new System.Drawing.Point(100, 129);
             this.lbl_repeattype.Name = "lbl_repeattype";
             this.lbl_repeattype.Size = new System.Drawing.Size(42, 16);
             this.lbl_repeattype.TabIndex = 13;
@@ -128,7 +128,7 @@
             this.lbl_description.AutoSize = true;
             this.lbl_description.Font = new System.Drawing.Font("HoloLens MDL2 Assets", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_description.ForeColor = System.Drawing.Color.White;
-            this.lbl_description.Location = new System.Drawing.Point(133, 160);
+            this.lbl_description.Location = new System.Drawing.Point(67, 161);
             this.lbl_description.Name = "lbl_description";
             this.lbl_description.Size = new System.Drawing.Size(42, 16);
             this.lbl_description.TabIndex = 10;

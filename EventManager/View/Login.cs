@@ -61,7 +61,7 @@ namespace EventManager
             if (Application.UserAppDataRegistry.GetValue("dbConnection").ToString().Equals("True"))
             {
                 pnl_error.Controls.Clear();
-                PictureBox picture = commonUtil.addLoaderImage(this.btn_login.Location.X + 205, this.btn_login.Location.Y + 2);
+                PictureBox picture = commonUtil.AddLoaderImage(this.btn_login.Location.X + 205, this.btn_login.Location.Y + 2);
                 btn_login.Enabled = false;
                 Controls.Add(picture);
                 bool task = await Task.Run(() => this.DoValidations());

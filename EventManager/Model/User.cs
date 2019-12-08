@@ -20,7 +20,7 @@ namespace EventManager.Model
         public string Username { get; set; }
         [MaxLength(50)]
         public string Name { get; set; }
-        [MaxLength(15)]
+        [MaxLength(10)]
         public string Phone { get; set; }
     }
 }

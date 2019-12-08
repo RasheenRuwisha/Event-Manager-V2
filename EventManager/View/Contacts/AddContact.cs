@@ -54,7 +54,9 @@ namespace EventManager.View.Contacts
             this.cpb_userimage.Image = bitmap;
         }
 
-
+        /// <summary>
+        /// This method adds the address controls dynamically when the user clicks on down chevron
+        /// </summary>
          private void AddAddressControls()
         {
             PictureBox tbx = this.Controls.Find("dynamicpbx_chevdown", true).FirstOrDefault() as PictureBox;
@@ -85,7 +87,14 @@ namespace EventManager.View.Contacts
             this.CenterToParent();
         }
 
-        private String GetDynamicTextBoxValues(String name)
+        /// <summary>
+        /// This methods get the values from the dynamic textboxs that are genrated
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns>if textbox is available values of the textbox
+        /// if not empty string
+        /// </returns>
+        private string GetDynamicTextBoxValues(String name)
         {
             TextBox tbx = this.Controls.Find(name, true).FirstOrDefault() as TextBox;
             if (tbx != null)
@@ -95,6 +104,10 @@ namespace EventManager.View.Contacts
             return "";
         }
 
+        /// <summary>
+        /// This methods removes all the dymaic uis that are generated once the user clicks the up cehvron
+        /// </summary>
+        /// <returns></returns>
         private bool RemoveDynamicUis()
         {
             List<Control> controlsList = new List<Control>();
@@ -126,6 +139,11 @@ namespace EventManager.View.Contacts
             return true;
         }
 
+        /// <summary>
+        /// This methods checks weteher the details are filled in the address fields and asks user for confimation if he wants to discard the filled data
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RemoveUiClick(object sender, EventArgs e)
         {
             if (this.GetDynamicTextBoxValues("dynamictxt_addressline1").Equals("") && this.GetDynamicTextBoxValues("dynamictxt_addressline2").Equals("") &&
@@ -171,7 +189,9 @@ namespace EventManager.View.Contacts
             }
         }
 
-
+        /// <summary>
+        /// This method shows the errors in the texboxes that are mandatory
+        /// </summary>
         private void ShowErrors()
         {
             foreach (Control control in this.Controls)
@@ -308,15 +328,40 @@ namespace EventManager.View.Contacts
             }
         }
 
+
+        private bool ValidatePhone()
+        {
+            if (fieldValidator.IsValidPhone(txt_phone.Text.Trim()))
+            {
+                return true;
+            }
+            this.AddPhoneError();
+            return false;
+        }
+
+        private void AddPhoneError()
+        {
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new MethodInvoker(this.AddPhoneError));
+            }
+            else
+            {
+                PictureBox error = uiMessage.AddErrorIcon(txt_phone.Name, txt_phone.Location.X + 255, txt_phone.Location.Y + 2);
+                this.Controls.Add(error);
+            }
+        }
+
+
         private bool DoValidations()
         {
-            return this.ValidateFields() && this.ValidateEmail() && this.CheckExistingEmail() && this.CheckExistingName();
+            return ValidateFields() && ValidatePhone() && ValidateEmail() && CheckExistingEmail() && CheckExistingName();
         }
 
         private async void btn_save_Click(object sender, EventArgs e)
         {
             Contact contactDetails = this.GenerateContactObject();
-            PictureBox pictureBox = commonUtil.addLoaderImage(this.btn_save.Location.X + 205, this.btn_save.Location.Y + 2);
+            PictureBox pictureBox = commonUtil.AddLoaderImage(this.btn_save.Location.X + 205, this.btn_save.Location.Y + 2);
             this.Controls.Add(pictureBox);
             this.btn_save.Enabled = false;
             bool task = await Task.Run(() => this.DoValidations());
@@ -360,7 +405,7 @@ namespace EventManager.View.Contacts
         {
             Contact contact = new Contact()
             {
-                ContactId = commonUtil.generateUserId("contact"),
+                ContactId = commonUtil.GenerateUserId("contact"),
                 Name = txt_name.Text.Trim(),
                 Email = txt_email.Text.Trim(),
                 Phone = txt_phone.Text.Trim(),
@@ -375,5 +420,26 @@ namespace EventManager.View.Contacts
             return contact;
         }
 
+ 
+        private void txt_name_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsLetter(e.KeyChar))
+            {
+                if (!char.IsControl(e.KeyChar))
+                {
+                    MessageBox.Show("Name can only contain alphabetical charatcters");
+                    e.Handled = true;
+                }
+            }
+        }
+
+        private void txt_phone_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (char.IsLetter(e.KeyChar))
+            {
+                MessageBox.Show("Phone can only contain numeric charatcters");
+                e.Handled = true;
+            }
+        }
     }
 }

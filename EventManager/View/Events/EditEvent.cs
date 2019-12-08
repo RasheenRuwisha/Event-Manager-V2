@@ -40,7 +40,7 @@ namespace EventManager.View.Events
 
             this.userEvent = eventid;
             txt_name.Text = userEvent.Title;
-            txt_email.Text = userEvent.Description;
+            txt_notes.Text = userEvent.Description;
             dtp_startdate.Value = userEvent.StartDate;
             dtp_starttime.Value = userEvent.StartDate;
             dtp_enddate.Value = userEvent.StartDate;
@@ -574,9 +574,9 @@ namespace EventManager.View.Events
         }
 
 
-        private EventDates generateStartEnd(DateTime startDateTime, DateTime endDateTime)
+        private EventDate generateStartEnd(DateTime startDateTime, DateTime endDateTime)
         {
-            EventDates eventDate = new EventDates
+            EventDate eventDate = new EventDate
             {
                 StartDate = startDateTime,
                 EndDate = endDateTime
@@ -710,7 +710,7 @@ namespace EventManager.View.Events
                 EventId = userEvent.EventId,
                 UserId = Application.UserAppDataRegistry.GetValue("userID").ToString(),
                 Title = txt_name.Text,
-                Description = txt_email.Text,
+                Description = txt_notes.Text,
                 RepeatType = cmb_repeattype.Text,
                 EventContacts = GenerateEventContacts(),
                 RepeatDuration = cComboBox != null ? cComboBox.Text : "",
@@ -734,10 +734,7 @@ namespace EventManager.View.Events
 
         private async void btn_save_Click(object sender, EventArgs e)
         {
-            Tasks tasks = new Tasks();
-            Appointment appointment = new Appointment();
-
-            PictureBox pictureBox = commonUtil.addLoaderImage(this.btn_save.Location.X + 205, this.btn_save.Location.Y + 2);
+            PictureBox pictureBox = commonUtil.AddLoaderImage(this.btn_save.Location.X + 205, this.btn_save.Location.Y + 2);
             this.Controls.Add(pictureBox);
             this.btn_save.Enabled = false;
             bool task = await Task.Run(() => this.DoValidations());

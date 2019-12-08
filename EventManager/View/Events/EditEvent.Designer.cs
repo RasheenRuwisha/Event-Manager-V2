@@ -44,11 +44,11 @@
             this.btn_save = new System.Windows.Forms.Button();
             this.lbl_contacts = new System.Windows.Forms.Label();
             this.lbl_header = new System.Windows.Forms.Label();
-            this.lbl_email = new System.Windows.Forms.Label();
+            this.lbl_notes = new System.Windows.Forms.Label();
             this.lbl_endtime = new System.Windows.Forms.Label();
             this.lbl_startadate = new System.Windows.Forms.Label();
             this.lbl_name = new System.Windows.Forms.Label();
-            this.txt_email = new System.Windows.Forms.TextBox();
+            this.txt_notes = new System.Windows.Forms.TextBox();
             this.txt_name = new System.Windows.Forms.TextBox();
             this.lbl_collaborators = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pb_close)).BeginInit();
@@ -228,15 +228,15 @@
             this.lbl_header.Text = "Edit Event";
             this.lbl_header.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // lbl_email
+            // lbl_notes
             // 
-            this.lbl_email.AutoSize = true;
-            this.lbl_email.ForeColor = System.Drawing.Color.White;
-            this.lbl_email.Location = new System.Drawing.Point(41, 129);
-            this.lbl_email.Name = "lbl_email";
-            this.lbl_email.Size = new System.Drawing.Size(32, 13);
-            this.lbl_email.TabIndex = 62;
-            this.lbl_email.Text = "Email";
+            this.lbl_notes.AutoSize = true;
+            this.lbl_notes.ForeColor = System.Drawing.Color.White;
+            this.lbl_notes.Location = new System.Drawing.Point(41, 129);
+            this.lbl_notes.Name = "lbl_notes";
+            this.lbl_notes.Size = new System.Drawing.Size(35, 13);
+            this.lbl_notes.TabIndex = 62;
+            this.lbl_notes.Text = "Notes";
             // 
             // lbl_endtime
             // 
@@ -268,17 +268,17 @@
             this.lbl_name.TabIndex = 59;
             this.lbl_name.Text = "Title";
             // 
-            // txt_email
+            // txt_notes
             // 
-            this.txt_email.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
-            this.txt_email.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
-            this.txt_email.ForeColor = System.Drawing.Color.White;
-            this.txt_email.Location = new System.Drawing.Point(44, 156);
-            this.txt_email.MaxLength = 500;
-            this.txt_email.Multiline = true;
-            this.txt_email.Name = "txt_email";
-            this.txt_email.Size = new System.Drawing.Size(250, 69);
-            this.txt_email.TabIndex = 2;
+            this.txt_notes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
+            this.txt_notes.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
+            this.txt_notes.ForeColor = System.Drawing.Color.White;
+            this.txt_notes.Location = new System.Drawing.Point(44, 156);
+            this.txt_notes.MaxLength = 500;
+            this.txt_notes.Multiline = true;
+            this.txt_notes.Name = "txt_notes";
+            this.txt_notes.Size = new System.Drawing.Size(250, 69);
+            this.txt_notes.TabIndex = 2;
             // 
             // txt_name
             // 
@@ -323,11 +323,11 @@
             this.Controls.Add(this.btn_save);
             this.Controls.Add(this.lbl_contacts);
             this.Controls.Add(this.lbl_header);
-            this.Controls.Add(this.lbl_email);
+            this.Controls.Add(this.lbl_notes);
             this.Controls.Add(this.lbl_endtime);
             this.Controls.Add(this.lbl_startadate);
             this.Controls.Add(this.lbl_name);
-            this.Controls.Add(this.txt_email);
+            this.Controls.Add(this.txt_notes);
             this.Controls.Add(this.txt_name);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "EditEvent";
@@ -358,11 +358,11 @@
         private System.Windows.Forms.Button btn_save;
         private System.Windows.Forms.Label lbl_contacts;
         private System.Windows.Forms.Label lbl_header;
-        private System.Windows.Forms.Label lbl_email;
+        private System.Windows.Forms.Label lbl_notes;
         private System.Windows.Forms.Label lbl_endtime;
         private System.Windows.Forms.Label lbl_startadate;
         private System.Windows.Forms.Label lbl_name;
-        private System.Windows.Forms.TextBox txt_email;
+        private System.Windows.Forms.TextBox txt_notes;
         private System.Windows.Forms.TextBox txt_name;
         private System.Windows.Forms.Label lbl_collaborators;
     }

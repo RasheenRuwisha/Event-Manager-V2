@@ -14,6 +14,7 @@ namespace EventManager.Model
         [Key]
         public string EventId { get; set; }
         [ForeignKey("User")]
+        [MaxLength(10)]
         public string UserId { get; set; }
         public virtual User User { get; set; }
         [MaxLength(100)]
@@ -29,6 +30,7 @@ namespace EventManager.Model
         public int RepeatCount { get; set; }
         public DateTime RepeatTill { get; set; }
         public virtual List<EventContact> EventContacts { get; set; }
+        [MaxLength(10)]
         public String ParentId { get; set; }
         [MaxLength(50)]
         public string AddressLine1 { get; set; }
