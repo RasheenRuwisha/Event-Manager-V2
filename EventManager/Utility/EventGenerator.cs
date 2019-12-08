@@ -88,7 +88,6 @@ namespace EventManager.Utility
                     }
                     else if (userEvent.RepeatDuration.Equals("Until"))
                     {
-                        if (userEvent.RepeatTill >= endDate)
                             for (int i = 1; i <= timeDifference; i++)
                             {
                                 UserEvent evnt = new UserEvent();
@@ -171,7 +170,6 @@ namespace EventManager.Utility
                     }
                     else if (userEvent.RepeatDuration.Equals("Until"))
                     {
-                        if (userEvent.RepeatTill >= endDate)
                             for (int i = 1; i <= timeDifference; i++)
                             {
                                 UserEvent evnt = new UserEvent();
@@ -249,7 +247,6 @@ namespace EventManager.Utility
                     }
                     else if (userEvent.RepeatDuration.Equals("Until"))
                     {
-                        if (userEvent.RepeatTill >= endDate)
                             for (int i = 1; i <= timeDifference; i++)
                             {
                                 UserEvent evnt = new UserEvent();

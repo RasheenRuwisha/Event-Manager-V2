@@ -14,6 +14,12 @@ namespace EventManager.DatabaseHelper
 {
     public class ContactHelper
     {
+        /// <summary>
+        /// This method checks wetheher the contact name already exists in the users cotnact list.
+        /// If there is no internet connection the check is done using the local XML file.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public static bool DoesNameExist(string name)
         {
             string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
@@ -67,6 +73,13 @@ namespace EventManager.DatabaseHelper
             return true;
         }
 
+
+        /// <summary>
+        /// This method checks wether the email exists in the users contact list.
+        /// If there is no internet connection the check is done using the local XML file.
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
         public static bool DoesEmailExist(string email)
         {
             string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
@@ -117,11 +130,17 @@ namespace EventManager.DatabaseHelper
                 Logger.LogException(ex, true);
                 return false;
             }
-           
+
             return true;
         }
 
 
+        /// <summary>
+        /// This methods adds the contact to the database. And the xml file gets updated.
+        /// If there is no internet connection a sperate fill will be crated, which will then be used to sync the changes to the database once there is an internet conenction.
+        /// </summary>
+        /// <param name="contact"></param>
+        /// <returns></returns>
         public static bool AddContact(Contact contact)
         {
             string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
@@ -163,20 +182,12 @@ namespace EventManager.DatabaseHelper
             }
         }
 
-        private EventContact genEvCon(string id,string conid)
-        {
-            string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
-
-            EventContact ewv = new EventContact()
-            {
-                EventId = id,
-                UserId = userId,
-                ContactId = conid
-            };
-
-            return ewv;
-        }
-
+        /// <summary>
+        /// This  method removes the contact from the database and the local xml file.
+        /// If there is no internet connection a sperate fill will be crated, which will then be used to sync the changes to the database once there is an internet conenction.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Boolean</returns>
         public static bool RemoveContact(string id)
         {
             try
@@ -186,7 +197,7 @@ namespace EventManager.DatabaseHelper
                     using (var dbContext = new DatabaseModel())
                     {
                         Contact contact = dbContext.Contacts.Find(id);
-                        List<EventContact> eventContact = dbContext.EventContacts.Where(x => x.ContactId ==  id).ToList();
+                        List<EventContact> eventContact = dbContext.EventContacts.Where(x => x.ContactId == id).ToList();
                         foreach (var item in eventContact)
                         {
                             dbContext.EventContacts.Remove(item);
@@ -223,7 +234,10 @@ namespace EventManager.DatabaseHelper
             }
         }
 
-
+        /// <summary>
+        /// This methods gets all the user contacts from the database. If there is no internet connection the data will be retreived from the local XML.
+        /// </summary>
+        /// <returns>The users contact list</returns>
         public static List<Contact> GetUserContacts()
         {
             string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
@@ -259,45 +273,16 @@ namespace EventManager.DatabaseHelper
             {
                 Logger.LogException(ex, true);
             }
-          
+
             return contacts;
         }
 
-        public static Contact GetContactDetails(string contactId)
-        {
-            Contact contactDetails = new Contact();
-
-            try
-            {
-                if (Application.UserAppDataRegistry.GetValue("dbConnection").ToString().Equals("True"))
-                {
-                    using (var dbContext = new DatabaseModel())
-                    {
-                        contactDetails = dbContext.Contacts.Find(contactId);
-                    }
-                }
-                else
-                {
-                    contactDetails = SearchContactXML(contactId, "ContactId");
-                }
-            }
-            catch (System.Data.Entity.Core.EntityException ex)
-            {
-                contactDetails = SearchContactXML(contactId, "ContactId");
-                Logger.LogException(ex, false);
-            }
-            catch (System.Data.SqlClient.SqlException ex)
-            {
-                contactDetails = SearchContactXML(contactId, "ContactId");
-                Logger.LogException(ex, false);
-            }
-            catch (Exception ex)
-            {
-                Logger.LogException(ex, true);
-            }
-            return contactDetails;
-        }
-
+        /// <summary>
+        /// This method updates the contact in the database and the local XMl file.
+        /// If there is no internet connection a sperate fill will be crated, which will then be used to sync the changes to the database once there is an internet conenction.
+        /// </summary>
+        /// <param name="contact"></param>
+        /// <returns></returns>
         public static bool UpdateContacts(Contact contact)
         {
             try
@@ -347,6 +332,12 @@ namespace EventManager.DatabaseHelper
             }
         }
 
+
+        /// <summary>
+        /// This method returns the contact of the user using the name.If there is not internet connection the data is retreived using the local XML
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public static List<Contact> GetUserContactsByName(string name)
         {
             string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
@@ -363,43 +354,47 @@ namespace EventManager.DatabaseHelper
                 }
                 else
                 {
-                    contacts = SearchContactsXML(name);
+                    contacts = SearchContactsByNameXML(name);
                 }
             }
             catch (System.Data.Entity.Core.EntityException ex)
             {
                 Logger.LogException(ex, false);
-                contacts = SearchContactsXML(name);
+                contacts = SearchContactsByNameXML(name);
             }
             catch (System.Data.SqlClient.SqlException ex)
             {
                 Logger.LogException(ex, false);
-                contacts = SearchContactsXML(name);
+                contacts = SearchContactsByNameXML(name);
             }
             catch (Exception ex)
             {
                 Logger.LogException(ex, true);
             }
-        
+
             return contacts;
         }
 
 
 
 
+        //XML METHODS START
 
 
 
 
-
-
+        /// <summary>
+        /// This method adds the data to the local XML.
+        /// </summary>
+        /// <param name="contact"></param>
+        /// <returns></returns>
         private static bool AddContactXML(Contact contact)
         {
             string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
-
+            string workingDir = Directory.GetCurrentDirectory();
             try
             {
-                XDocument xmlDoc = XDocument.Load($"{userId}.xml");
+                XDocument xmlDoc = XDocument.Load(workingDir + $@"\{userId}.xml");
 
                 XElement xEvent = new XElement("Contact",
                     new XElement("ContactId", contact.ContactId),
@@ -433,15 +428,19 @@ namespace EventManager.DatabaseHelper
 
 
 
-
+        /// <summary>
+        /// This method updates the data in the local XML 
+        /// </summary>
+        /// <param name="contact"></param>
+        /// <returns></returns>
         private static bool UpdateContactXML(Contact contact)
         {
             string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
-
+            string workingDir = Directory.GetCurrentDirectory();
             XDocument xmlDoc = new XDocument();
             try
             {
-                xmlDoc = XDocument.Load($"{userId}.xml");
+                xmlDoc = XDocument.Load(workingDir + $@"\{userId}.xml");
                 var updateQuery = (from item in xmlDoc.Descendants("Contact")
                                    where item.Element("ContactId").Value == contact.ContactId
                                    select item).FirstOrDefault();
@@ -473,14 +472,19 @@ namespace EventManager.DatabaseHelper
             }
         }
 
+        /// <summary>
+        /// This method removes the contact from the local XML.
+        /// </summary>
+        /// <param name="contactId"></param>
+        /// <returns></returns>
         private static bool RemoveContactXML(string contactId)
         {
             string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
-
+            string workingDir = Directory.GetCurrentDirectory();
             XDocument xmlDoc = new XDocument();
             try
             {
-                xmlDoc = XDocument.Load($"{userId}.xml");
+                xmlDoc = XDocument.Load(workingDir + $@"\{userId}.xml");
                 var removeQuery = (from item in xmlDoc.Descendants("Contact")
                                    where item.Element("ContactId").Value == contactId
                                    select item).FirstOrDefault();
@@ -504,14 +508,18 @@ namespace EventManager.DatabaseHelper
         }
 
 
+        /// <summary>
+        /// This method retreives all the contacts from the local XML.
+        /// </summary>
+        /// <returns></returns>
         private static List<Contact> GetAllContactsXML()
         {
             string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
-
+            string workingDir = Directory.GetCurrentDirectory();
             List<Contact> contacts = null;
             try
             {
-                using (var reader = new StreamReader($"{userId}.xml"))
+                using (var reader = new StreamReader(workingDir + $@"\{userId}.xml"))
                 {
                     XmlSerializer deserializer = new XmlSerializer(typeof(List<Contact>), new XmlRootAttribute("LocalStore"));
                     contacts = (List<Contact>)deserializer.Deserialize(reader);
@@ -525,51 +533,23 @@ namespace EventManager.DatabaseHelper
             return contacts;
         }
 
-        private static List<Contact> SearchContactsXML(string name)
+        /// <summary>
+        /// This methods searches for contacts in the local XML.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="element">The elemnt that should be queried</param>
+        /// <returns></returns>
+        private static Contact SearchContactXML(string value, string element)
         {
             string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
-
-            List<Contact> contact = new List<Contact>();
-            XDocument xmlDoc = new XDocument();
-            try
-            {
-                xmlDoc = XDocument.Load($"{userId}.xml");
-                var searchQuery = (from item in xmlDoc.Descendants("Contact")
-                                   where item.Element("ContactId").Value == name
-                                   select new Contact
-                                   {
-                                       ContactId = item.Element("ContactId").Value,
-                                       Email = item.Element("Email").Value,
-                                       Phone = item.Element("Phone").Value,
-                                       Image = item.Element("Image").Value,
-                                       Name = item.Element("Name").Value,
-                                       AddressLine1 = item.Element("AddressLine1").Value,
-                                       AddressLine2 = item.Element("AddressLine2").Value,
-                                       City = item.Element("City").Value,
-                                       State = item.Element("State").Value,
-                                       Zipcode = item.Element("Zipcode").Value
-                                   }).ToList();
-
-                return searchQuery;
-            }
-            catch (Exception ex)
-            {
-                Logger.LogException(ex, true);
-                return contact;
-            }
-        }
-
-        private static Contact SearchContactXML(string name, string element)
-        {
-            string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
-
+            string workingDir = Directory.GetCurrentDirectory();
             Contact contact = new Contact();
             XDocument xmlDoc = new XDocument();
             try
             {
-                xmlDoc = XDocument.Load($"{userId}.xml");
+                xmlDoc = XDocument.Load(workingDir + $@"\{userId}.xml");
                 var searchQuery = (from item in xmlDoc.Descendants("Contact")
-                                   where item.Element(element).Value == name
+                                   where item.Element(element).Value == value
                                    select new Contact
                                    {
                                        ContactId = item.Element("ContactId").Value,
@@ -593,6 +573,52 @@ namespace EventManager.DatabaseHelper
             }
         }
 
+        /// <summary>
+        /// This method searches the contacts in the XML using the name.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        private static List<Contact> SearchContactsByNameXML(string name)
+        {
+            string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
+            string workingDir = Directory.GetCurrentDirectory();
+            List<Contact> contact = new List<Contact>();
+            XDocument xmlDoc = new XDocument();
+            try
+            {
+                xmlDoc = XDocument.Load(workingDir + $@"\{userId}.xml");
+                var searchQuery = (from item in xmlDoc.Descendants("Contact")
+                                   where item.Element("Name").Value == name
+                                   select new Contact
+                                   {
+                                       ContactId = item.Element("ContactId").Value,
+                                       Email = item.Element("Email").Value,
+                                       Phone = item.Element("Phone").Value,
+                                       Image = item.Element("Image").Value,
+                                       Name = item.Element("Name").Value,
+                                       AddressLine1 = item.Element("AddressLine1").Value,
+                                       AddressLine2 = item.Element("AddressLine2").Value,
+                                       City = item.Element("City").Value,
+                                       State = item.Element("State").Value,
+                                       Zipcode = item.Element("Zipcode").Value
+                                   }).ToList();
+
+                return searchQuery;
+            }
+            catch (Exception ex)
+            {
+                Logger.LogException(ex, true);
+                return contact;
+            }
+        }
+
+
+
+        /// <summary>
+        /// This method retreives all the contacts that requires to be synced with the database.
+        /// </summary>
+        /// <param name="fileepath"></param>
+        /// <returns></returns>
         public static List<Contact> GettAllUpdateContact(string fileepath)
         {
             List<Contact> contacts = null;
@@ -613,7 +639,11 @@ namespace EventManager.DatabaseHelper
         }
 
 
-
+        /// <summary>
+        /// This method adds the data to the local xml file if there is no internet connection.
+        /// This method check wether the file exists if the file does not exist a new file will be created.
+        /// </summary>
+        /// <param name="xElement"></param>
         public static void InitLocalEventFileAddContact(XElement xElement)
         {
             Application.UserAppDataRegistry.SetValue("dbMatch", false);
@@ -635,6 +665,12 @@ namespace EventManager.DatabaseHelper
             }
         }
 
+
+        /// <summary>
+        /// This method update the data to the local xml file if there is no internet connection.
+        /// This method check wether the file exists if the file does not exist a new file will be created.
+        /// </summary>
+        /// <param name="xElement"></param>
         public static void InitLocalEventFileUpdateContact(XElement xElement)
         {
             Application.UserAppDataRegistry.SetValue("dbMatch", false);
@@ -656,6 +692,12 @@ namespace EventManager.DatabaseHelper
             }
         }
 
+
+        /// <summary>
+        /// This method remove the data to the local xml file if there is no internet connection.
+        /// This method check wether the file exists if the file does not exist a new file will be created.
+        /// </summary>
+        /// <param name="xElement"></param>
         public static void InitLocalEventFileRemoveContact(XElement xElement)
         {
             Application.UserAppDataRegistry.SetValue("dbMatch", false);

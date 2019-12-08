@@ -15,6 +15,10 @@ namespace EventManager.DatabaseHelper
         readonly DatabaseDataValidator databaseDataValidator = new DatabaseDataValidator();
         int failNotificationCount = 0;
 
+        /// <summary>
+        /// This methods run a thread every 20 seconds to check for database connection availability.
+        /// </summary>
+        /// <returns></returns>
         public async Task ConnectionValidator()
         {
             string t = "";
@@ -25,6 +29,11 @@ namespace EventManager.DatabaseHelper
             }
         }
 
+        /// <summary>
+        /// This methods checks for the database connection and shows the user a notification if there is no connection to the database.
+        /// If the database connection was established it checks wether any chanegs were done locally and, if changes were done locally the user is shown with a notification.
+        /// </summary>
+        /// <returns></returns>
         public string CheckConnection()
         {
             try

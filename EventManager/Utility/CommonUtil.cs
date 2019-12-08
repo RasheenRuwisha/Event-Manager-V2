@@ -17,40 +17,40 @@ namespace EventManager.Utility
 
         public string GenerateOTP()
         {
-            var stringChars1 = new char[6];
-            var random1 = new Random();
+            var stringChars = new char[6];
+            var random = new Random();
 
-            for (int i = 0; i < stringChars1.Length; i++)
+            for (int i = 0; i < stringChars.Length; i++)
             {
-                stringChars1[i] = chars[random1.Next(chars.Length)];
+                stringChars[i] = chars[random.Next(chars.Length)];
             }
-            return new String(stringChars1);
+            return new String(stringChars);
         }
 
-        public string GenerateUserId(string type)
+        public string GenerateId(string type)
         {
-            var stringChars1 = new char[6];
-            var random1 = new Random();
+            var stringChars = new char[6];
+            var random = new Random();
             string id = "";
-            for (int i = 0; i < stringChars1.Length; i++)
+            for (int i = 0; i < stringChars.Length; i++)
             {
-                stringChars1[i] = chars[random1.Next(chars.Length)];
+                stringChars[i] = chars[random.Next(chars.Length)];
             }
             if (type.Equals("user"))
             {
-                id = $"USR_{new string(stringChars1)}";
+                id = $"USR_{new string(stringChars)}";
                 return id;
             }
 
             if (type.Equals("contact"))
             {
-                id = $"CNT_{new string(stringChars1)}";
+                id = $"CNT_{new string(stringChars)}";
                 return id;
             }
 
             if (type.Equals("event"))
             {
-                id = $"ENT_{new string(stringChars1)}";
+                id = $"ENT_{new string(stringChars)}";
                 return id;
             }
             return id;

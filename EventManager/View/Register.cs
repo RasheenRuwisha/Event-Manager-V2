@@ -180,7 +180,7 @@ namespace EventManager.View
 
         private bool CheckExistingEmail()
         {
-            if (UserHelper.IsNewUser(txt_email.Text.Trim()))
+            if (UserHelper.UserExists(txt_email.Text.Trim()))
             {
                 return true;
             }
@@ -234,7 +234,7 @@ namespace EventManager.View
         {
             if (Application.UserAppDataRegistry.GetValue("dbConnection").ToString().Equals("True"))
             {
-                String id = commonUtil.GenerateUserId("user");
+                String id = commonUtil.GenerateId("user");
                 PictureBox picture = commonUtil.AddLoaderImage(this.btn_register.Location.X + 205, this.btn_register.Location.Y + 2);
                 btn_register.Enabled = false;
                 Controls.Add(picture);

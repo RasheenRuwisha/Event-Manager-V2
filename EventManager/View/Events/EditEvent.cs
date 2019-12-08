@@ -34,6 +34,10 @@ namespace EventManager.View.Events
             InitializeComponent();
         }
 
+        /// <summary>
+        /// This method intiializes the form with the details that are already existing in the event
+        /// </summary>
+        /// <param name="eventid"></param>
         public EditEvent(UserEvent  eventid)
         {
             InitializeComponent();
@@ -124,7 +128,7 @@ namespace EventManager.View.Events
             if (!userEvent.AddressLine1.Equals("") || !userEvent.AddressLine2.Equals("") || !userEvent.City.Equals("") || !userEvent.State.Equals("") || !userEvent.Zipcode.Equals(""))
             {
                 this.AddAddressControls();
-                this.changeConrolLocations("add");
+                this.changeControlLocations("add");
             }
             else
             {
@@ -144,13 +148,17 @@ namespace EventManager.View.Events
             this.dtp_enddate.ValueChanged += new EventHandler(endDate_ValueChanged);
             this.dtp_endtime.ValueChanged += new EventHandler(endTime_ValueChanged);
 
-            this.dtp_startdate.ValueChanged += new EventHandler(DisableRepeatTyps);
-            this.dtp_enddate.ValueChanged += new EventHandler(DisableRepeatTyps);
+            this.dtp_startdate.ValueChanged += new EventHandler(DisableRepeatTypes);
+            this.dtp_enddate.ValueChanged += new EventHandler(DisableRepeatTypes);
 
         }
 
-
-        void DisableRepeatTyps(object sender, EventArgs e)
+        /// <summary>
+        /// This method disables the repeat types according the changes done to the start and end date.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void DisableRepeatTypes(object sender, EventArgs e)
         {
             if ((dtp_enddate.Value - dtp_startdate.Value).Days >= 30)
             {
@@ -211,6 +219,12 @@ namespace EventManager.View.Events
 
         }
 
+
+        /// <summary>
+        /// This method checks weteher the end time is less than the start time and changes the values of the end time accordingly
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void startPickerValueChanged(object sender, EventArgs e)
         {
             if (dtp_endtime.Value < dtp_starttime.Value)
@@ -220,6 +234,11 @@ namespace EventManager.View.Events
 
         }
 
+        /// <summary>
+        /// This checks wether the end time is less than the start date and changes the value of the end date to the star date.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void startDatePickerValueChanged(object sender, EventArgs e)
         {
             if (dtp_enddate.Value < dtp_startdate.Value)
@@ -229,6 +248,11 @@ namespace EventManager.View.Events
             }
         }
 
+        /// <summary>
+        /// This checks wether the end date is less than the start date and changes the end date to the star date even if the user selects a past date.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void endDate_ValueChanged(object sender, EventArgs e)
         {
             if (dtp_enddate.Value < dtp_startdate.Value)
@@ -236,6 +260,13 @@ namespace EventManager.View.Events
                 dtp_enddate.Value = dtp_startdate.Value;
             }
         }
+
+
+        /// <summary>
+        /// This checks wether the end time is less than the start time and changes the end time to the start dtimeate even if the user selects a past time.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void endTime_ValueChanged(object sender, EventArgs e)
         {
             if (dtp_endtime.Value < dtp_starttime.Value)
@@ -244,10 +275,11 @@ namespace EventManager.View.Events
             }
         }
 
-
-
-
-
+        /// <summary>
+        /// This method gets the name of the contact using the contact id
+        /// </summary>
+        /// <param name="contactId"></param>
+        /// <returns></returns>
         public String GetContactName(String contactId)
         {
             String name = "";
@@ -263,7 +295,12 @@ namespace EventManager.View.Events
             return name;
         }
 
-        private void changeConrolLocations(string type)
+
+        /// <summary>
+        /// This method changes the location of the controls when the dynamic views are added.
+        /// </summary>
+        /// <param name="type"></param>
+        private void changeControlLocations(string type)
         {
             Label lbl_repeatduration = Controls.Find("lbl_repeatduration", true).FirstOrDefault() as Label;
             ComboBox cmb_repeatfor = Controls.Find("cmb_repeatfor", true).FirstOrDefault() as ComboBox;
@@ -351,7 +388,9 @@ namespace EventManager.View.Events
             }
         }
 
-
+        /// <summary>
+        /// This method adds the address controls when the user click on the chevron and then adjusts the location of the existing controls.
+        /// </summary>
         private void AddAddressControls()
         {
             PictureBox tbx = this.Controls.Find("dynamicpbx_chevdown", true).FirstOrDefault() as PictureBox;
@@ -390,6 +429,11 @@ namespace EventManager.View.Events
             this.CenterToParent();
         }
 
+        /// <summary>
+        /// This methods retreives the values from the dynamic controls
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         private String GetDynamicTextBoxValues(String name)
         {
             TextBox tbx = this.Controls.Find(name, true).FirstOrDefault() as TextBox;
@@ -400,6 +444,11 @@ namespace EventManager.View.Events
             return "";
         }
 
+
+        /// <summary>
+        /// This method removes the dynamically added fields and then readjusts the location of the other controls.
+        /// </summary>
+        /// <returns></returns>
         private bool RemoveDynamicUis()
         {
             Label rLabel = Controls.Find("lbl_repeatfor", true).FirstOrDefault() as Label;
@@ -430,18 +479,31 @@ namespace EventManager.View.Events
             pbx.Click += new EventHandler(this.AddUiClick);
 
             Label label = uiBuilder.GenerateLabel(40, 390, "dynamiclbl_address", "Address");
-            this.changeConrolLocations("");
+            this.changeControlLocations("");
             this.CenterToParent();
             this.Controls.Add(pbx);
             this.Controls.Add(label);
             return true;
         }
 
+
+        /// <summary>
+        /// This method handels the addtion of the Dynamic uis
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddUiClick(object sender, EventArgs e)
         {
             this.AddAddressControls();
-            this.changeConrolLocations("add");
+            this.changeControlLocations("add");
         }
+
+        /// <summary>
+        /// This method handles the click event for removing the dynamic ui.
+        /// If fields in the dynamic ui's are filled a confimration will be shown to the user.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RemoveUiClick(object sender, EventArgs e)
         {
             if (this.GetDynamicTextBoxValues("dynamictxt_addressline1").Equals("") && this.GetDynamicTextBoxValues("dynamictxt_addressline2").Equals("") &&
@@ -468,25 +530,10 @@ namespace EventManager.View.Events
             this.Close();
         }
 
-        private async void AddEvent_Load(object sender, EventArgs e)
-        {
-            bool addContact = await Task.Run(() => this.doAddContacts());
-        }
 
-        private bool doAddContacts()
-        {
-            try
-            {
-                contacts = ContactHelper.GetUserContacts();
-                this.AddContactList();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Logger.LogException(ex, true);
-                return false;
-            }
-        }
+        /// <summary>
+        /// This methods add the contacts to the contact list.
+        /// </summary>
 
         private void AddContactList()
         {
@@ -518,6 +565,11 @@ namespace EventManager.View.Events
 
         }
 
+        /// <summary>
+        /// This method adds the contact to the collaborator list and then removes the contact from the contact list.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void lbl_addcollab_Click(object sender, EventArgs e)
         {
             if (cmb_contacts.Text.Equals("") && cmb_evetncollab.Text.Equals("No More Contacts"))
@@ -537,15 +589,22 @@ namespace EventManager.View.Events
                 {
                     cmb_contacts.Items.Add("No More Contacts");
                     lbl_addcollab.Enabled = false;
+                    cmb_contacts.SelectedIndex = 0;
                 }
                 else
                 {
                     lbl_addcollab.Enabled = true;
+                    cmb_contacts.SelectedIndex = 0;
                 }
 
             }
         }
 
+        /// <summary>
+        /// This method removes the contact from thr collaborators list and adds the contact back to the contact list.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_removecollab_Click(object sender, EventArgs e)
         {
             if (cmb_evetncollab.Text.Equals("") && cmb_evetncollab.Text.Equals("No Contacts Added"))
@@ -565,28 +624,20 @@ namespace EventManager.View.Events
                 {
                     cmb_evetncollab.Items.Add("No Contacts Added");
                     btn_removecollab.Enabled = false;
+                    cmb_evetncollab.SelectedIndex = 0;
                 }
                 else
                 {
                     btn_removecollab.Enabled = true;
+                    cmb_evetncollab.SelectedIndex = 0;
                 }
             }
         }
 
 
-        private EventDate generateStartEnd(DateTime startDateTime, DateTime endDateTime)
-        {
-            EventDate eventDate = new EventDate
-            {
-                StartDate = startDateTime,
-                EndDate = endDateTime
-            };
-            return eventDate;
-
-        }
-
-
-
+        /// <summary>
+        /// This methods add the error icons next to the mandataory fields if they are left blank.
+        /// </summary>
         private void ShowErrors()
         {
             PictureBox pictureBox = Controls.Find("ptx_" + txt_name.Name, true).FirstOrDefault() as PictureBox;
@@ -619,8 +670,12 @@ namespace EventManager.View.Events
                 }
             }
         }
-    
 
+
+        /// <summary>
+        /// This method validates the fields.
+        /// </summary>
+        /// <returns></returns>
         private bool ValidateFields()
         {
             this.ShowErrors();
@@ -639,6 +694,11 @@ namespace EventManager.View.Events
             return this.ValidateFields();
         }
 
+
+        /// <summary>
+        /// This method generates the contacts for the event using the data from the collaborators combo box
+        /// </summary>
+        /// <returns></returns>
         private List<EventContact> GenerateEventContacts()
         {
             List<EventContact> eventContacts = new List<EventContact>();
@@ -657,6 +717,10 @@ namespace EventManager.View.Events
             return eventContacts;
         }
 
+        /// <summary>
+        /// This methods generates the End time according to the repeat type that is slected by the user.
+        /// </summary>
+        /// <returns></returns>
         DateTime GenerateEndTime()
         {
             ComboBox cComboBox = Controls.Find("cmb_repeatfor", true).FirstOrDefault() as ComboBox;
@@ -694,6 +758,11 @@ namespace EventManager.View.Events
             }
             return endDate;
         }
+
+        /// <summary>
+        /// This method generates the event that is nedded to be created.
+        /// </summary>
+        /// <returns></returns>
         private UserEvent GenerateUserEvent()
         {
             ComboBox cComboBox = Controls.Find("cmb_repeatfor", true).FirstOrDefault() as ComboBox;
@@ -731,7 +800,11 @@ namespace EventManager.View.Events
             return events;
         }
 
-
+        /// <summary>
+        /// This method handles the save function
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void btn_save_Click(object sender, EventArgs e)
         {
             PictureBox pictureBox = commonUtil.AddLoaderImage(this.btn_save.Location.X + 205, this.btn_save.Location.Y + 2);
@@ -780,6 +853,11 @@ namespace EventManager.View.Events
             }
         }
 
+        /// <summary>
+        /// This methods checks for the change in the repeat type and adds the repeat for section.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cmb_repeattype_SelectedIndexChanged(object sender, EventArgs e)
         {
             TextBox dynamictxt_addressline1 = Controls.Find("dynamictxt_addressline1", true).FirstOrDefault() as TextBox;
@@ -840,9 +918,35 @@ namespace EventManager.View.Events
 
                 }
             }
+            else
+            {
+                Label lbl_duration = Controls.Find("lbl_repeatduration", true).FirstOrDefault() as Label;
+                TextBox txt_duration = Controls.Find("txt_duration", true).FirstOrDefault() as TextBox;
+                DateTimePicker dtp_duration = Controls.Find("dtp_duration", true).FirstOrDefault() as DateTimePicker;
+
+                if (lbl_duration != null)
+                {
+                    lbl_duration.Dispose();
+                }
+
+                if (txt_duration != null)
+                {
+                    txt_duration.Dispose();
+                }
+
+                if (dtp_duration != null)
+                {
+                    dtp_duration.Dispose();
+                }
+            }
         }
 
 
+        /// <summary>
+        /// This methods checks for the changes in the repeat for method and then adds the required control for the user to add the details.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cmb_repeatfor_SelectedIndexChanged(object sender, EventArgs e)
         {
             Label lbl_duration = Controls.Find("lbl_repeatduration", true).FirstOrDefault() as Label;
@@ -901,7 +1005,7 @@ namespace EventManager.View.Events
                     Name = "dtp_duration",
                     Location = new Point(333, cmb_repeatfor.Location.Y),
                     ForeColor = System.Drawing.Color.White,
-                    Value = userEvent.RepeatTill == DateTime.MaxValue ? DateTime.Now : userEvent.RepeatTill,
+                    Value = userEvent.RepeatTill.Date == DateTime.MaxValue.Date ? DateTime.Now : userEvent.RepeatTill.AddHours(24).AddSeconds(-1),
                 };
                 Controls.Add(text);
             }

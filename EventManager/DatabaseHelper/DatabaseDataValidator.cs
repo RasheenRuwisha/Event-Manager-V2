@@ -18,6 +18,11 @@ namespace EventManager.DatabaseHelper
             string t = await Task.Run(() => this.DoesMatch());
         }
 
+        /// <summary>
+        /// This method syncs the data that was done while the user was offline.
+        /// It checks the avaliability of the files which were created for syncing with the database and once synced the file is then delted.
+        /// </summary>
+        /// <returns></returns>
         public string DoesMatch()
         {
             if(Application.UserAppDataRegistry.GetValue("dbMatch") != null)
@@ -30,7 +35,7 @@ namespace EventManager.DatabaseHelper
                         {
                             if (File.Exists(workingDir + @"\event_add.xml"))
                             {
-                                List<UserEvent> userEvents = EventHelper.GettAllUpdateEvent(workingDir + @"\event_add.xml");
+                                List<UserEvent> userEvents = EventHelper.GetAllUpdateEvent(workingDir + @"\event_add.xml");
                                 foreach (UserEvent userEvent in userEvents)
                                 {
                                     EventHelper.AddEvent(userEvent);
@@ -41,7 +46,7 @@ namespace EventManager.DatabaseHelper
 
                             if (File.Exists(workingDir + @"\event_update.xml"))
                             {
-                                List<UserEvent> userEventUpdate = EventHelper.GettAllUpdateEvent(workingDir + @"\event_update.xml");
+                                List<UserEvent> userEventUpdate = EventHelper.GetAllUpdateEvent(workingDir + @"\event_update.xml");
                                 foreach (UserEvent userEvent in userEventUpdate)
                                 {
                                     EventHelper.UpdateEvent(userEvent);
@@ -52,7 +57,7 @@ namespace EventManager.DatabaseHelper
 
                             if (File.Exists(workingDir + @"\event_remove.xml"))
                             {
-                                List<UserEvent> userEventRemove = EventHelper.GettAllUpdateEvent(workingDir + @"\event_remove.xml");
+                                List<UserEvent> userEventRemove = EventHelper.GetAllUpdateEvent(workingDir + @"\event_remove.xml");
                                 foreach (UserEvent userEvent in userEventRemove)
                                 {
                                     EventHelper.RemoveEvent(userEvent.EventId);

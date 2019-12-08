@@ -18,6 +18,7 @@ namespace EventManager.UIComponents
 
         UserEvent eventDetails = new UserEvent();
         CommonUtil commonUtil = new CommonUtil();
+        UserEvent existingEvent = new UserEvent();
         Form form;
         public RepeatEventConfirmation()
         {
@@ -28,7 +29,26 @@ namespace EventManager.UIComponents
         {
             InitializeComponent();
             this.eventDetails = userEvent;
+            this.existingEvent = EventHelper.GetUserEvent(eventDetails.EventId);
             this.form = form;
+
+
+            if (!(eventDetails.RepeatType.Equals(existingEvent.RepeatType)))
+            {
+                Controls.Remove(btn_futureevents);
+                Controls.Remove(btn_thisonly);
+                Size = new Size(368, 100);
+                btn_cancel.Location = new Point(0, 51);
+            }
+
+
+            if (eventDetails.RepeatCount != (existingEvent.RepeatCount))
+            {
+                Controls.Remove(btn_futureevents);
+                Controls.Remove(btn_thisonly);
+                Size = new Size(368, 100);
+                btn_cancel.Location = new Point(0, 51);
+            }
         }
 
         public RepeatEventConfirmation(UserEvent userEvent)
@@ -83,7 +103,7 @@ namespace EventManager.UIComponents
                 UserEvent existingEvent = EventHelper.GetUserEvent(eventDetails.EventId);
                 eventDetails.StartDate = existingEvent.StartDate;
                 eventDetails.EndDate = existingEvent.EndDate;
-                eventDetails.RepeatTill = existingEvent.RepeatTill;
+
                 await Task.Run(() => EventHelper.RemoveEvent(eventDetails.EventId));
                 await Task.Run(() => EventHelper.AddEvent(eventDetails));
 
@@ -116,10 +136,12 @@ namespace EventManager.UIComponents
                 }
                 else
                 {
+                    await Task.Run(() => EventHelper.RemoveEvent(existingEvent.EventId));
                     existingEvent.RepeatTill = eventDetails.StartDate.Date;
-                    await Task.Run(() => EventHelper.UpdateEvent(existingEvent)); 
+                    existingEvent.RepeatDuration = "Until";
+                    await Task.Run(() => EventHelper.AddEvent(existingEvent));
                 }
-               
+
 
                 Notification notification = new Notification("Event Deleted Successfully");
                 Timer timer = new Timer();
@@ -144,7 +166,8 @@ namespace EventManager.UIComponents
                 else
                 {
                     existingEvent.RepeatTill = eventDetails.StartDate.Date;
-                    eventDetails.EventId = commonUtil.GenerateUserId("event");
+                    existingEvent.RepeatDuration = "Until";
+                    eventDetails.EventId = commonUtil.GenerateId("event");
                     await Task.Run(() => EventHelper.RemoveEvent(existingEvent.EventId));
                     await Task.Run(() => EventHelper.AddEvent(existingEvent));
                     await Task.Run(() => EventHelper.AddEvent(eventDetails));
@@ -200,7 +223,8 @@ namespace EventManager.UIComponents
                 {
 
                     existingEvent.RepeatTill = eventDetails.StartDate.Date;
-                    eventDetails.EventId = commonUtil.GenerateUserId("event");
+                    existingEvent.RepeatDuration = "Until";
+                    eventDetails.EventId = commonUtil.GenerateId("event");
                     if (existingEvent.ParentId == null)
                     {
                         eventDetails.ParentId = existingEvent.EventId;
@@ -228,9 +252,25 @@ namespace EventManager.UIComponents
                         eventDetails.StartDate = eventDetails.StartDate.AddDays(30);
                         eventDetails.EndDate = eventDetails.EndDate.AddDays(30);
                     }
+                    List<EventContact> eventContacts = new List<EventContact>();
+
+                    foreach(EventContact eventContact in eventDetails.EventContacts)
+                    {
+                        EventContact contact = new EventContact();
+                        contact.EventId = eventDetails.EventId;
+                        contact.ContactId = eventContact.ContactId;
+                        contact.UserId = eventContact.UserId;
+                        contact.ContactName = eventContact.ContactName;
+                        eventContacts.Add(contact);
+                    }
+
+                   
+                    eventDetails.EventContacts = eventContacts;
+
                     await Task.Run(() => EventHelper.AddEvent(eventDetails));
                 }
-                await Task.Run(() => EventHelper.UpdateEvent(existingEvent));
+                await Task.Run(() => EventHelper.RemoveEvent(existingEvent.EventId));
+                await Task.Run(() => EventHelper.AddEvent(existingEvent));
 
                 Notification notification = new Notification("Event Deleted Successfully");
                 Timer timer = new Timer();
@@ -250,15 +290,18 @@ namespace EventManager.UIComponents
                 DateTime repeatTill = eventDetails.RepeatTill;
                 UserEvent existingEvent = EventHelper.GetUserEvent(eventDetails.EventId);
                 existingEvent.RepeatTill = eventDetails.StartDate.Date;
-                await Task.Run(() => EventHelper.UpdateEvent(existingEvent));
+                existingEvent.RepeatDuration = "Until";
+                await Task.Run(() => EventHelper.RemoveEvent(existingEvent.EventId));
+                await Task.Run(() => EventHelper.AddEvent(existingEvent));
 
 
-                eventDetails.EventId = commonUtil.GenerateUserId("event");
+                eventDetails.EventId = commonUtil.GenerateId("event");
                 eventDetails.ParentId = existingEvent.EventId;
                 eventDetails.RepeatTill = eventDetails.EndDate.Date;
                 await Task.Run(() => EventHelper.AddEvent(eventDetails));
 
                 existingEvent.RepeatTill = repeatTill;
+                existingEvent.RepeatDuration = "Until";
                 if (existingEvent.RepeatType.Equals("Daily"))
                 {
                     existingEvent.StartDate = eventDetails.StartDate.AddDays(1);
@@ -275,7 +318,7 @@ namespace EventManager.UIComponents
                     existingEvent.EndDate = eventDetails.EndDate.AddDays(30);
                 }
                 existingEvent.ParentId = eventDetails.ParentId;
-                existingEvent.EventId = commonUtil.GenerateUserId("event");
+                existingEvent.EventId = commonUtil.GenerateId("event");
                 await Task.Run(() => EventHelper.AddEvent(existingEvent));
 
                 Notification notification = new Notification("Event Updated Successfully");
@@ -307,13 +350,23 @@ namespace EventManager.UIComponents
 
         private void DisableButtons()
         {
-            btn_alleventsinseries.Enabled = false;
-            btn_futureevents.Enabled = false;
-            btn_thisonly.Enabled = false;
-            btn_cancel.Enabled = false;
+            Controls.Remove(btn_alleventsinseries);
+            Controls.Remove(btn_futureevents);
+            Controls.Remove(btn_thisonly);
+            Controls.Remove(btn_cancel);
+            Label label = new Label
+            {
+                Text = "Updating",
+                Font = new Font("Microsoft Sans Serif", 11.25F),
+                ForeColor = Color.White
+            };
+            label.Location = new Point(this.Width / 2 - label.Width / 2, this.Height / 2 - label.Height / 2);
+            Controls.Add(label);
+            Controls.Add(commonUtil.AddLoaderImage(label.Location.X - 30, label.Location.Y - 3));
         }
 
-        private void EnableButtons()
+
+            private void EnableButtons()
         {
             btn_alleventsinseries.Enabled = true;
             btn_futureevents.Enabled = true;

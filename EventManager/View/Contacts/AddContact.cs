@@ -405,7 +405,7 @@ namespace EventManager.View.Contacts
         {
             Contact contact = new Contact()
             {
-                ContactId = commonUtil.GenerateUserId("contact"),
+                ContactId = commonUtil.GenerateId("contact"),
                 Name = txt_name.Text.Trim(),
                 Email = txt_email.Text.Trim(),
                 Phone = txt_phone.Text.Trim(),

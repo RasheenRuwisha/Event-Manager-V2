@@ -14,6 +14,11 @@ namespace EventManager.DatabaseHelper
     public class EventHelper
     {
 
+        /// <summary>
+        /// Adds the event to the database, and write an xml file for local storage, if offline an additional xml file is created and the event is added to that xml file which will be then used to sync the data into the database
+        /// </summary>
+        /// <param name="userEvent"></param>
+        /// <returns></returns>
         public static bool AddEvent(UserEvent userEvent)
         {
 
@@ -37,7 +42,7 @@ namespace EventManager.DatabaseHelper
             }
             catch (System.Data.Entity.Core.EntityException ex)
             {
-                Logger.LogException(ex,false);
+                Logger.LogException(ex, false);
                 AddEventXML(userEvent);
                 return true;
             }
@@ -54,8 +59,12 @@ namespace EventManager.DatabaseHelper
             }
 
         }
-    
 
+        /// <summary>
+        /// Get the specific event of the user from the database, if the user is offline then the event is retreived fromt the local xml file
+        /// </summary>
+        /// <param name="eventid"></param>
+        /// <returns></returns>
         public static UserEvent GetUserEvent(string eventid)
         {
             string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
@@ -77,7 +86,7 @@ namespace EventManager.DatabaseHelper
             }
             catch (System.Data.Entity.Core.EntityException ex)
             {
-                Logger.LogException(ex,false);
+                Logger.LogException(ex, false);
                 userEvents = SearchEventXML(eventid);
             }
             catch (System.Data.SqlClient.SqlException ex)
@@ -93,6 +102,11 @@ namespace EventManager.DatabaseHelper
         }
 
 
+        /// <summary>
+        /// Get all the child events of a parent event. If offline the events are retreived from the local xml file
+        /// </summary>
+        /// <param name="eventid"></param>
+        /// <returns></returns>
         public static List<UserEvent> GetChildEvents(string eventid)
         {
             string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
@@ -131,6 +145,12 @@ namespace EventManager.DatabaseHelper
         }
 
 
+        /// <summary>
+        /// The methods searches for the user events for a specific time period from the database, and if there is no internet connection the data is retreived from the local xml.
+        /// </summary>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <returns></returns>
         public static List<UserEvent> SearchUserEvent(DateTime startDate, DateTime endDate)
         {
             string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
@@ -164,12 +184,17 @@ namespace EventManager.DatabaseHelper
             {
                 Logger.LogException(ex, true);
             }
-           
-               
+
+
             return EventGenerator.GenerateEvents(userEvents, startDate.Date, endDate.Date.AddHours(24).AddSeconds(-1));
         }
 
-
+        /// <summary>
+        /// This method removes the specific event using the event id from the database and the xml file, 
+        /// if there is no internet connection the event is deleted from the local xml file and a spereate file is created with the event which will be then used to remove the event from the database once there is an internet connection
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <returns></returns>
         public static bool RemoveEvent(string eventId)
         {
             string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
@@ -183,22 +208,15 @@ namespace EventManager.DatabaseHelper
                     using (var dbContext = new DatabaseModel())
                     {
                         userEvent = dbContext.Events.Where(events => events.EventId.Equals(eventId)).FirstOrDefault();
-                        List<EventContact> eventDates = new List<EventContact>();
-
-                        foreach (var item in eventDates)
+                        List<EventContact> eventContact = dbContext.EventContacts.Where(x => x.EventId == userEvent.EventId).ToList();
+                        foreach (var item in eventContact)
                         {
                             dbContext.EventContacts.Remove(item);
                             dbContext.SaveChanges();
                         }
 
-
-                        foreach (EventContact contact in userEvent.EventContacts)
-                        {
-                            eventDates.Add(contact);
-                        }
-                        userEvent.EventContacts = eventDates;
                         dbContext.Events.Remove(userEvent);
-                     
+
                         dbContext.SaveChanges();
                         RemoveEventXML(eventId);
                     }
@@ -229,7 +247,13 @@ namespace EventManager.DatabaseHelper
             }
         }
 
-        public static bool UpdateEvent(UserEvent @event)
+        /// <summary>
+        /// This method updates the events from the database and the local xml file, if there is no internet connecction a seperate file is created with the event that needs to be updated which will then be used to update the database
+        /// once there is an active internet conenction.
+        /// </summary>
+        /// <param name="eventDetails"></param>
+        /// <returns></returns>
+        public static bool UpdateEvent(UserEvent eventDetails)
         {
             try
             {
@@ -239,8 +263,8 @@ namespace EventManager.DatabaseHelper
                     List<EventContact> eventContacts = new List<EventContact>();
                     using (var dbContext = new DatabaseModel())
                     {
-                        userEvent = dbContext.Events.Find(@event.EventId);
-                        List<EventContact> eventContact = dbContext.EventContacts.Where(x => x.EventId == @event.EventId).ToList();
+                        userEvent = dbContext.Events.Find(eventDetails.EventId);
+                        List<EventContact> eventContact = dbContext.EventContacts.Where(x => x.EventId == eventDetails.EventId).ToList();
                         foreach (var item in eventContact)
                         {
                             dbContext.EventContacts.Remove(item);
@@ -249,32 +273,32 @@ namespace EventManager.DatabaseHelper
 
 
                         userEvent.EventContacts.Clear();
-                        userEvent.AddressLine1 = @event.AddressLine1;
-                        userEvent.AddressLine2 = @event.AddressLine2;
-                        userEvent.State = @event.State;
-                        userEvent.City = @event.City;
-                        userEvent.Zipcode = @event.Zipcode;
-                        userEvent.EventId = @event.EventId;
-                        userEvent.UserId = @event.UserId;
-                        userEvent.Title = @event.Title;
-                        userEvent.Description = @event.Description;
-                        userEvent.Type = @event.Type;
-                        userEvent.RepeatType = @event.RepeatType;
-                        userEvent.EventContacts = @event.EventContacts;
-                        userEvent.RepeatDuration = @event.RepeatDuration;
-                        userEvent.RepeatCount = @event.RepeatCount;
-                        userEvent.RepeatTill = @event.RepeatTill;
-                        userEvent.ParentId = @event.ParentId;
-                        userEvent.StartDate = @event.StartDate;
-                        userEvent.EndDate = @event.EndDate;
+                        userEvent.AddressLine1 = eventDetails.AddressLine1;
+                        userEvent.AddressLine2 = eventDetails.AddressLine2;
+                        userEvent.State = eventDetails.State;
+                        userEvent.City = eventDetails.City;
+                        userEvent.Zipcode = eventDetails.Zipcode;
+                        userEvent.EventId = eventDetails.EventId;
+                        userEvent.UserId = eventDetails.UserId;
+                        userEvent.Title = eventDetails.Title;
+                        userEvent.Description = eventDetails.Description;
+                        userEvent.Type = eventDetails.Type;
+                        userEvent.RepeatType = eventDetails.RepeatType;
+                        userEvent.EventContacts = eventDetails.EventContacts;
+                        userEvent.RepeatDuration = eventDetails.RepeatDuration;
+                        userEvent.RepeatCount = eventDetails.RepeatCount;
+                        userEvent.RepeatTill = eventDetails.RepeatTill;
+                        userEvent.ParentId = eventDetails.ParentId;
+                        userEvent.StartDate = eventDetails.StartDate;
+                        userEvent.EndDate = eventDetails.EndDate;
                         dbContext.SaveChanges();
-                        UpdateEventXML(@event);
+                        UpdateEventXML(eventDetails);
 
                     }
                 }
                 else
                 {
-                    UpdateEventXML(@event);
+                    UpdateEventXML(eventDetails);
                 }
 
                 return true;
@@ -282,13 +306,13 @@ namespace EventManager.DatabaseHelper
             catch (System.Data.Entity.Core.EntityException ex)
             {
                 Logger.LogException(ex, false);
-                UpdateEventXML(@event);
+                UpdateEventXML(eventDetails);
                 return true;
             }
             catch (System.Data.SqlClient.SqlException ex)
             {
                 Logger.LogException(ex, false);
-                UpdateEventXML(@event);
+                UpdateEventXML(eventDetails);
                 return true;
 
             }
@@ -301,17 +325,22 @@ namespace EventManager.DatabaseHelper
 
 
 
+        //XML WRITING METHOD STARTS
 
 
-
+        /// <summary>
+        /// This method add the event to the local XML file
+        /// </summary>
+        /// <param name="userEvent"></param>
+        /// <returns></returns>
         private static bool AddEventXML(UserEvent userEvent)
         {
             string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
-
+            string workingDir = Directory.GetCurrentDirectory();
             XDocument xmlDoc = new XDocument();
             try
             {
-                xmlDoc = XDocument.Load($"{userId}.xml");
+                xmlDoc = XDocument.Load(workingDir + $@"\{userId}.xml");
                 var updateQuery = (from item in xmlDoc.Descendants("UserEvent")
                                    where item.Element("EventId").Value == userEvent.EventId
                                    select item).FirstOrDefault();
@@ -363,15 +392,19 @@ namespace EventManager.DatabaseHelper
 
 
 
-
+        /// <summary>
+        /// This method updates the event in the local xml file
+        /// </summary>
+        /// <param name="userEvent"></param>
+        /// <returns></returns>
         private static bool UpdateEventXML(UserEvent userEvent)
         {
             string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
-
+            string workingDir = Directory.GetCurrentDirectory();
             XDocument xmlDoc = new XDocument();
             try
             {
-                xmlDoc = XDocument.Load($"{userId}.xml");
+                xmlDoc = XDocument.Load(workingDir + $@"\{userId}.xml");
                 var updateQuery = (from item in xmlDoc.Descendants("UserEvent")
                                    where item.Element("EventId").Value == userEvent.EventId
                                    select item).FirstOrDefault();
@@ -409,7 +442,7 @@ namespace EventManager.DatabaseHelper
                                                     new XElement("EventId", eventContact.EventId)))));
                     }
                 }
-              
+
 
                 xmlDoc.Save($"{userId}.xml");
                 if (Application.UserAppDataRegistry.GetValue("dbConnection").ToString().Equals("False"))
@@ -421,19 +454,25 @@ namespace EventManager.DatabaseHelper
             }
             catch (Exception ex)
             {
-                Logger.LogException(ex,true);
+                Logger.LogException(ex, true);
                 return false;
             }
         }
 
+
+        /// <summary>
+        /// This method removes the events in the local xml file
+        /// </summary>
+        /// <param name="userEvent"></param>
+        /// <returns></returns>
         private static bool RemoveEventXML(string userEvent)
         {
             string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
-
+            string workingDir = Directory.GetCurrentDirectory();
             XDocument xmlDoc = new XDocument();
             try
             {
-                xmlDoc = XDocument.Load($"{userId}.xml");
+                xmlDoc = XDocument.Load(workingDir + $@"\{userId}.xml");
                 var removeQuery = (from item in xmlDoc.Descendants("UserEvent")
                                    where item.Element("EventId").Value == userEvent
                                    select item).FirstOrDefault();
@@ -454,15 +493,20 @@ namespace EventManager.DatabaseHelper
             }
         }
 
+        /// <summary>
+        /// This method searches for the events in the local xml file using the event id
+        /// </summary>
+        /// <param name="userEvent"></param>
+        /// <returns></returns>
         private static UserEvent SearchEventXML(string userEvent)
         {
             string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
-
+            string workingDir = Directory.GetCurrentDirectory();
             UserEvent e = new UserEvent();
             XDocument xmlDoc = new XDocument();
             try
             {
-                xmlDoc = XDocument.Load($"{userId}.xml");
+                xmlDoc = XDocument.Load(workingDir + $@"\{userId}.xml");
                 var searchQuery = (from item in xmlDoc.Descendants("UserEvent")
                                    where item.Element("EventId").Value == userEvent
                                    select new UserEvent
@@ -502,17 +546,21 @@ namespace EventManager.DatabaseHelper
             }
         }
 
-
+        /// <summary>
+        /// This method gets the event data in the local xml file using the start date
+        /// </summary>
+        /// <param name="startDate"></param>
+        /// <returns></returns>
         private static List<UserEvent> FilterEventsXML(DateTime startDate)
         {
 
             string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
-
+            string workingDir = Directory.GetCurrentDirectory();
             List<UserEvent> e = new List<UserEvent>();
             XDocument xmlDoc = new XDocument();
             try
             {
-                xmlDoc = XDocument.Load($"{userId}.xml");
+                xmlDoc = XDocument.Load(workingDir + $@"\{userId}.xml");
                 var filterQuery = (from item in xmlDoc.Descendants("UserEvent")
                                    where DateTime.Parse(item.Element("RepeatTill").Value) >= startDate
                                    select new UserEvent
@@ -553,17 +601,21 @@ namespace EventManager.DatabaseHelper
         }
 
 
-
+        /// <summary>
+        /// This method gets all the child events using the parent event id
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <returns></returns>
         private static List<UserEvent> GetAllChildEvents(string eventId)
         {
 
             string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
-
+            string workingDir = Directory.GetCurrentDirectory();
             List<UserEvent> e = new List<UserEvent>();
             XDocument xmlDoc = new XDocument();
             try
             {
-                xmlDoc = XDocument.Load($"{userId}.xml");
+                xmlDoc = XDocument.Load(workingDir + $@"\{userId}.xml");
                 var filterQuery = (from item in xmlDoc.Descendants("UserEvent")
                                    where item.Element("ParentId").Value.Equals(eventId)
                                    select new UserEvent
@@ -603,8 +655,12 @@ namespace EventManager.DatabaseHelper
             }
         }
 
-
-        public static List<UserEvent> GettAllUpdateEvent(String fileepath)
+        /// <summary>
+        /// This method gets all the local changes that were done and has to be synced to the online database
+        /// </summary>
+        /// <param name="filepath"></param>
+        /// <returns></returns>
+        public static List<UserEvent> GetAllUpdateEvent(String filepath)
         {
             string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
 
@@ -613,12 +669,12 @@ namespace EventManager.DatabaseHelper
             XDocument xmlDoc = new XDocument();
             try
             {
-                using (var reader = new StreamReader($"{userId}.xml"))
-            {
-                XmlSerializer deserializer = new XmlSerializer(typeof(List<UserEvent>),
-                    new XmlRootAttribute("LocalStore"));
+                using (var reader = new StreamReader(filepath))
+                {
+                    XmlSerializer deserializer = new XmlSerializer(typeof(List<UserEvent>),
+                        new XmlRootAttribute("LocalStore"));
                     filterQuery = (List<UserEvent>)deserializer.Deserialize(reader);
-            }
+                }
 
 
                 return filterQuery;
@@ -631,7 +687,11 @@ namespace EventManager.DatabaseHelper
         }
 
 
-
+        /// <summary>
+        /// This method adds the data to the local xml file if there is no internet connection.
+        /// This method check wether the file exists if the file does not exist a new file will be created.
+        /// </summary>
+        /// <param name="xElement"></param>
         public static void InitLocalEventFileAddEvent(XElement xElement)
         {
             string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
@@ -655,6 +715,11 @@ namespace EventManager.DatabaseHelper
             }
         }
 
+        /// <summary>
+        /// This method updates the data to the local xml file if there is no internet connection.
+        /// This method check wether the file exists if the file does not exist a new file will be created.
+        /// </summary>
+        /// <param name="xElement"></param>
         public static void InitLocalEventFileUpdateEvent(XElement xElement)
         {
             Application.UserAppDataRegistry.SetValue("dbMatch", false);
@@ -676,6 +741,12 @@ namespace EventManager.DatabaseHelper
             }
         }
 
+
+        /// <summary>
+        /// This method removes the data to the local xml file if there is no internet connection.
+        /// This method check wether the file exists if the file does not exist a new file will be created.
+        /// </summary>
+        /// <param name="xElement"></param>
         public static void InitLocalEventFileRemovevent(XElement xElement)
         {
             Application.UserAppDataRegistry.SetValue("dbMatch", false);
