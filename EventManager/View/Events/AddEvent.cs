@@ -698,7 +698,7 @@ namespace EventManager.View.Events
                 EventContacts = GenerateEventContacts(),
                 RepeatDuration = cComboBox != null ? cComboBox.Text : "",
                 RepeatCount = durationText != null ? Int32.Parse(durationText.Text) - 1 : 0,
-                RepeatTill = durationTime != null ? durationTime.Value : this.GenerateEndTime(),
+                RepeatTill = durationTime != null ? durationTime.Value.AddHours(24).AddSeconds(-1) : this.GenerateEndTime(),
                 StartDate = dtp_startdate.Value.Date + dtp_starttime.Value.TimeOfDay,
                 EndDate = dtp_enddate.Value.Date + dtp_endtime.Value.TimeOfDay,
             };
