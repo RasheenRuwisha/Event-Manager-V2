@@ -25,7 +25,7 @@ namespace EventManager.UIComponents
             InitializeComponent();
         }
 
-        public RepeatEventConfirmation(UserEvent userEvent, Form form)
+        public RepeatEventConfirmation(UserEvent userEvent, Form form, bool wasTimeChanged)
         {
             InitializeComponent();
             this.eventDetails = userEvent;
@@ -43,6 +43,14 @@ namespace EventManager.UIComponents
 
 
             if (eventDetails.RepeatCount != (existingEvent.RepeatCount))
+            {
+                Controls.Remove(btn_futureevents);
+                Controls.Remove(btn_thisonly);
+                Size = new Size(368, 100);
+                btn_cancel.Location = new Point(0, 51);
+            }
+
+            if (wasTimeChanged)
             {
                 Controls.Remove(btn_futureevents);
                 Controls.Remove(btn_thisonly);
@@ -287,7 +295,7 @@ namespace EventManager.UIComponents
             }
             else
             {
-                DateTime repeatTill = eventDetails.RepeatTill;
+                DateTime repeatTill = eventDetails.RepeatTill.Date;
                 UserEvent existingEvent = EventHelper.GetUserEvent(eventDetails.EventId);
                 existingEvent.RepeatTill = eventDetails.StartDate.Date;
                 existingEvent.RepeatDuration = "Until";

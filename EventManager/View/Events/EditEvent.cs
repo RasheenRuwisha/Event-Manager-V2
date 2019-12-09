@@ -19,7 +19,8 @@ namespace EventManager.View.Events
         readonly UiBuilder uiBuilder = new UiBuilder();
         readonly UiMessageUtitlity uiMessage = new UiMessageUtitlity();
         readonly CommonUtil commonUtil = new CommonUtil();
-        readonly String userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
+        readonly string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
+        bool wasTimeChanged = false;
 
 
         List<Contact> contacts = new List<Contact>();
@@ -818,7 +819,7 @@ namespace EventManager.View.Events
                 bool contact = false;
                 if (doesEventRepeat)
                 {
-                    RepeatEventConfirmation repeatEventConfirmation = new RepeatEventConfirmation(userEvent, this);
+                    RepeatEventConfirmation repeatEventConfirmation = new RepeatEventConfirmation(userEvent, this, wasTimeChanged);
                     repeatEventConfirmation.ShowDialog();
                 }
                 else
@@ -992,25 +993,30 @@ namespace EventManager.View.Events
                     ForeColor = System.Drawing.Color.White,
                     BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31))))),
                     Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F),
-                    Text = (userEvent.RepeatCount+1).ToString(),
-
+                    Text = (userEvent.RepeatCount).ToString(),
                 };
+                text.TextChanged += new EventHandler(DateChanged);
                 Controls.Add(text);
             }
 
             if (cmb_repeatfor.Text.Equals("Until"))
             {
-                DateTimePicker text = new DateTimePicker()
+                DateTimePicker date = new DateTimePicker()
                 {
                     Name = "dtp_duration",
                     Location = new Point(333, cmb_repeatfor.Location.Y),
                     ForeColor = System.Drawing.Color.White,
                     Value = userEvent.RepeatTill.Date == DateTime.MaxValue.Date ? DateTime.Now : userEvent.RepeatTill.AddHours(24).AddSeconds(-1),
                 };
-                Controls.Add(text);
+                date.ValueChanged += new EventHandler(DateChanged);
+                Controls.Add(date);
             }
+            
+        }
 
-
+        void DateChanged(object sender, EventArgs e)
+        {
+            wasTimeChanged = true;
         }
 
     }
