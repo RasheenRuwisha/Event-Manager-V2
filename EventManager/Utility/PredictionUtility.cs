@@ -27,7 +27,7 @@ namespace EventManager.Utility
             List<UserEvent> userEvents = EventHelper.SearchUserEvent(MonthStart, MonthEnd);
             foreach (UserEvent userEvent in userEvents)
             {
-                TimeConsumtion += (userEvent.EndDate - userEvent.StartDate).TotalMinutes;
+                TimeConsumtion += (userEvent.EndDate - userEvent.StartDate).TotalHours;
                 if (userEvent.Type.Equals("Appointment"))
                 {
                     AppointmentCount += 1;

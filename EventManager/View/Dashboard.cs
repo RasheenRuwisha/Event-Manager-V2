@@ -550,9 +550,39 @@ namespace EventManager.View
                 cpbar_appointments.Multiplier = 360 / prediction.EventCount;
                 cpbar_appointments.CircleText = $"{prediction.AppointmentCount} / {prediction.EventCount}";
 
-                lbl_dailyavgtext.Text = $"For the next month you might spend {Math.Round(prediction.DailyAverage / 60, 2)} hours  on average for Events Daily";
-                lbl_weeklyavgtext.Text = $"For the next month you might spend {Math.Round(prediction.WeeklyAverage / 60, 2)} hours on average for Events Weekly";
-                lbl_monthlyavgtext.Text = $"For the next month you might spend {Math.Round(prediction.MonthlyAverage / 60, 2)} hours on average for Events Monthly";
+                if(prediction.DailyAverage < 1)
+                {
+                    prediction.DailyAverage = prediction.DailyAverage * 60;
+                    lbl_dailyavgtext.Text = $"For the next month you might spend {Math.Round(prediction.DailyAverage, 2)} Minutes  on average for Events Daily";
+                }
+                else
+                {
+                    lbl_dailyavgtext.Text = $"For the next month you might spend {Math.Round(prediction.DailyAverage, 1)} Hours  on average for Events Daily";
+                }
+
+                if (prediction.WeeklyAverage < 1)
+                {
+                    prediction.WeeklyAverage = prediction.WeeklyAverage * 60;
+                    lbl_weeklyavgtext.Text = $"For the next month you might spend {Math.Round(prediction.WeeklyAverage, 1)} Minutes on average for Events Weekly";
+                }
+                else
+                {
+                    lbl_weeklyavgtext.Text = $"For the next month you might spend {Math.Round(prediction.WeeklyAverage, 1)} Hours on average for Events Weekly";
+
+                }
+
+                if (prediction.MonthlyAverage < 1)
+                {
+                    prediction.MonthlyAverage = prediction.MonthlyAverage * 60;
+                    lbl_monthlyavgtext.Text = $"For the next month you might spend {Math.Round(prediction.MonthlyAverage, 1)} Minutes on average for Events Monthly";
+
+                }
+                else
+                {
+                    lbl_monthlyavgtext.Text = $"For the next month you might spend {Math.Round(prediction.MonthlyAverage, 1)} Hours on average for Events Monthly";
+                }
+
+              
 
             }
 
