@@ -447,6 +447,7 @@ namespace EventManager.DatabaseHelper
 
 
                 updateQuery.Element("ContactId").SetValue(contact.ContactId);
+                updateQuery.Element("UserId").SetValue(contact.UserId);
                 updateQuery.Element("Email").SetValue(contact.Email);
                 updateQuery.Element("Phone").SetValue(contact.Phone);
                 updateQuery.Element("Image").SetValue(contact.Image);
@@ -553,6 +554,7 @@ namespace EventManager.DatabaseHelper
                                    select new Contact
                                    {
                                        ContactId = item.Element("ContactId").Value,
+                                       UserId = item.Element("UserId").Value,
                                        Email = item.Element("Email").Value,
                                        Phone = item.Element("Phone").Value,
                                        Image = item.Element("Image").Value,
@@ -592,6 +594,7 @@ namespace EventManager.DatabaseHelper
                                    select new Contact
                                    {
                                        ContactId = item.Element("ContactId").Value,
+                                       UserId = item.Element("UserId").Value,
                                        Email = item.Element("Email").Value,
                                        Phone = item.Element("Phone").Value,
                                        Image = item.Element("Image").Value,
@@ -647,21 +650,22 @@ namespace EventManager.DatabaseHelper
         public static void InitLocalEventFileAddContact(XElement xElement)
         {
             Application.UserAppDataRegistry.SetValue("dbMatch", false);
-
+            string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
             string workingDir = Directory.GetCurrentDirectory();
+            string directory = workingDir + $@"\{userId}contact_add.xml";
 
-            if (File.Exists(workingDir + @"\contact_add.xml"))
+            if (File.Exists(directory))
             {
-                XDocument xmlDoc = XDocument.Load(workingDir + @"\contact_add.xml");
+                XDocument xmlDoc = XDocument.Load(directory);
                 xmlDoc.Element("LocalStore").Add(xElement);
-                xmlDoc.Save(workingDir + @"\contact_add.xml");
+                xmlDoc.Save(directory);
             }
             else
             {
                 XDocument xmlDoc = new XDocument();
                 xmlDoc.Add(new XElement("LocalStore"));
                 xmlDoc.Element("LocalStore").Add(xElement);
-                xmlDoc.Save(workingDir + @"\contact_add.xml");
+                xmlDoc.Save(directory);
             }
         }
 
@@ -674,21 +678,22 @@ namespace EventManager.DatabaseHelper
         public static void InitLocalEventFileUpdateContact(XElement xElement)
         {
             Application.UserAppDataRegistry.SetValue("dbMatch", false);
+            string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
+            string workingDir = Directory.GetCurrentDirectory();
+            string directory = workingDir + $@"\{userId}contact_update.xml";
 
-            String workingDir = Directory.GetCurrentDirectory();
-
-            if (File.Exists(workingDir + @"\contact_update.xml"))
+            if (File.Exists(directory))
             {
-                XDocument xmlDoc = XDocument.Load(workingDir + @"\contact_update.xml");
+                XDocument xmlDoc = XDocument.Load(directory);
                 xmlDoc.Element("LocalStore").Add(xElement);
-                xmlDoc.Save(workingDir + @"\contact_update.xml");
+                xmlDoc.Save(directory);
             }
             else
             {
                 XDocument xmlDoc = new XDocument();
                 xmlDoc.Add(new XElement("LocalStore"));
                 xmlDoc.Element("LocalStore").Add(xElement);
-                xmlDoc.Save(workingDir + @"\contact_update.xml");
+                xmlDoc.Save(directory);
             }
         }
 
@@ -701,21 +706,22 @@ namespace EventManager.DatabaseHelper
         public static void InitLocalEventFileRemoveContact(XElement xElement)
         {
             Application.UserAppDataRegistry.SetValue("dbMatch", false);
-
+            string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
             string workingDir = Directory.GetCurrentDirectory();
+            string directory = workingDir + $@"\{userId}contact_remove.xml";
 
-            if (File.Exists(workingDir + @"\contact_remove.xml"))
+            if (File.Exists(directory))
             {
-                XDocument xmlDoc = XDocument.Load(workingDir + @"\contact_remove.xml");
+                XDocument xmlDoc = XDocument.Load(directory);
                 xmlDoc.Element("LocalStore").Add(xElement);
-                xmlDoc.Save(workingDir + @"\contact_remove.xml");
+                xmlDoc.Save(directory);
             }
             else
             {
                 XDocument xmlDoc = new XDocument();
                 xmlDoc.Add(new XElement("LocalStore"));
                 xmlDoc.Element("LocalStore").Add(xElement);
-                xmlDoc.Save(workingDir + @"\contact_remove.xml");
+                xmlDoc.Save(directory);
             }
         }
     }

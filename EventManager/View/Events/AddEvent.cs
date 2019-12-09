@@ -485,18 +485,26 @@ namespace EventManager.View.Events
         /// <param name="e"></param>
         private void lbl_addcollab_Click(object sender, EventArgs e)
         {
-            if (cmb_contacts.Text.Equals("") && cmb_evetncollab.Text.Equals("No More Contacts"))
+            if (cmb_contacts.Text.Equals("") && (cmb_contacts.Text.Equals("No More Contacts") || cmb_contacts.Text.Equals("No Contacts")))
             {
                 MessageBox.Show("Please Select an contact!");
             }
             else
             {
                 ComboBoxItem comboBoxItem = cmb_contacts.SelectedItem as ComboBoxItem;
-                comboBoxItems.Add(comboBoxItem);
-                cmb_evetncollab.Items.Add(comboBoxItem);
-                cmb_contacts.Items.Remove(comboBoxItem);
+                if(comboBoxItem != null)
+                {
+                    comboBoxItems.Add(comboBoxItem);
+                    cmb_evetncollab.Items.Add(comboBoxItem);
+                    cmb_contacts.Items.Remove(comboBoxItem);
+                }
+                else
+                {
+                    MessageBox.Show("Please Select an contact!");
+                }
+
                 btn_removecollab.Enabled = true;
-                cmb_evetncollab.Items.Remove("No Contacts Added");
+                cmb_evetncollab.Items.Remove("No Contacts");
 
                 if (cmb_contacts.Items.Count == 0)
                 {
@@ -528,9 +536,16 @@ namespace EventManager.View.Events
             else
             {
                 ComboBoxItem comboBoxItem = cmb_evetncollab.SelectedItem as ComboBoxItem;
-                cmb_contacts.Items.Add(comboBoxItem);
-                cmb_evetncollab.Items.Remove(comboBoxItem);
-                comboBoxItems.Remove(comboBoxItem);
+                if (comboBoxItem != null)
+                {
+                    cmb_contacts.Items.Add(comboBoxItem);
+                    cmb_evetncollab.Items.Remove(comboBoxItem);
+                    comboBoxItems.Remove(comboBoxItem);
+                }
+                else
+                {
+                    MessageBox.Show("Please Select an contact!");
+                }
                 lbl_addcollab.Enabled = true;
                 cmb_contacts.Items.Remove("No More Contacts");
 

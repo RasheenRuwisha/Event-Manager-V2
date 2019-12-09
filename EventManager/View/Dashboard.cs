@@ -345,6 +345,10 @@ namespace EventManager.View
             this.pnl_eventlist.Controls.Clear();
             this.pnl_eventlist.Refresh();
             this.pnl_eventlist.BringToFront();
+            if (ActivePanel.Equals("Prediction"))
+            {
+                pnl_predictiondet.Refresh();
+            }
         }
 
 
@@ -633,7 +637,6 @@ namespace EventManager.View
         private void cpb_pred_refresh_Click(object sender, EventArgs e)
         {
             this.pnl_predloader.BringToFront();
-            this.pnl_predictiondet.Controls.Clear();
             this.pnl_predictiondet.Refresh();
         }
 

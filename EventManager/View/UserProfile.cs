@@ -107,9 +107,11 @@ namespace EventManager.View
             {
                 if (!char.IsControl(e.KeyChar))
                 {
-                    MessageBox.Show("Name can only contain alphabetical charatcters");
-                    e.Handled = true;
-
+                    if (e.KeyChar != 32)
+                    {
+                        MessageBox.Show("Name can only contain alphabetical charatcters");
+                        e.Handled = true;
+                    }
                 }
             }
         }
@@ -120,9 +122,11 @@ namespace EventManager.View
             {
                 if (!char.IsControl(e.KeyChar))
                 {
-                    MessageBox.Show("Username can only contain alphabetical charatcters");
-                    e.Handled = true;
-
+                    if (e.KeyChar != 32)
+                    {
+                        MessageBox.Show("Name can only contain alphabetical charatcters");
+                        e.Handled = true;
+                    }
                 }
             }
         }

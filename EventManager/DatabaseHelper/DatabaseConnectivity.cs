@@ -25,7 +25,7 @@ namespace EventManager.DatabaseHelper
             while (true)
             {
                 t = await Task.Run(() => this.CheckConnection());
-                await Task.Delay(20000);
+                await Task.Delay(10000);
             }
         }
 
@@ -59,11 +59,12 @@ namespace EventManager.DatabaseHelper
                         };
                         notifyIcon.ShowBalloonTip(5000);
                     }
+                    if (Application.UserAppDataRegistry.GetValue("userId") != null)
+                    {
+                        databaseDataValidator.DataValidator();
+                    }
                 }
-                if(Application.UserAppDataRegistry.GetValue("userId") != null)
-                {
-                    databaseDataValidator.DataValidator();
-                }
+               
                 failNotificationCount =0;
                 return "success";
             }

@@ -39,7 +39,7 @@ namespace EventManager.View.Events
         /// This method intiializes the form with the details that are already existing in the event
         /// </summary>
         /// <param name="eventid"></param>
-        public EditEvent(UserEvent  eventid)
+        public EditEvent(UserEvent eventid)
         {
             InitializeComponent();
 
@@ -53,7 +53,7 @@ namespace EventManager.View.Events
 
             cmb_repeattype.SelectedIndex = 0;
 
-            if(userEvent.RepeatType.Equals("Daily") || userEvent.RepeatType.Equals("Weekly") || userEvent.RepeatType.Equals("Monthly"))
+            if (userEvent.RepeatType.Equals("Daily") || userEvent.RepeatType.Equals("Weekly") || userEvent.RepeatType.Equals("Monthly"))
             {
                 doesEventRepeat = true;
             }
@@ -61,13 +61,13 @@ namespace EventManager.View.Events
             allContacts = ContactHelper.GetUserContacts();
             allContacts.RemoveAll(x => contacts.Exists(y => y.ContactId == x.ContactId));
 
-            if(userEvent.EventContacts != null)
+            if (userEvent.EventContacts != null)
             {
-                foreach(EventContact eventContact in userEvent.EventContacts)
+                foreach (EventContact eventContact in userEvent.EventContacts)
                 {
                     ComboBoxItem comboBoxItem = new ComboBoxItem()
                     {
-                        Id  = eventContact.Id,
+                        Id = eventContact.Id,
                         ContactId = eventContact.ContactId,
                         Name = this.GetContactName(eventContact.ContactId),
                     };
@@ -83,7 +83,7 @@ namespace EventManager.View.Events
                 {
                     cmb_evetncollab.SelectedItem = 0;
                 }
-      
+
             }
 
             if (userEvent.Type.Equals("Task"))
@@ -95,7 +95,7 @@ namespace EventManager.View.Events
                 rb_appointment.Checked = true;
             }
 
-           allContacts.RemoveAll(x => userEvent.EventContacts.Exists(y => y.ContactId == x.ContactId));
+            allContacts.RemoveAll(x => userEvent.EventContacts.Exists(y => y.ContactId == x.ContactId));
 
             if (allContacts != null)
             {
@@ -114,7 +114,7 @@ namespace EventManager.View.Events
                     cmb_contacts.Items.Add(comboBoxItem);
                 }
                 cmb_contacts.Items.Remove("Loading....");
-                if(allContacts.Count != 0)
+                if (allContacts.Count != 0)
                 {
                     cmb_contacts.SelectedIndex = 0;
                 }
@@ -284,11 +284,11 @@ namespace EventManager.View.Events
         public String GetContactName(String contactId)
         {
             String name = "";
-            foreach(Contact contact in allContacts)
+            foreach (Contact contact in allContacts)
             {
                 if (contact.ContactId.Equals(contactId))
                 {
-                    name =  contact.Name;
+                    name = contact.Name;
                     break;
                 }
             }
@@ -313,7 +313,7 @@ namespace EventManager.View.Events
             {
                 lbl_contacts.Location = new Point(41, 512);
                 cmb_contacts.Location = new Point(41, lbl_contacts.Location.Y + lbl_contacts.Height + 10);
-                lbl_collaborators.Location = new Point(335, lbl_contacts.Location.Y );
+                lbl_collaborators.Location = new Point(335, lbl_contacts.Location.Y);
                 lbl_addcollab.Location = new Point(299, cmb_contacts.Location.Y);
                 cmb_evetncollab.Location = new Point(333, cmb_contacts.Location.Y);
                 btn_removecollab.Location = new Point(589, cmb_contacts.Location.Y);
@@ -338,7 +338,7 @@ namespace EventManager.View.Events
                     {
                         txt_duration.Location = new Point(333, cmb_repeatfor.Location.Y);
                     }
-                    else if(dtp_duration != null)
+                    else if (dtp_duration != null)
                     {
                         dtp_duration.Location = new Point(333, cmb_repeatfor.Location.Y);
                     }
@@ -412,11 +412,11 @@ namespace EventManager.View.Events
             {
                 this.Size = new Size(627, 700);
             }
-            this.Controls.Add(uiBuilder.GenerateLongTextBox(42, 410, "dynamictxt_addressline1", userEvent.AddressLine1,50,9));
-            this.Controls.Add(uiBuilder.GenerateLongTextBox(330, 410, "dynamictxt_addressline2", userEvent.AddressLine2,50,10));
-            this.Controls.Add(uiBuilder.GenerateShortTextBox(42, 467, "dynamictxt_city", userEvent.City ,50,11));
-            this.Controls.Add(uiBuilder.GenerateShortTextBox(243, 467, "dynamictxt_state", userEvent.State ,50,12));
-            this.Controls.Add(uiBuilder.GenerateShortTextBox(451, 467, "dynamictxt_zip", userEvent.Zipcode,10,13));
+            this.Controls.Add(uiBuilder.GenerateLongTextBox(42, 410, "dynamictxt_addressline1", userEvent.AddressLine1, 50, 9));
+            this.Controls.Add(uiBuilder.GenerateLongTextBox(330, 410, "dynamictxt_addressline2", userEvent.AddressLine2, 50, 10));
+            this.Controls.Add(uiBuilder.GenerateShortTextBox(42, 467, "dynamictxt_city", userEvent.City, 50, 11));
+            this.Controls.Add(uiBuilder.GenerateShortTextBox(243, 467, "dynamictxt_state", userEvent.State, 50, 12));
+            this.Controls.Add(uiBuilder.GenerateShortTextBox(451, 467, "dynamictxt_zip", userEvent.Zipcode, 10, 13));
             this.Controls.Add(uiBuilder.GenerateLabel(40, 388, "dynamiclbl_addressline1", "Address Line 1 "));
             this.Controls.Add(uiBuilder.GenerateLabel(329, 388, "dynamiclbl_addressline2", "Address Line 2 "));
             this.Controls.Add(uiBuilder.GenerateLabel(40, 445, "dynamiclbl_city", "City "));
@@ -513,7 +513,8 @@ namespace EventManager.View.Events
             {
                 this.RemoveDynamicUis();
             }
-            else {
+            else
+            {
                 var confirmResult = MessageBox.Show("Address fields will be removed from the contact. Do you want to proceed?",
                        "Confirm Delete!!",
                        MessageBoxButtons.YesNo);
@@ -580,9 +581,17 @@ namespace EventManager.View.Events
             else
             {
                 ComboBoxItem comboBoxItem = cmb_contacts.SelectedItem as ComboBoxItem;
-                comboBoxItems.Add(comboBoxItem);
-                cmb_evetncollab.Items.Add(comboBoxItem);
-                cmb_contacts.Items.Remove(comboBoxItem);
+                if (comboBoxItem != null)
+                {
+                    comboBoxItems.Add(comboBoxItem);
+                    cmb_evetncollab.Items.Add(comboBoxItem);
+                    cmb_contacts.Items.Remove(comboBoxItem);
+                }
+                else
+                {
+                    MessageBox.Show("Please Select an contact!");
+                }
+
                 btn_removecollab.Enabled = true;
                 cmb_evetncollab.Items.Remove("No Contacts Added");
 
@@ -615,9 +624,17 @@ namespace EventManager.View.Events
             else
             {
                 ComboBoxItem comboBoxItem = cmb_evetncollab.SelectedItem as ComboBoxItem;
-                cmb_contacts.Items.Add(comboBoxItem);
-                cmb_evetncollab.Items.Remove(comboBoxItem);
-                comboBoxItems.Remove(comboBoxItem);
+                if (comboBoxItem != null)
+                {
+                    cmb_contacts.Items.Add(comboBoxItem);
+                    cmb_evetncollab.Items.Remove(comboBoxItem);
+                    comboBoxItems.Remove(comboBoxItem);
+                }
+                else
+                {
+                    MessageBox.Show("Please Select an contact!");
+                }
+
                 lbl_addcollab.Enabled = true;
                 cmb_contacts.Items.Remove("No More Contacts");
 
@@ -648,14 +665,14 @@ namespace EventManager.View.Events
                 if (pictureBox == null)
                 {
                     PictureBox error = uiMessage.AddErrorIcon(txt_name.Name, txt_name.Location.X + 255, txt_name.Location.Y + 2);
-                        if (this.InvokeRequired)
-                        {
-                            this.Invoke(new MethodInvoker(this.ShowErrors));
-                        }
-                        else
-                        {
-                            this.Controls.Add(error);
-                        }
+                    if (this.InvokeRequired)
+                    {
+                        this.Invoke(new MethodInvoker(this.ShowErrors));
+                    }
+                    else
+                    {
+                        this.Controls.Add(error);
+                    }
 
                 }
             }
@@ -844,8 +861,8 @@ namespace EventManager.View.Events
 
                     }
                 }
-               
-          
+
+
             }
             else
             {
@@ -1011,7 +1028,7 @@ namespace EventManager.View.Events
                 date.ValueChanged += new EventHandler(DateChanged);
                 Controls.Add(date);
             }
-            
+
         }
 
         void DateChanged(object sender, EventArgs e)

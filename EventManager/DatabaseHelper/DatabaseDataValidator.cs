@@ -13,6 +13,8 @@ namespace EventManager.DatabaseHelper
     public class DatabaseDataValidator
     {
         readonly string workingDir = Directory.GetCurrentDirectory();
+        string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
+
         public async Task DataValidator()
         {
             string t = await Task.Run(() => this.DoesMatch());
@@ -33,69 +35,71 @@ namespace EventManager.DatabaseHelper
                     {
                         try
                         {
-                            if (File.Exists(workingDir + @"\event_add.xml"))
+                            if (File.Exists(workingDir + $@"\{userId}contact_add.xml"))
                             {
-                                List<UserEvent> userEvents = EventHelper.GetAllUpdateEvent(workingDir + @"\event_add.xml");
-                                foreach (UserEvent userEvent in userEvents)
-                                {
-                                    EventHelper.AddEvent(userEvent);
-                                }
-                                File.Delete(workingDir + @"\event_add.xml");
-                            }
-
-
-                            if (File.Exists(workingDir + @"\event_update.xml"))
-                            {
-                                List<UserEvent> userEventUpdate = EventHelper.GetAllUpdateEvent(workingDir + @"\event_update.xml");
-                                foreach (UserEvent userEvent in userEventUpdate)
-                                {
-                                    EventHelper.UpdateEvent(userEvent);
-                                }
-                                File.Delete(workingDir + @"\event_update.xml");
-                            }
-
-
-                            if (File.Exists(workingDir + @"\event_remove.xml"))
-                            {
-                                List<UserEvent> userEventRemove = EventHelper.GetAllUpdateEvent(workingDir + @"\event_remove.xml");
-                                foreach (UserEvent userEvent in userEventRemove)
-                                {
-                                    EventHelper.RemoveEvent(userEvent.EventId);
-                                }
-                                File.Delete(workingDir + @"\event_remove.xml");
-                            }
-
-                            if (File.Exists(workingDir + @"\contact_add.xml"))
-                            {
-                                List<Contact> contacts = ContactHelper.GettAllUpdateContact(workingDir + @"\contact_add.xml");
+                                List<Contact> contacts = ContactHelper.GettAllUpdateContact(workingDir + $@"\{userId}contact_add.xml");
                                 foreach (Contact contact in contacts)
                                 {
                                     ContactHelper.AddContact(contact);
                                 }
-                                File.Delete(workingDir + @"\contact_add.xml");
+                                File.Delete(workingDir + $@"\{userId}contact_add.xml");
                             }
 
 
-                            if (File.Exists(workingDir + @"\contact_update.xml"))
+                            if (File.Exists(workingDir + $@"\{userId}contact_update.xml"))
                             {
-                                List<Contact> contactUpdates = ContactHelper.GettAllUpdateContact(workingDir + @"\contact_update.xml");
+                                List<Contact> contactUpdates = ContactHelper.GettAllUpdateContact(workingDir + $@"\{userId}contact_update.xml");
                                 foreach (Contact contact in contactUpdates)
                                 {
                                     ContactHelper.UpdateContacts(contact);
                                 }
-                                File.Delete(workingDir + @"\contact_update.xml");
+                                File.Delete(workingDir + $@"\{userId}contact_update.xml");
                             }
 
 
-                            if (File.Exists(workingDir + @"\contact_remove.xml"))
+                            if (File.Exists(workingDir + $@"\{userId}contact_remove.xml"))
                             {
-                                List<Contact> contactRemove = ContactHelper.GettAllUpdateContact(workingDir + @"\contact_remove.xml");
+                                List<Contact> contactRemove = ContactHelper.GettAllUpdateContact(workingDir + $@"\{userId}contact_remove.xml");
                                 foreach (Contact contact in contactRemove)
                                 {
                                     ContactHelper.RemoveContact(contact.ContactId);
                                 }
-                                File.Delete(workingDir + @"\contact_remove.xml");
+                                File.Delete(workingDir + $@"\{userId}contact_remove.xml");
                             }
+
+                            if (File.Exists(workingDir +  $@"\{userId}event_add.xml"))
+                            {
+                                List<UserEvent> userEvents = EventHelper.GetAllUpdateEvent(workingDir +  $@"\{userId}event_add.xml");
+                                foreach (UserEvent userEvent in userEvents)
+                                {
+                                    EventHelper.AddEvent(userEvent);
+                                }
+                                File.Delete(workingDir +  $@"\{userId}event_add.xml");
+                            }
+
+
+                            if (File.Exists(workingDir +  $@"\{userId}event_update.xml"))
+                            {
+                                List<UserEvent> userEventUpdate = EventHelper.GetAllUpdateEvent(workingDir +  $@"\{userId}event_update.xml");
+                                foreach (UserEvent userEvent in userEventUpdate)
+                                {
+                                    EventHelper.UpdateEvent(userEvent);
+                                }
+                                File.Delete(workingDir +  $@"\{userId}event_update.xml");
+                            }
+
+
+                            if (File.Exists(workingDir +  $@"\{userId}event_remove.xml"))
+                            {
+                                List<UserEvent> userEventRemove = EventHelper.GetAllUpdateEvent(workingDir +  $@"\{userId}event_remove.xml");
+                                foreach (UserEvent userEvent in userEventRemove)
+                                {
+                                    EventHelper.RemoveEvent(userEvent.EventId);
+                                }
+                                File.Delete(workingDir +  $@"\{userId}event_remove.xml");
+                            }
+
+                            
 
                             Application.UserAppDataRegistry.SetValue("dbMatch", true);
                             NotifyIcon notifyIcon = new NotifyIcon

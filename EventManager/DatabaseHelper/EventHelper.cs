@@ -367,6 +367,7 @@ namespace EventManager.DatabaseHelper
                    new XElement("Zipcode", userEvent.Zipcode),
                    new XElement("EventContacts", userEvent.EventContacts.Select(x => new XElement("EventContact",
                                                                 new XElement("Id", x.Id),
+                                                                new XElement("ContactName", x.ContactName),
                                                                 new XElement("ContactId", x.ContactId),
                                                                 new XElement("UserId", x.UserId),
                                                                 new XElement("EventId", x.EventId)))));
@@ -421,6 +422,7 @@ namespace EventManager.DatabaseHelper
                 updateQuery.Element("RepeatTill").SetValue(userEvent.RepeatTill);
                 updateQuery.Element("AddressLine1").SetValue(userEvent.AddressLine1);
                 updateQuery.Element("AddressLine2").SetValue(userEvent.AddressLine2);
+                updateQuery.Element("UserId").SetValue(userEvent.UserId);
                 updateQuery.Element("City").SetValue(userEvent.City);
                 updateQuery.Element("State").SetValue(userEvent.State);
                 updateQuery.Element("Zipcode").SetValue(userEvent.Zipcode);
@@ -477,12 +479,16 @@ namespace EventManager.DatabaseHelper
                                    where item.Element("EventId").Value == userEvent
                                    select item).FirstOrDefault();
 
+               
                 if (Application.UserAppDataRegistry.GetValue("dbConnection").ToString().Equals("False"))
                 {
                     InitLocalEventFileRemovevent(removeQuery);
                 }
 
-                removeQuery.Remove();
+                if(removeQuery != null)
+                {
+                    removeQuery.Remove();
+                }
                 xmlDoc.Save($"{userId}.xml");
                 return true;
             }
@@ -512,6 +518,7 @@ namespace EventManager.DatabaseHelper
                                    select new UserEvent
                                    {
                                        EventId = item.Element("EventId").Value,
+                                       UserId = item.Element("UserId").Value,
                                        Title = item.Element("Title").Value,
                                        Description = item.Element("Description").Value,
                                        Type = item.Element("Type").Value,
@@ -568,6 +575,7 @@ namespace EventManager.DatabaseHelper
                                        EventId = item.Element("EventId").Value,
                                        Title = item.Element("Title").Value,
                                        Description = item.Element("Description").Value,
+                                       UserId = item.Element("UserId").Value,
                                        Type = item.Element("Type").Value,
                                        RepeatType = item.Element("RepeatType").Value,
                                        RepeatDuration = item.Element("RepeatDuration").Value,
@@ -622,6 +630,7 @@ namespace EventManager.DatabaseHelper
                                    {
                                        EventId = item.Element("EventId").Value,
                                        Title = item.Element("Title").Value,
+                                       UserId = item.Element("UserId").Value,
                                        Description = item.Element("Description").Value,
                                        Type = item.Element("Type").Value,
                                        RepeatType = item.Element("RepeatType").Value,
@@ -695,23 +704,45 @@ namespace EventManager.DatabaseHelper
         public static void InitLocalEventFileAddEvent(XElement xElement)
         {
             string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
-
             Application.UserAppDataRegistry.SetValue("dbMatch", false);
+            string workingDir = Directory.GetCurrentDirectory();
+            string directory = workingDir + $@"\{userId}event_add.xml";
 
-            String workingDir = Directory.GetCurrentDirectory();
-
-            if (File.Exists(workingDir + @"\event_add.xml"))
+            if (File.Exists(directory))
             {
-                XDocument xmlDoc = XDocument.Load(workingDir + @"\event_add.xml");
+                XDocument xmlDoc = XDocument.Load(directory);
+                var searchQuery = (from item in xmlDoc.Descendants("UserEvent")
+                                   where item.Element("EventId").Value == xElement.Element("EventId").Value select item).FirstOrDefault();
+                if(searchQuery != null)
+                {
+                    searchQuery.Remove();
+                }
                 xmlDoc.Element("LocalStore").Add(xElement);
-                xmlDoc.Save(workingDir + @"\event_add.xml");
+                xmlDoc.Save(directory);
+
+                if (File.Exists(workingDir + $@"\{userId}event_remove.xml"))
+                {
+                    if(xElement.Element("EventsId") == null || xElement.Element("EventsId").Equals(""))
+                    {
+                        XDocument removeXMl = XDocument.Load(workingDir + $@"\{userId}event_remove.xml");
+                        var removeQuery = (from item in removeXMl.Descendants("UserEvent")
+                                           where item.Element("EventId").Value == xElement.Element("EventId").Value
+                                           select item).FirstOrDefault();
+
+                        if (removeQuery != null)
+                        {
+                            removeQuery.Remove();
+                        }
+                        removeXMl.Save(workingDir + $@"\{userId}event_remove.xml");
+                    }
+                }
             }
             else
             {
                 XDocument xmlDoc = new XDocument();
                 xmlDoc.Add(new XElement("LocalStore"));
                 xmlDoc.Element("LocalStore").Add(xElement);
-                xmlDoc.Save(workingDir + @"\event_add.xml");
+                xmlDoc.Save(directory);
             }
         }
 
@@ -723,21 +754,22 @@ namespace EventManager.DatabaseHelper
         public static void InitLocalEventFileUpdateEvent(XElement xElement)
         {
             Application.UserAppDataRegistry.SetValue("dbMatch", false);
+            string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
+            string workingDir = Directory.GetCurrentDirectory();
+            string directory = workingDir + $@"\{userId}event_update.xml";
 
-            String workingDir = Directory.GetCurrentDirectory();
-
-            if (File.Exists(workingDir + @"\event_update.xml"))
+            if (File.Exists(directory))
             {
-                XDocument xmlDoc = XDocument.Load(workingDir + @"\event_update.xml");
+                XDocument xmlDoc = XDocument.Load(directory);
                 xmlDoc.Element("LocalStore").Add(xElement);
-                xmlDoc.Save(workingDir + @"\event_update.xml");
+                xmlDoc.Save(directory);
             }
             else
             {
                 XDocument xmlDoc = new XDocument();
                 xmlDoc.Add(new XElement("LocalStore"));
                 xmlDoc.Element("LocalStore").Add(xElement);
-                xmlDoc.Save(workingDir + @"\event_update.xml");
+                xmlDoc.Save(directory);
             }
         }
 
@@ -750,21 +782,42 @@ namespace EventManager.DatabaseHelper
         public static void InitLocalEventFileRemovevent(XElement xElement)
         {
             Application.UserAppDataRegistry.SetValue("dbMatch", false);
+            string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
+            string workingDir = Directory.GetCurrentDirectory();
+            string directory = workingDir + $@"\{userId}event_remove.xml";
 
-            String workingDir = Directory.GetCurrentDirectory();
-
-            if (File.Exists(workingDir + @"\event_remove.xml"))
+            if (File.Exists(directory))
             {
-                XDocument xmlDoc = XDocument.Load(workingDir + @"\event_remove.xml");
-                xmlDoc.Element("LocalStore").Add(xElement);
-                xmlDoc.Save(workingDir + @"\event_remove.xml");
+                XDocument xmlDoc = XDocument.Load(directory);
+              
+                if (File.Exists(workingDir + $@"\{userId}event_add.xml"))
+                {
+                    if (xElement.Element("EventsId") == null || xElement.Element("EventsId").Equals(""))
+                    {
+                        XDocument removeXMl = XDocument.Load(workingDir + $@"\{userId}event_add.xml");
+                        var removeQuery = (from item in removeXMl.Descendants("UserEvent")
+                                           where item.Element("EventId").Value == xElement.Element("EventId").Value
+                                           select item).FirstOrDefault();
+
+                        if (removeQuery != null)
+                        {
+                            removeQuery.Remove();
+                        }
+                        removeXMl.Save(workingDir + $@"\{userId}event_add.xml");
+                    }
+                }
+                else
+                {
+                    xmlDoc.Element("LocalStore").Add(xElement);
+                    xmlDoc.Save(directory);
+                }
             }
             else
             {
                 XDocument xmlDoc = new XDocument();
                 xmlDoc.Add(new XElement("LocalStore"));
                 xmlDoc.Element("LocalStore").Add(xElement);
-                xmlDoc.Save(workingDir + @"\event_remove.xml");
+                xmlDoc.Save(directory);
             }
         }
     }

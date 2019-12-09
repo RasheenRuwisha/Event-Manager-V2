@@ -18,7 +18,6 @@ namespace EventManager.UIComponents
 
         UserEvent eventDetails = new UserEvent();
         CommonUtil commonUtil = new CommonUtil();
-        UserEvent existingEvent = new UserEvent();
         Form form;
         public RepeatEventConfirmation()
         {
@@ -28,8 +27,9 @@ namespace EventManager.UIComponents
         public RepeatEventConfirmation(UserEvent userEvent, Form form, bool wasTimeChanged)
         {
             InitializeComponent();
+            UserEvent existingEvent = new UserEvent();
             this.eventDetails = userEvent;
-            this.existingEvent = EventHelper.GetUserEvent(eventDetails.EventId);
+            existingEvent = EventHelper.GetUserEvent(eventDetails.EventId);
             this.form = form;
 
 
@@ -70,7 +70,7 @@ namespace EventManager.UIComponents
             DisableButtons();
             if (form == null)
             {
-                if (eventDetails.ParentId != null)
+                if (eventDetails.ParentId != null && !eventDetails.ParentId.Equals(""))
                 {
                     List<UserEvent> userEvents = EventHelper.GetChildEvents(eventDetails.ParentId);
                     foreach (UserEvent userEvent in userEvents)
@@ -134,10 +134,11 @@ namespace EventManager.UIComponents
 
         private async void btn_futureevents_Click(object sender, EventArgs e)
         {
+            UserEvent existingEvent = EventHelper.GetUserEvent(eventDetails.EventId);
+
             DisableButtons();
             if (form == null)
             {
-                UserEvent existingEvent = EventHelper.GetUserEvent(eventDetails.EventId);
                 if (existingEvent.StartDate == eventDetails.StartDate)
                 {
                     await Task.Run(() => EventHelper.RemoveEvent(eventDetails.EventId));
@@ -166,7 +167,6 @@ namespace EventManager.UIComponents
             }
             else
             {
-                UserEvent existingEvent = EventHelper.GetUserEvent(eventDetails.EventId);
                 if (existingEvent.StartDate == eventDetails.StartDate)
                 {
                     await Task.Run(() => EventHelper.RemoveEvent(eventDetails.EventId));
@@ -200,10 +200,11 @@ namespace EventManager.UIComponents
 
         private async void btn_thisonly_Click(object sender, EventArgs e)
         {
+            UserEvent existingEvent = EventHelper.GetUserEvent(eventDetails.EventId);
+
             DisableButtons();
             if (form == null)
             {
-                UserEvent existingEvent = EventHelper.GetUserEvent(eventDetails.EventId);
                 //if (existingEvent.StartDate == eventDetails.StartDate && existingEvent.RepeatTill == eventDetails.RepeatTill)
                 //{
                 //    await Task.Run(() => EventHelper.RemoveEvent(existingEvent.EventId));
@@ -296,7 +297,6 @@ namespace EventManager.UIComponents
             else
             {
                 DateTime repeatTill = eventDetails.RepeatTill.Date;
-                UserEvent existingEvent = EventHelper.GetUserEvent(eventDetails.EventId);
                 existingEvent.RepeatTill = eventDetails.StartDate.Date;
                 existingEvent.RepeatDuration = "Until";
                 await Task.Run(() => EventHelper.RemoveEvent(existingEvent.EventId));
@@ -374,12 +374,5 @@ namespace EventManager.UIComponents
         }
 
 
-            private void EnableButtons()
-        {
-            btn_alleventsinseries.Enabled = true;
-            btn_futureevents.Enabled = true;
-            btn_thisonly.Enabled = true;
-            btn_cancel.Enabled = true;
-        }
     }
 }
