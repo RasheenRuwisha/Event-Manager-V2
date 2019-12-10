@@ -21,6 +21,7 @@ namespace EventManager.View.Contacts
         private Bitmap bitmap = new Bitmap(Properties.Resources.user);
         readonly FieldValidator fieldValidator = new FieldValidator();
         readonly CommonUtil commonUtil = new CommonUtil();
+        Banner banner;
 
         public AddContact()
         {
@@ -281,7 +282,8 @@ namespace EventManager.View.Contacts
             }
             else
             {
-                Banner banner = uiMessage.AddBanner("Contact with email already exists", "error");
+                Controls.Remove(banner);
+                banner = uiMessage.AddBanner("Contact with email already exists", "error");
                 this.Controls.Add(banner);
                 banner.BringToFront();
                 PictureBox error = uiMessage.AddErrorIcon(txt_email.Name, txt_email.Location.X + 255, txt_email.Location.Y + 2);
@@ -293,11 +295,12 @@ namespace EventManager.View.Contacts
         {
             if (this.InvokeRequired)
             {
-                this.Invoke(new MethodInvoker(this.AddEmailErrorIcon));
+                this.Invoke(new MethodInvoker(this.AddNameErrorIcon));
             }
             else
             {
-                Banner banner = uiMessage.AddBanner("Contact with name already exists", "error");
+                Controls.Remove(banner);
+                banner = uiMessage.AddBanner("Contact with name already exists", "error");
                 this.Controls.Add(banner);
                 banner.BringToFront();
                 PictureBox error = uiMessage.AddErrorIcon(txt_email.Name, txt_email.Location.X + 255, txt_email.Location.Y + 2);
@@ -386,7 +389,8 @@ namespace EventManager.View.Contacts
                 }
                 else
                 {
-                    Banner banner = new Banner();
+                    Controls.Remove(banner);
+                    banner = new Banner();
                     banner = uiMessage.AddBanner("Unable to add contact. Please try again later", "error");
                     this.Controls.Add(banner);
                     banner.BringToFront();

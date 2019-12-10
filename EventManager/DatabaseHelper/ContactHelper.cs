@@ -394,9 +394,15 @@ namespace EventManager.DatabaseHelper
             string workingDir = Directory.GetCurrentDirectory();
             try
             {
+                XElement xEvent = null;
                 XDocument xmlDoc = XDocument.Load(workingDir + $@"\{userId}.xml");
 
-                XElement xEvent = new XElement("Contact",
+                var updateQuery = (from item in xmlDoc.Descendants("Contact")
+                                   where item.Element("ContactId").Value == contact.ContactId
+                                   select item).FirstOrDefault();
+                if(updateQuery == null)
+                {
+                    xEvent = new XElement("Contact",
                     new XElement("ContactId", contact.ContactId),
                     new XElement("Email", contact.Email),
                     new XElement("Phone", contact.Phone),
@@ -409,8 +415,9 @@ namespace EventManager.DatabaseHelper
                     new XElement("Zipcode", contact.Zipcode),
                     new XElement("UserId", contact.UserId)
                 );
-                xmlDoc.Element("LocalStore").Add(xEvent);
-                xmlDoc.Save($"{userId}.xml");
+                    xmlDoc.Element("LocalStore").Add(xEvent);
+                    xmlDoc.Save($"{userId}.xml");
+                }
 
                 if (Application.UserAppDataRegistry.GetValue("dbConnection").ToString().Equals("False"))
                 {

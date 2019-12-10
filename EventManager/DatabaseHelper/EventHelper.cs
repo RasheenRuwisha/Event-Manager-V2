@@ -28,6 +28,17 @@ namespace EventManager.DatabaseHelper
                 {
                     using (var dbContext = new DatabaseModel())
                     {
+                        if(userEvent.EventContacts != null)
+                        {
+                            foreach (EventContact eventContact in userEvent.EventContacts)
+                            {
+                                if (eventContact.Id == 0)
+                                {
+                                    RemoveEventXML(userEvent.EventId);
+                                }
+                            }
+
+                        }
                         dbContext.Events.Add(userEvent);
                         dbContext.SaveChanges();
                         AddEventXML(userEvent);
