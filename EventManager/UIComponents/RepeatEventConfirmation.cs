@@ -170,6 +170,7 @@ namespace EventManager.UIComponents
                 if (existingEvent.StartDate == eventDetails.StartDate)
                 {
                     await Task.Run(() => EventHelper.RemoveEvent(eventDetails.EventId));
+                    await Task.Run(() => EventHelper.AddEvent(eventDetails));
                 }
                 else
                 {

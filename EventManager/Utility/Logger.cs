@@ -10,6 +10,7 @@ namespace EventManager.Utility
 {
     public class Logger
     {
+        public static string lockingObject = "";
         /// <summary>
         /// Logger to log the exceptions that occur during the application runtime
         /// </summary>
@@ -17,40 +18,42 @@ namespace EventManager.Utility
         /// <param name="showError"></param>
         public static void LogException(Exception ex, bool showError)
         {
+           
             String workingDir = Directory.GetCurrentDirectory();
             string filePath = workingDir + @"\" + DateTime.Now.ToString("MM-dd-yyyy-h-mm-tt") + ex.GetType().Name + ".txt";
 
-
-            using (StreamWriter writer = new StreamWriter(filePath, true))
+            lock (lockingObject)
             {
-                writer.WriteLine("-----------------------------------------------------------------------------");
-                writer.WriteLine("Date : " + DateTime.Now.ToString());
-                writer.WriteLine("-----------------------------------------------------------------------------");
-                writer.WriteLine();
-
-                while (ex != null)
+                using (StreamWriter writer = new StreamWriter(filePath, true))
                 {
-                    writer.WriteLine("----------------------------------Name-------------------------------------------");
-                    writer.WriteLine(ex.GetType().FullName);
                     writer.WriteLine("-----------------------------------------------------------------------------");
-                    writer.WriteLine();
-                    writer.WriteLine("----------------------------------Message-------------------------------------------");
-                    writer.WriteLine("Message : " + ex.Message);
-                    writer.WriteLine("-----------------------------------------------------------------------------");
-                    writer.WriteLine();
-                    writer.WriteLine("----------------------------------Cause-------------------------------------------");
-                    writer.WriteLine("StackTrace : " + ex.StackTrace);
-                    writer.WriteLine("-----------------------------------------------------------------------------");
-                    writer.WriteLine();
-                    writer.WriteLine("----------------------------------Source-------------------------------------------");
-                    writer.WriteLine("StackTrace : " + ex.Source);
+                    writer.WriteLine("Date : " + DateTime.Now.ToString());
                     writer.WriteLine("-----------------------------------------------------------------------------");
                     writer.WriteLine();
 
-                    ex = ex.InnerException;
+                    while (ex != null)
+                    {
+                        writer.WriteLine("----------------------------------Name-------------------------------------------");
+                        writer.WriteLine(ex.GetType().FullName);
+                        writer.WriteLine("-----------------------------------------------------------------------------");
+                        writer.WriteLine();
+                        writer.WriteLine("----------------------------------Message-------------------------------------------");
+                        writer.WriteLine("Message : " + ex.Message);
+                        writer.WriteLine("-----------------------------------------------------------------------------");
+                        writer.WriteLine();
+                        writer.WriteLine("----------------------------------Cause-------------------------------------------");
+                        writer.WriteLine("StackTrace : " + ex.StackTrace);
+                        writer.WriteLine("-----------------------------------------------------------------------------");
+                        writer.WriteLine();
+                        writer.WriteLine("----------------------------------Source-------------------------------------------");
+                        writer.WriteLine("StackTrace : " + ex.Source);
+                        writer.WriteLine("-----------------------------------------------------------------------------");
+                        writer.WriteLine();
+
+                        ex = ex.InnerException;
+                    }
                 }
             }
-
             if (showError)
             {
                 MessageBox.Show("Something went wrong. The error has been logged to " + filePath);
