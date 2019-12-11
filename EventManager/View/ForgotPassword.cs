@@ -140,14 +140,14 @@ namespace EventManager.View
             if (txt_password.Text.Trim().Equals(txt_confirmpasword.Text.Trim()) && !txt_password.Text.Trim().Equals("")
                 && !txt_confirmpasword.Text.Trim().Equals(""))
             {
-                PictureBox pictureBox = Controls.Find("ptx_" + txt_confirmpasword.Name, true).FirstOrDefault() as PictureBox;
-                Controls.Remove(pictureBox);
+                PictureBox pictureBox = reset_panel.Controls.Find("ptx_" + txt_confirmpasword.Name, true).FirstOrDefault() as PictureBox;
+                reset_panel.Controls.Remove(pictureBox);
                 return true;
             }
             else
             {
                 PictureBox error = uiMessageUtitlity.AddPasswordErrorIcon(txt_confirmpasword.Name, txt_confirmpasword.Location.X + 255, txt_confirmpasword.Location.Y + 2);
-                this.Controls.Add(error);
+                this.reset_panel.Controls.Add(error);
                 MessageBox.Show("Passwords do not match!");
                 return false;
             }
