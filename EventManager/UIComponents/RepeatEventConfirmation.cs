@@ -245,8 +245,9 @@ namespace EventManager.UIComponents
                     }
                     else
                     {
-                        eventDetails.ParentId = existingEvent.ParentId;
+                        eventDetails.ParentId = eventDetails.ParentId;
                     }
+
                     if (eventDetails.RepeatType.Equals("Daily"))
                     {
                         eventDetails.StartDate = eventDetails.StartDate.AddDays(1);
@@ -264,7 +265,7 @@ namespace EventManager.UIComponents
                     }
                     List<EventContact> eventContacts = new List<EventContact>();
 
-                    foreach(EventContact eventContact in eventDetails.EventContacts)
+                    foreach (EventContact eventContact in eventDetails.EventContacts)
                     {
                         EventContact contact = new EventContact();
                         contact.EventId = eventDetails.EventId;
@@ -274,7 +275,7 @@ namespace EventManager.UIComponents
                         eventContacts.Add(contact);
                     }
 
-                   
+
                     eventDetails.EventContacts = eventContacts;
 
                     await Task.Run(() => EventHelper.AddEvent(eventDetails));
@@ -297,20 +298,64 @@ namespace EventManager.UIComponents
             }
             else
             {
+
+                bool stat = false;
+                if (existingEvent.StartDate == eventDetails.StartDate && existingEvent.EndDate == eventDetails.EndDate)
+                {
+                    stat = true;
+                    if (existingEvent.RepeatType.Equals("Daily"))
+                    {
+                        existingEvent.StartDate = eventDetails.StartDate.AddDays(1);
+                        existingEvent.EndDate = eventDetails.EndDate.AddDays(1);
+                    }
+                    else if (existingEvent.RepeatType.Equals("Weekly"))
+                    {
+                        existingEvent.StartDate = eventDetails.StartDate.AddDays(7);
+                        existingEvent.EndDate = eventDetails.EndDate.AddDays(7);
+                    }
+                    else if (existingEvent.RepeatType.Equals("Monthly"))
+                    {
+                        existingEvent.StartDate = eventDetails.StartDate.AddDays(30);
+                        existingEvent.EndDate = eventDetails.EndDate.AddDays(30);
+                    }
+                }
                 DateTime repeatTill = eventDetails.RepeatTill.Date;
                 existingEvent.RepeatTill = eventDetails.StartDate.Date;
                 existingEvent.RepeatDuration = "Until";
-                await Task.Run(() => EventHelper.RemoveEvent(existingEvent.EventId));
-                await Task.Run(() => EventHelper.AddEvent(existingEvent));
+                if (stat)
+                {
+                    await Task.Run(() => EventHelper.RemoveEvent(existingEvent.EventId));
+                }
+                else
+                {
+                    await Task.Run(() => EventHelper.RemoveEvent(existingEvent.EventId));
+                    await Task.Run(() => EventHelper.AddEvent(existingEvent));
+                }
 
 
                 eventDetails.EventId = commonUtil.GenerateId("event");
-                eventDetails.ParentId = existingEvent.EventId;
+
+
+                if (existingEvent.ParentId == null)
+                {
+                    eventDetails.ParentId = eventDetails.EventId;
+                }
+                else if (existingEvent.ParentId.Equals(""))
+                {
+                    eventDetails.ParentId = eventDetails.EventId;
+                }
+                else
+                {
+                    eventDetails.ParentId = existingEvent.ParentId;
+                }
+
+
                 eventDetails.RepeatTill = eventDetails.EndDate.Date;
                 await Task.Run(() => EventHelper.AddEvent(eventDetails));
 
                 existingEvent.RepeatTill = repeatTill;
-                existingEvent.RepeatDuration = "Until";
+                existingEvent.RepeatDuration = "Forever";
+
                 if (existingEvent.RepeatType.Equals("Daily"))
                 {
                     existingEvent.StartDate = eventDetails.StartDate.AddDays(1);
@@ -326,14 +371,17 @@ namespace EventManager.UIComponents
                     existingEvent.StartDate = eventDetails.StartDate.AddDays(30);
                     existingEvent.EndDate = eventDetails.EndDate.AddDays(30);
                 }
-                existingEvent.ParentId = eventDetails.ParentId;
-                existingEvent.EventId = commonUtil.GenerateId("event");
+
+                if (!stat)
+                {
+                    existingEvent.ParentId = eventDetails.ParentId;
+                    existingEvent.EventId = commonUtil.GenerateId("event");
+                }
                 await Task.Run(() => EventHelper.AddEvent(existingEvent));
 
                 Notification notification = new Notification("Event Updated Successfully");
                 Timer timer = new Timer();
                 notification.Show();
-
                 timer.Tick += (o, ea) =>
                 {
                     notification.Close();
@@ -343,6 +391,7 @@ namespace EventManager.UIComponents
                 timer.Interval = 1000;
                 timer.Start();
                 form.Close();
+
             }
         }
 

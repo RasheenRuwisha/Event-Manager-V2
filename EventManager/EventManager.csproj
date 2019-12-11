@@ -164,6 +164,18 @@
     <Compile Include="UIComponents\ContactListView.Designer.cs">
       <DependentUpon>ContactListView.cs</DependentUpon>
     </Compile>
+    <Compile Include="UIComponents\DataSync.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIComponents\DataSync.Designer.cs">
+      <DependentUpon>DataSync.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIComponents\DeleteEvent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIComponents\DeleteEvent.Designer.cs">
+      <DependentUpon>DeleteEvent.cs</DependentUpon>
+    </Compile>
     <Compile Include="UIComponents\EventListView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -318,6 +330,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UIComponents\ContactListView.resx">
       <DependentUpon>ContactListView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIComponents\DataSync.resx">
+      <DependentUpon>DataSync.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIComponents\DeleteEvent.resx">
+      <DependentUpon>DeleteEvent.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UIComponents\EventListView.resx">
       <DependentUpon>EventListView.cs</DependentUpon>

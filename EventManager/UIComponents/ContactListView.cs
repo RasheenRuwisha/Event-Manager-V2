@@ -42,41 +42,13 @@ namespace EventManager.UIComponents
                                     MessageBoxButtons.YesNo);
             if (confirmResult == DialogResult.Yes)
             {
-                Controls.Clear();
-                Label label = new Label
-                {
-                    Text = "Removing",
-                    Font = new Font("Microsoft Sans Serif", 11.25F),
-                    ForeColor = Color.White
-                };
-                label.Location = new Point(this.Width / 2 - label.Width / 2, this.Height / 2 - label.Height / 2);
-                Controls.Add(label);
-                Controls.Add(commonUtil.AddLoaderImage(label.Location.X - 30, label.Location.Y - 3));
 
-                bool removeContact = await Task.Run(() => ContactHelper.RemoveContact(contact.ContactId));
-                if (removeContact)
-                {
+                Panel panel = Parent.Parent.Controls.Find("pnl_contactlist", true).FirstOrDefault() as Panel;
+                Panel panelPreview = Parent.Parent.Controls.Find("pnl_contactpreview", true).FirstOrDefault() as Panel;
 
-                    Panel panel = Parent.Parent.Controls.Find("pnl_contactlist", true).FirstOrDefault() as Panel;
-                    Panel panelPreview = Parent.Parent.Controls.Find("pnl_contactpreview", true).FirstOrDefault() as Panel;
-                    panelPreview.Controls.Clear();
 
-                    panel.Controls.Clear();
-                    panel.Refresh();
-                    panel.BringToFront();
-
-                    Panel parentPanel = Parent as Panel;
-                    if(parentPanel != null)
-                    {
-                        parentPanel.Controls.Clear();
-
-                    }
-
-                }
-            }
-            else
-            {
-
+                DeleteEvent deleteEvent = new DeleteEvent("contact", contact.ContactId, panel, panelPreview);
+                deleteEvent.ShowDialog();
             }
         }
 

@@ -38,7 +38,7 @@ namespace EventManager.UIComponents
             }
         }
 
-        private async void pb_delete_Click(object sender, EventArgs e)
+        private void pb_delete_Click(object sender, EventArgs e)
         {
 
             UserEvent userEvent = this.Tag as UserEvent;
@@ -50,29 +50,13 @@ namespace EventManager.UIComponents
                                MessageBoxButtons.YesNo);
                 if (confirmResult == DialogResult.Yes)
                 {
-                    Controls.Clear();
-                    Label label = new Label
-                    {
-                        Text = "Removing",
-                        Font = new Font("Microsoft Sans Serif", 11.25F),
-                        ForeColor = Color.White
-                    };
-                    label.Location = new Point(this.Width / 2 - label.Width / 2, this.Height / 2 - label.Height / 2);
-                    Controls.Add(label);
-                    Controls.Add(commonUtil.AddLoaderImage(label.Location.X - 30, label.Location.Y - 3));
+
+                    Panel panel = this.Parent as Panel;
+                    Panel panelPreview = Parent.Parent.Controls.Find("pnl_eventspreview", true).FirstOrDefault() as Panel;
 
 
-                    bool removeEvent = await Task.Run(() => EventHelper.RemoveEvent(userEvent.EventId));
-                    if (removeEvent)
-                    {
-                        Panel panel = this.Parent as Panel;
-                        Panel panelPreview = Parent.Parent.Controls.Find("pnl_eventspreview", true).FirstOrDefault() as Panel;
-                        panelPreview.Controls.Clear();
-                        panel.Controls.Clear();
-                        panel.Refresh();
-                    }
-                  
-;
+                    DeleteEvent deleteEvent = new DeleteEvent("event",userEvent.EventId, panel, panelPreview);
+                    deleteEvent.ShowDialog();
                 }
             }
             else
