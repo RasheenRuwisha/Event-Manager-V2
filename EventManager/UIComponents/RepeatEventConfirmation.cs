@@ -37,8 +37,8 @@ namespace EventManager.UIComponents
             {
                 Controls.Remove(btn_futureevents);
                 Controls.Remove(btn_thisonly);
-                Size = new Size(368, 100);
-                btn_cancel.Location = new Point(0, 51);
+                Size = new Size(368, 110);
+                btn_cancel.Location = new Point(0, 65);
             }
 
 
@@ -46,16 +46,16 @@ namespace EventManager.UIComponents
             {
                 Controls.Remove(btn_futureevents);
                 Controls.Remove(btn_thisonly);
-                Size = new Size(368, 100);
-                btn_cancel.Location = new Point(0, 51);
+                Size = new Size(368, 110);
+                btn_cancel.Location = new Point(0, 65);
             }
 
             if (wasTimeChanged)
             {
                 Controls.Remove(btn_futureevents);
                 Controls.Remove(btn_thisonly);
-                Size = new Size(368, 100);
-                btn_cancel.Location = new Point(0, 51);
+                Size = new Size(368, 110);
+                btn_cancel.Location = new Point(0, 65);
             }
         }
 
@@ -338,11 +338,11 @@ namespace EventManager.UIComponents
 
                 if (existingEvent.ParentId == null)
                 {
-                    eventDetails.ParentId = eventDetails.EventId;
+                    eventDetails.ParentId = existingEvent.EventId;
                 }
                 else if (existingEvent.ParentId.Equals(""))
                 {
-                    eventDetails.ParentId = eventDetails.EventId;
+                    eventDetails.ParentId = existingEvent.EventId;
                 }
                 else
                 {

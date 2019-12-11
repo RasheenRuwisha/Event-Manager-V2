@@ -23,6 +23,7 @@ namespace EventManager.View.Contacts
         readonly FieldValidator fieldValidator = new FieldValidator();
         readonly CommonUtil commonUtil = new CommonUtil();
         Contact contact = new Contact();
+        Banner banner = new Banner();
 
         public EditContact(Contact contactDetails)
         {
@@ -283,6 +284,43 @@ namespace EventManager.View.Contacts
             }
         }
 
+        private bool CheckExistingEmail()
+        {
+            if (!contact.Email.Equals(txt_email.Text.Trim()))
+            {
+                if (ContactHelper.DoesEmailExist(txt_email.Text.Trim()))
+                {
+                    return true;
+                }
+                else
+                {
+                    this.AddEmailErrorIcon();
+                    return false;
+                }
+            }
+            return true;
+        }
+
+
+        public void AddEmailErrorIcon()
+        {
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new MethodInvoker(this.AddEmailErrorIcon));
+            }
+            else
+            {
+                Controls.Remove(banner);
+                banner = uiMessage.AddBanner("Contact with email already exists", "error");
+                this.Controls.Add(banner);
+                banner.BringToFront();
+                PictureBox error = uiMessage.AddErrorIcon(txt_email.Name, txt_email.Location.X + 255, txt_email.Location.Y + 2);
+                this.Controls.Add(error);
+            }
+        }
+
+
+
 
         private bool ValidatePhone()
         {
@@ -310,7 +348,7 @@ namespace EventManager.View.Contacts
 
         private bool DoValidations()
         {
-            return ValidateFields() && ValidatePhone() && ValidateEmail();
+            return ValidateFields() && ValidatePhone() && ValidateEmail() && CheckExistingEmail();
         }
 
         private async void btn_save_Click(object sender, EventArgs e)
@@ -318,10 +356,10 @@ namespace EventManager.View.Contacts
             PictureBox pictureBox = commonUtil.AddLoaderImage(this.btn_save.Location.X + 205, this.btn_save.Location.Y + 2);
             this.Controls.Add(pictureBox);
             this.btn_save.Enabled = false;
-            this.GenerateContactObject();
             bool task = await Task.Run(() => this.DoValidations());
             if (task)
             {
+                this.GenerateContactObject();
                 bool update = await Task.Run(() => ContactHelper.UpdateContacts(contact));
                 if (update)
                 {

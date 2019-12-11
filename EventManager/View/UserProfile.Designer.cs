@@ -202,7 +202,7 @@
             this.Controls.Add(this.lbl_email);
             this.Controls.Add(this.lbl_username);
             this.Controls.Add(this.cpb_image);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "UserProfile";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

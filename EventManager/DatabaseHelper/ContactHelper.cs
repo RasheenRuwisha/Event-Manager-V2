@@ -30,7 +30,7 @@ namespace EventManager.DatabaseHelper
                 {
                     using (var dbContext = new DatabaseModel())
                     {
-                        var userDetails = dbContext.Contacts.Where(contact => contact.Email.Equals(name)).Where(contact => contact.UserId.Equals(userId)).FirstOrDefault();
+                        var userDetails = dbContext.Contacts.Where(contact => contact.Name.Equals(name)).Where(contact => contact.UserId.Equals(userId)).FirstOrDefault();
                         if (userDetails != null)
                         {
                             return false;

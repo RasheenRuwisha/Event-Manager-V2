@@ -74,19 +74,12 @@ namespace EventManager.Utility
                 Application.UserAppDataRegistry.DeleteValue("dbMatch");
             }
 
-            if (Application.UserAppDataRegistry.GetValue("remeberMe") != null)
-            {
-                if (Application.UserAppDataRegistry.GetValue("remeberMe").Equals("False"))
-                {
-                    Application.UserAppDataRegistry.DeleteValue("email");
-                    Application.UserAppDataRegistry.DeleteValue("remeberMe");
-                }
-            }
 
+            Application.UserAppDataRegistry.DeleteValue("email");
+            Application.UserAppDataRegistry.DeleteValue("remeberMe");
             Application.UserAppDataRegistry.DeleteValue("userID");
             Application.UserAppDataRegistry.DeleteValue("username");
             Application.UserAppDataRegistry.DeleteValue("password");
-
         }
 
         public string BitmapToBase64(Image image)

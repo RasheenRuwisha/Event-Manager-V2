@@ -80,6 +80,7 @@
             this.cpb_userimage.Location = new System.Drawing.Point(108, 31);
             this.cpb_userimage.Name = "cpb_userimage";
             this.cpb_userimage.Size = new System.Drawing.Size(150, 150);
+            this.cpb_userimage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.cpb_userimage.TabIndex = 9;
             this.cpb_userimage.TabStop = false;
             // 

@@ -1,5 +1,6 @@
 ﻿using EventManager.DatabaseHelper;
 using EventManager.Model;
+using EventManager.UIComponents;
 using EventManager.Utility;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,8 @@ namespace EventManager.View
         readonly string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
         User user = new User();
         UserCredential userCredential = new UserCredential();
+        Banner banner = new Banner();
+        UiMessageUtitlity uiMessageUtitlity = new UiMessageUtitlity();
 
         CommonUtil commonUtil = new CommonUtil();
         public UserProfile()
@@ -57,6 +60,39 @@ namespace EventManager.View
 
         }
 
+        private bool CheckExistingEmail()
+        {
+            if (!(user.Email.Equals(txt_email.Text.Trim())))
+            {
+                if (UserHelper.IsNewUser(txt_email.Text.Trim()))
+                {
+                    return true;
+                }
+                else
+                {
+                    this.AddEmailErrorIcon();
+                    return false;
+                }
+            }
+            return true;
+        }
+
+
+        public void AddEmailErrorIcon()
+        {
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new MethodInvoker(this.AddEmailErrorIcon));
+            }
+            else
+            {
+                Controls.Remove(banner);
+                banner = uiMessageUtitlity.AddBanner("Contact with email already exists", "error");
+                this.Controls.Add(banner);
+                banner.BringToFront();
+            }
+        }
+
         private void lbl_forgotpassword_Click(object sender, EventArgs e)
         {
             ForgotPassword forgotPassword = new ForgotPassword("User");
@@ -65,25 +101,35 @@ namespace EventManager.View
 
         private async void btn_update_Click(object sender, EventArgs e)
         {
+            PictureBox picture = commonUtil.AddLoaderImage(this.btn_update.Location.X + 205, this.btn_update.Location.Y + 2);
+            btn_update.Enabled = false;
+            Controls.Add(picture);
 
-            user.Name = txt_name.Text.Trim();
-            user.Email = txt_email.Text.Trim();
-            user.Phone = txt_phone.Text.Trim();
-            user.Username = txt_username.Text.Trim();
-            user.Image = commonUtil.BitmapToBase64(cpb_image.Image);
 
-            Application.UserAppDataRegistry.SetValue("image", commonUtil.BitmapToBase64(cpb_image.Image));
-
-            bool updated = await Task.Run(() => UserHelper.UpdateUser(user));
-            if (updated)
+            bool existingEmail = await (Task.Run(() => CheckExistingEmail()));
+            if (existingEmail)
             {
-                commonUtil.AddUserUpdatedDetailsToLocalApp(user);
-                MessageBox.Show("Profile Details Updated Successfully");
+                user.Name = txt_name.Text.Trim();
+                user.Email = txt_email.Text.Trim();
+                user.Phone = txt_phone.Text.Trim();
+                user.Username = txt_username.Text.Trim();
+                user.Image = commonUtil.BitmapToBase64(cpb_image.Image);
+                Application.UserAppDataRegistry.SetValue("image", commonUtil.BitmapToBase64(cpb_image.Image));
+
+                bool updated = await Task.Run(() => UserHelper.UpdateUser(user));
+                if (updated)
+                {
+                    commonUtil.AddUserUpdatedDetailsToLocalApp(user);
+                    MessageBox.Show("Profile Details Updated Successfully");
+                }
+                else
+                {
+                    MessageBox.Show("Profile Details Not Updated. Please Try Again Later");
+                }
             }
-            else
-            {
-                MessageBox.Show("Profile Details Not Updated. Please Try Again Later");
-            }
+
+            btn_update.Enabled = true;
+            Controls.Remove(picture);
         }
 
         private void pb_close_Click(object sender, EventArgs e)

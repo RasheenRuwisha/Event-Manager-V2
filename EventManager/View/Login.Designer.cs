@@ -159,11 +159,11 @@
             // 
             this.cb_rememberme.AutoSize = true;
             this.cb_rememberme.ForeColor = System.Drawing.Color.White;
-            this.cb_rememberme.Location = new System.Drawing.Point(156, 381);
+            this.cb_rememberme.Location = new System.Drawing.Point(135, 381);
             this.cb_rememberme.Name = "cb_rememberme";
-            this.cb_rememberme.Size = new System.Drawing.Size(95, 17);
+            this.cb_rememberme.Size = new System.Drawing.Size(120, 17);
             this.cb_rememberme.TabIndex = 20;
-            this.cb_rememberme.Text = "Remember Me";
+            this.cb_rememberme.Text = "Keep Me Logged In";
             this.cb_rememberme.UseVisualStyleBackColor = true;
             // 
             // Login
