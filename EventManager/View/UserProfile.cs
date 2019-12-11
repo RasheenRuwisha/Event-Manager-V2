@@ -59,7 +59,7 @@ namespace EventManager.View
         private void lbl_forgotpassword_Click(object sender, EventArgs e)
         {
             ForgotPassword forgotPassword = new ForgotPassword("User");
-            forgotPassword.Show();
+            forgotPassword.ShowDialog();
         }
 
         private async void btn_update_Click(object sender, EventArgs e)
