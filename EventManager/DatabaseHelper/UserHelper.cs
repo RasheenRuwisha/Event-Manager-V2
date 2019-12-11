@@ -14,7 +14,25 @@ namespace EventManager.DatabaseHelper
     public class UserHelper
     {
 
-      
+        /// <summary>
+        /// Check wether user email exists when registering the user
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public static bool IsNewUser(String email)
+        {
+            using (var dbContext = new DatabaseModel())
+            {
+                var userDetails = dbContext.Users.Where(user => user.Email.Equals(email)).FirstOrDefault();
+                if (userDetails != null)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+
         /// <summary>
         /// This methods creates a new user in the database.
         /// Then it creates the user credentials in the database

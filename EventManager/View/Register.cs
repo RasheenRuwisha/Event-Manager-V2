@@ -180,7 +180,7 @@ namespace EventManager.View
 
         private bool CheckExistingEmail()
         {
-            if (UserHelper.UserExists(txt_email.Text.Trim()))
+            if (UserHelper.IsNewUser(txt_email.Text.Trim()))
             {
                 return true;
             }

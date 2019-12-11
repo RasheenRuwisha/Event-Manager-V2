@@ -13,9 +13,6 @@ namespace EventManager.DatabaseHelper
 {
     public class DatabaseDataValidator
     {
-        readonly string workingDir = Directory.GetCurrentDirectory();
-        string userId = Application.UserAppDataRegistry.GetValue("userID").ToString();
-
         public async Task DataValidator()
         {
             string t = await Task.Run(() => this.DoesMatch());
