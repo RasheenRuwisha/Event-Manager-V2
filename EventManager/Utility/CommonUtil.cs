@@ -73,10 +73,18 @@ namespace EventManager.Utility
             {
                 Application.UserAppDataRegistry.DeleteValue("dbMatch");
             }
-            Application.UserAppDataRegistry.DeleteValue("remeberMe");
+
+            if (Application.UserAppDataRegistry.GetValue("remeberMe") != null)
+            {
+                if (Application.UserAppDataRegistry.GetValue("remeberMe").Equals("False"))
+                {
+                    Application.UserAppDataRegistry.DeleteValue("email");
+                    Application.UserAppDataRegistry.DeleteValue("remeberMe");
+                }
+            }
+
             Application.UserAppDataRegistry.DeleteValue("userID");
             Application.UserAppDataRegistry.DeleteValue("username");
-            Application.UserAppDataRegistry.DeleteValue("email");
             Application.UserAppDataRegistry.DeleteValue("password");
 
         }

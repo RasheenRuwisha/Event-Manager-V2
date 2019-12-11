@@ -128,6 +128,7 @@
             // cpb_userimage
             // 
             this.cpb_userimage.BackColor = System.Drawing.Color.Transparent;
+            this.cpb_userimage.Cursor = System.Windows.Forms.Cursors.Hand;
             this.cpb_userimage.Location = new System.Drawing.Point(21, 13);
             this.cpb_userimage.Name = "cpb_userimage";
             this.cpb_userimage.Size = new System.Drawing.Size(50, 50);
@@ -139,11 +140,12 @@
             // btn_logout
             // 
             this.btn_logout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.btn_logout.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_logout.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
             this.btn_logout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_logout.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_logout.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(174)))), ((int)(((byte)(191)))));
-            this.btn_logout.Location = new System.Drawing.Point(5, 666);
+            this.btn_logout.Location = new System.Drawing.Point(5, 662);
             this.btn_logout.Name = "btn_logout";
             this.btn_logout.Size = new System.Drawing.Size(327, 41);
             this.btn_logout.TabIndex = 5;
@@ -164,6 +166,7 @@
             // 
             // btn_contact
             // 
+            this.btn_contact.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_contact.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
             this.btn_contact.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_contact.Font = new System.Drawing.Font("HoloLens MDL2 Assets", 12F, System.Drawing.FontStyle.Bold);
@@ -179,6 +182,7 @@
             // 
             // btn_predictions
             // 
+            this.btn_predictions.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_predictions.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
             this.btn_predictions.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_predictions.Font = new System.Drawing.Font("HoloLens MDL2 Assets", 12F, System.Drawing.FontStyle.Bold);
@@ -194,6 +198,7 @@
             // 
             // btn_events
             // 
+            this.btn_events.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_events.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
             this.btn_events.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_events.Font = new System.Drawing.Font("HoloLens MDL2 Assets", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -302,6 +307,7 @@
             // 
             // pb_search
             // 
+            this.pb_search.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pb_search.Image = global::EventManager.Properties.Resources.search;
             this.pb_search.Location = new System.Drawing.Point(589, 58);
             this.pb_search.Name = "pb_search";
@@ -374,6 +380,7 @@
             // cpb_evnt_addcont
             // 
             this.cpb_evnt_addcont.BackColor = System.Drawing.Color.Transparent;
+            this.cpb_evnt_addcont.Cursor = System.Windows.Forms.Cursors.Hand;
             this.cpb_evnt_addcont.Image = global::EventManager.Properties.Resources.adduser;
             this.cpb_evnt_addcont.Location = new System.Drawing.Point(930, 21);
             this.cpb_evnt_addcont.Name = "cpb_evnt_addcont";
@@ -386,6 +393,7 @@
             // cpb_evnt_refresh
             // 
             this.cpb_evnt_refresh.BackColor = System.Drawing.Color.Transparent;
+            this.cpb_evnt_refresh.Cursor = System.Windows.Forms.Cursors.Hand;
             this.cpb_evnt_refresh.Image = global::EventManager.Properties.Resources.refresh;
             this.cpb_evnt_refresh.Location = new System.Drawing.Point(874, 21);
             this.cpb_evnt_refresh.Name = "cpb_evnt_refresh";
@@ -470,6 +478,7 @@
             // 
             // pb_eventsearch
             // 
+            this.pb_eventsearch.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pb_eventsearch.Image = global::EventManager.Properties.Resources.search;
             this.pb_eventsearch.Location = new System.Drawing.Point(589, 58);
             this.pb_eventsearch.Name = "pb_eventsearch";
@@ -482,6 +491,7 @@
             // cpb_evnt_addevent
             // 
             this.cpb_evnt_addevent.BackColor = System.Drawing.Color.Transparent;
+            this.cpb_evnt_addevent.Cursor = System.Windows.Forms.Cursors.Hand;
             this.cpb_evnt_addevent.Image = global::EventManager.Properties.Resources.eventadd;
             this.cpb_evnt_addevent.Location = new System.Drawing.Point(990, 25);
             this.cpb_evnt_addevent.Name = "cpb_evnt_addevent";
@@ -760,7 +770,6 @@
             this.Controls.Add(this.pnl_menu);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(1382, 744);
             this.MinimumSize = new System.Drawing.Size(1364, 726);
             this.Name = "Dashboard";
             this.StartPosition = System.Windows.Forms.FormStartPosition.WindowsDefaultBounds;

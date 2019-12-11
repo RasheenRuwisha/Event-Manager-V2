@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -127,7 +128,7 @@ namespace EventManager.View
                 if (txt_password.Text.Trim().Length <= 6)
                 {
                     this.AddPasswordError();
-                    MessageBox.Show("Password should contain atleast 6 characters");
+                    MessageBox.Show("Password should contain atleast 7 characters");
                     return false;
                 }
                 else
@@ -185,7 +186,7 @@ namespace EventManager.View
                 return true;
             }
             this.AddEmailError();
-            MessageBox.Show("Email Already Exixts");
+            MessageBox.Show("Account exists for this email!");
             return false;
         }
 
@@ -299,12 +300,23 @@ namespace EventManager.View
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
             {
-                Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png"
+                Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png",
+
             };
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                bitmap = new Bitmap(openFileDialog.FileName);
-                cpb_userimage.Image = bitmap;
+                FileInfo fi = new FileInfo(openFileDialog.FileName);
+                long fileSize = fi.Length;
+                if (fileSize > 1000000)
+                {
+                    MessageBox.Show("File to large");
+                }
+                else
+                {
+
+                    bitmap = new Bitmap(openFileDialog.FileName);
+                    cpb_userimage.Image = bitmap;
+                }
             }
         }
 
@@ -327,7 +339,7 @@ namespace EventManager.View
                 {
                     if (e.KeyChar != 32)
                     {
-                        MessageBox.Show("Name can only contain alphabetical charatcters");
+                        MessageBox.Show("Name can only contain alphabetical characters");
                         e.Handled = true;
                     }
                 }
@@ -338,7 +350,7 @@ namespace EventManager.View
         {
             if (char.IsLetter(e.KeyChar))
             {
-                MessageBox.Show("Phone can only contain numeric charatcters");
+                MessageBox.Show("Phone can only contain numeric characters");
                 e.Handled = true;
             }
         }
@@ -351,7 +363,7 @@ namespace EventManager.View
                 {
                     if (e.KeyChar != 32)
                     {
-                        MessageBox.Show("Name can only contain alphabetical charatcters");
+                        MessageBox.Show("Name can only contain alphabetical characters");
                         e.Handled = true;
                     }
                 }

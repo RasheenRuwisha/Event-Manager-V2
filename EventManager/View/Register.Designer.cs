@@ -51,6 +51,7 @@
             // 
             // lbl_login
             // 
+            this.lbl_login.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lbl_login.AutoSize = true;
             this.lbl_login.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lbl_login.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(174)))), ((int)(((byte)(191)))));
@@ -63,6 +64,7 @@
             // 
             // btn_register
             // 
+            this.btn_register.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btn_register.BackColor = System.Drawing.Color.Transparent;
             this.btn_register.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(123)))), ((int)(((byte)(123)))));
             this.btn_register.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(174)))), ((int)(((byte)(191)))));
@@ -233,6 +235,7 @@
             // 
             // cpb_userimage
             // 
+            this.cpb_userimage.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.cpb_userimage.BackColor = System.Drawing.Color.Transparent;
             this.cpb_userimage.Location = new System.Drawing.Point(310, 148);
             this.cpb_userimage.Name = "cpb_userimage";

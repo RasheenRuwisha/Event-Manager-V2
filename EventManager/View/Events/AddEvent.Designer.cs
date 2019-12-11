@@ -65,7 +65,7 @@
             "Daily",
             "Weekly",
             "Monthly"});
-            this.cmb_repeattype.Location = new System.Drawing.Point(43, 507);
+            this.cmb_repeattype.Location = new System.Drawing.Point(41, 507);
             this.cmb_repeattype.Name = "cmb_repeattype";
             this.cmb_repeattype.Size = new System.Drawing.Size(250, 21);
             this.cmb_repeattype.TabIndex = 18;
@@ -75,7 +75,7 @@
             // 
             this.lbl_repeat.AutoSize = true;
             this.lbl_repeat.ForeColor = System.Drawing.Color.White;
-            this.lbl_repeat.Location = new System.Drawing.Point(41, 482);
+            this.lbl_repeat.Location = new System.Drawing.Point(39, 482);
             this.lbl_repeat.Name = "lbl_repeat";
             this.lbl_repeat.Size = new System.Drawing.Size(42, 13);
             this.lbl_repeat.TabIndex = 74;
@@ -85,7 +85,7 @@
             // 
             this.rb_appointment.AutoSize = true;
             this.rb_appointment.ForeColor = System.Drawing.Color.White;
-            this.rb_appointment.Location = new System.Drawing.Point(128, 354);
+            this.rb_appointment.Location = new System.Drawing.Point(126, 354);
             this.rb_appointment.Name = "rb_appointment";
             this.rb_appointment.Size = new System.Drawing.Size(84, 17);
             this.rb_appointment.TabIndex = 8;
@@ -97,7 +97,7 @@
             this.rb_task.AutoSize = true;
             this.rb_task.Checked = true;
             this.rb_task.ForeColor = System.Drawing.Color.White;
-            this.rb_task.Location = new System.Drawing.Point(43, 354);
+            this.rb_task.Location = new System.Drawing.Point(41, 354);
             this.rb_task.Name = "rb_task";
             this.rb_task.Size = new System.Drawing.Size(49, 17);
             this.rb_task.TabIndex = 7;
@@ -108,7 +108,7 @@
             // dtp_endtime
             // 
             this.dtp_endtime.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dtp_endtime.Location = new System.Drawing.Point(299, 317);
+            this.dtp_endtime.Location = new System.Drawing.Point(297, 317);
             this.dtp_endtime.Name = "dtp_endtime";
             this.dtp_endtime.ShowUpDown = true;
             this.dtp_endtime.Size = new System.Drawing.Size(92, 20);
@@ -117,7 +117,7 @@
             // dtp_starttime
             // 
             this.dtp_starttime.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dtp_starttime.Location = new System.Drawing.Point(299, 262);
+            this.dtp_starttime.Location = new System.Drawing.Point(297, 262);
             this.dtp_starttime.Name = "dtp_starttime";
             this.dtp_starttime.ShowUpDown = true;
             this.dtp_starttime.Size = new System.Drawing.Size(92, 20);
@@ -130,7 +130,7 @@
             this.cmb_contacts.FormattingEnabled = true;
             this.cmb_contacts.Items.AddRange(new object[] {
             "Loading...."});
-            this.cmb_contacts.Location = new System.Drawing.Point(43, 446);
+            this.cmb_contacts.Location = new System.Drawing.Point(41, 446);
             this.cmb_contacts.Name = "cmb_contacts";
             this.cmb_contacts.Size = new System.Drawing.Size(250, 21);
             this.cmb_contacts.TabIndex = 14;
@@ -138,18 +138,20 @@
             // dtp_enddate
             // 
             this.dtp_enddate.CalendarMonthBackground = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.dtp_enddate.Location = new System.Drawing.Point(44, 317);
+            this.dtp_enddate.Location = new System.Drawing.Point(42, 317);
             this.dtp_enddate.Name = "dtp_enddate";
             this.dtp_enddate.Size = new System.Drawing.Size(249, 20);
             this.dtp_enddate.TabIndex = 5;
+            this.dtp_enddate.ValueChanged += new System.EventHandler(this.dtp_enddate_ValueChanged);
             // 
             // dtp_startdate
             // 
             this.dtp_startdate.CalendarMonthBackground = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.dtp_startdate.Location = new System.Drawing.Point(44, 262);
+            this.dtp_startdate.Location = new System.Drawing.Point(42, 262);
             this.dtp_startdate.Name = "dtp_startdate";
             this.dtp_startdate.Size = new System.Drawing.Size(249, 20);
             this.dtp_startdate.TabIndex = 3;
+            this.dtp_startdate.ValueChanged += new System.EventHandler(this.dtp_startdate_ValueChanged);
             // 
             // btn_save
             // 
@@ -158,7 +160,7 @@
             this.btn_save.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(174)))), ((int)(((byte)(191)))));
             this.btn_save.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_save.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.btn_save.Location = new System.Drawing.Point(44, 560);
+            this.btn_save.Location = new System.Drawing.Point(42, 560);
             this.btn_save.Name = "btn_save";
             this.btn_save.Size = new System.Drawing.Size(200, 29);
             this.btn_save.TabIndex = 65;
@@ -182,7 +184,7 @@
             // 
             this.lbl_email.AutoSize = true;
             this.lbl_email.ForeColor = System.Drawing.Color.White;
-            this.lbl_email.Location = new System.Drawing.Point(41, 129);
+            this.lbl_email.Location = new System.Drawing.Point(39, 129);
             this.lbl_email.Name = "lbl_email";
             this.lbl_email.Size = new System.Drawing.Size(35, 13);
             this.lbl_email.TabIndex = 62;
@@ -192,7 +194,7 @@
             // 
             this.lbl_endtime.AutoSize = true;
             this.lbl_endtime.ForeColor = System.Drawing.Color.White;
-            this.lbl_endtime.Location = new System.Drawing.Point(41, 301);
+            this.lbl_endtime.Location = new System.Drawing.Point(39, 301);
             this.lbl_endtime.Name = "lbl_endtime";
             this.lbl_endtime.Size = new System.Drawing.Size(52, 13);
             this.lbl_endtime.TabIndex = 61;
@@ -202,7 +204,7 @@
             // 
             this.lbl_startadate.AutoSize = true;
             this.lbl_startadate.ForeColor = System.Drawing.Color.White;
-            this.lbl_startadate.Location = new System.Drawing.Point(41, 245);
+            this.lbl_startadate.Location = new System.Drawing.Point(39, 245);
             this.lbl_startadate.Name = "lbl_startadate";
             this.lbl_startadate.Size = new System.Drawing.Size(55, 13);
             this.lbl_startadate.TabIndex = 60;
@@ -212,7 +214,7 @@
             // 
             this.lbl_name.AutoSize = true;
             this.lbl_name.ForeColor = System.Drawing.Color.White;
-            this.lbl_name.Location = new System.Drawing.Point(41, 75);
+            this.lbl_name.Location = new System.Drawing.Point(39, 75);
             this.lbl_name.Name = "lbl_name";
             this.lbl_name.Size = new System.Drawing.Size(27, 13);
             this.lbl_name.TabIndex = 59;
@@ -223,7 +225,7 @@
             this.txt_notes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
             this.txt_notes.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
             this.txt_notes.ForeColor = System.Drawing.Color.White;
-            this.txt_notes.Location = new System.Drawing.Point(44, 156);
+            this.txt_notes.Location = new System.Drawing.Point(42, 156);
             this.txt_notes.MaxLength = 500;
             this.txt_notes.Multiline = true;
             this.txt_notes.Name = "txt_notes";
@@ -235,7 +237,7 @@
             this.txt_name.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
             this.txt_name.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
             this.txt_name.ForeColor = System.Drawing.Color.White;
-            this.txt_name.Location = new System.Drawing.Point(43, 92);
+            this.txt_name.Location = new System.Drawing.Point(41, 92);
             this.txt_name.Name = "txt_name";
             this.txt_name.Size = new System.Drawing.Size(250, 24);
             this.txt_name.TabIndex = 1;
@@ -253,7 +255,7 @@
             // 
             // lbl_addcollab
             // 
-            this.lbl_addcollab.Location = new System.Drawing.Point(299, 444);
+            this.lbl_addcollab.Location = new System.Drawing.Point(297, 444);
             this.lbl_addcollab.Name = "lbl_addcollab";
             this.lbl_addcollab.Size = new System.Drawing.Size(25, 23);
             this.lbl_addcollab.TabIndex = 15;
@@ -263,7 +265,7 @@
             // 
             // btn_removecollab
             // 
-            this.btn_removecollab.Location = new System.Drawing.Point(589, 443);
+            this.btn_removecollab.Location = new System.Drawing.Point(587, 443);
             this.btn_removecollab.Name = "btn_removecollab";
             this.btn_removecollab.Size = new System.Drawing.Size(25, 23);
             this.btn_removecollab.TabIndex = 17;
@@ -276,7 +278,9 @@
             this.cmb_evetncollab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.cmb_evetncollab.ForeColor = System.Drawing.Color.White;
             this.cmb_evetncollab.FormattingEnabled = true;
-            this.cmb_evetncollab.Location = new System.Drawing.Point(333, 445);
+            this.cmb_evetncollab.Items.AddRange(new object[] {
+            "No collaborators"});
+            this.cmb_evetncollab.Location = new System.Drawing.Point(331, 445);
             this.cmb_evetncollab.Name = "cmb_evetncollab";
             this.cmb_evetncollab.Size = new System.Drawing.Size(250, 21);
             this.cmb_evetncollab.TabIndex = 16;
@@ -285,28 +289,28 @@
             // 
             this.lbl_contacts.AutoSize = true;
             this.lbl_contacts.ForeColor = System.Drawing.Color.White;
-            this.lbl_contacts.Location = new System.Drawing.Point(41, 421);
+            this.lbl_contacts.Location = new System.Drawing.Point(39, 421);
             this.lbl_contacts.Name = "lbl_contacts";
-            this.lbl_contacts.Size = new System.Drawing.Size(49, 13);
+            this.lbl_contacts.Size = new System.Drawing.Size(121, 13);
             this.lbl_contacts.TabIndex = 64;
-            this.lbl_contacts.Text = "Contacts";
+            this.lbl_contacts.Text = "Add Event Collaborators";
             // 
             // lbl_collaborators
             // 
             this.lbl_collaborators.AutoSize = true;
             this.lbl_collaborators.ForeColor = System.Drawing.Color.White;
-            this.lbl_collaborators.Location = new System.Drawing.Point(333, 421);
+            this.lbl_collaborators.Location = new System.Drawing.Point(331, 421);
             this.lbl_collaborators.Name = "lbl_collaborators";
-            this.lbl_collaborators.Size = new System.Drawing.Size(99, 13);
+            this.lbl_collaborators.Size = new System.Drawing.Size(136, 13);
             this.lbl_collaborators.TabIndex = 80;
-            this.lbl_collaborators.Text = "Event Collaborators";
+            this.lbl_collaborators.Text = "Current Event Collaborators";
             // 
             // AddEvent
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(627, 626);
+            this.ClientSize = new System.Drawing.Size(658, 626);
             this.Controls.Add(this.lbl_collaborators);
             this.Controls.Add(this.btn_removecollab);
             this.Controls.Add(this.cmb_evetncollab);
@@ -334,7 +338,7 @@
             this.Name = "AddEvent";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "`````````";
+            this.Text = "Add Event";
             this.Load += new System.EventHandler(this.AddEvent_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pb_close)).EndInit();
             this.ResumeLayout(false);

@@ -61,6 +61,12 @@ namespace EventManager.View.Events
             allContacts = ContactHelper.GetUserContacts();
             allContacts.RemoveAll(x => contacts.Exists(y => y.ContactId == x.ContactId));
 
+            cmb_evetncollab.DisplayMember = "Name";
+            cmb_evetncollab.ValueMember = "ContactId";
+
+            cmb_contacts.DisplayMember = "Name";
+            cmb_contacts.ValueMember = "ContactId";
+
             if (userEvent.EventContacts != null)
             {
                 foreach (EventContact eventContact in userEvent.EventContacts)
@@ -71,10 +77,6 @@ namespace EventManager.View.Events
                         ContactId = eventContact.ContactId,
                         Name = this.GetContactName(eventContact.ContactId),
                     };
-                    cmb_evetncollab.DisplayMember = "Name";
-                    cmb_evetncollab.ValueMember = "ContactId";
-                    cmb_evetncollab.DisplayMember = "Name";
-                    cmb_evetncollab.ValueMember = "ContactId";
                     cmb_evetncollab.Items.Add(comboBoxItem);
                     comboBoxItems.Add(comboBoxItem);
 
@@ -84,6 +86,12 @@ namespace EventManager.View.Events
                     cmb_evetncollab.SelectedItem = 0;
                 }
 
+            }
+
+            if(userEvent.EventContacts.Count == 0)
+            {
+                cmb_evetncollab.Items.Add("No Collaborators");
+                cmb_evetncollab.SelectedIndex = 0;
             }
 
             if (userEvent.Type.Equals("Task"))
@@ -107,10 +115,6 @@ namespace EventManager.View.Events
                         Name = eventContact.Name,
                     };
 
-                    cmb_contacts.DisplayMember = "Name";
-                    cmb_contacts.ValueMember = "ContactId";
-                    cmb_contacts.DisplayMember = "Name";
-                    cmb_contacts.ValueMember = "ContactId";
                     cmb_contacts.Items.Add(comboBoxItem);
                 }
                 cmb_contacts.Items.Remove("Loading....");
@@ -406,11 +410,11 @@ namespace EventManager.View.Events
             Label rLabel = Controls.Find("lbl_repeatfor", true).FirstOrDefault() as Label;
             if (rLabel != null)
             {
-                this.Size = new Size(627, 750);
+                this.Size = new Size(658, 730);
             }
             else
             {
-                this.Size = new Size(627, 700);
+                this.Size = new Size(658, 700);
             }
             this.Controls.Add(uiBuilder.GenerateLongTextBox(42, 410, "dynamictxt_addressline1", userEvent.AddressLine1, 50, 9));
             this.Controls.Add(uiBuilder.GenerateLongTextBox(330, 410, "dynamictxt_addressline2", userEvent.AddressLine2, 50, 10));
@@ -455,11 +459,11 @@ namespace EventManager.View.Events
             Label rLabel = Controls.Find("lbl_repeatfor", true).FirstOrDefault() as Label;
             if (rLabel != null)
             {
-                this.Size = new Size(627, 600);
+                this.Size = new Size(658, 600);
             }
             else
             {
-                this.Size = new Size(627, 626);
+                this.Size = new Size(658, 626);
             }
             List<Control> controlsList = new List<Control>();
             foreach (Control currentControl in this.Controls)
@@ -574,7 +578,7 @@ namespace EventManager.View.Events
         /// <param name="e"></param>
         private void lbl_addcollab_Click(object sender, EventArgs e)
         {
-            if (cmb_contacts.Text.Equals("") && cmb_evetncollab.Text.Equals("No More Contacts"))
+            if (cmb_contacts.Text.Equals("") && cmb_evetncollab.Text.Equals("No Collaborators"))
             {
                 MessageBox.Show("Please Select an contact!");
             }
@@ -593,7 +597,7 @@ namespace EventManager.View.Events
                 }
 
                 btn_removecollab.Enabled = true;
-                cmb_evetncollab.Items.Remove("No Contacts Added");
+                cmb_evetncollab.Items.Remove("No Collaborators");
 
                 if (cmb_contacts.Items.Count == 0)
                 {
@@ -617,7 +621,7 @@ namespace EventManager.View.Events
         /// <param name="e"></param>
         private void btn_removecollab_Click(object sender, EventArgs e)
         {
-            if (cmb_evetncollab.Text.Equals("") && cmb_evetncollab.Text.Equals("No Contacts Added"))
+            if (cmb_evetncollab.Text.Equals("") && cmb_evetncollab.Text.Equals("No Collaborators"))
             {
                 MessageBox.Show("Please Select an contact!");
             }
@@ -637,10 +641,11 @@ namespace EventManager.View.Events
 
                 lbl_addcollab.Enabled = true;
                 cmb_contacts.Items.Remove("No More Contacts");
+                cmb_contacts.Items.Remove("No Contacts");
 
                 if (cmb_evetncollab.Items.Count == 0)
                 {
-                    cmb_evetncollab.Items.Add("No Contacts Added");
+                    cmb_evetncollab.Items.Add("No Collaborators");
                     btn_removecollab.Enabled = false;
                     cmb_evetncollab.SelectedIndex = 0;
                 }
@@ -881,12 +886,12 @@ namespace EventManager.View.Events
             TextBox dynamictxt_addressline1 = Controls.Find("dynamictxt_addressline1", true).FirstOrDefault() as TextBox;
             if (dynamictxt_addressline1 == null)
             {
-                this.Size = new Size(627, 650);
+                this.Size = new Size(658, 650);
 
             }
             else
             {
-                this.Size = new Size(627, 750);
+                this.Size = new Size(658, 750);
 
             }
             Label lbl_repeatfor = Controls.Find("lbl_repeatfor", true).FirstOrDefault() as Label;
@@ -1036,6 +1041,21 @@ namespace EventManager.View.Events
             wasTimeChanged = true;
         }
 
+        private void dtp_startdate_ValueChanged(object sender, EventArgs e)
+        {
+            if (dtp_startdate.Value < DateTime.Now.Date)
+            {
+                dtp_startdate.Value = DateTime.Now.Date;
+            }
+        }
+
+        private void dtp_enddate_ValueChanged(object sender, EventArgs e)
+        {
+              if (dtp_enddate.Value < DateTime.Now.Date)
+            {
+                dtp_enddate.Value = DateTime.Now.Date;
+            }
+        }
     }
 
 

@@ -147,6 +147,7 @@ namespace EventManager.DatabaseHelper
                     user.Phone = userUpdate.Phone;
                     user.Name = userUpdate.Name;
                     user.Email = userUpdate.Email;
+                    user.Image = userUpdate.Image;
                     user.Username = userUpdate.Username;
                     dbContext.SaveChanges();
                 }

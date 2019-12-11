@@ -50,10 +50,9 @@ namespace EventManager.UIComponents
                                MessageBoxButtons.YesNo);
                 if (confirmResult == DialogResult.Yes)
                 {
-
+                    
                     Panel panel = this.Parent as Panel;
                     Panel panelPreview = Parent.Parent.Controls.Find("pnl_eventspreview", true).FirstOrDefault() as Panel;
-
 
                     DeleteEvent deleteEvent = new DeleteEvent("event",userEvent.EventId, panel, panelPreview);
                     deleteEvent.ShowDialog();

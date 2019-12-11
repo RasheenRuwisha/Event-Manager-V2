@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -181,12 +182,23 @@ namespace EventManager.View.Contacts
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
             {
-                Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png"
+                Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png",
+                
             };
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                bitmap = new Bitmap(openFileDialog.FileName);
-                cpb_userimage.Image = bitmap;
+                FileInfo fi = new FileInfo(openFileDialog.FileName);
+                long fileSize = fi.Length;
+                if(fileSize > 1000000)
+                {
+                    MessageBox.Show("File to large");
+                }
+                else
+                {
+
+                    bitmap = new Bitmap(openFileDialog.FileName);
+                    cpb_userimage.Image = bitmap;
+                }
             }
         }
 
@@ -433,7 +445,7 @@ namespace EventManager.View.Contacts
                 {
                     if(e.KeyChar != 32)
                     {
-                        MessageBox.Show("Name can only contain alphabetical charatcters");
+                        MessageBox.Show("Name can only contain alphabetical characters");
                         e.Handled = true;
                     }
                 }
@@ -444,7 +456,7 @@ namespace EventManager.View.Contacts
         {
             if (char.IsLetter(e.KeyChar))
             {
-                MessageBox.Show("Phone can only contain numeric charatcters");
+                MessageBox.Show("Phone can only contain numeric characters");
                 e.Handled = true;
             }
         }

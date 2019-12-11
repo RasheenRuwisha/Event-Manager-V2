@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -71,6 +72,8 @@ namespace EventManager.View
             user.Username = txt_username.Text.Trim();
             user.Image = commonUtil.BitmapToBase64(cpb_image.Image);
 
+            Application.UserAppDataRegistry.SetValue("image", commonUtil.BitmapToBase64(cpb_image.Image));
+
             bool updated = await Task.Run(() => UserHelper.UpdateUser(user));
             if (updated)
             {
@@ -92,12 +95,23 @@ namespace EventManager.View
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
             {
-                Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png"
+                Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png",
+
             };
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                Bitmap bitmap = new Bitmap(openFileDialog.FileName);
-                cpb_image.Image = bitmap;
+                FileInfo fi = new FileInfo(openFileDialog.FileName);
+                long fileSize = fi.Length;
+                if (fileSize > 1000000)
+                {
+                    MessageBox.Show("File to large");
+                }
+                else
+                {
+
+                    Bitmap bitmap = new Bitmap(openFileDialog.FileName);
+                    cpb_image.Image = bitmap;
+                }
             }
         }
 
@@ -109,7 +123,7 @@ namespace EventManager.View
                 {
                     if (e.KeyChar != 32)
                     {
-                        MessageBox.Show("Name can only contain alphabetical charatcters");
+                        MessageBox.Show("Name can only contain alphabetical characters");
                         e.Handled = true;
                     }
                 }
@@ -124,7 +138,7 @@ namespace EventManager.View
                 {
                     if (e.KeyChar != 32)
                     {
-                        MessageBox.Show("Name can only contain alphabetical charatcters");
+                        MessageBox.Show("Name can only contain alphabetical characters");
                         e.Handled = true;
                     }
                 }
@@ -135,7 +149,7 @@ namespace EventManager.View
         {
             if (char.IsLetter(e.KeyChar))
             {
-                MessageBox.Show("Phone can only contain numeric charatcters");
+                MessageBox.Show("Phone can only contain numeric characters");
                 e.Handled = true;
             }
         }

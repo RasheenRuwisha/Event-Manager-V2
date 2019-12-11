@@ -171,6 +171,7 @@
             this.dtp_enddate.Name = "dtp_enddate";
             this.dtp_enddate.Size = new System.Drawing.Size(249, 20);
             this.dtp_enddate.TabIndex = 5;
+            this.dtp_enddate.ValueChanged += new System.EventHandler(this.dtp_enddate_ValueChanged);
             // 
             // dtp_startdate
             // 
@@ -179,6 +180,7 @@
             this.dtp_startdate.Name = "dtp_startdate";
             this.dtp_startdate.Size = new System.Drawing.Size(249, 20);
             this.dtp_startdate.TabIndex = 3;
+            this.dtp_startdate.ValueChanged += new System.EventHandler(this.dtp_startdate_ValueChanged);
             // 
             // pb_close
             // 
@@ -212,9 +214,9 @@
             this.lbl_contacts.ForeColor = System.Drawing.Color.White;
             this.lbl_contacts.Location = new System.Drawing.Point(41, 421);
             this.lbl_contacts.Name = "lbl_contacts";
-            this.lbl_contacts.Size = new System.Drawing.Size(49, 13);
+            this.lbl_contacts.Size = new System.Drawing.Size(121, 13);
             this.lbl_contacts.TabIndex = 64;
-            this.lbl_contacts.Text = "Contacts";
+            this.lbl_contacts.Text = "Add Event Collaborators";
             // 
             // lbl_header
             // 
@@ -296,16 +298,16 @@
             this.lbl_collaborators.ForeColor = System.Drawing.Color.White;
             this.lbl_collaborators.Location = new System.Drawing.Point(335, 421);
             this.lbl_collaborators.Name = "lbl_collaborators";
-            this.lbl_collaborators.Size = new System.Drawing.Size(99, 13);
+            this.lbl_collaborators.Size = new System.Drawing.Size(136, 13);
             this.lbl_collaborators.TabIndex = 79;
-            this.lbl_collaborators.Text = "Event Collaborators";
+            this.lbl_collaborators.Text = "Current Event Collaborators";
             // 
             // EditEvent
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(627, 626);
+            this.ClientSize = new System.Drawing.Size(658, 626);
             this.Controls.Add(this.lbl_collaborators);
             this.Controls.Add(this.btn_removecollab);
             this.Controls.Add(this.cmb_evetncollab);

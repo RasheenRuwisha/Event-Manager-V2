@@ -46,6 +46,7 @@ namespace EventManager.View.Events
             this.txt_name.Size = new System.Drawing.Size(250, 30);
 
             cmb_repeattype.SelectedIndex = 0;
+            cmb_evetncollab.SelectedIndex = 0;
 
             PictureBox pbx = uiBuilder.GeneratePictureBox(17, 390, "dynamicpbx_chevdown", Properties.Resources.chevdown, 15, 15);
             pbx.Click += new EventHandler(this.AddUiClick);
@@ -278,11 +279,11 @@ namespace EventManager.View.Events
             Label rLabel = Controls.Find("lbl_repeatfor", true).FirstOrDefault() as Label;
             if (rLabel != null)
             {
-                this.Size = new Size(627, 750);
+                this.Size = new Size(658, 730);
             }
             else
             {
-                this.Size = new Size(627, 700);
+                this.Size = new Size(658, 700);
             }
 
             this.Controls.Add(uiBuilder.GenerateLongTextBox(42, 410, "dynamictxt_addressline1", "", 50, 9));
@@ -326,11 +327,11 @@ namespace EventManager.View.Events
             Label rLabel = Controls.Find("lbl_repeatfor", true).FirstOrDefault() as Label;
             if (rLabel != null)
             {
-                this.Size = new Size(627, 650);
+                this.Size = new Size(658, 650);
             }
             else
             {
-                this.Size = new Size(627, 626);
+                this.Size = new Size(658, 626);
             }
             List<Control> controlsList = new List<Control>();
             foreach (Control currentControl in this.Controls)
@@ -497,6 +498,7 @@ namespace EventManager.View.Events
                     comboBoxItems.Add(comboBoxItem);
                     cmb_evetncollab.Items.Add(comboBoxItem);
                     cmb_contacts.Items.Remove(comboBoxItem);
+                    cmb_evetncollab.Items.Remove("No collaborators");
                 }
                 else
                 {
@@ -529,7 +531,7 @@ namespace EventManager.View.Events
         /// <param name="e"></param>
         private void btn_removecollab_Click(object sender, EventArgs e)
         {
-            if (cmb_evetncollab.Text.Equals("") && cmb_evetncollab.Text.Equals("No Contacts Added"))
+            if (cmb_evetncollab.Text.Equals("") && cmb_evetncollab.Text.Equals("No collaborators"))
             {
                 MessageBox.Show("Please Select an contact!");
             }
@@ -551,7 +553,7 @@ namespace EventManager.View.Events
 
                 if (cmb_evetncollab.Items.Count == 0)
                 {
-                    cmb_evetncollab.Items.Add("No Contacts Added");
+                    cmb_evetncollab.Items.Add("No collaborators");
                     btn_removecollab.Enabled = false;
                     cmb_evetncollab.SelectedIndex = 0;
                 }
@@ -793,12 +795,12 @@ namespace EventManager.View.Events
             TextBox dynamictxt_addressline1 = Controls.Find("dynamictxt_addressline1", true).FirstOrDefault() as TextBox;
             if (dynamictxt_addressline1 == null)
             {
-                this.Size = new Size(627, 650);
+                this.Size = new Size(658, 650);
 
             }
             else
             {
-                this.Size = new Size(627, 750);
+                this.Size = new Size(658, 750);
 
             }
             Label lbl_repeatfor = Controls.Find("lbl_repeatfor", true).FirstOrDefault() as Label;
@@ -938,6 +940,22 @@ namespace EventManager.View.Events
             }
 
 
+        }
+
+        private void dtp_startdate_ValueChanged(object sender, EventArgs e)
+        {
+            if(dtp_startdate.Value < DateTime.Now.Date)
+            {
+                dtp_startdate.Value = DateTime.Now.Date;
+            }
+        }
+
+        private void dtp_enddate_ValueChanged(object sender, EventArgs e)
+        {
+            if (dtp_enddate.Value < DateTime.Now.Date)
+            {
+                dtp_enddate.Value = DateTime.Now.Date;
+            }
         }
     }
 }

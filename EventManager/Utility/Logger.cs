@@ -56,7 +56,7 @@ namespace EventManager.Utility
             }
             if (showError)
             {
-                MessageBox.Show("Something went wrong. The error has been logged to " + filePath);
+                MessageBox.Show("Something went wrong.");
             }
         }
     }

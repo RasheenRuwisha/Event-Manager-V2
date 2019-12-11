@@ -21,6 +21,7 @@ namespace EventManager.View
         CommonUtil commonUtil = new CommonUtil();
         Banner banner = new Banner();
         string otp;
+        PictureBox error;
         string window;
         public ForgotPassword()
         {
@@ -140,15 +141,30 @@ namespace EventManager.View
             if (txt_password.Text.Trim().Equals(txt_confirmpasword.Text.Trim()) && !txt_password.Text.Trim().Equals("")
                 && !txt_confirmpasword.Text.Trim().Equals(""))
             {
-                PictureBox pictureBox = reset_panel.Controls.Find("ptx_" + txt_confirmpasword.Name, true).FirstOrDefault() as PictureBox;
-                reset_panel.Controls.Remove(pictureBox);
-                return true;
+                if (txt_password.Text.Trim().Length <= 6)
+                {
+                    if(error != null)
+                    {
+                        reset_panel.Controls.Remove(error);
+                    }
+                    error = uiMessageUtitlity.AddPasswordErrorIcon(txt_password.Name, txt_password.Location.X + 255, txt_password.Location.Y + 2);
+                    this.reset_panel.Controls.Add(error);
+                    MessageBox.Show("Password should contain atleast 7 characters");
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
             }
             else
             {
-                PictureBox error = uiMessageUtitlity.AddPasswordErrorIcon(txt_confirmpasword.Name, txt_confirmpasword.Location.X + 255, txt_confirmpasword.Location.Y + 2);
+                if (error != null)
+                {
+                    reset_panel.Controls.Remove(error);
+                }
+                error = uiMessageUtitlity.AddPasswordErrorIcon(txt_confirmpasword.Name, txt_confirmpasword.Location.X + 255, txt_confirmpasword.Location.Y + 2);
                 this.reset_panel.Controls.Add(error);
-                MessageBox.Show("Passwords do not match!");
                 return false;
             }
         }

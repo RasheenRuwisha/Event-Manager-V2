@@ -40,6 +40,23 @@ namespace EventManager
             this.btn_login.Left = this.Width / 2 - this.btn_login.Width / 2;
             this.lbl_email.Left = (this.Width / 2) - 3 - this.txt_email.Width / 2;
             this.lbl_password.Left = (this.Width / 2) - 3 - this.txt_email.Width / 2;
+
+            if(Application.UserAppDataRegistry.GetValue("email") != null)
+            {
+                txt_email.Text = Application.UserAppDataRegistry.GetValue("email").ToString();
+            }
+
+            if (Application.UserAppDataRegistry.GetValue("remeberMe") != null)
+            {
+                if (Application.UserAppDataRegistry.GetValue("remeberMe").Equals("False"))
+                {
+                    cb_rememberme.Checked = false;
+                }
+                else
+                {
+                    cb_rememberme.Checked = true;
+                }
+            }
         }
 
         private void lbl_register_Click(object sender, EventArgs e)

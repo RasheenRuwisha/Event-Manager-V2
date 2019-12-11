@@ -249,10 +249,11 @@
             this.Controls.Add(this.verification_panel);
             this.Controls.Add(this.lbl_login);
             this.Controls.Add(this.logo);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ForgotPassword";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "ForgotPassword";
+            this.Text = "Forgot Password";
             this.reset_panel.ResumeLayout(false);
             this.reset_panel.PerformLayout();
             this.email_panel.ResumeLayout(false);

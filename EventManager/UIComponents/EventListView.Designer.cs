@@ -72,6 +72,7 @@
             // 
             // pb_edit
             // 
+            this.pb_edit.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pb_edit.Image = global::EventManager.Properties.Resources.edit;
             this.pb_edit.Location = new System.Drawing.Point(557, 16);
             this.pb_edit.Name = "pb_edit";
@@ -83,6 +84,7 @@
             // 
             // pb_delete
             // 
+            this.pb_delete.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pb_delete.Image = global::EventManager.Properties.Resources.remove;
             this.pb_delete.Location = new System.Drawing.Point(583, 16);
             this.pb_delete.Name = "pb_delete";

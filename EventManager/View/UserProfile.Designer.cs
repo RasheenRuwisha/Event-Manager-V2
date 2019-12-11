@@ -189,6 +189,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ClientSize = new System.Drawing.Size(436, 512);
+            this.ControlBox = false;
             this.Controls.Add(this.pb_close);
             this.Controls.Add(this.lbl_forgotpassword);
             this.Controls.Add(this.btn_update);
@@ -201,7 +202,7 @@
             this.Controls.Add(this.lbl_email);
             this.Controls.Add(this.lbl_username);
             this.Controls.Add(this.cpb_image);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "UserProfile";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

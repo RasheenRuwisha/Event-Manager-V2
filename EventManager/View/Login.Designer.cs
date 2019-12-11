@@ -183,6 +183,7 @@
             this.Controls.Add(this.btn_login);
             this.Controls.Add(this.pnl_error);
             this.Controls.Add(this.pb_logo);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Login";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
