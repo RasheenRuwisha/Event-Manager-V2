@@ -191,7 +191,7 @@ namespace EventManager.View.Contacts
                 long fileSize = fi.Length;
                 if(fileSize > 1000000)
                 {
-                    MessageBox.Show("File to large");
+                    MessageBox.Show("File too large. Maxmum file size 1MB");
                 }
                 else
                 {
