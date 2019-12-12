@@ -195,14 +195,6 @@ namespace EventManager.Utility
                         userEvents.Add(userEvent);
                     }
 
-                    if (startDate >= userEvent.StartDate)
-                    {
-                        DateTime newStart = new DateTime(startDate.Year, startDate.Month, userEvent.StartDate.Day, userEvent.StartDate.Hour, userEvent.StartDate.Minute, userEvent.StartDate.Second);
-                        userEvent.StartDate = newStart;
-                        DateTime newEnd = new DateTime(startDate.Year, startDate.Month, userEvent.EndDate.Day, userEvent.EndDate.Hour, userEvent.EndDate.Minute, userEvent.EndDate.Second);
-                        userEvent.EndDate = newEnd;
-                    }
-
                     if (userEvent.RepeatDuration.Equals("Specific Number Of Times"))
                     {
                         for (int i = 1; i <= timeDifference; i++)
