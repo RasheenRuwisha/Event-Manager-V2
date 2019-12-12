@@ -17,6 +17,9 @@ namespace EventManager.UIComponents
         string id;
         Panel panel;
         Panel previewPanel;
+        Panel eventPreviewPanel;
+        Panel eventPanel;
+
         public DeleteEvent()
         {
             InitializeComponent();
@@ -29,6 +32,19 @@ namespace EventManager.UIComponents
             this.id = id;
             this.panel = panel;
             this.previewPanel = previewPanel;
+
+        }
+
+
+        public DeleteEvent(string type, string id, Panel panel, Panel previewPanel, Panel eventPanel, Panel eventPreviewPanel)
+        {
+            InitializeComponent();
+            this.type = type;
+            this.id = id;
+            this.panel = panel;
+            this.previewPanel = previewPanel;
+            this.eventPreviewPanel = eventPreviewPanel;
+            this.eventPanel = eventPanel;
 
         }
 
@@ -46,11 +62,18 @@ namespace EventManager.UIComponents
 
             if (remove)
             {
+                if (type.Equals("contact"))
+                {
+                    eventPanel.Controls.Clear();
+                    eventPreviewPanel.Controls.Clear();
+                    eventPanel.Refresh();
+                }
                 previewPanel.Controls.Clear();
                 panel.Controls.Clear();
                 panel.Refresh();
                 this.Close();
             }
+         
         }
     }
 }

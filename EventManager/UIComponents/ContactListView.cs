@@ -37,7 +37,7 @@ namespace EventManager.UIComponents
         private async void pb_delete_Click(object sender, EventArgs e)
         {
             Contact contact = Tag as Contact;
-            var confirmResult = MessageBox.Show("Are you sure to delete this item ??",
+            var confirmResult = MessageBox.Show("Are you sure to delete this contact ??",
                                     "Confirm Delete!!",
                                     MessageBoxButtons.YesNo);
             if (confirmResult == DialogResult.Yes)
@@ -45,9 +45,12 @@ namespace EventManager.UIComponents
 
                 Panel panel = Parent.Parent.Controls.Find("pnl_contactlist", true).FirstOrDefault() as Panel;
                 Panel panelPreview = Parent.Parent.Controls.Find("pnl_contactpreview", true).FirstOrDefault() as Panel;
+                Panel eventPanel = Parent.Parent.Parent.Controls.Find("pnl_events", true).FirstOrDefault() as Panel;
+                Panel eventPanel21 = Parent.Parent.Controls.Find("pnl_events", true).FirstOrDefault() as Panel;
+                Panel eventList = eventPanel.Controls.Find("pnl_eventlist", true).FirstOrDefault() as Panel;
+                Panel eventPreview = eventPanel.Controls.Find("pnl_eventspreview", true).FirstOrDefault() as Panel;
 
-
-                DeleteEvent deleteEvent = new DeleteEvent("contact", contact.ContactId, panel, panelPreview);
+                DeleteEvent deleteEvent = new DeleteEvent("contact", contact.ContactId, panel, panelPreview,eventList,eventPreview);
                 deleteEvent.ShowDialog();
             }
         }
@@ -65,10 +68,16 @@ namespace EventManager.UIComponents
             Panel panel = this.Parent.Parent.Controls.Find("pnl_contactlist", true).FirstOrDefault() as Panel;
 
             Panel panelPreview = Parent.Parent.Controls.Find("pnl_contactpreview", true).FirstOrDefault() as Panel;
-            panelPreview.Controls.Clear();
+            Panel eventPanel = Parent.Parent.Parent.Controls.Find("pnl_events", true).FirstOrDefault() as Panel;
+            Panel eventList = eventPanel.Controls.Find("pnl_eventlist", true).FirstOrDefault() as Panel;
+            Panel eventPreview = eventPanel.Controls.Find("pnl_eventspreview", true).FirstOrDefault() as Panel;
 
+            eventPreview.Controls.Clear();
+            panelPreview.Controls.Clear();
             panel.Controls.Clear();
             panel.Refresh();
+            eventList.Controls.Clear();
+            eventList.Refresh();
             panel.BringToFront();
 
             Panel parentPanel = this.Parent as Panel;
