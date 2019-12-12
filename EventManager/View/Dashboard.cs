@@ -581,8 +581,16 @@ namespace EventManager.View
                 {
                     lbl_monthlyavgtext.Text = $"For the next month you might spend {Math.Round(prediction.MonthlyAverage, 1)} Hours on average for Events Monthly";
                 }
-
-              
+            }
+            else
+            {
+                cpbar_tasks.Progress = prediction.TaskCount;
+                cpbar_appointments.Progress = prediction.AppointmentCount;
+                cpbar_appointments.CircleText = $"{prediction.AppointmentCount} / {prediction.EventCount}";
+                cpbar_tasks.CircleText = $"{prediction.TaskCount} / {prediction.EventCount}";
+                lbl_weeklyavgtext.Text = "Not Enough Data";
+                lbl_dailyavgtext.Text = "Not Enough Data";
+                lbl_monthlyavgtext.Text = "Not Enough Data";
 
             }
 
