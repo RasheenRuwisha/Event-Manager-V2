@@ -32,6 +32,7 @@ namespace EventManager.View
         private async void UserProfile_Load(object sender, EventArgs e)
         {
 
+            this.btn_update.Enabled = false; 
 
             this.cpb_image.AutoSize = false;
             this.cpb_image.Left = this.Width / 2 - this.cpb_image.Width / 2;
@@ -56,7 +57,7 @@ namespace EventManager.View
             txt_email.Text = user.Email;
             txt_phone.Text = user.Phone;
 
-
+            this.btn_update.Enabled = true;
 
         }
 
